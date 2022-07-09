@@ -1,4 +1,4 @@
-import { AdvertisementPrice } from "../advertisements/AdvertisementPrice";
+import { AdvertisementPrice } from "../advertisements/valueObjects/AdvertisementPrice";
 import { Address } from "../utilities/Address";
 
 export interface Plan {

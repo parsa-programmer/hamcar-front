@@ -15,6 +15,7 @@ export interface NotifyFilterData {
   advertisementType: string;
   advertisementCount: number;
 }
+
 export interface NotifyAdvertisementFilterData {
   id: string;
   creationDate: Date;

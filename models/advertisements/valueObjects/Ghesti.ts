@@ -1,4 +1,4 @@
-import { GhestiPaymentType } from "./enums/GhestiPaymentType";
+import { GhestiPaymentType } from "../enums/GhestiPaymentType";
 
 export class Ghesti {
 constructor(

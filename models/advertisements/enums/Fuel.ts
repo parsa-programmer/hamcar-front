@@ -1,5 +1,4 @@
-﻿export enum Fuel
-{
-    برقی,
-    بنزینی
+﻿export enum Fuel {
+  برقی = "برقی",
+  بنزینی = "بنزینی",
 }

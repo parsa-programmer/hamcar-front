@@ -1,4 +1,4 @@
-import { AdvertisementPaymentType } from "./enums/AdvertisementPaymentType";
+import { AdvertisementPaymentType } from "../enums/AdvertisementPaymentType";
 import { Ghesti } from "./Ghesti";
 
 export interface AdvertisementPrice {

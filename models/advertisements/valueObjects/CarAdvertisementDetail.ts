@@ -1,6 +1,6 @@
 import { Color } from "csstype";
-import { BodyCondition } from "./enums/BodyCondition";
-import { CarType } from "./enums/CarType";
+import { BodyCondition } from "../enums/BodyCondition";
+import { CarType } from "../enums/CarType";
 
 export class CarAdvertisementDetail {
   constructor(

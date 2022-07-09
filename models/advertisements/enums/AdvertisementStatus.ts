@@ -6,9 +6,3 @@
     Published,
     InActive
 }
-
-export enum AdvertisementType
-{
-    Car,
-    MotorCycle
-}
