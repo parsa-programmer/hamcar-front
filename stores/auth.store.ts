@@ -16,7 +16,7 @@ export const authStore = defineStore("auth", {
     },
   },
   actions: {
-    setLoginData(loginResult:LoginResultDto) {
+    setLoginData(loginResult: LoginResultDto) {
       this.accessToken = loginResult.token;
       this.refreshToken = loginResult.refreshToken;
     },

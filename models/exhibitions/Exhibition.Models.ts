@@ -21,3 +21,24 @@ export interface PhoneNumbers {
   mobilePhoneTwo: string;
   mobilePhoneTree: string;
 }
+export interface SingleExhiitionDto {
+  title: string;
+  address: Address;
+  postalCode: string;
+  logoImageName: string;
+  englishTitle: string;
+  type: string;
+  phoneNumbers: PhoneNumbers;
+  advertisementCount: number;
+}
+export interface ExhibitionConsultantDto {
+  id: string;
+  creationDate: Date;
+  role: string;
+  userId: string;
+  phoneNumber: string;
+  fullName: string;
+  activeAdvertisements: number;
+  advertisementInCurrentMonth: number;
+  usedNardebansInCurrentMonth: number;
+}
