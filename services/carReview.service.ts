@@ -18,7 +18,7 @@ export const GetMainPageData = (): Promise<
 export const GetBySlug = (
   slug: string
 ): Promise<IApiResponse<CarReviewDto>> => {
-  return FetchApi(`/carReview/${slug}`);
+  return FetchApi(`/carReview/GetBySlug/${slug}`);
 };
 
 export const GetByFilter = (
@@ -31,4 +31,7 @@ export const GetByFilter = (
 
 export const GetSpecifications = (): Promise<IApiResponse<Specification[]>> => {
   return FetchApi("/carReview/specifications");
+};
+export const GetRelatedCars = (): Promise<IApiResponse<CarReviewFilterData[]>> => {
+  return FetchApi("/carReview/RelatedCars");
 };

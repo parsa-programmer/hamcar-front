@@ -1,19 +1,19 @@
 <template>
   <div>
-    <nuxt-link to="/test">test</nuxt-link>
-      
+    <a @click="showAlert">test</a>
   </div>
 </template>
 
-<script setup lang="ts">
-import {
-  GetSpecifications,
-} from "~~/services/carReview.service";
-
-onMounted(async () => {
-  var result = await GetSpecifications();
-  console.log(result);
-});
+<script>
+export default {
+  mounted() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+      setTimeout(() => this.$nuxt.$loading.finish(), 500)
+    });
+  }
+}
 </script>
+
 
 <style scoped></style>

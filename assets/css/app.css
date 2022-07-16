@@ -1,0 +1,1025 @@
+/* -- Dana Fontface --*/
+@font-face {
+    src: url("../fonts/DanaFaNum-Regular.ttf") format("truetype");
+    font-family: "DanaFaNum Regular";
+    /*font-weight: 400;*/
+}
+
+@font-face {
+    src: url("../fonts/DanaFaNum-Medium.ttf") format("truetype");
+    font-family: "DanaFaNum Medium";
+    /*font-weight: 500;*/
+}
+
+@font-face {
+    src: url("../fonts/DanaFaNum-Bold.ttf") format("truetype");
+    font-family: "DanaFaNum Bold";
+    /*font-weight: 700;*/
+}
+
+@font-face {
+    src: url("../fonts/DanaFaNum-UltraBold.ttf") format("truetype");
+    font-family: "DanaFaNum UltraBold";
+    /*font-weight: 800;*/
+}
+
+@font-face {
+    src: url("../fonts/DanaEnNum-UltraBold.ttf") format("truetype");
+    font-family: "DanaEnNum UltraBold";
+    /*font-weight: 800;*/
+}
+
+@font-face {
+    src: url("../fonts/DanaEnNum-DemiBold.ttf") format("truetype");
+    font-family: "DanaEnNum DemiBold";
+    /*font-weight: 600;*/
+}
+
+@font-face {
+    src: url("../fonts/DanaEnNum-ExtraBold.ttf") format("truetype");
+    font-family: "DanaEnNum ExtraBold";
+    /*font-weight: 800;*/
+}
+
+@font-face {
+    src: url("../fonts/DanaFaNum-ExtraBold.ttf") format("truetype");
+    font-family: "DanaFaNum ExtraBold";
+    /*font-weight: 800;*/
+}
+
+@font-face {
+    src: url("../fonts/DanaFaNum-ExtraBold.ttf") format("truetype");
+    font-family: "DanaFaNum Black";
+    /*font-weight: 900;*/
+}
+
+@font-face {
+    src: url("../fonts/Poppins-Regular.ttf") format("truetype");
+    font-family: "Poppins";
+    /*font-weight: 900;*/
+}
+
+/* -- Css Variables -- */
+:root {
+    /* Sizes */
+    --header-height: 7.5rem;
+    --app-border-radius: 18px;
+    --element-height: 4.5rem;
+    --border-width: 2px;
+    /* Font & Typography */
+    --regular-font-family: "DanaFaNum Regular", sans-serif;
+    --medium-font-family: "DanaFaNum Medium", sans-serif;
+    --bold-font-family: "DanaFaNum Bold", sans-serif;
+    --ultrabold-font-family: "DanaFaNum UltraBold", sans-serif;
+    --extrabold-font-family: "DanaFaNum ExtraBold", sans-serif;
+    --black-font-family: "DanaFaNum Black", sans-serif;
+
+
+    --nav-padding: 1.5rem 0;
+
+    --t1-font-size: 26px;
+    --t2-font-size: 20px;
+    --t3-font-size: 20px;
+    --t4-font-size: 16px;
+    --t5-font-size: 16px;
+    --t6-font-size: 14px;
+    --t1-font-family: "DanaFaNum Black", sans-serif;
+    --t2-font-family: "DanaFaNum UltraBold", sans-serif;
+    --t3-font-family: "DanaFaNum Medium", sans-serif;
+    --t4-font-family: "DanaFaNum ExtraBold", sans-serif;
+    --t5-font-family: "DanaFaNum Medium", sans-serif;
+    --t6-font-family: "DanaFaNum Regular", sans-serif;
+
+    /* Font Weight */
+    --black-font-weight: 900;
+    --extra-bold-font-weight: 800;
+    --ultra-bold-font-weight: 800;
+    --bold-font-weight: 700;
+    --medium-font-weight: 500;
+    --regular-font-weight: 400;
+
+    /* Colors */
+    --color-gray-200: #F7F7F7;
+    --color-gray-300: #F0EFEF;
+    --color-gray-400: #DCDDE0;
+    --color-gray-500: #C6C7CC;
+    --color-gray-600: #ABADB2;
+    --color-white: #FFFFFF;
+
+    --color-black-200: #85858F;
+    --color-black-300: #606066;
+    --color-black-400: #434347;
+    --color-black-500: #2B2B2E;
+    --color-black-600: #1D1D1F;
+    --color-black: #0F0F10;
+
+    --color-blue-200: #94C7FF;
+    --color-blue-300: #66AFFF;
+    --color-blue-400: #429DFF;
+    --color-blue-500: #1F8AFF;
+    --color-blue-600: #006ADD;
+    --color-blue: #007AFF;
+    --color-orange-200: #FFDCAA;
+    --color-orange-300: #FFBF66;
+    --color-orange-400: #FFB142;
+    --color-orange-500: #FFA21F;
+    --color-orange-600: #E08300;
+    --color-orange: #FF9500;
+    --color-green-200: #8EF5F0;
+    --color-green-300: #42EBE3;
+    --color-green-400: #1BE0D7;
+    --color-green-500: #08D1C8;
+    --color-green-600: #02ADA6;
+    --color-green: #02C7BE;
+
+    --body-text-color: var(--color-black);
+    --body-bg-color: #DADADA;
+    --border-color: var(--color-gray-400);
+
+    /* Stars Value */
+    /*--star-width: 1.5rem;*/
+    /*--star-gutter: 0.5rem;*/
+    --star-half-width: 0.75rem;
+    --star-length: 2rem;
+}
+
+.main {
+    overflow-x: hidden;
+}
+
+/* -- Responsive Typography -- */
+
+@media screen and (max-width: 768px) {
+    :root {
+        --header-height: 5rem;
+        --h1-font-size: 1.375rem;
+        --h2-font-size: 1rem;
+        --normal-font-size: 0.875rem;
+        --small-font-size: 0.75rem;
+        --app-border-radius: 12px;
+        --element-height: 3rem;
+        --border-width: 1px;
+
+
+        --star-half-width: 0.5rem;
+        --star-length: 1.25rem;
+
+
+        --nav-padding: 1rem 0;
+        /*  New Typo  */
+        --t1-font-size: 22px;
+        --t2-font-size: 20px;
+        --t3-font-size: 16px;
+        --t4-font-size: 16px;
+        --t5-font-size: 14px;
+        --t6-font-size: 14px;
+        --t7-font-size: 12px;
+        --t2-font-family: "DanaFaNum Medium", sans-serif;
+        --t3-font-family: "DanaFaNum UltraBold", sans-serif;
+        --t4-font-family: "DanaFaNum Medium", sans-serif;
+        --t5-font-family: "DanaFaNum Bold", sans-serif;
+        --t6-font-family: "DanaFaNum Medium", sans-serif;
+        --t7-font-family: "DanaFaNum Regular", sans-serif;
+    }
+}
+
+hr {
+    margin: 3rem 0;
+    border: none;
+    height: 1px;
+    background: var(--color-gray-400);
+}
+
+/* -- Cards -- */
+
+.breadcrumb {
+    border-bottom: 2px solid var(--color-white);
+    padding-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+/* -- Helper Class -- */
+.justify-space-between {
+    justify-content: space-between;
+}
+
+.mr-1 {
+    margin-right: 1rem;
+}
+
+.mr {
+    margin-right: .5rem;
+}
+
+.ml-1 {
+    margin-left: 1rem;
+}
+
+.my-1 {
+    margin: 1rem 0;
+}
+
+.py-1 {
+    padding: 1rem 0;
+}
+
+.mt-1 {
+    margin-top: 1rem;
+}
+
+.blue-link {
+    color: var(--color-blue);
+    font-size: 16px;
+    line-height: 27.2px;
+}
+
+.blue-link svg {
+    margin-right: 8.75px;
+}
+
+.bold-500 {
+    font-weight: 500;
+}
+
+.relative {
+    position: relative;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.page__title {
+    font-family: var(--t1-font-family);
+    font-size: var(--t1-font-size);
+}
+
+.page__sub__title {
+    font-family: var(--t2-font-family);
+    font-size: var(--t2-font-size);
+}
+
+.h-full {
+    height: 100%;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.color-white {
+    color: var(--color-white);
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.mb-3 {
+    margin-bottom: 3rem;
+}
+
+.mb-4 {
+    margin-bottom: 4rem;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.color-primary {
+    color: var(--color-blue);
+}
+
+.bg-transparent {
+    background-color: transparent;
+}
+
+.flex {
+    display: flex;
+}
+
+.overflow-x-hidden {
+    overflow-x: hidden;
+}
+
+.row {
+    display: flex;
+    gap: 1rem;
+
+}
+
+.gap-1 {
+    gap: 1rem;
+}
+
+.see-ads {
+    font-size: var(--t4-font-size);
+    font-family: var(--t4-font-family);
+    color: var(--color-blue);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* -- Config --*/
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+*::before,
+*::after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family: var(--t3-font-family);
+    font-size: var(--t3-font-size);
+    color: var(--body-text-color);
+    overflow-x: hidden;
+    background-color: #f6f6f6;
+}
+
+.m-auto {
+    margin: auto;
+}
+
+.nav__item {
+    position: relative;
+}
+
+.nav__menu .nav__item {
+    transition: all ease .2s;
+    border-bottom: 2px solid #006bdd00;
+    padding-bottom: 3px;
+}
+
+.nav__menu .nav__item:hover>ul {
+    display: block;
+}
+
+.nav__menu .nav__item:hover {
+    border-bottom: 2px solid var(--color-black);
+
+}
+
+.nav__menu ul {
+    position: absolute;
+    width: 212px;
+    background: var(--color-gray-200);
+    padding: 24px 23px;
+    display: none;
+    z-index: 2;
+    top: 35px;
+}
+
+.nav__menu ul:hover {
+    display: block;
+}
+
+.nav__menu ul li {
+    padding-bottom: 1rem;
+    font-family: var(--t5-font-family);
+    font-size: var(--t5-font-size);
+    font-weight: 400;
+    line-height: 27.2px;
+    transition: all ease .2s;
+}
+
+.nav__menu ul li:hover {
+    transform: translateX(-2px);
+}
+html {
+    scroll-behavior: smooth;
+    direction: rtl;
+  }
+h1,
+h2,
+h3 {
+    color: var(--color-black);
+}
+
+ul,
+ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+input,
+button {
+    font-family: inherit;
+    outline: none;
+    border: none;
+}
+
+
+/* -- Start Header -- */
+
+.header {
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+
+.nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: var(--nav-padding);
+}
+
+.nav__title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--t3-font-family);
+    gap: 0.5rem;
+    margin: 0 auto;
+}
+
+.nav__logo {
+    width: 8rem;
+    height: 2.75rem;
+    margin-left: 5rem;
+}
+
+.nav__img {
+    height: 100%;
+    object-fit: contain;
+}
+
+.nav__img--en {
+    display: none;
+}
+
+.nav__icon {
+    background-color: var(--color-gray-200);
+    color: var(--color-black);
+    border-radius: var(--app-border-radius);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    margin-left: 1rem;
+}
+
+.nav__icon--fixed-right {
+    position: absolute;
+    right: 0;
+}
+
+.nav__wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.nav__icons-wrapper {
+    display: none;
+}
+
+.nav__menu {
+    display: flex;
+    gap: 3rem;
+}
+
+.nav__link {
+    color: var(--color-black);
+}
+
+.nav__register {
+    display: flex;
+}
+
+.nav__register-link {
+    font-family: var(--t3-font-family);
+    font-size: var(--t3-font-size);
+}
+
+.nav__register-link--new {
+    width: 12rem;
+    padding: 0;
+}
+
+.header__bottom {
+    display: none;
+    gap: 1rem;
+    padding-bottom: 1rem;
+}
+
+.header__input {
+    font-size: var(--t4-font-size);
+    font-family: var(--t4-font-family);
+}
+
+.header__link {
+    position: relative;
+    height: 4.5rem;
+    width: 12rem;
+    flex-shrink: 0;
+    padding: 0 2rem;
+}
+
+.header__link a {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 122, 255, 0.1);
+    color: var(--color-blue);
+    font-family: var(--t5-font-family);
+    font-size: var(--t5-font-size);
+    border-radius: var(--app-border-radius);
+    z-index: 1;
+    backdrop-filter: blur(20px);
+}
+
+.header__link::after {
+    content: "";
+    background-color: var(--color-blue);
+    border-radius: var(--app-border-radius);
+    width: 4.5rem;
+    height: 0.5rem;
+    position: absolute;
+    bottom: -3px;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+}
+
+
+/* -- End Header --*/
+
+
+
+/* -- Breadcrumb -- */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb__item {
+    font-family: var(--t5-font-family);
+    font-size: var(--t5-font-size);
+    display: inline-block;
+    color: var(--color-black);
+}
+
+.breadcrumb__item:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb__item:first-child svg {
+    margin-left: 0.5rem;
+}
+
+.breadcrumb__item--active {
+    color: var(--color-gray-600);
+}
+
+.breadcrumb__item {
+    margin: 0 1rem;
+}
+
+
+/* -- End Breadcrumb -- */
+
+
+
+/* -- Advert -- */
+.advertising__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+
+
+.advert {
+    background-color: var(--color-white);
+    border-radius: var(--app-border-radius);
+    font-family: var(--t6-font-family);
+    font-size: var(--t6-font-size);
+    padding: 1rem;
+    position: relative;
+    width: 296px;
+}
+
+
+.advert__badge {
+    background-color: rgba(15, 15, 16, 0.7);
+    border-radius: 0 8px 8px 0;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    position: absolute;
+    left: 1rem;
+    top: 2.75rem;
+    z-index: 2;
+}
+
+.advert__badge>svg:first-child {
+    margin-right: 8px;
+}
+
+.advert__safe-badge {}
+
+.advert__verified-badge {}
+
+.advert__hamcar-badge {}
+
+
+.advert__banner {
+    height: 15rem;
+    position: relative;
+    user-select: none;
+
+}
+
+.advert__img {
+    border-radius: 12px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+
+}
+
+.advert__flag {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 8px;
+    height: 36px;
+    padding: 0 12px;
+    color: var(--color-gray-400);
+    background-color: rgba(15, 15, 16, 0.7);
+    position: absolute;
+    top: 1.75rem;
+    right: 1rem;
+}
+
+
+.advert__flag--light {
+    color: var(--color-black-300);
+    background-color: var(--color-white);
+    opacity: 0.8;
+}
+
+.advert__flag--place {
+    /*left: 1rem;*/
+    /*right: auto;*/
+}
+
+.advert__flag--picture-number {
+    display: none;
+}
+
+.advert__body {
+    margin-top: 15px;
+}
+
+.advert__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.advert__name {
+    font-family: "DanaEnNum ExtraBold", sans-serif;
+    font-size: var(--t4-font-size);
+}
+
+.advert__date {
+    color: var(--color-gray-600);
+}
+
+.advert__date-wide {
+    display: none;
+    color: var(--color-black-200);
+    background-color: var(--color-gray-200);
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 110px;
+    height: 36px;
+    font-family: var(--t6-font-family);
+    font-size: var(--t6-font-size);
+}
+
+.advert__info {
+    display: flex;
+    align-items: center;
+    margin: 18px 0 5px;
+}
+
+.advert__info span {
+    padding-left: 0.5rem;
+    margin-left: 0.5rem;
+    position: relative;
+}
+
+.advert__info span::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 1px;
+    height: 12px;
+    background-color: var(--color-gray-400);
+}
+
+.advert__info span:last-child {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+.advert__info span:last-child::before {
+    content: none;
+}
+
+.advert__location {
+    display: flex;
+    align-items: center;
+}
+
+.advert__location svg {
+    margin-left: 0.5rem;
+}
+
+.advert__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+}
+
+.advert__footer>span {
+    display: none;
+    color: var(--color-black-200);
+    background-color: var(--color-gray-200);
+    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 4px;
+    width: 72px;
+    height: 24px;
+    font-family: var(--t7-font-family);
+    font-size: var(--t7-font-size);
+}
+
+.advert__price {
+    font-family: var(--t2-font-family);
+    font-size: var(--t2-font-size);
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+}
+
+.advert__price span {
+    font-family: var(--t4-font-family);
+    font-size: var(--t4-font-size);
+    margin-right: 0.5rem;
+    line-height: 1.8;
+}
+
+.advert__wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 69px;
+    margin-right: auto;
+}
+
+
+
+
+
+@media screen and (max-width: 1400px) {
+    .advert {
+        flex-grow: 1;
+        max-width: 400px;
+    }
+
+    .advert__banner {
+        height: 18rem;
+    }
+
+    .advert__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .company__serach-box {
+        width: 28rem;
+    }
+
+    .advert {
+        max-width: 310px;
+    }
+
+    .advert__banner {
+        height: 15rem;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .company__serach-box {
+        width: 26rem;
+    }
+
+    .advert {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .company__serach-box {
+        display: none;
+    }
+
+    .row {
+        gap: .5rem;
+    }
+
+    .page__sub__title {
+        font-size: var(--t5-font-size);
+        font-family: var(--t1-font-family);
+        font-weight: 700;
+        line-height: 21.94px;
+    }
+
+    .blue-link {
+        font-size: var(--t6-font-size);
+        font-style: normal;
+        font-family: var(--t6-font-family);
+    }
+
+    .see-ads {
+        font-size: var(--t6-font-size);
+        font-family: var(--t6-font-family);
+        gap: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    body {
+        background-color: #fff;
+    }
+
+    .advert {
+        box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.08);
+        padding: 0;
+    }
+
+    .advert__body {
+        padding: 1rem;
+        margin-top: 0;
+    }
+
+    .advert__header {
+        justify-content: start;
+        gap: 1rem;
+    }
+
+    .advert__banner {
+        height: 217px;
+    }
+
+    .advert__img {
+        border-radius: 1rem 1rem 0 0;
+    }
+
+    .advert__name {
+        font-size: var(--t3-font-size);
+    }
+
+    .advert__date,
+    .advert__info,
+    .advert__location {
+        font-size: var(--t7-font-size);
+        font-family: var(--t7-font-family);
+    }
+
+    .advert__location svg {
+        width: 12px;
+        height: 12px;
+        margin-left: 5px;
+    }
+
+    .advert__info {
+        margin-bottom: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .advert__wrapper {
+        height: 50px;
+    }
+
+    .advert__footer>span {
+        display: flex;
+    }
+
+    .advert__price {
+        font-size: var(--t3-font-size);
+        font-family: var(--t3-font-family);
+    }
+
+    .advert__price span {
+        font-size: var(--t7-font-size);
+        font-family: var(--t7-font-family);
+        margin-right: 4px;
+    }
+
+    .advert__badge {
+        left: 0;
+        background-color: transparent;
+        gap: 4px;
+        top: 14.1rem;
+    }
+
+    .advert__safe-badge {
+        width: 12px;
+        height: 14px;
+    }
+
+    .advert__verified-badge {
+        width: 16px;
+        height: 16px;
+    }
+
+    .advert__hamcar-badge {
+        width: 12px;
+        height: 36px;
+    }
+
+    .advert__flag--place {
+        display: none;
+    }
+
+    .filter-list-btn {
+        display: flex;
+    }
+
+    .advert__flag--picture-number {
+        display: flex;
+        flex-direction: row-reverse;
+        width: 47px;
+        height: 24px;
+        top: 1rem;
+        left: 1rem;
+        right: auto;
+        color: var(--color-gray-300);
+        font-size: var(--t6-font-size);
+        font-family: var(--t6-font-family);
+    }
+
+    .advert__flag svg {
+        margin: 0;
+        flex-shrink: 0;
+        width: 14px;
+        height: 14px;
+    }
+
+    .advert__flag--place {
+        display: none;
+    }
+}
+
+
+/* -- End Advert -- */

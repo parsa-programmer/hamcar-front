@@ -23,16 +23,27 @@ export async function FetchApi<T>(
     // @ts-ignore: Unreachable code erro
     config.headers["Authorization"] = `Bearer ${store.accessToken}`;
   }
-
+  function showError(result: IApiResponse<any>) {
+    const { showToast } = useToast();
+    console.log(customConfig.ignoreErrors);
+    if (
+      customConfig.ignoreErrors == false ||
+      customConfig.ignoreErrors == undefined
+    ) {
+      showToast(result.metaData.message, ToastType.error, 3000);
+    }
+  }
   return $fetch<IApiResponse<T>>(url, config)
     .then((response) => {
       if (response.isSuccess == false) {
         showError(response);
       }
+
       return response;
     })
     .catch((e: FetchError) => {
       customConfig.onError?.(e);
+
       if (e.response?.status == 401) {
         showError({
           isSuccess: false,
@@ -43,6 +54,25 @@ export async function FetchApi<T>(
           },
         });
       }
+      if (e.response?.status == 400) {
+        showError({
+          isSuccess: false,
+          data: undefined,
+          metaData: {
+            message: "اطلاعات نامعتبر است",
+            appStatusCode: ApiStatusCodes.BadRequest,
+          },
+        });
+      }
+      var response = {
+        data: undefined,
+        isSuccess: false,
+        metaData: {
+          message: e.response?._data?.MetaData?.Message,
+          appStatusCode: e.response?._data?.MetaData?.AppStatusCode,
+        },
+      };
+      console.log(response);
       if (e.response?._data == undefined) {
         showError({
           data: undefined,
@@ -52,18 +82,10 @@ export async function FetchApi<T>(
             appStatusCode: ApiStatusCodes.ServerError,
           },
         });
+      } else {
+        showError(response);
       }
-      return {
-        data: undefined,
-        isSuccess: false,
-        metaData: {
-          message: e.response?._data?.metaData?.message,
-          appStatusCode: e.response?._data?.metaData?.appStatusCode,
-        },
-      };
+
+      return response;
     });
-}
-function showError(result: IApiResponse<any>) {
-  const { showToast } = useToast();
-  showToast(result.metaData.message, ToastType.error, 3000);
 }

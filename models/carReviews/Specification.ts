@@ -4,8 +4,8 @@ title: string;
 details: SpecificationDetail[];
 }
 export interface SpecificationDetail {
-    id: string;
-    title: string;
+    key: string;
+    value: string;
 }
 export interface PercentageSpecification {
     title: string;

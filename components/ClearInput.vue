@@ -1,14 +1,18 @@
 <template>
   <div class="input-group has-empty-btn">
     <input
-      class="form-control"
+      :class="['form-control', { 'invalid-data': !!errorMessage }]"
       :type="type"
       :placeholder="placeholder"
       :autofocus="autofocus"
       :value="modelValue"
-      @input="handleChange"
+      :name="name"
+      @input="modelValueChanged"
+      @focus="showEmptyBtn"
+      @blur="blureInput"
+      v-bind="$attrs"
     />
-
+    <p class="input-invalid-text">{{ errorMessage || successMessage }}</p>
     <svg
       class="input-empty-btn"
       width="24"
@@ -16,6 +20,7 @@
       viewBox="0 0 24 24"
       fill="none"
       @click="clear"
+      ref="emptyBtn"
     >
       <path
         fill-rule="evenodd"
@@ -27,8 +32,13 @@
   </div>
 </template>
 
-<script setup>
+
+<script setup lang="ts">
+import { Ref } from "vue";
+import { useField } from "vee-validate";
+
 const emit = defineEmits(["update:modelValue"]);
+
 const props = defineProps({
   autofocus: {
     default: null,
@@ -38,6 +48,10 @@ const props = defineProps({
     default: "",
     type: String,
   },
+  successMessage: {
+    type: String,
+    default: "",
+  },
   modelValue: {
     default: "",
     type: String,
@@ -46,12 +60,75 @@ const props = defineProps({
     default: "text",
     type: String,
   },
+  number: {
+    type: Boolean,
+    default: false,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
 });
 
+const {
+  value: inputValue,
+  errorMessage,
+  meta,
+  handleChange,
+  handleBlur,
+  setValue,
+} = useField(props.name, undefined, {
+  initialValue: props.modelValue,
+  validateOnValueUpdate: false,
+});
+const emptyBtn: Ref<HTMLInputElement | null> = ref(null);
+
+watchEffect(() => {
+  emit("update:modelValue", unref(inputValue));
+});
+onMounted(() => {
+  if (props.autofocus) {
+    showEmptyBtn();
+  }
+});
+watch(
+  () => props.modelValue,
+  (value) => {
+    setValue(value);
+    setTimeout(() => {
+      if (meta.valid) {
+        showEmptyBtn();
+      } else {
+        emptyBtn.value?.removeAttribute("style");
+      }
+    }, 10);
+  }
+);
+const showEmptyBtn = () => {
+  if (meta.valid && inputValue.value) {
+    emptyBtn.value?.setAttribute("style", "display:block");
+  }
+};
+const blureInput = ($event: any) => {
+  handleBlur($event);
+  setTimeout(() => {
+    emptyBtn.value?.removeAttribute("style");
+  }, 100);
+};
 const clear = () => {
   emit("update:modelValue", "");
+  emptyBtn.value?.removeAttribute("style");
 };
-const handleChange = ($event) => {
-  emit("update:modelValue", $event.target.value);
+const modelValueChanged = ($event: any) => {
+  handleChange($event);
+  if (props.number) {
+    if (!isNaN($event.target.value)) {
+      emit("update:modelValue", $event.target.value);
+    } else {
+      $event.target.value = props.modelValue;
+    }
+  } else {
+    emit("update:modelValue", $event.target.value);
+  }
 };
 </script>

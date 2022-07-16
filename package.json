@@ -7,12 +7,17 @@
     "preview": "nuxt preview"
   },
   "devDependencies": {
+    "@nuxt/image-edge": "^1.0.0-27628766.3629b9a",
     "nuxt": "3.0.0-rc.4"
   },
   "dependencies": {
+    "@persian-tools/persian-tools": "^3.4.0",
     "@pinia/nuxt": "^0.1.9",
+    "@vueuse/core": "^8.9.2",
     "gsap": "^3.10.4",
     "lodash": "^4.17.21",
-    "pinia": "^2.0.14"
+    "pinia": "^2.0.14",
+    "vee-validate": "^4.6.0",
+    "yup": "^0.32.11"
   }
 }

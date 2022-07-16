@@ -1,0 +1,384 @@
+body {
+    background-color: #f6f6f6;
+}
+
+.main {
+    padding-top: 1.5rem;
+    padding-bottom: 10rem;
+}
+
+
+
+/* price list head */
+.price-list__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.price-list__title {
+    font-family: "DanaEnNum UltraBold",sans-serif;
+    font-size: var(--t2-font-size);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.price-list__title span {
+    font-family: var(--t3-font-family);
+    font-size: var(--t3-font-size);
+    font-weight: 500;
+}
+
+.price-list__search-box {
+    width: 31.5rem;
+}
+
+.price-list__search-box input {
+    border-color: var(--color-gray-400);
+    padding-right: 3.9rem;
+}
+
+.price-list__search-box svg {
+
+}
+
+.price-list__search-box .input-icon {
+    width: 24px;
+    height: 24px;
+    right: 24px;
+}
+
+
+.price-list__info,
+.price-list__date{
+    display: none;
+}
+.price-list__info{
+    align-items: center;
+    gap: 1rem;
+}
+.price-list__logo{
+    flex-shrink: 0;
+    width: 26px;
+    height: 26px;
+}
+.price-list__name{
+    font-family: var(--t3-font-family);
+    font-size: var(--t3-font-size);
+}
+.price-list__date{
+    font-family: var(--t7-font-family);
+    font-size: var(--t7-font-size);
+    min-width: 120px;
+    height: 25px;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-gray-200);
+    border-radius: 6px;
+}
+/* price content */
+.price-list__content{
+
+}
+.price-list__wrapper{
+    display: flex;
+    align-items: start;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+.price-list__product-banner{
+    border-radius: var(--app-border-radius);
+    overflow: hidden;
+    height: 12rem;
+    width: 18.5rem;
+    flex-shrink: 0;
+}
+.price-list__img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.prices{
+    border-radius: var(--app-border-radius);
+    background-color: var(--color-white);
+    padding: 44px 2rem 2rem;
+    width: 100%;
+}
+.prices__head{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.prices__name{
+    font-family: "DanaEnNum UltraBold",sans-serif;
+    font-size: var(--t2-font-size);
+}
+.prices__date{
+    font-family: var(--t6-font-family);
+    font-size: var(--t6-font-size);
+    color: var(--color-black-200);
+    background-color: var(--color-gray-200);
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    text-align: center;
+}
+.prices__list{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.prices__item{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--t5-font-family);
+    font-size: var(--t5-font-size);
+    gap: 6.5rem;
+}
+.prices__right{
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    position: relative;
+    padding-right: 28px;
+}
+.prices__right::after{
+    content: "";
+    position: absolute;
+    right: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    background-color: var(--color-blue);
+}
+.prices__item--blue .prices__right::after{
+    background-color: #007AFF;
+
+}
+.prices__item--orange .prices__right::after{
+    background-color: #FF9500;
+}
+.prices__item--pink .prices__right::after{
+    background-color: #EF5DA8;
+
+}
+.prices__item--green .prices__right::after{
+    background-color: #66D3CF;
+}
+.prices__model{
+    position: relative;
+    padding-left: 1rem;
+    margin-left: 1rem;
+}
+.prices__model::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 0;
+    margin: auto;
+    width: 1px;
+    height: 1rem;
+    background-color: var(--color-gray-400);
+}
+.prices__detail{
+
+}
+.prices__left{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.prices__time{
+
+}
+.prices__info{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+.prices__percent{
+    font-family: "DanaEnNum ExtraBold",sans-serif;
+    font-size: var(--t5-font-size);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.prices__percent span{
+    flex-shrink: 0;
+    width: 0;
+    height: 0;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    margin-bottom: 2px;
+}
+.prices__percent--up{
+    color: var(--color-green);
+}
+.prices__percent--up span{
+    border-bottom: 12px solid currentColor;
+    border-top: 0 solid transparent;
+}
+.prices__percent--down{
+    color: #EF3838;
+}
+.prices__percent--down span{
+    border-top: 12px solid currentColor;
+    border-bottom: 0 solid transparent;
+}
+.prices__price{
+    font-family: var(--t1-font-family);
+    font-size: var(--t1-font-size);
+    display: flex;
+    gap: 0.5rem;
+    align-items: end;
+    line-height: 41px;
+}
+.prices__price span{
+    font-family: var(--t2-font-family);
+    font-size: var(--t2-font-size);
+    font-weight: 800;
+}
+
+
+
+
+
+.price-list__links{
+    display: flex;
+    gap: 1rem;
+    justify-content: end;
+    margin-top: 5.5rem;
+}
+.price-list__link{
+    gap: 0.5rem;
+    font-family: "DanaEnNum ExtraBold",sans-serif;
+}
+
+
+
+@media screen and (max-width: 1200px) {
+    .price-list__wrapper{
+        flex-direction: column;
+    }
+    .price-list__product-banner{
+        margin: 0 auto;
+    }
+}
+@media screen and (max-width: 992px) {
+    .prices__list{
+        gap: 1rem;
+    }
+    .prices__item{
+        align-items: start;
+        gap: 0;
+    }
+    .prices__left{
+        flex-direction: column-reverse;
+        align-items: end;
+    }
+}
+@media screen and (max-width: 768px){
+    body {
+        background-color: var(--color-white);
+    }
+
+    .header {
+        background: rgba(255, 255, 255, 0.8);
+        box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.07);
+    }
+    .main{
+        padding-top: 2rem;
+    }
+    .breadcrumb{
+        display: none;
+    }
+    .price-list__title{
+        display: none;
+    }
+    .price-list__search-box {
+        display: none;
+    }
+    .price-list__info,
+    .price-list__date{
+        display: flex;
+    }
+
+    .price-list__product-banner{
+        width: 100%;
+        min-height: 14.25rem;
+        border-radius: 20px;
+    }
+    .price-list__wrapper{
+        gap: 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .prices{
+        padding: 0;
+    }
+    .prices__head{
+        display: none;
+    }
+    .prices__list{
+        margin-top: 0;
+    }
+    .prices__item{
+        font-family: var(--t6-font-family);
+        font-size: var(--t6-font-size);
+    }
+    .prices__model{
+        padding-left: 0.5rem;
+        margin-left: 0.5rem;
+    }
+    .prices__right{
+        padding-right: 1rem;
+    }
+    .prices__right::after{
+        width: 0.5rem;
+        height: 0.5rem;
+    }
+    .prices__left{
+        gap: 4px;
+        width: auto;
+    }
+    .prices__price{
+        font-family: var(--t3-font-family);
+        font-size: var(--t3-font-size);
+        gap: 4px;
+        line-height: 25px;
+    }
+    .prices__price span{
+        font-family: var(--t7-font-family);
+        font-size: var(--t7-font-size);
+        font-weight: 400;
+    }
+    .prices__time{
+        font-family: var(--t7-font-family);
+        font-size: var(--t7-font-size);
+        color: var(--color-gray-600);
+    }
+    .price-list__links{
+        flex-direction: column-reverse;
+        margin-top: 3rem;
+    }
+    .price-list__link{
+        padding: 0;
+    }
+}
+@media screen and (max-width: 576px){
+    .prices__item{
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+}
+@media screen and (max-width: 460px){
+    .prices__left{
+        width: 100%;
+    }
+}

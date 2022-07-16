@@ -1,6 +1,13 @@
 <template>
-    <div>
+  <div>
+    <the-header :show-search-bar="false" showSearchIcon></the-header>
+    <main class="main">
+      <div class="container">
         <slot></slot>
-        <the-toast></the-toast>
-    </div>
+      </div>
+    </main>
+    <the-toast></the-toast>
+  </div>
 </template>
+<script setup>
+</script>

@@ -9,7 +9,7 @@ import { Specification, PercentageSpecification } from "./Specification";
 export interface CarReviewMainPageDto {
   brands: Brand[];
   topVisitReviews: CarReviewFilterData[];
-  carReviews: CarReviewMainPageData;
+  carReviews: CarReviewMainPageData[];
 }
 export interface CarReviewMainPageData {
   brand: Brand;
@@ -27,6 +27,7 @@ export interface CarReviewFilterData {
   brand: string;
   year: string;
   trim: string;
+  brandSlug: string;
 }
 export interface CarReviewFilterParams extends FilterParams {
   search: string | null;
