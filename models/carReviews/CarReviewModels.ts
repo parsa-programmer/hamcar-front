@@ -29,10 +29,12 @@ export interface CarReviewFilterData {
   trim: string;
   brandSlug: string;
 }
-export interface CarReviewFilterParams extends FilterParams {
+export interface CarReviewFilterParams  {
   search: string | null;
   brandSlug: string | null;
   orderBy: CarReviewFilterOrderBy | null;
+    pageId:number;
+  take:number;
 }
 export enum CarReviewFilterOrderBy {
   visit = "visit",

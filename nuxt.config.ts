@@ -5,8 +5,8 @@ import { PROXY_CONFIG } from "./utilities/api.config";
 
 export default defineNuxtConfig({
   typescript: {
-    typeCheck: true,
     strict: true,
+    shim: false
   },
   buildModules: ["@pinia/nuxt", "@nuxt/image-edge"],
   vite: {
@@ -15,14 +15,6 @@ export default defineNuxtConfig({
       proxy: PROXY_CONFIG,
     },
     
-  },
-  loading: {
-    color: "blue",
-    height: "5px",
-    rtl: true,
-    throttle: 200,
-    continuous: true,
-    failedColor: "red",
   },
   css: [
     "~/assets/css/app.css",

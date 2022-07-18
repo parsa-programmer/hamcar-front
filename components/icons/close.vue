@@ -7,9 +7,9 @@
     fill="none"
   >
     <path
-      d="M5.25 9.75L0.75 5.25L5.25 0.75"
+      d="M9 1L5 5M5 5L1 9M5 5L9 9M5 5L1 1"
       :stroke="hashColor"
-      :stroke-width="storkeWith"
+      stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
     />
@@ -20,19 +20,15 @@
 const props = defineProps({
   hashColor: {
     type: String,
-    default: "#85858F",
+    default: "var(--color-black)",
   },
   width: {
     type: Number,
-    default: 11,
+    default: 10,
   },
   height: {
     type: Number,
-    default: 17,
-  },
-  storkeWith: {
-    type: Number,
-    default: 1.5,
+    default: 10,
   },
 });
 </script>

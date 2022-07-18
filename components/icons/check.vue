@@ -1,5 +1,5 @@
 <template>
-<svg :width="width" :height="height" :viewBox="`0 0 ${width} ${height}`" fill="none">
+<svg :width="width" :height="height" :viewBox="`0 0 24 24`" fill="none">
     <path
       d="M16 9.5L11 14.5L8.5 12"
       :stroke="hashColor"

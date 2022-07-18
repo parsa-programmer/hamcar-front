@@ -15,25 +15,18 @@
     <section class="technical">
       <div class="technical__head">
         <h1 class="technical__title">مشخصات فنی و مقایسه خودرو ها</h1>
-        <div class="input-group technical__search-box">
-          <input
-            type="text"
-            class="form-control bg-transparent"
-            placeholder="جستجو میان همه آگهی ها..."
-          />
-          <icons-search class="input-icon" hash-color="#C6C7CC"></icons-search>
-        </div>
+        <search-advert />
       </div>
 
       <div class="technical__content">
-        <div class="brand__heading row justify-space-between">
+        <div class="brand__heading row justify-content-space-between">
           <h2 class="page__sub__title">برند ها</h2>
           <nuxt-link to="/car-reviews/brands" class="blue-link bold-500">
             مشاهده همه
             <icons-chevron-left
               hash-color="#007AFF"
               :width="6"
-              :height="10.5"
+              :height="11"
             ></icons-chevron-left>
           </nuxt-link>
         </div>
@@ -51,7 +44,7 @@
           </template>
         </h-slider>
         <hr />
-        <div class="brand__heading row justify-space-between mt__mobile__24">
+        <div class="brand__heading row justify-content-space-between mt__mobile__24">
           <h2 class="page__sub__title">مدل های پربازدید</h2>
           <nuxt-link
             to="/car-reviews/filter?orderBy=visit"
@@ -61,7 +54,7 @@
             <icons-chevron-left
               hash-color="#007AFF"
               :width="6"
-              :height="10.5"
+              :height="11"
             ></icons-chevron-left>
           </nuxt-link>
         </div>

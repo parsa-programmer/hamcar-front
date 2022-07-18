@@ -114,7 +114,7 @@
             </span>
             اشتراک گذاری
           </a>
-          <a href="#" class="technical__option">
+          <nuxt-link :to="`/car-reviews/compare/${carReview.slug}`" class="technical__option">
             <span>
               <svg
                 width="24"
@@ -140,7 +140,7 @@
               </svg>
             </span>
             مقایسه
-          </a>
+          </nuxt-link>
           <a href="#" class="technical__option">
             <span>
               <svg
@@ -311,27 +311,23 @@
         <nuxt-link to="/" class="btn btn-primary technical__link"
           >مشاهده 16 آگهی مرتبط
         </nuxt-link>
-        <div class="technical__properties technical__properties--limited">
-          <CarReviewSpecifications
-            :leftSide="leftSpecifications"
-            :rightSide="rightSpecifications"
-          />
-          <span class="btn btn-primary-outline technical__properties-see-more"
-            >مشاهده لیست کامل مشخصات</span
-          >
-        </div>
+        <CarReviewSpecifications
+          :leftSide="leftSpecifications"
+          :rightSide="rightSpecifications"
+        />
+
         <div class="technical__same-cars">
           <span class="technical__section-title">خودرو های هم رده</span>
-          <h-slider :items="" :arrows="false">
-            <template #items="{ item }">
+          <h-slider :items="relatedCars" :arrows="false">
+            <template #item="{ item }">
               <div class="car">
                 <nuxt-link
                   :to="`/car-reviews/${item.brandSlug}/${item.slug}`"
                   class="car__link"
                 >
                   <h-image
-                    :src="GetCarReviewImage(item.image)"
-                    alt="Hamcar"
+                    :src="GetCarReviewImage(item.imageName)"
+                    :alt="item.title"
                     class="car__img"
                   />
                   <h3 class="car__name">{{ item.title }}</h3>
@@ -370,7 +366,7 @@ import {
   CarReviewDto,
   CarReviewFilterData,
 } from "../../../models/carReviews/CarReviewModels";
-import { GetBySlug } from "../../../services/carReview.service";
+import { GetBySlug, GetRelatedCars } from "../../../services/carReview.service";
 import { GetCarReviewImage } from "~/utilities/imageUtil";
 import {
   Specification,
@@ -378,17 +374,21 @@ import {
 } from "~~/models/carReviews/Specification";
 
 const carReview: Ref<CarReviewDto | undefined> = ref(undefined);
-const relatedCars: Ref<CarReviewFilterData[] | undefined> = ref(undefined);
+const relatedCars: Ref<CarReviewFilterData[]> = ref([]);
 const route = useRoute();
 const slug = route.params.slug.toString();
-const { data, pending } = await useAsyncData("car-review-single", () =>
-  GetBySlug(slug)
+const { data, pending } = await useAsyncData(
+  "car-review-single",
+  () => GetBySlug(slug),
+  {
+    initialCache: false,
+  }
 );
 const leftSpecifications: Ref<Specification[]> = ref([]);
 const rightSpecifications: Ref<Specification[]> = ref([]);
 
 carReview.value = data.value.data;
-onMounted(() => {
+onMounted(async () => {
   if (data.value.isSuccess) {
     const specifications = [...data.value.data?.specifications!];
     var specCount = (specifications.length ?? 0) / 2;
@@ -399,6 +399,8 @@ onMounted(() => {
       rightSpecifications.value = data.value.data?.specifications!;
     }
   }
+  var relatedResult = await GetRelatedCars(carReview.value!.carReviewBrand.id);
+  relatedCars.value = relatedResult.data!;
   setTimeout(() => {
     window.scrollTo(0, 0);
     //@ts-ignore
@@ -409,15 +411,6 @@ onMounted(() => {
         document
           .querySelector(".technical__description--limited")
           .classList.remove("technical__description--limited");
-      });
-    //@ts-ignore
-    document
-      .querySelector(".technical__properties-see-more")
-      .addEventListener("click", function () {
-        //@ts-ignore
-        document
-          .querySelector(".technical__properties--limited")
-          .classList.remove("technical__properties--limited");
       });
   }, 100);
 });

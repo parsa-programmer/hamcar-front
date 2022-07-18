@@ -16,6 +16,7 @@
         :icon="Icon.solid_close"
         v-else-if="toastRef.type == ToastType.error"
       ></h-icon>
+      <icons-security-check hashColor="#fff" v-else-if="toastRef.type == ToastType.warning"/>
     </div>
     {{ toastRef.message }}
     <p id="prog" class="progress" :style="`width: ${progress}%`"></p>
@@ -141,6 +142,9 @@ watch(progress, (value) => {
 
 .bg-success {
   background: var(--color-green);
+}
+.bg-warning{
+  background: var(--color-orange);
 }
 .progress {
   width: 90%;

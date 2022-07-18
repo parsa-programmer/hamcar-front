@@ -19,8 +19,6 @@ useHead({
 </script>
 
 <style >
-
-
 .not__found__layout .nav__icon {
   color: white;
 }

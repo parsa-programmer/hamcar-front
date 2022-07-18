@@ -199,10 +199,15 @@ hr {
 }
 
 /* -- Helper Class -- */
-.justify-space-between {
+.justify-content-space-between {
     justify-content: space-between;
 }
-
+.justify-content-center{
+    justify-content: center;
+}
+.wrap{
+    flex-wrap: wrap;
+}
 .mr-1 {
     margin-right: 1rem;
 }

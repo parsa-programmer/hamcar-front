@@ -5,7 +5,21 @@
         <icons-chevron-right></icons-chevron-right>
       </button>
       <button class="arrow-button left-arrow" @click="clickNext">
-        <icons-chevron-left class=""></icons-chevron-left>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="11"
+          height="17"
+          viewBox="0 0 11 17"
+          fill="none"
+        >
+          <path
+            d="M9.16699 1.76172L1.66699 8.61886L9.16699 15.476"
+            stroke="#85858F"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
       </button>
     </template>
     <div class="overflow-x-hidden">
@@ -83,7 +97,9 @@ export default defineComponent({
     const recalculate = () => {
       const { el, maxX } = getConfig();
       //@ts-ignore
-      Draggable.get(unref(el)).applyBounds({ minX: 0, maxX });
+      if (props.items.length > 1) {
+        Draggable.get(unref(el)).applyBounds({ minX: 0, maxX });
+      }
     };
     onUpdated(() => {
       recalculate();

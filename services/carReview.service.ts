@@ -32,6 +32,6 @@ export const GetByFilter = (
 export const GetSpecifications = (): Promise<IApiResponse<Specification[]>> => {
   return FetchApi("/carReview/specifications");
 };
-export const GetRelatedCars = (): Promise<IApiResponse<CarReviewFilterData[]>> => {
-  return FetchApi("/carReview/RelatedCars");
+export const GetRelatedCars = (brandId:string): Promise<IApiResponse<CarReviewFilterData[]>> => {
+  return FetchApi(`/carReview/RelatedCars?brandId=${brandId}&take=6`);
 };

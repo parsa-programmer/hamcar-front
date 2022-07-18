@@ -1,4 +1,4 @@
 export interface Year {
-id: string;
-yearTitle: string;
+  id: string;
+  yearTitle: string;
 }

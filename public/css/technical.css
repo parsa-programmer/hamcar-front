@@ -105,6 +105,7 @@
     font-size: var(--t5-font-size);
     color: var(--color-gray-600);
     line-height: 27.2px;
+    font-weight: 400;
 }
 
 
