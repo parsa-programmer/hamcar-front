@@ -15,9 +15,9 @@
         >مشخصات فنی خودرو</nuxt-link
       >
       <icons-left-arrow></icons-left-arrow>
-      <a class="breadcrumb__item breadcrumb__item--active"
-        >جستوجو میان مدل ها</a
-      >
+      <a class="breadcrumb__item breadcrumb__item--active">
+        جستوجو میان مدل ها
+      </a>
     </section>
     <section class="technical">
       <div class="technical__head">
