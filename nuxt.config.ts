@@ -28,6 +28,5 @@ export default defineNuxtConfig({
       hamcar: "http://dl.test13.ir",
       static: "http://localhost:3000",
     },
-  },
-  target: "static",
+  }
 });
