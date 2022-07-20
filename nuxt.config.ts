@@ -6,7 +6,7 @@ import { PROXY_CONFIG } from "./utilities/api.config";
 export default defineNuxtConfig({
   typescript: {
     strict: true,
-    shim: false
+    shim: false,
   },
   buildModules: ["@pinia/nuxt", "@nuxt/image-edge"],
   vite: {
@@ -14,7 +14,6 @@ export default defineNuxtConfig({
       //@ts-ignore
       proxy: PROXY_CONFIG,
     },
-    
   },
   css: [
     "~/assets/css/app.css",
@@ -30,4 +29,5 @@ export default defineNuxtConfig({
       static: "http://localhost:3000",
     },
   },
+  target: "static",
 });
