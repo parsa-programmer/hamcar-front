@@ -8,8 +8,10 @@ export const CLIENT_ID = "testclientfront";
 export const CLIENT_SECRET = "ghgkhgh@bfb,fbfgfgasd";
 
 export const PROXY_CONFIG = isProd
-  ? {  }
+  ? {
+      "/api": "http://test13.ir/",
+    }
   : {
-    //"/api": "http://localhost:5000/",
-    "/api": "http://test13.ir/",
+      //"/api": "http://localhost:5000/",
+      "/api": "http://test13.ir/",
     };
