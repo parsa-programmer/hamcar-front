@@ -19,14 +19,16 @@
         <h1 class="technical__title">مشخصات فنی و مقایسه خودرو ها</h1>
         <search-advert />
       </div>
-
       <div class="technical__content mb-3">
-        <div class="row cards" ref="sticky">
+        <skeleton-loading-car-review-model-card class="mb-3" v-if="loading" />
+
+        <div class="row cards" ref="sticky" v-else>
           <div class="compare__Item" v-for="data in cars" :key="data.slug">
             <button @click="deleteCar(data.slug)">
               حذف
               <icons-close />
             </button>
+
             <div class="model__card">
               <h-image
                 class="model__card-img"
@@ -47,7 +49,7 @@
             class="compare__Item compare__select"
             v-if="accessCount > cars.length"
           >
-            <div class="model__card">
+            <div class="model__card" @click="openModal">
               <div class="select__car__img">
                 <icons-car
                   v-if="accessCount == 2"
@@ -70,7 +72,12 @@
               v-for="(item, index) in cars[0].percentageSpecifications"
               :key="index"
             >
-              <div class="compare__card__header compare__card__radius">
+              <div
+                :class="[
+                  'compare__card__header',
+                  { compare__card__radius: index == 0 },
+                ]"
+              >
                 {{ item.title }}
               </div>
               <div class="compare__card__body">
@@ -112,35 +119,67 @@
                 <div class="compare__card__body">
                   <div class="row">
                     <div
-                      class="compare__card__item"
+                      class="compare__card__item point__item"
                       v-for="(item, index) in cars"
                       :key="index"
                     >
-                      <template
-                        v-for="(p, index2) in item.advantages.split('-')"
-                        :key="index2"
-                      >
-                        {{ p }}
-                      </template>
+                      <ul v-if="accessCount == 2">
+                        <li
+                          v-for="(p, index2) in item.advantages.split('-')"
+                          :key="index2"
+                        >
+                          {{ p }}
+                        </li>
+                      </ul>
+                      <div v-else>
+                        <template
+                          v-for="(p, index2) in item.advantages.split('-')"
+                          :key="index2"
+                        >
+                          {{ p }}
+                          <span
+                            v-if="
+                              item.advantages.split('-').length != index2 + 1
+                            "
+                            >،
+                          </span>
+                        </template>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="compare__card">
-                <div class="compare__card__header">نقاط قوت</div>
+                <div class="compare__card__header">نقاط ضعف</div>
                 <div class="compare__card__body">
                   <div class="row">
                     <div
-                      class="compare__card__item"
+                      class="compare__card__item point__item"
                       v-for="(item, index) in cars"
                       :key="index"
                     >
-                      <template
-                        v-for="(p, index2) in item.disadvantages.split('-')"
-                        :key="index2"
-                      >
-                        {{ p }}
-                      </template>
+                      <ul v-if="accessCount == 2">
+                        <li
+                          v-for="(p, index2) in item.disadvantages.split('-')"
+                          :key="index2"
+                        >
+                          {{ p }}
+                        </li>
+                      </ul>
+                      <div v-else>
+                        <template
+                          v-for="(p, index2) in item.disadvantages.split('-')"
+                          :key="index2"
+                        >
+                          {{ p }}
+                          <span
+                            v-if="
+                              item.disadvantages.split('-').length != index2 + 1
+                            "
+                            >،
+                          </span>
+                        </template>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -154,7 +193,7 @@
               :key="index"
             >
               <h2>
-                <SpecificationIcons :title="item.title" />
+                <car-review-specification-icons :title="item.title" />
                 {{ item.title }}
               </h2>
               <template v-for="(detail, index2) in item.details" :key="index2">
@@ -209,10 +248,21 @@
           </div>
         </template>
         <div v-else>
-          برای نمایش جزئیات خودرو بر روی افزودن خودرو به مقایسه کلیک کنید و یک خودرو دیگه انتخاب کنید
+          <h-alert :type="AlertType.Warning">
+            برای نمایش جزئیات خودرو  روی افزودن خودرو به مقایسه کلیک کنید و یک
+            خودرو دیگه انتخاب کنید
+          </h-alert>
         </div>
       </div>
     </section>
+    <client-only>
+      <Transition name="bounce" mode="out-in">
+        <CarReviewSelectCarForComare
+          v-model="isOpenModal"
+          @selectedCar="addCar"
+        />
+      </Transition>
+    </client-only>
   </div>
 </template>
 <script setup lang="ts">
@@ -224,16 +274,44 @@ import {
 import { GetModelImage } from "~~/utilities/imageUtil";
 import { GetBySlug } from "~/services/carReview.service";
 import { ToastType } from "~~/composables/useToast";
-import SpecificationIcons from "~/components/carReview/SpecificationIcons.vue";
+import { AlertType } from "~~/models/utilities/AlertType";
 
+const loading = ref(false);
 const accessCount = ref(4);
 const cars: Ref<CarReviewDto[]> = ref([]);
 const route = useRoute();
 const router = useRouter();
 const toast = useToast();
+const isOpenModal = ref(false);
 const sticky: Ref<HTMLElement | null> = ref(null);
 const deleteCar = (slug: string) => {
   cars.value = cars.value.filter((f) => f.slug != slug);
+};
+
+const openModal = () => {
+  isOpenModal.value = true;
+};
+const addCar = (slug: string) => {
+  isOpenModal.value = false;
+  window.scrollTo(0, 0);
+  if (cars.value.filter((f) => f.slug == slug)[0]) {
+    toast.showToast(
+      "این ماشین در لیست مقایسه وجود دارد",
+      ToastType.error,
+      5000
+    );
+    return;
+  }
+  loading.value = true;
+  GetBySlug(slug)
+    .then((res) => {
+      if (res.data) {
+        cars.value.push(res.data);
+      }
+    })
+    .finally(() => {
+      loading.value = false;
+    });
 };
 onMounted(async () => {
   const slug = route.params.slug.toString();
@@ -259,7 +337,7 @@ onMounted(async () => {
     };
     var element = sticky.value!.offsetTop;
     function myFunction() {
-      if (window.pageYOffset >= element) {
+      if (window.pageYOffset > element + 100) {
         sticky.value!.classList.add("sticky");
         sticky.value!.classList.add("container");
       } else {
@@ -285,6 +363,37 @@ onMounted(async () => {
   .sticky.container {
     width: 97%;
     padding-bottom: 0 !important;
+  }
+  .value,
+  li {
+    font-family: var(--t7-font-family) !important;
+    font-size: var(--t7-font-size) !important;
+    font-weight: 400 !important;
+    line-height: 18.19px !important;
+    font-style: normal;
+  }
+  .compare__card__body {
+    border: 2px solid var(--color-gray-200) !important;
+  }
+  .compare__points {
+    margin-top: 2rem;
+  }
+  .compare__points .compare__card:first-child .compare__card__header {
+    color: var(--color-green) !important;
+    font-weight: 700 !important;
+  }
+  .compare__points .compare__card:last-child {
+    margin-top: 12px;
+  }
+  .compare__points .compare__card:last-child .compare__card__header {
+    color: var(--color-error) !important;
+    font-weight: 700 !important;
+  }
+  .compare__points .compare__card__header {
+    text-align: center !important;
+    border-radius: 12px 12px 0px 0px !important;
+  }
+  .compare__card__item {
   }
 }
 @media screen and (max-width: 1000px) {
@@ -352,6 +461,20 @@ onMounted(async () => {
     line-height: 21.94px !important;
     margin-top: 1.5rem !important;
   }
+  .compare__card__header {
+    color: var(--color-gray-600) !important;
+    font-family: var(--t6-font-family) !important;
+    font-size: var(--t6-font-size) !important;
+    font-weight: 400 !important;
+    padding: 5px 24px !important;
+    background: var(--color-gray-200) !important;
+  }
+  .compare__specifications h2{
+    font-family: var(--t5-font-family);
+    font-size: var(--t5-font-size);
+    font-weight: 700 !important;
+    line-height: 22px !important;
+  }
 }
 @media screen and (max-width: 1000px) {
   .row {
@@ -375,6 +498,9 @@ onMounted(async () => {
 }
 .compare__select {
   cursor: pointer;
+}
+.point__item {
+  width: 250px;
 }
 .select__car__img {
   background: var(--color-gray-300);

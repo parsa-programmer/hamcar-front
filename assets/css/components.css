@@ -273,6 +273,17 @@ Input & Input Group
     background-color: var(--color-blue);
 }
 
+
+.btn-error-outline {
+    border: 2px solid var(--color-error);
+    color: var(--color-error);
+}
+
+.btn-error {
+    color: var(--color-white);
+    background-color: var(--color-error);
+}
+
 .btn-orange {
     color: var(--color-white);
     background-color: var(--color-orange);
@@ -324,7 +335,7 @@ button[disabled]{
     border-color: var(--color-gray-300);
 }
 .select--error{
-    border-color: #EF3838 !important;
+    border-color: var(--color-error) !important;
 }
 .select--valid{
     background-color: transparent;

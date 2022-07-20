@@ -15,7 +15,7 @@
       :name="name"
       autocomplete="off"
     />
-    <slot name="icon" />
+    <slot />
     <p class="input-invalid-text">{{ errorMessage || successMessage }}</p>
   </div>
   <div v-else>

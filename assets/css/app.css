@@ -113,6 +113,11 @@
     --color-black-600: #1D1D1F;
     --color-black: #0F0F10;
 
+    --color-error-tint: #FC8D8D;
+    --color-error-shade: #AB0E0E;
+    --color-error: #Ef3838;
+
+
     --color-blue-200: #94C7FF;
     --color-blue-300: #66AFFF;
     --color-blue-400: #429DFF;
@@ -1028,3 +1033,36 @@ button {
 
 
 /* -- End Advert -- */
+
+
+/* -- Pagination -- */
+.pagination{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+    gap: .5rem;
+    justify-content: center;
+
+}
+.pagination__link{
+    padding: 10px;
+    border-radius: .5rem;
+    color: var(--color-white);
+    background-color: var(--color-blue);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all ease .2s;
+}
+.pagination__link:hover{
+    background-color: var(--color-blue-600);
+}
+.pagination__link.active{
+    background-color: var(--color-blue-300);
+    cursor: no-drop;
+}
