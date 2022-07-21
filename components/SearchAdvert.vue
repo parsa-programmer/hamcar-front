@@ -5,6 +5,6 @@
       class="form-control bg-transparent"
       placeholder="جستجو میان همه آگهی ها..."
     />
-    <icons-search class="input-icon" hash-color="#C6C7CC"></icons-search>
+    <icons-search class="input-icon" hash-color="var(--color-gray-500)"></icons-search>
   </div>
 </template>

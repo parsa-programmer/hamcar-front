@@ -19,9 +19,9 @@ const setAnimation = (): void => {
     unref(target),
     { width: 0 + "%" },
     {
-      duration: 120,
+      duration: 130,
       width: 100 + "%",
-      ease:"Sine.easeInOut"
+      ease:"power2"
     }
   );
 };
@@ -63,7 +63,6 @@ const setTimer = () => {
       time.value -= 1000;
     } else {
       clearInterval(counterInterval);
-      animation.stop();
     }
   }, 1000);
 };

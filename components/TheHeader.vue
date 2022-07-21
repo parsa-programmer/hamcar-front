@@ -29,6 +29,7 @@
                 <li>
                   <nuxt-link to="/car-reviews">مشخصات فنی خودرو</nuxt-link>
                 </li>
+
                 <li>
                   <nuxt-link to="/">گوش به زنگ خودرو</nuxt-link>
                 </li>
@@ -38,6 +39,9 @@
               </ul>
             </li>
             <li class="nav__item">
+              <ChangeTheme></ChangeTheme>
+            </li>
+            <li>
               <a href="#" class="nav__link">موتور سیکلت</a>
             </li>
             <li class="nav__item">

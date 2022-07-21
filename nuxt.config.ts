@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     },
   },
   css: [
+    "~/assets/css/dark.css",
     "~/assets/css/app.css",
     "~/assets/css/grid.css",
     "~/assets/css/components.css",
@@ -28,5 +29,5 @@ export default defineNuxtConfig({
       hamcar: "http://dl.test13.ir",
       static: "http://localhost:3000",
     },
-  }
+  },
 });

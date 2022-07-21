@@ -4,7 +4,7 @@
       <Style> main{ overflow: visible !important; } </Style>
     </Head>
     <div class="not__found__container__img"></div>
-    <h1 class="color-white mb-3">متاسفانه خطای ۴۰۴ رخ داد !</h1>
+    <h1 class="mb-3">متاسفانه خطای ۴۰۴ رخ داد !</h1>
     <p class="text-center">
       کاربر گرامی متاسفانه این صفحه در وبسایت همکار وجود ندارد؛ شما می توانید از
       طریق صفحه اصلی، منوی وبسایت یا پنل کاربری، صفحه مد نظر خود را بیابید.

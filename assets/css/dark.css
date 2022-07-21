@@ -1,0 +1,61 @@
+[data-theme="dark"] {
+    /* --color-gray-200: #85858F !important; */
+    --color-gray-200: #85858F !important;
+    --color-gray-300: #606066 !important;
+    --color-gray-400: #434347 !important;
+    --color-gray-500: #2B2B2E !important;
+    --color-gray-600: #ABADB3 !important;
+    --color-white: #0F0F10 !important;
+
+    --color-black-200: #F7F7F7 !important;
+    --color-black-300: #F0EFEF !important;
+    --color-black-400: #DCDDE0 !important;
+    --color-black-500: #C6C7CC !important;
+    --color-black-600: #ABADB3 !important;
+    --color-black: #FFFFFF !important;
+    --body-text-color: var(--color-black) !important;
+    --body-bg-color: #1D1D1F !important;
+}
+
+[data-theme="dark"] .header {
+    background-color: var(--color-white) !important;
+}
+
+[data-theme="dark"] .btn-primary {
+    color: var(--color-black) !important;
+}
+
+[data-theme="dark"] .points__title {
+    background-color: var(--color-gray-500) !important;
+}
+
+[data-theme="dark"] .technical__option {
+    color: var(--color-gray-300);
+}
+
+[data-theme="dark"] .form-control {
+    background-color: transparent !important;
+    color: var(--color-gray-400) !important;
+}
+
+[data-theme="dark"] .arrow-button {
+    background-color: var(--color-gray-500) !important;
+}
+
+[data-theme="dark"] .compare__card__header {
+    background: var(--color-gray-500) !important;
+    color: var(--color-gray-200) !important;
+}
+
+[data-theme="dark"] hr {
+    background: var(--color-white) !important;
+}
+[data-theme="dark"] .select__car__img {
+    background-color: var(--color-gray-500) !important;
+}
+[data-theme="dark"] .btn-error{
+    color: var(--color-black) !important;
+}
+[data-theme="dark"] .nav__menu ul{
+    background:var(--color-gray-500);
+}

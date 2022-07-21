@@ -31,7 +31,7 @@
 }
 
 .brand__card {
-    background-color: #ffff;
+    background-color: var(--color-white);
     border-radius: 18px;
     width: 192px;
     height: 202px;
@@ -71,7 +71,7 @@
 }
 
 .model__card {
-    background-color: #ffff;
+    background-color: var(--color-white);
     border-radius: 18px;
     width: 296px;
     height: 288px;
@@ -218,7 +218,7 @@
     left: 0;
     right: 0;
     height: 10rem;
-    background-image: linear-gradient(to bottom, transparent, #f6f6f6 80%);
+    background-image: linear-gradient(to bottom, transparent,var(--body-bg-color) 80%);
 }
 
 .technical__text {
@@ -418,7 +418,7 @@
     left: 0;
     right: 0;
     height: 30rem;
-    background-image: linear-gradient(to bottom, transparent, #f6f6f6 80%);
+    background-image: linear-gradient(to bottom, transparent, var(--body-bg-color) 80%);
 }
 
 .technical__specifications {
@@ -530,22 +530,22 @@
 }
 
 .car__link {
-    display: block;
-    height: 100%;
+    display: block !important;
+    height: 100% !important;
 }
 
 .car__img {
-    border-radius: 12px;
-    display: block;
-    width: 100%;
-    max-height: 182px;
-    object-fit: cover;
+    border-radius: 12px !important;
+    display: block !important;
+    width: 100% !important;
+    max-height: 182px !important;
+    object-fit: cover !important;
 }
 
 .car__name {
-    font-size: var(--t2-font-size);
-    font-family: var(--t2-font-family);
-    margin-top: 1rem;
+    font-size: var(--t2-font-size) ;
+    font-family: var(--t2-font-family) ;
+    margin-top: 1rem ;
 }
 
 .car__en-name {
@@ -558,19 +558,6 @@
 
 .technical__form {}
 
-.technical__textarea {
-    width: 100%;
-    padding: 1.5rem;
-    min-height: 15.25rem;
-    outline: none;
-    resize: vertical;
-}
-
-.technical__submit {
-    margin-top: 2rem;
-    margin-right: auto;
-    width: 12rem;
-}
 
 .technical__link--mobile {
     display: none;
@@ -619,9 +606,7 @@
 }
 
 @media screen and (max-width: 768px) {
-    body {
-        background-color: var(--color-white);
-    }
+   
 
     .header {
         background-color: var(--color-gray-200);
@@ -985,9 +970,9 @@
     }
 
     .technical__textarea {
-        padding: 1rem 1.5rem;
-        font-family: var(--t7-font-family);
-        font-size: var(--t7-font-size);
+        padding: 1rem 1.5rem !important;
+        font-family: var(--t7-font-family) !important;
+        font-size: var(--t7-font-size) !important;
     }
 
     .technical__same-cars {
@@ -996,12 +981,12 @@
     }
 
     .technical__submit {
-        margin-top: 1rem;
-        font-family: var(--t6-font-family);
-        font-size: var(--t6-font-size);
-        background-color: var(--color-green);
-        height: 3rem;
-        width: 100%;
+        margin-top: 1rem !important;
+        font-family: var(--t6-font-family) !important;
+        font-size: var(--t6-font-size) !important;
+        background-color: var(--color-green) !important;
+        height: 3rem !important; 
+        width: 100% !important;
     }
 
     .technical__link--mobile {

@@ -37,8 +37,7 @@ const store = authStore();
 const phoneNumber = store.phoneNumber;
 const loginStep = ref(1);
 definePageMeta({
-  middleware: ["auth-middleware"],
-  // or middleware: 'auth'
+  middleware: ["auth"],
 });
 const nextStep = (step: number) => {
   loginStep.value = step;

@@ -2,7 +2,7 @@
   <div class="not__found__layout">
     <the-header :show-search-bar="false" showSearchIcon></the-header>
     <main class="main">
-      <div class="container text-center color-white">
+      <div class="container text-center white">
         <slot></slot>
       </div>
     </main>
@@ -18,7 +18,10 @@ useHead({
 });
 </script>
 
-<style >
+<style scoped>
+h1{
+  color: white !important;
+}
 .not__found__layout .nav__icon {
   color: white;
 }
@@ -27,7 +30,7 @@ useHead({
   top: 22%;
 }
 .not__found__layout {
-  background: #0f0f10;
+  background: #0F0F10;
   opacity: 0.9;
   height: 100vh;
   position: relative;

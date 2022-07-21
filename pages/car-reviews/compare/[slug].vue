@@ -408,7 +408,7 @@ onMounted(async () => {
 .sticky {
   position: fixed;
   top: 0;
-  background: #f6f6f6;
+  background: var(--body-bg-color);
   z-index: 1000;
   margin: auto;
   padding-top: 12px;
@@ -564,11 +564,11 @@ onMounted(async () => {
 .compare__Item button {
   width: 77px;
   height: 2rem;
+  color: var(--color-black);
   position: absolute;
   left: 2rem;
   top: 2rem;
   background: var(--color-white);
-  box-shadow: 0 0 5px 0 var(--color-gray-500);
   border-radius: 6px;
   cursor: pointer;
   font-family: var(--t5-font-family);

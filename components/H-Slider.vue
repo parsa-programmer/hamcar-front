@@ -226,7 +226,7 @@ export default defineComponent({
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--color-white);
   box-shadow: 0px 4px 25px 0px #00000026;
   z-index: 100;
   top: 40%;

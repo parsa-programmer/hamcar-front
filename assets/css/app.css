@@ -60,6 +60,7 @@
 }
 
 /* -- Css Variables -- */
+
 :root {
     /* Sizes */
     --header-height: 7.5rem;
@@ -103,7 +104,7 @@
     --color-gray-300: #F0EFEF;
     --color-gray-400: #DCDDE0;
     --color-gray-500: #C6C7CC;
-    --color-gray-600: #ABADB2;
+    --color-gray-600: #ABADB3;
     --color-white: #FFFFFF;
 
     --color-black-200: #85858F;
@@ -138,7 +139,7 @@
     --color-green: #02C7BE;
 
     --body-text-color: var(--color-black);
-    --body-bg-color: #DADADA;
+    --body-bg-color: #f6f6f6;
     --border-color: var(--color-gray-400);
 
     /* Stars Value */
@@ -361,7 +362,7 @@ body {
     font-size: var(--t3-font-size);
     color: var(--body-text-color);
     overflow-x: hidden;
-    background-color: #f6f6f6;
+    background-color: var(--body-bg-color);
 }
 
 .m-auto {
@@ -408,6 +409,16 @@ body {
     font-weight: 400;
     line-height: 27.2px;
     transition: all ease .2s;
+}
+
+.nav__menu ul li a{
+    padding-bottom: 1rem;
+    font-family: var(--t5-font-family);
+    font-size: var(--t5-font-size);
+    font-weight: 400;
+    line-height: 27.2px;
+    transition: all ease .2s;
+    color: var(--color-black-400);
 }
 
 .nav__menu ul li:hover {
@@ -909,7 +920,7 @@ button {
 
 @media screen and (max-width: 576px) {
     body {
-        background-color: #fff;
+        background-color: var(--color-white);
     }
 
     .advert {

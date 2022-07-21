@@ -15,7 +15,7 @@
     <circle
       r="3"
       transform="matrix(-1 0 0 1 12 12)"
-      stroke="#0F0F10"
+      :stroke="hashColor"
       stroke-width="2"
     ></circle>
   </svg>
@@ -25,7 +25,7 @@
 const props = defineProps({
   hashColor: {
     type: String,
-    default: "#0F0F10",
+    default: "var(--color-black)",
   },
   width: {
     type: Number,

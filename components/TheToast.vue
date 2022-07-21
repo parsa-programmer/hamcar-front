@@ -109,7 +109,7 @@ watch(progress, (value) => {
   border-radius: 58px;
   padding: 10px 0;
   padding-left: 1rem;
-  color: var(--color-white);
+  color: white;
   right: 10px;
   display: flex;
   min-width: 250px;
@@ -137,7 +137,7 @@ watch(progress, (value) => {
   background: rgb(76, 76, 255);
 }
 .bg-error {
-  background: red;
+  background: var(--color-error);
 }
 
 .bg-success {
