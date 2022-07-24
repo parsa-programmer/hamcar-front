@@ -11,6 +11,7 @@ const defaultState = () => ({
   isRefreshSuccess: false,
   phoneNumber: "",
   user: {} as UserDto,
+  loading: false,
 });
 
 export const authStore = defineStore("auth", {
@@ -32,9 +33,14 @@ export const authStore = defineStore("auth", {
       if (localStorage.getItem("auth-data")) {
         const data = localStorage.getItem("auth-data");
         this.setLoginData(JSON.parse(data!));
-        GetCurrenctUser().then((res) => {
-          this.user = res.data!;
-        });
+        this.loading = true;
+        GetCurrenctUser()
+          .then((res) => {
+            this.user = res.data!;
+          })
+          .finally(() => {
+            this.loading = false;
+          });
       }
     },
   },

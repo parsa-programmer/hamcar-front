@@ -1,9 +1,11 @@
 <template>
-  <h1>{{phoneNumber.phoneNumber}}</h1>
+  <h1>{{ store.user.phoneNumber }}</h1>
 </template>
 <script setup>
 import { authStore } from "~~/stores/auth.store";
 
 const store = authStore();
-const phoneNumber = store.user;
+definePageMeta({
+  middleware:['should-login']
+})
 </script>

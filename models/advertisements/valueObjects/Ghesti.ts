@@ -2,10 +2,10 @@ import { GhestiPaymentType } from "../enums/GhestiPaymentType";
 
 export class Ghesti {
 constructor(
-public tedadeGhestHa: number,
-public pishPardakht: number,
+public tedadeGhestHa: string,
+public pishPardakht: string ,
 public ghestiPaymentType: GhestiPaymentType,
-public amountPricePerGhest: number,
+public amountPricePerGhest: string,
 public deliveryDate: number
 ) { }
 }

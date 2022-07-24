@@ -73,11 +73,12 @@
           >
             حساب کاربری
           </nuxt-link>
-          <a
-            href="#"
+          <nuxt-link
+            href="/sell/car"
             class="btn btn-primary nav__register-link nav__register-link--new"
-            >ثبت آگهی رایگان</a
           >
+            ثبت آگهی رایگان
+          </nuxt-link>
         </div>
         <div class="nav__icons-wrapper" v-if="showSearchIcon">
           <div class="nav__icon nav__icon--bars-icon">

@@ -1,5 +1,6 @@
 <template>
   <div>
+ 
     <the-header :show-search-bar="false" showSearchIcon></the-header>
     <main class="main">
       <div class="container">

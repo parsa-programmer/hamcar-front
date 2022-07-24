@@ -27,27 +27,27 @@
       </h-button>
     </Form>
     <div class="login__term">
-        <h-icon :icon="Icon.check"/>
-        <p>
-          با ورود به همکار،
-          <a href="#">شرایط و قوانین</a>
-          آن را می پذیرم.
-        </p>
-      </div>
+      <h-icon :icon="Icon.check" />
+      <p>
+        با ورود به همکار،
+        <a href="#">شرایط و قوانین</a>
+        آن را می پذیرم.
+      </p>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
 import { Form } from "vee-validate";
 import * as Yup from "yup";
-import { useAuth } from "~~/composables/auth/useAuth";
 import { authStore } from "~~/stores/auth.store";
 import { Icon } from "~~/models/utilities/Icon";
+import { useAuth } from "~~/composables/auth/useAuth";
 
 const emit = defineEmits(["toggleLoginStep"]);
 const store = authStore();
-const { login, validateCode, loading } = useAuth();
+const { login, loading } = useAuth();
 
-const phoneNumber = ref('');
+const phoneNumber = ref("");
 
 const loginSchema = Yup.object().shape({
   // @ts-ignore
@@ -58,10 +58,8 @@ const register = async () => {
   var isSuccess = await login(phoneNumber.value);
   if (isSuccess) {
     store.setPhoneNumber(phoneNumber.value);
-    emit("toggleLoginStep",2);
+    emit("toggleLoginStep", 2);
   }
 };
 </script>
 
-<style>
-</style>

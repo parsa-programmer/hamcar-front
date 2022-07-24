@@ -8,7 +8,7 @@
         { 'invalid-data': !!errorMessage },
       ]"
       :placeholder="placeholder"
-      v-model="modelValue"
+      :value="modelValue"
       :autofocus="autofocus"
       v-bind="$attrs"
       @input="modelValueChanged"
@@ -16,7 +16,47 @@
       autocomplete="off"
     />
     <slot />
-    <p class="input-invalid-text">{{ errorMessage || successMessage }}</p>
+    <p class="input-invalid-text">{{ errorMessage }}</p>
+  </div>
+  <div v-else-if="suffix">
+    <div :class="['input-group', { input__valid: !errorMessage && modelValue }]">
+      <input
+        :type="type"
+        :class="[
+          'form-control bg-transparent',
+          'has-suffix',
+          classValue,
+          { 'invalid-data': !!errorMessage },
+          ,
+        ]"
+        :placeholder="placeholder"
+        :value="modelValue"
+        :autofocus="autofocus"
+        v-bind="$attrs"
+        @input="modelValueChanged"
+        autocomplete="off"
+        :name="name"
+      />
+      <span class="input-group-suffix">{{ suffix }}</span>
+      <svg
+        v-if="showCheckBox && !errorMessage"
+        class="input__valid-icon"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+      >
+        <circle cx="12" cy="12" r="12" fill="#02C7BE" />
+        <path
+          fill-rule="evenodd"
+          clip-rule="evenodd"
+          d="M16.9073 10.3067C17.2978 9.91619 17.2978 9.28303 16.9073 8.8925C16.5168 8.50198 15.8836 8.50198 15.4931 8.8925L10.2002 14.1854L7.9073 11.8925C7.51678 11.502 6.88361 11.502 6.49309 11.8925C6.10256 12.283 6.10256 12.9162 6.49309 13.3067L9.49267 16.3063C9.49281 16.3064 9.49295 16.3066 9.49309 16.3067C9.5419 16.3555 9.59451 16.3982 9.64996 16.4349C10.0381 16.6911 10.5656 16.6484 10.9073 16.3067L16.9073 10.3067Z"
+          fill="white"
+        />
+      </svg>
+    </div>
+    <p class="input-valid-text" v-if="!errorMessage">{{ message }}</p>
+    <p class="input-invalid-text" v-else-if="modelValue">{{ errorMessage }}</p>
   </div>
   <div v-else>
     <input
@@ -27,14 +67,14 @@
         { 'invalid-data': !!errorMessage },
       ]"
       :placeholder="placeholder"
-      v-model="modelValue"
+      :value="modelValue"
       :autofocus="autofocus"
       v-bind="$attrs"
       @input="modelValueChanged"
       autocomplete="off"
       :name="name"
     />
-    <p class="input-invalid-text">{{ errorMessage || successMessage }}</p>
+    <p class="input-invalid-text">{{ errorMessage }}</p>
   </div>
 </template>
 
@@ -66,7 +106,7 @@ const props = defineProps({
     type: String,
     required: true,
   },
-  successMessage: {
+  message: {
     type: String,
     default: "",
   },
@@ -77,6 +117,14 @@ const props = defineProps({
   classValue: {
     type: String,
     default: "",
+  },
+  suffix: {
+    type: String,
+    default: "",
+  },
+  showCheckBox: {
+    type: Boolean,
+    default: false,
   },
 });
 
@@ -102,7 +150,6 @@ watch(
   }
 );
 const modelValueChanged = ($event: any) => {
-  handleChange($event);
   if (props.number) {
     if (!isNaN($event.target.value)) {
       emit("update:modelValue", $event.target.value);
@@ -112,6 +159,7 @@ const modelValueChanged = ($event: any) => {
   } else {
     emit("update:modelValue", $event.target.value);
   }
+  handleChange($event);
 };
 const hasSlot = () => {
   return !!slots.default;

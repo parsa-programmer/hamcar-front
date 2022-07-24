@@ -1,5 +1,5 @@
 <template>
-  <div class="input-group technical__search-box">
+  <div class="input-group advert__search-box">
     <input
       type="text"
       class="form-control bg-transparent"

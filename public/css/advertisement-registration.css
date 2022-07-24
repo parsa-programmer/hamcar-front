@@ -1,11 +1,5 @@
-body {
-    background-color: #f6f6f6;
-}
 
-.main {
-    padding-top: 1.5rem;
-    padding-bottom: 10rem;
-}
+
 
 .breadcrumb {
     border-bottom: 2px solid var(--color-white);
@@ -282,3 +276,32 @@ body {
         width: 100%;
     }
 }
+.advert__type__selection {
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--app-border-radius);
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    padding: 0.5rem;
+  }
+  .advert__type__selection .selection__active {
+    background: var(--color-green) !important;
+    color: #fff;
+    border-radius: 12px;
+    width: 100%;
+  }
+  .advert__type__selection span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    height: 3.5rem;
+    cursor: pointer;
+    transition: all ease 0.2s;
+  }
+  .advert__type__selection span:hover {
+    background: var(--color-gray-200);
+    border-radius: 12px;
+  }

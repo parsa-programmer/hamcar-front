@@ -7,9 +7,16 @@ import { Icon } from "~~/models/utilities/Icon";
 import { convertMsToMinutesSeconds } from "~/utilities/numberUtils";
 import { gsap } from "gsap";
 
+const props = defineProps({
+  isRedirect: {
+    type: Boolean,
+    default: true,
+  },
+});
+
 const router = useRouter();
 const store = authStore();
-const emit = defineEmits(["toggleLoginStep"]);
+const emit = defineEmits(["toggleLoginStep", "successed"]);
 let animation: any;
 let counterInterval: any = null;
 const target = ref();
@@ -21,7 +28,7 @@ const setAnimation = (): void => {
     {
       duration: 130,
       width: 100 + "%",
-      ease:"power2"
+      ease: "power2",
     }
   );
 };
@@ -47,7 +54,11 @@ const sendAgain = async () => {
 const validate = async (d: any, actions: any) => {
   var isSuccess = await validateCode(phoneNumber, code.value);
   if (isSuccess) {
-    router.push("/");
+    if (props.isRedirect) {
+      router.push("/");
+    } else {
+      emit("successed");
+    }
   } else {
     actions.setFieldError("code", "کد تایید نامعتبر است");
   }
@@ -134,9 +145,7 @@ const editPhoneNumber = () => {
       <div v-if="time == 0">
         <h-icon :icon="Icon.refresh" />
         <p>
-          <a @click="sendAgain"
-          
-           class="cursor-pointer">ارسال مجدد کد</a>
+          <a @click="sendAgain" class="cursor-pointer">ارسال مجدد کد</a>
         </p>
       </div>
     </div>

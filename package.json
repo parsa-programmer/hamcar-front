@@ -16,6 +16,7 @@
     "@vueuse/core": "^8.9.2",
     "gsap": "^3.10.4",
     "lodash": "^4.17.21",
+    "num2persian": "^3.2.2",
     "pinia": "^2.0.14",
     "vee-validate": "^4.6.0",
     "yup": "^0.32.11"

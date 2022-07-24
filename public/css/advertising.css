@@ -318,6 +318,7 @@ body {
 }
 .filter__body::-webkit-scrollbar {
     width: 4px;
+    margin-top: 20px;
 }
 
 /* Track */
@@ -329,6 +330,7 @@ body {
 .filter__body::-webkit-scrollbar-thumb {
     background: var(--color-gray-400);
     border-radius: 56px;
+    height: 10px;
 }
 
 /* Handle on hover */

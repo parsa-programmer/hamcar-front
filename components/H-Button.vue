@@ -1,6 +1,7 @@
 <template>
   <button
     :class="['btn', outline ? 'btn-primary-outline' : `btn-${props.color}`]"
+    :disabled="loading"
   >
     <slot v-if="loading == false" />
     <div class="snippet" v-else data-title=".dot-elastic">
@@ -26,7 +27,6 @@ const props = defineProps({
     default: false,
   },
 });
-const btnClass = ``;
 </script>
 
 <style scoped>

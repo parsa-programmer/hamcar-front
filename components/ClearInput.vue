@@ -120,7 +120,6 @@ const clear = () => {
   emptyBtn.value?.removeAttribute("style");
 };
 const modelValueChanged = ($event: any) => {
-  handleChange($event);
   if (props.number) {
     if (!isNaN($event.target.value)) {
       emit("update:modelValue", $event.target.value);
@@ -130,5 +129,6 @@ const modelValueChanged = ($event: any) => {
   } else {
     emit("update:modelValue", $event.target.value);
   }
+  handleChange($event);
 };
 </script>

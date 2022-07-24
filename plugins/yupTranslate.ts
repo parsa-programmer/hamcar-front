@@ -6,11 +6,14 @@ export default defineNuxtPlugin(() => {
     mixed: {
       default: "ورودی نامعتبر است",
       required: "${path}  را وارد کنید ",
-
     },
     string: {
       email: "ایمیل نامعتبر است",
     },
+    number: {
+      min: " حداقل مقدار ${path} ${min} است",
+      
+    }
   });
   addMethod(string, "phoneNumber", function phoneNumber(phoneNumber: string) {
     return this.test("phoneNumber","شماره موبایل نامعتبر است",function (value) {

@@ -1,8 +1,3 @@
-.main {
-    padding-top: 1.5rem;
-    padding-bottom: 10rem;
-}
-
 /* -- technical head -- */
 .technical__head {
     display: flex;
@@ -109,20 +104,6 @@
 }
 
 
-.technical__search-box {
-    width: 31.5rem !important;
-}
-
-.technical__search-box .form-control {
-    border-color: var(--color-gray-400);
-    padding-right: 4.5rem;
-}
-
-.technical__search-box .input-icon {
-    width: 24px;
-    height: 24px;
-    right: 2rem;
-}
 
 .technical__slider {
     margin-bottom: 1rem;
