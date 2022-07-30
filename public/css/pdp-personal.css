@@ -493,6 +493,7 @@ body {
     height: 100%;
     background-color: rgba(15, 15, 16, 0.9);
     overflow-y: scroll;
+    overflow-x: hidden;
     z-index: 999;
     display: none;
 }
@@ -584,7 +585,7 @@ body {
 }
 
 .ads-gallery__item {
-    flex-shrink: 0;
+    /*flex-shrink: 0;*/
     width: 12rem;
     height: 8.125rem;
     border-radius: var(--app-border-radius);
@@ -613,6 +614,32 @@ body {
 .ads-gallery__item--active::before {
     content: none;
 }
+
+
+.form__header{
+    font-family: var(--t3-font-family);
+    font-size: var(--t3-font-size);
+    color: var(--color-black-200);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
+}
+.form__input-mobile{
+    direction: ltr;
+    text-align: left;
+    width: 60%;
+}
+.form__input{
+    margin-top: 1rem;
+    font-family: var(--t5-font-family);
+    font-size: var(--t5-font-size);
+    padding-top: 1.2rem;
+    min-height: 11rem;
+    outline: none;
+}
+
 
 
 @media screen and (max-width: 1400px) {
@@ -654,7 +681,16 @@ body {
     .ads-slider__picture {
         height: 500px;
     }
-
+    .gallery-slider__img{
+        width: 90%;
+    }
+    .gallery-slider__nav{
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+    .ads-gallery__list{
+        flex-wrap: wrap;
+    }
 }
 
 @media screen and (max-width: 992px) {
@@ -695,6 +731,9 @@ body {
         height: 4rem;
     }
     .ads-company__left{
+        display: none;
+    }
+    .ads-gallery__flags{
         display: none;
     }
 }
@@ -925,5 +964,20 @@ body {
     }
     .ads__mobile-connection .ads__chat-btn{
         width: 120px;
+    }
+    .form__header{
+        font-family: var(--t6-font-family);
+        font-size: var(--t6-font-size);
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+    }
+    .form__input-mobile{
+        font-family: var(--t2-font-family);
+        font-size: var(--t2-font-size);
+        width: 100%;
+    }
+    .form__input{
+        font-family: var(--t6-font-family);
+        font-size: var(--t6-font-size);
     }
 }

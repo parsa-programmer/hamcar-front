@@ -1,3 +1,74 @@
+
+<template>
+  <div class="login">
+    <h2 class="login__title">به وبسایت همکار خوش آمدید!</h2>
+    <p class="login__caption">
+      کد یکبار مصرف به شماره {{ phoneNumber }} پیامک شد; لطفا کد ارسال شده را در
+      کادر زیر وارد نمایید.
+    </p>
+    <p class="login__label">
+      کد یکبار مصرف به شماره {{ phoneNumber }} پیامک شد; لطفا کد ارسال شده را در
+      کادر زیر وارد نمایید.
+    </p>
+    <div class="timer__progress">
+      <div class="progress__bar">
+        <div class="progress__current" ref="target"></div>
+      </div>
+
+      <p class="progress_time">
+        {{ convertMsToMinutesSeconds(time) }}
+      </p>
+    </div>
+    <Form @submit="validate" :validation-schema="schema" v-slot="{ meta }">
+      <h-input
+        name="code"
+        number
+        class="text-center"
+        maxlength="5"
+        v-model="code"
+        placeholder="کد تایید"
+      ></h-input>
+      <div class="row align-items-center">
+        <a
+          v-if="time == 0"
+          class="send__again mt-2 color-primary cursor-pointer"
+          @click="sendAgain"
+          >ارسال مجدد کد</a
+        >
+        <h-button
+          class="login__submit"
+          :disabled="loading || meta.valid == false"
+          type="submit"
+          :loading="loading"
+        >
+          تایید و ادامه
+        </h-button>
+      </div>
+    </Form>
+    <div class="login__term desktop">
+      <h-icon :icon="Icon.exclamation" />
+      <p>
+        شماره ام را اشتباه وارد کرده ام.
+        <a @click="editPhoneNumber" class="cursor-pointer">ویرایش شماره</a>
+      </p>
+    </div>
+    <div class="login__term mobile">
+      <div>
+        <h-icon :icon="Icon.edit" />
+        <p>
+          <a @click="editPhoneNumber" class="cursor-pointer">ویرایش شماره</a>
+        </p>
+      </div>
+      <div v-if="time == 0">
+        <h-icon :icon="Icon.refresh" />
+        <p>
+          <a @click="sendAgain" class="cursor-pointer">ارسال مجدد کد</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script setup lang="ts">
 import { Form } from "vee-validate";
 import * as Yup from "yup";
@@ -81,76 +152,6 @@ const editPhoneNumber = () => {
   emit("toggleLoginStep", 1);
 };
 </script>
-
-<template>
-  <div class="login">
-    <h2 class="login__title">به وبسایت همکار خوش آمدید!</h2>
-    <p class="login__caption">
-      کد یکبار مصرف به شماره {{ phoneNumber }} پیامک شد; لطفا کد ارسال شده را در
-      کادر زیر وارد نمایید.
-    </p>
-    <p class="login__label">
-      کد یکبار مصرف به شماره {{ phoneNumber }} پیامک شد; لطفا کد ارسال شده را در
-      کادر زیر وارد نمایید.
-    </p>
-    <div class="timer__progress">
-      <div class="progress__bar">
-        <div class="progress__current" ref="target"></div>
-      </div>
-
-      <p class="progress_time">
-        {{ convertMsToMinutesSeconds(time) }}
-      </p>
-    </div>
-    <Form @submit="validate" :validation-schema="schema" v-slot="{ meta }">
-      <h-input
-        name="code"
-        number
-        class="text-center"
-        maxlength="5"
-        v-model="code"
-        placeholder="کد تایید"
-      ></h-input>
-      <div class="row align-items-center">
-        <a
-          v-if="time == 0"
-          class="send__again mt-2 color-primary cursor-pointer"
-          @click="sendAgain"
-          >ارسال مجدد کد</a
-        >
-        <h-button
-          class="login__submit"
-          :disabled="loading || meta.valid == false"
-          type="submit"
-          :loading="loading"
-        >
-          تایید و ادامه
-        </h-button>
-      </div>
-    </Form>
-    <div class="login__term desktop">
-      <h-icon :icon="Icon.exclamation" />
-      <p>
-        شماره ام را اشتباه وارد کرده ام.
-        <a @click="editPhoneNumber" class="cursor-pointer">ویرایش شماره</a>
-      </p>
-    </div>
-    <div class="login__term mobile">
-      <div>
-        <h-icon :icon="Icon.edit" />
-        <p>
-          <a @click="editPhoneNumber" class="cursor-pointer">ویرایش شماره</a>
-        </p>
-      </div>
-      <div v-if="time == 0">
-        <h-icon :icon="Icon.refresh" />
-        <p>
-          <a @click="sendAgain" class="cursor-pointer">ارسال مجدد کد</a>
-        </p>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 .login__term.mobile {

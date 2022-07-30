@@ -1,13 +1,7 @@
 <template>
-  <div>
-    <a @click="showAlert">test</a>
-  </div>
+  <a @click="showAlert">test</a>
 </template>
 
 <script setup>
-
 </script>
 
-
-<style scoped>
-</style>

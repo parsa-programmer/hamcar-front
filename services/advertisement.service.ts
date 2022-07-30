@@ -24,6 +24,15 @@ export const GetByShortLink = (
   return FetchApi(`/advertisement/${shortLink}`);
 };
 
+export const CreateAdvertisement = (
+  command: FormData
+): Promise<IApiResponse<undefined>> => {
+  return FetchApi(`/advertisement`, {
+    method: "Post",
+    body: command,
+  });
+};
+
 export const EditAdvertisement = (
   command: EditAdvertisementCommand
 ): Promise<IApiResponse<undefined>> => {

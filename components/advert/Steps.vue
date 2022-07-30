@@ -96,6 +96,9 @@ import { advertStore } from "~~/stores/advert.store";
 const store = advertStore();
 const progressPercentage = ref(14);
 
+onMounted(()=>{
+    progressPercentage.value = (store.currentStep * 14)+2;
+})
 watch(
   () => store.currentStep,
   (newVal) => {

@@ -266,6 +266,11 @@
         font-family: var(--t5-font-family);
         font-size: var(--t5-font-size);
     }
+    .advert__type__selection span{
+        font-family: var(--t4-font-family);
+        font-size: var(--t4-font-size);
+        font-weight: 400 !important;
+    }
 }
 @media screen and (max-width: 576px) {
     .registration__footer{

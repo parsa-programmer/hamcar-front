@@ -6,30 +6,30 @@
           placeholder="انتخاب برند"
           name="brand"
           :show-check-box="true"
-          v-model="brandId"
+          v-model="stepData.brandId"
           :data="brands"
         />
         <h-select-box
           placeholder="انتخاب مدل"
           name="brand"
-          :disabled="!brandId || models.length == 0"
-          v-model="modelId"
+          :disabled="!stepData.brandId || models.length == 0"
+          v-model="stepData.modelId"
           :show-check-box="true"
           :data="models"
         />
         <h-select-box
           placeholder="انتخاب سال"
           name="brand"
-          :disabled="!modelId || years.length == 0"
-          v-model="yearId"
+          :disabled="!stepData.modelId || years.length == 0"
+          v-model="stepData.yearId"
           :show-check-box="true"
           :data="years"
         />
         <h-select-box
           placeholder="انتخاب تریم"
           name="brand"
-          v-if="yearId && trims.length > 0"
-          v-model="trimId"
+          v-if="stepData.yearId && trims.length > 0"
+          v-model="stepData.trimId"
           :show-check-box="true"
           :data="trims"
         />
@@ -43,10 +43,10 @@
       </span>
       <h-button
         :disabled="
-          !brandId ||
-          !modelId ||
-          !yearId ||
-          (trims.length > 0 && !trimId) ||
+          !stepData.brandId ||
+          !stepData.modelId ||
+          !stepData.yearId ||
+          (trims.length > 0 && !stepData.trimId) ||
           isLoading
         "
         @click="nextStep"
@@ -66,10 +66,8 @@ import { ProssesAsync } from "~~/utilities/ProssesAsync";
 const store = advertStore();
 
 const isLoading = ref(true);
-const brandId = ref("");
-const modelId = ref("");
-const yearId = ref("");
-const trimId = ref("");
+
+const stepData = reactive(store.steps.one);
 
 const brands: Ref<SelectData[]> = ref([]);
 const models: Ref<SelectData[]> = ref([]);
@@ -77,12 +75,6 @@ const years: Ref<SelectData[]> = ref([]);
 const trims: Ref<SelectData[]> = ref([]);
 
 const nextStep = () => {
-  store.setStepData({
-    brandId: brandId.value,
-    modelId: modelId.value,
-    yearId: yearId.value,
-    trimId: trimId.value,
-  });
   store.changeStep(2);
   setTimeout(() => {
     window.scrollTo(0, document.body.scrollHeight);
@@ -97,55 +89,70 @@ onMounted(async () => {
     };
   });
 });
-watch(brandId, (brandId) => {
-  if (brandId) {
-    ProssesAsync(
-      () =>
-        GetModels(brandId).then((res) => {
-          models.value =
+watch(
+  () => stepData.brandId,
+  (brandId) => {
+    if (brandId) {
+      ProssesAsync(
+        () =>
+          GetModels(brandId).then((res) => {
+            models.value =
+              res.data?.map((model) => {
+                return {
+                  value: model.id,
+                  label: model.title,
+                };
+              }) ?? [];
+          }),
+        isLoading
+      );
+      stepData.modelId = "";
+      stepData.yearId = "";
+      stepData.trimId = "";
+    }
+  }
+);
+watch(
+  () => stepData.modelId,
+  (modelId) => {
+    if (modelId) {
+      ProssesAsync(
+        () =>
+          GetYears(modelId).then((res) => {
+            years.value =
+              res.data?.map((model) => {
+                return {
+                  value: model.id,
+                  label: model.yearTitle,
+                };
+              }) ?? [];
+          }),
+        isLoading
+      );
+      stepData.yearId = "";
+      stepData.trimId = "";
+    }
+  }
+);
+watch(
+  () => stepData.yearId,
+  (yearId) => {
+    if (yearId) {
+      ProssesAsync(() => {
+        return GetTrims(yearId).then((res) => {
+          trims.value =
             res.data?.map((model) => {
               return {
                 value: model.id,
                 label: model.title,
               };
             }) ?? [];
-        }),
-      isLoading
-    );
+        });
+      }, isLoading);
+      stepData.trimId = "";
+    }
   }
-});
-watch(modelId, (modelId) => {
-  if (modelId) {
-    ProssesAsync(
-      () =>
-        GetYears(modelId).then((res) => {
-          years.value =
-            res.data?.map((model) => {
-              return {
-                value: model.id,
-                label: model.yearTitle,
-              };
-            }) ?? [];
-        }),
-      isLoading
-    );
-  }
-});
-watch(yearId, (yearId) => {
-  if (yearId) {
-    ProssesAsync(() => {
-      return GetTrims(yearId).then((res) => {
-        trims.value =
-          res.data?.map((model) => {
-            return {
-              value: model.id,
-              label: model.title,
-            };
-          }) ?? [];
-      });
-    }, isLoading);
-  }
-});
+);
 </script>
 
 <style>

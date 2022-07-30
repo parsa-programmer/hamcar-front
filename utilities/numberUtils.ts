@@ -10,3 +10,6 @@ export function convertMsToMinutesSeconds(milliseconds: number) {
     ? `${minutes + 1}:00`
     : `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
 }
+export function splitNumber(value: number | string) {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

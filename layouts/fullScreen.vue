@@ -1,13 +1,18 @@
 <template>
   <div>
-    <the-header :show-search-bar="false" showSearchIcon></the-header>
+    <div id="header"></div>
     <main class="main">
-      <div class="container">
+      <div class="container-fluid">
         <slot></slot>
       </div>
     </main>
     <the-toast></the-toast>
   </div>
 </template>
-<script setup>
+
+<script>
+export default {};
 </script>
+
+<style>
+</style>

@@ -1,6 +1,7 @@
 <template>
   <client-only>
-    <div v-if="store.loading" class="global__loading">...</div>
+    <!-- <div v-if="store.loading" class="global__loading">...</div> -->
+    <div v-if="false" class="global__loading">...</div>
   </client-only>
 </template>
 

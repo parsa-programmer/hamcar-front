@@ -1,5 +1,6 @@
 <template>
   <Form
+    @submit="loginUser"
     :validation-schema="loginSchema"
     v-slot="{ meta }"
     class="login__container"
@@ -27,8 +28,8 @@
       <h-button
         :disabled="loading || meta.valid == false"
         class="btn-default-size"
-        @click="loginUser"
         :loading="loading"
+        type="submit"
       >
         ورود
       </h-button>

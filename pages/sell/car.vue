@@ -23,7 +23,7 @@
           <advert-step-one />
           <Transition
             name="custom-classes2"
-            enter-active-class="animate__animated animate__fadeInUp"
+            enter-active-class="animate__animated animate__fadeInUp "
             leave-active-class="animate__animated animate__bounceOutRight"
           >
             <advert-step-two v-if="store.currentStep >= 2" />
@@ -36,12 +36,19 @@
           >
             <advert-step-three v-if="store.currentStep >= 3" />
           </Transition>
-           <Transition
+          <Transition
             name="custom-classes2"
             enter-active-class="animate__animated animate__fadeInUp"
             leave-active-class="animate__animated animate__bounceOutRight"
           >
-            <advert-step-four />
+            <advert-step-four v-if="store.currentStep >= 4" />
+          </Transition>
+          <Transition
+            name="custom-classes2"
+            enter-active-class="animate__animated animate__fadeInUp"
+            leave-active-class="animate__animated animate__bounceOutRight"
+          >
+            <advert-step-five v-if="store.currentStep >= 5" />
           </Transition>
         </div>
       </div>
@@ -55,5 +62,10 @@ import { advertStore } from "~~/stores/advert.store";
 const store = advertStore();
 </script>
 
-<style>
+<style scoped>
+@media screen and (max-width: 768px) {
+  .mt-7 {
+    margin-top: 5rem !important;
+  }
+}
 </style>

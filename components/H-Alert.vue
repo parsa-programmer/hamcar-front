@@ -1,30 +1,40 @@
 <template>
   <div :class="['alert', `alert-${type}`]">
-    <icons-warning
-      class="alert-icon"
-      v-if="type == AlertType.Warning"
-      :width="24"
-      :height="24"
-      hash-color="var(--color-white)"
-    />
-    <icons-close-box
-      class="alert-icon"
-      v-else-if="type == AlertType.Error"
-      hash-color="var(--color-white)"
-      :width="24"
-      :height="24"
-    />
+    <div v-if="showIcon" style="display: inline">
+      <icons-warning
+        class="alert-icon"
+        v-if="type == 'warning'"
+        :width="24"
+        :height="24"
+        hash-color="var(--color-orange)"
+      />
+      <icons-close-box
+        class="alert-icon"
+        v-else-if="type == 'error'"
+        hash-color="var(--color-white)"
+        :width="24"
+        :height="24"
+      />
+    </div>
+
     <slot />
   </div>
 </template>
 
 <script setup lang="ts">
-import { AlertType } from "~/models/utilities/AlertType";
-defineProps<{
-  type: AlertType;
+const { type = "warning", showIcon = false } = defineProps<{
+  type: string;
+  showIcon?: boolean;
 }>();
 </script>
 <style scoped>
+@media screen and (max-width: 768px) {
+  .alert {
+    font-size: var(--t5-font-size) !important;
+    font-family: var(--t5-font-size) !important;
+    font-weight: 700 !important;
+  }
+}
 .alert {
   width: 100%;
   display: block;
@@ -35,15 +45,18 @@ defineProps<{
   font-family: var(--t3-font-size);
 }
 .alert-warning {
-  background: var(--color-orange);
-  color: var(--color-white);
+  background: rgba(255, 220, 170, 0.2);
+  border: 1px solid var(--color-orange);
+  color: var(--color-orange) !important;
+  font-weight: 500;
 }
+
 .alert-error {
   background: red;
   color: var(--color-white);
 }
 .alert-icon {
-  top: 8px;
+  top: 6px;
   position: relative;
   margin-left: 7px;
 }

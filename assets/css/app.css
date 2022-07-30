@@ -152,7 +152,7 @@
 .main {
     overflow-x: hidden;
     padding-top: 1.5rem;
-    padding-bottom: 10rem;
+    padding-bottom: 5rem;
 }
 
 /* -- Responsive Typography -- */
@@ -198,7 +198,15 @@ hr {
     background: var(--color-gray-400);
 }
 
+.logo {
+    width: 128px;
+    height: 44px;
+}
+
 /* -- Cards -- */
+.bg-white {
+    background: var(--color-white);
+}
 
 .breadcrumb {
     border-bottom: 2px solid var(--color-white);
@@ -207,6 +215,37 @@ hr {
 }
 
 /* -- Helper Class -- */
+.text__description {
+    font-family: var(--t3-font-family);
+    font-size: var(--t3-font-size);
+    font-weight: 400;
+    color: var(--color-gray-600);
+}
+
+.bg-error {
+    background: var(--color-error);
+    color: white;
+}
+.bg-success {
+    background: var(--color-green);
+    color: white;
+}
+
+.font-3 {
+    font-size: var(--t3-font-size);
+    font-family: var(--t3-font-family);
+}
+
+.font-6 {
+    font-size: var(--t6-font-size);
+    font-family: var(--t6-font-family);
+
+}
+
+.pull-left {
+    float: left;
+}
+
 .justify-content-space-between {
     justify-content: space-between;
 }
@@ -214,7 +253,9 @@ hr {
 .justify-content-center {
     justify-content: center;
 }
-
+.align-items-center{
+    align-items: center;
+}
 .wrap {
     flex-wrap: wrap;
 }
@@ -231,6 +272,14 @@ hr {
     margin-left: 1rem;
 }
 
+.ml-0_5 {
+    margin-left: .5rem;
+
+}
+.mr-0_5 {
+    margin-right: .5rem;
+
+}
 .my-1 {
     margin: 1rem 0;
 }
@@ -247,12 +296,18 @@ hr {
     margin-top: 2rem;
 }
 
+.mt-3 {
+    margin-top: 3rem;
+}
+
 .mt-6 {
     margin-top: 6rem;
 }
+
 .mt-7 {
     margin-top: 7rem;
 }
+
 .blue-link {
     color: var(--color-blue);
     font-size: 16px;
@@ -297,9 +352,16 @@ hr {
     color: var(--color-white);
 }
 
+.mb-1_5 {
+    margin-bottom: 1.5rem;
+}
 
 .mb-3 {
     margin-bottom: 3rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
 }
 
 .mb-4 {
@@ -908,8 +970,24 @@ button {
         display: none;
     }
 
+    body {
+        background-color: var(--color-white);
+    }
+
+    .text__description {
+        font-family: var(--t6-font-family) !important;
+        font-size: var(--t6-font-size) !important;
+        font-weight: 500 !important;
+        line-height: 21px;
+        letter-spacing: -0.03em;
+    }
+
     .row {
         gap: .5rem;
+    }
+
+    .advert__search-box {
+        display: none;
     }
 
     .wrap-sm {
@@ -939,6 +1017,10 @@ button {
 @media screen and (max-width: 576px) {
     body {
         background-color: var(--color-white);
+    }
+
+    .d-sm-none {
+        display: none;
     }
 
     .advert {

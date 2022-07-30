@@ -1,5 +1,5 @@
 <template>
-  <Form :validation-schema="schema" class="mt-6">
+  <Form :validation-schema="schema" class="mt-7">
     <div class="advert__type__selection">
       <span
         @click="changeType(AdvertisementPaymentType.مقطوع)"
@@ -63,7 +63,7 @@
         "
       >
         <div class="row wrap-sm mt-1">
-          <div class="w-full  ">
+          <div class="w-full">
             <h-input
               name="pish_price"
               :number="true"
@@ -72,7 +72,7 @@
               v-model="stepData.ghest.pishPardakht"
             />
           </div>
-          <div class="w-full ">
+          <div class="w-full">
             <h-select-box
               name="ghestType"
               placeholder="تعداد اقساط"
@@ -81,8 +81,8 @@
             />
           </div>
         </div>
-        <div class="row wrap-sm mt-1 ">
-          <div class="w-full ">
+        <div class="row wrap-sm mt-1">
+          <div class="w-full">
             <h-input
               name="per_price"
               :number="true"
@@ -182,7 +182,7 @@ import { GenerateTedadeGhest } from "~~/utilities/selectDataGenerator";
 const store = advertStore();
 const stepData = reactive(store.steps.three);
 const schema = Yup.object().shape({
-  price: Yup.number().min(10000).label('قیمت').required(),
+  price: Yup.number().min(10000).label("قیمت").required(),
 });
 
 const changeType = (type: AdvertisementPaymentType) => {
@@ -190,14 +190,36 @@ const changeType = (type: AdvertisementPaymentType) => {
 };
 
 watch(stepData, (val) => {
-  if (val.advertisementPaymentType == AdvertisementPaymentType.توافقی) {
-    store.setStepData(val);
+  if (
+    val.advertisementPaymentType == AdvertisementPaymentType.توافقی &&
+    store.currentStep == 3
+  ) {
     store.changeStep(4);
     setTimeout(() => {
       window.scrollTo(0, document.body.scrollHeight);
     }, 100);
-  } else {
-    store.changeStep(3);
+  } else if (
+    val.advertisementPaymentType == AdvertisementPaymentType.قسطی &&
+    val.ghest.tedadeGhestHa > "0" &&
+    val.ghest.amountPricePerGhest > "0" &&
+    val.ghest.pishPardakht != "" &&
+    val.ghest.ghestiPaymentType != null &&
+    val.ghest.deliveryDate >= 0 &&
+    store.currentStep == 3
+  ) {
+    store.changeStep(4);
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    }, 100);
+  } else if (
+    val.advertisementPaymentType == AdvertisementPaymentType.مقطوع &&
+    val.amount > "100000" &&
+    store.currentStep == 3
+  ) {
+    store.changeStep(4);
+    setTimeout(() => {
+      window.scrollTo(0, document.body.scrollHeight);
+    }, 100);
   }
 });
 </script>

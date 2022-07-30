@@ -1,5 +1,5 @@
 <template>
-  <Form :validation-schema="schema" class="mt-6">
+  <Form :validation-schema="schema" class="mt-7">
     <div class="advert__type__selection">
       <span
         @click="changeCarType(CarType.صفر)"
@@ -41,26 +41,7 @@
       class="mt-1"
       name="bodyCondition"
       v-model="stepData.bodyCondition"
-      :data="[
-        { label: 'اتاق تعویض', value: BodyCondition.اتاق_تعویض },
-        { label: 'اوراقی', value: BodyCondition.اوراقی },
-        { label: 'بدونه رنگ', value: BodyCondition.بدونه_رنگ },
-        { label: 'تصادفی', value: BodyCondition.تصادفی },
-        { label: 'درب تعویض', value: BodyCondition.درب_تعویض },
-        { label: 'دو درب رنگ', value: BodyCondition.دو_درب_رنگ },
-        { label: 'دو لکه رنگ', value: BodyCondition.دو_لکه_رنگ },
-        { label: 'دوره رنگ', value: BodyCondition.دوره_رنگ },
-        { label: 'سوخته', value: BodyCondition.سوخته },
-        { label: 'صافکاری بدونه رنگ', value: BodyCondition.صافکاری_بدونه_رنگ },
-        { label: 'چند لکه رنگ', value: BodyCondition.چند_لکه_رنگ },
-        { label: 'کامل رنگ', value: BodyCondition.کامل_رنگ },
-        { label: 'کاپوت تعویض', value: BodyCondition.کاپوت_تعویض },
-        { label: 'کاپوت رنگ', value: BodyCondition.کاپوت_رنگ },
-        { label: 'گلگیر تعویض', value: BodyCondition.گلگیر_تعویض },
-        { label: 'گلگیر رنگ', value: BodyCondition.گلگیر_رنگ },
-        { label: 'یک درب رنگ', value: BodyCondition.یک_درب_رنگ },
-        { label: 'یک لکه رنگ', value: BodyCondition.یک_لکه_رنگ },
-      ]"
+      :data="GenerateBodyConditionSelectData()"
       :show-check-box="true"
       placeholder="وضعیت بدنه"
     />
@@ -109,7 +90,7 @@
 <script setup lang="ts">
 import { Form } from "vee-validate";
 import { ToastType } from "~~/composables/useToast";
-import { BodyCondition } from "~~/models/advertisements/enums/BodyCondition";
+import { GenerateBodyConditionSelectData } from "~~/models/advertisements/enums/BodyCondition";
 import { CarType } from "~~/models/advertisements/enums/CarType";
 import * as Yup from "yup";
 import {
@@ -139,11 +120,13 @@ watch(stepData, (val) => {
     val.gearBox != null &&
     val.description != ""
   ) {
-    if (val.carType == CarType.کارکرده && val.milage == "0") {
+    if (
+      val.carType == CarType.کارکرده &&
+      (val.milage == "0" || val.milage == "")
+    ) {
       toast.showToast("کارکرد خودرو را وارد کنید", ToastType.error);
       store.changeStep(2);
-    } else {
-      store.setStepData(val);
+    } else if (store.currentStep == 2) {
       store.changeStep(3);
       setTimeout(() => {
         window.scrollTo(0, document.body.scrollHeight);

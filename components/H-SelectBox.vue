@@ -34,7 +34,7 @@
           class="select__item"
           v-for="(item, index) in data"
           :key="index"
-          @click="(e) => selectItem(item.value, e)"
+          @click="(e) => selectItem(item, e)"
         >
           {{ item.label }}
         </li>
@@ -68,7 +68,7 @@ import { SelectData } from "~~/models/utilities/SelectData";
 import { useField } from "vee-validate";
 
 const isOpen = ref(false);
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(["update:modelValue", "selectedItem"]);
 const selectedValue = ref(null);
 
 const props = defineProps<{
@@ -102,17 +102,26 @@ watch(
     setValue(value);
   }
 );
+watch(
+  () => props.data,
+  (value) => {
+    if (!value.filter((f) => f.value == props.modelValue)[0]) {
+      emit("update:modelValue", null);
+    }
+  }
+);
 const openBox = (event: any) => {
   if (disabled?.value) return;
   openSelectBox(event);
 };
 
-const selectItem = (val: any, event: any) => {
+const selectItem = (item: SelectData, event: any) => {
   selectItem_in_selectBox(event);
   //////////////////////////////////////////////////////////////
-  emit("update:modelValue", val);
+  emit("update:modelValue", item.value);
   isOpen.value = false;
-  selectedValue.value = val;
+  selectedValue.value = item.value;
+  emit("selectedItem", item);
 };
 </script>
 

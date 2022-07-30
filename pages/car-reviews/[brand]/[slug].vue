@@ -35,14 +35,7 @@
           {{ carReview.carReviewModel.title }}
           <small>{{ carReview.year }}</small>
         </h2>
-        <div class="input-group technical__search-box">
-          <input
-            type="text"
-            class="form-control bg-transparent"
-            placeholder="جستجو میان همه آگهی ها..."
-          />
-          <icons-search class="input-icon" hash-color="#C6C7CC"></icons-search>
-        </div>
+        <search-advert />
         <div class="technical__rating-stars">
           <div class="technical__star">
             <img src="/img/star-outline.svg" />
@@ -211,8 +204,18 @@
                   stroke-linejoin="round"
                 ></path>
                 <circle cx="8" cy="11" r="1" fill="var(--color-black)"></circle>
-                <circle cx="12" cy="11" r="1" fill="var(--color-black)"></circle>
-                <circle cx="16" cy="11" r="1" fill="var(--color-black)"></circle>
+                <circle
+                  cx="12"
+                  cy="11"
+                  r="1"
+                  fill="var(--color-black)"
+                ></circle>
+                <circle
+                  cx="16"
+                  cy="11"
+                  r="1"
+                  fill="var(--color-black)"
+                ></circle>
               </svg>
               32 دیدگاه
             </div>
@@ -322,24 +325,24 @@
         <div class="technical__same-cars">
           <span class="technical__section-title">خودرو های هم رده</span>
 
-        <div class="car__row">
+          <div class="car__row">
             <div class="car" v-for="item in relatedCars" :key="item.id">
-            <nuxt-link
-              :to="`/car-reviews/${item.brandSlug}/${item.slug}`"
-              class="car__link"
-            >
-              <h-image
-                :src="GetModelImage(item.imageName)"
-                :alt="`${item.brand}, ${item.model}`"
-                class="car__img"
-              />
-              <h3 class="car__name">{{ item.brand }}،{{ item.model }}</h3>
-              <span class="car__en-name">{{
-                item.slug.replace("-", " ")
-              }}</span>
-            </nuxt-link>
+              <nuxt-link
+                :to="`/car-reviews/${item.brandSlug}/${item.slug}`"
+                class="car__link"
+              >
+                <h-image
+                  :src="GetModelImage(item.imageName)"
+                  :alt="`${item.brand}, ${item.model}`"
+                  class="car__img"
+                />
+                <h3 class="car__name">{{ item.brand }}،{{ item.model }}</h3>
+                <span class="car__en-name">{{
+                  item.slug.replace("-", " ")
+                }}</span>
+              </nuxt-link>
+            </div>
           </div>
-        </div>
         </div>
         <div class="technical__comment">
           <form class="technical__form" action="">
