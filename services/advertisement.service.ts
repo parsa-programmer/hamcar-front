@@ -18,12 +18,20 @@ export const GetByFilter = (
   });
 };
 
+export const GetDraftAdvert = (): Promise<IApiResponse<AdvertisementDto>> => {
+  return FetchApi(`/advertisement/GetDraft`, {}, { ignoreErrors: true });
+};
+
 export const GetByShortLink = (
   shortLink: string
 ): Promise<IApiResponse<AdvertisementDto>> => {
   return FetchApi(`/advertisement/${shortLink}`);
 };
-
+export const GetById = (
+  id: string
+): Promise<IApiResponse<AdvertisementDto>> => {
+  return FetchApi(`/advertisement/getById/${id}`);
+};
 export const CreateAdvertisement = (
   command: FormData
 ): Promise<IApiResponse<undefined>> => {

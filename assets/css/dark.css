@@ -71,3 +71,10 @@
 [data-theme="dark"] .input-group-suffix {
     background: var(--color-dark-black-600) !important;
 }
+[data-theme="dark"] .info-data{
+    background: var(--color-dark-black-600) !important;
+}
+[data-theme="dark"] .info__item--active{
+    background: var(--color-dark-black-600) !important;
+    border: none;
+}

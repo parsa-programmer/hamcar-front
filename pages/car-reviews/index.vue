@@ -116,8 +116,8 @@
 <script setup lang="ts">
 import { GetMainPageData } from "~/services/carReview.service";
 import { GetBrandImage, GetModelImage } from "~~/utilities/imageUtil";
-const middel = ref(0);
 const { data } = await useAsyncData("reviews", () => GetMainPageData());
+
 </script>
 
 

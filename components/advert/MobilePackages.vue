@@ -90,9 +90,7 @@
             <icons-flash v-if="selectedPlan == 2" />
           </h2>
           <label class="bg-success font-6">
-            {{
-              splitNumber(plans.filter((f) => f.id == 2)[0].totalPrice)
-            }}
+            {{ splitNumber(plans.filter((f) => f.id == 2)[0].totalPrice) }}
             تومان
           </label>
         </div>
@@ -166,9 +164,7 @@
             <icons-flash v-if="selectedPlan == 3" />
           </h2>
           <label class="bg-success font-6">
-            {{
-              splitNumber(plans.filter((f) => f.id == 3)[0].totalPrice)
-            }}
+            {{ splitNumber(plans.filter((f) => f.id == 3)[0].totalPrice) }}
             تومان
           </label>
         </div>
@@ -242,9 +238,7 @@
             <icons-flash v-if="selectedPlan == 4" />
           </h2>
           <label class="bg-success font-6">
-            {{
-              splitNumber(plans.filter((f) => f.id == 4)[0].totalPrice)
-            }}
+            {{ splitNumber(plans.filter((f) => f.id == 4)[0].totalPrice) }}
             تومان
           </label>
         </div>

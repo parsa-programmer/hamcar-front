@@ -15,6 +15,7 @@
         :width="24"
         :height="24"
       />
+      <icons-check-circle v-if="type == 'success'" class="alert-icon" />
     </div>
 
     <slot />
@@ -33,12 +34,14 @@ const { type = "warning", showIcon = false } = defineProps<{
     font-size: var(--t5-font-size) !important;
     font-family: var(--t5-font-size) !important;
     font-weight: 700 !important;
+    padding: 0.5rem 1rem 14px 1rem !important;
   }
 }
 .alert {
   width: 100%;
   display: block;
-  padding: 15px;
+  align-items: center;
+  padding: 1rem 2rem 14px 1.5rem;
   text-align: center;
   border-radius: 9px;
   font-size: var(--t3-font-size);
@@ -54,6 +57,12 @@ const { type = "warning", showIcon = false } = defineProps<{
 .alert-error {
   background: red;
   color: var(--color-white);
+}
+.alert-success {
+  color: var(--color-green-600);
+  border: 1px solid #02ada6;
+  border-radius: 16px;
+  background: #f0fefd;
 }
 .alert-icon {
   top: 6px;

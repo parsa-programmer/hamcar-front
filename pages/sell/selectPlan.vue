@@ -5,12 +5,27 @@
       <link href="/css/plan.css" rel="stylesheet" />
       <Title>ثبت آگهی فروش خودرو شما</Title>
     </Head>
-    <icons-loading v-if="plans.length == 0" />
-    <div v-else>
+    <Teleport to="body">
+      <div class="fixed__loading" v-if="isLoadingToPay">
+        <p
+          class="text-center"
+          style="
+            background: var(--color-white);
+            color: var(--color-black);
+            padding: 2rem;
+            height: fit-content;
+          "
+        >
+          درحال انتقال به درگاه بانک ...
+        </p>
+      </div>
+    </Teleport>
+    <icons-loading v-if="pending" />
+    <div v-if="pending == false">
       <advert-mobile-packages
         v-if="isMobilePage"
         class="mt-1"
-        :plans="plans"
+        :plans="data.data ?? []"
         @planSeleced="selectPlan"
         :selected-plan="selectedPlan"
       />
@@ -39,7 +54,7 @@
         </div>
         <hr class="d-sm-none" />
         <advert-desktop-plan
-          :plans="plans"
+          :plans="data.data ?? []"
           @planSeleced="selectPlan"
           :selected-plan="selectedPlan"
         />
@@ -49,30 +64,78 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  middleware: "should-login",
+});
 import { Ref } from "vue";
-import { AdvertisementPlan } from "~~/models/plans/AdvertisementPlan";
 import { GetAdvertisementPlans } from "~~/services/plans.service";
+import { CreateTransaction } from "~~/services/transaction.service";
+import {
+  FinallyAdvert,
+  GetDraftAdvert,
+} from "~~/services/advertisement.service";
 import { advertStore } from "~~/stores/advert.store";
+import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models";
+import { ToastType } from "~~/composables/useToast";
+import { TransactionOrderType } from "~~/models/transactions/CreateTransactionCommand";
 
 const isMobilePage = ref(false);
+const isLoadingToPay = ref(false);
 const selectedPlan = ref(0);
 const store = advertStore();
-const plans: Ref<AdvertisementPlan[]> = ref([]);
-const selectPlan = (id: number) => {
-  alert("selected " + id);
+const advert: Ref<AdvertisementDto | null> = ref(null);
+const router = useRouter();
+const toast = useToast();
+
+const { data, pending } = await useAsyncData(
+  "plans",
+  () => GetAdvertisementPlans(),
+  {
+    server: false,
+  }
+);
+
+const selectPlan = async (id: number) => {
+  if (id == 1) {
+    const result = await FinallyAdvert(advert.value!.id);
+    if (result.isSuccess) {
+      router.push(`/sell/finish?id=${advert.value?.id}`);
+    } else {
+      toast.showToast(result.metaData.message, ToastType.error);
+    }
+  } else {
+    isLoadingToPay.value = true;
+    const result = await CreateTransaction({
+      orderId: advert.value!.id,
+      orderType: TransactionOrderType.advertisementPlan,
+      planId: id,
+      successCallBack: `http://localhost:3000/sell/finish?id=${advert.value?.id}`,
+      errorCallBack: "http://localhost:3000/transactions/error",
+    }).finally(() => {
+      isLoadingToPay.value = false;
+    });
+    if (result.isSuccess) {
+      location.replace(result.data!);
+    } else {
+      toast.showToast(result.metaData.message, ToastType.error);
+    }
+  }
 };
 
-onMounted(() => {
+//plans.value = data?.value?.data ?? [];
+
+onMounted(async () => {
   let windowWidth = window.innerWidth;
   if (windowWidth <= 700) {
     isMobilePage.value = true;
   }
+  var res = await GetDraftAdvert();
+  if (!res.data) {
+    router.push("/");
+    return;
+  }
+  advert.value = res.data!;
   store.changeStep(6);
-  GetAdvertisementPlans().then((res) => {
-    if (res.isSuccess) {
-      plans.value = res.data!;
-    }
-  });
 });
 
 definePageMeta({

@@ -1,6 +1,5 @@
-﻿export enum AdvertisementPlanType
-{
-    Personal,
-    Exhibition,
-    Advertisement
+﻿export enum AdvertisementPlanType {
+  Personal = "personal",
+  Exhibition = "exhibition",
+  Advertisement = "advertisement",
 }

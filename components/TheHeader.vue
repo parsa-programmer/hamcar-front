@@ -24,23 +24,26 @@
               <a href="#" class="nav__link title">خودرو</a>
               <ul>
                 <li>
-                  <nuxt-link to="/">ثبت آگهی خودرو</nuxt-link>
+                  <nuxt-link to="/sell/car">ثبت آگهی خودرو</nuxt-link>
                 </li>
                 <li>
                   <nuxt-link to="/car-reviews">مشخصات فنی خودرو</nuxt-link>
                 </li>
-
+                <li>
+                  <nuxt-link to="/price"> قیمت روز خودرو</nuxt-link>
+                </li>
                 <li>
                   <nuxt-link to="/">گوش به زنگ خودرو</nuxt-link>
                 </li>
                 <li>
                   <nuxt-link to="/">نمایشگاه های خودرو</nuxt-link>
                 </li>
+                <li>
+                  <ChangeTheme></ChangeTheme>
+                </li>
               </ul>
             </li>
-            <li class="nav__item">
-              <ChangeTheme></ChangeTheme>
-            </li>
+
             <li>
               <a href="#" class="nav__link">موتور سیکلت</a>
             </li>
@@ -156,6 +159,12 @@ const isLogin = ref(false);
 onMounted(() => {
   isLogin.value = store.isLogin;
 });
+watch(
+  () => store.isLogin,
+  (val) => {
+    isLogin.value = val;
+  }
+);
 const props = defineProps({
   showSearchBar: {
     type: Boolean,

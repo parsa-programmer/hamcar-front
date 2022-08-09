@@ -1,5 +1,13 @@
 <template>
-  <div class="h-image-uploader">
+  <div :class="['h-image-uploader', size]">
+    <Teleport to="body">
+      <div class="image__uploading__container" v-if="loading">
+        <!-- <div class="image__uploading__progress">
+          <div class="image__uploading__progress__bar"></div>
+        </div> -->
+        <icons-loading />
+      </div>
+    </Teleport>
     <div class="image__container row" ref="imagContainer">
       <div
         class="image__item img__selector"
@@ -14,13 +22,13 @@
           type="file"
           @change="(e) => SelectedFile(e)"
         />
-        <icons-add-image :width="iconWidth" :height="iconHeight"/>
+        <icons-add-image :mobile-mode="size == 'sm' || isMobile" />
       </div>
+      <slot />
       <div class="image__item" v-for="(item, index) in imageNames" :key="index">
         <img :src="item" />
         <button class="delete__image__item" @click="DeleteImage(index)">
-          حذف
-          <icons-close  />
+          <icons-trash :width="20" :height="40" />
         </button>
       </div>
     </div>
@@ -30,9 +38,10 @@
 <script setup lang="ts">
 import { createImage } from "@nuxt/image-edge/dist/runtime";
 import { Ref } from "vue";
+import { ProssesAsync } from "~~/utilities/ProssesAsync";
 
-const iconWidth = ref(192);
-const iconHeight = ref(192);
+const isMobile = ref(false);
+
 const props = defineProps({
   multiple: {
     type: Boolean,
@@ -54,7 +63,16 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  size: {
+    type: String,
+    default: "normal",
+  },
+  onUploadNewImage: {
+    type: Function,
+    default: () => true,
+  },
 });
+const loading = ref(false);
 const selectedData = ref([]);
 const emit = defineEmits(["onSelected", "update:modelValue"]);
 const fileUpload: Ref<HTMLInputElement | null> = ref(null);
@@ -68,7 +86,7 @@ const DeleteImage = (index: number) => {
   selectedData.value.splice(index, 1);
   emit("update:modelValue", selectedData.value);
 };
-const SelectedFile = (e: any) => {
+const SelectedFile = async (e: any) => {
   if (props.justSelectOneTime) {
     selectedData.value = [];
     imageNames.value = [];
@@ -92,6 +110,17 @@ const SelectedFile = (e: any) => {
       }
     }
 
+    var result = await ProssesAsync<boolean | undefined>(
+      () => props.onUploadNewImage(file),
+      loading
+    );
+    if (!result) {
+      return;
+    }
+    //@ts-ignore
+    if (result == false) {
+      return;
+    }
     //@ts-ignore
     selectedData.value.push(file);
     imageNames.value.push(URL.createObjectURL(file));
@@ -102,80 +131,18 @@ const SelectedFile = (e: any) => {
 onMounted(() => {
   let windowWidth = window.innerWidth;
   if (windowWidth < 768) {
-    iconWidth.value = 88;
-    iconHeight.value = 88;
+    isMobile.value = true;
   }
 });
 </script>
-
 <style scoped>
-@media screen and (max-width: 768px) {
-  .img__selector {
-    width: 88px !important;
-    height: 88px !important;
-  }
-  .image__container img {
-    width: 88px !important;
-    height: 88px !important;
-  }
-  .delete__image__item {
-    left: 0.3rem !important;
-    top: 0.3rem !important;
-    font-family: var(--t6-font-family) !important;
-    font-size: var(--t6-font-size) !important;
-    width: 45px !important;
-  }
-  .delete__image__item svg {
-    display: none;
-  }
-}
-.image__container {
-  flex-wrap: wrap;
-}
-.image__container input {
-  opacity: 0;
-}
-.img__selector {
-  border: 2px dashed var(--color-gray-400);
-  border-radius: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 192px;
-  height: 192px;
-  cursor: pointer;
-  transition: all ease 0.2s;
-}
-.image__container img {
-  width: 192px;
-  height: 192px;
-  border-radius: 16px;
-}
-.image__item {
-  position: relative;
-}
-.delete__image__item {
-  width: 77px;
-  height: 2rem;
-  color: var(--color-black);
-  position: absolute;
-  left: 1rem;
-  top: 1rem;
-  background: var(--color-white);
-  border-radius: 6px;
-  cursor: pointer !important;
-  font-family: var(--t5-font-family);
-  font-size: var(--t5-font-size);
-  font-weight: 500;
-  transition: all ease 0.2s;
-}
-.delete__image__item:hover {
-  background: var(--color-gray-300) !important;
-}
-.delete__image__item svg {
-  margin-right: 14px;
-}
-.img__selector:hover {
-  background: var(--body-bg-color);
+.image__uploading__container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
 }
 </style>

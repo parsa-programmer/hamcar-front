@@ -20,7 +20,7 @@ definePageMeta({
   layout: "not-found",
 });
 </script>
-<style >
+<style scoped>
 @media screen and (max-width: 770px) {
   .w-full {
     width: 100% !important;
@@ -33,9 +33,12 @@ definePageMeta({
     top: -34% !important;
   }
 }
-
+h1{
+  color: #fff !important;
+}
 .not__found__container {
   position: relative;
+  color: #fff !important;
 }
 .not__found__container p {
   line-height: 180%;

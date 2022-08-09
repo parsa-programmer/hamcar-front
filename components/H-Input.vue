@@ -19,7 +19,9 @@
     <p class="input-invalid-text">{{ errorMessage }}</p>
   </div>
   <div v-else-if="suffix">
-    <div :class="['input-group', { input__valid: !errorMessage && modelValue }]">
+    <div
+      :class="['input-group', { input__valid: !errorMessage && modelValue }]"
+    >
       <input
         :type="type"
         :class="[
@@ -58,7 +60,7 @@
     <p class="input-valid-text" v-if="!errorMessage">{{ message }}</p>
     <p class="input-invalid-text" v-else-if="modelValue">{{ errorMessage }}</p>
   </div>
-  <div v-else>
+  <template v-else>
     <input
       :type="type"
       :class="[
@@ -74,8 +76,8 @@
       autocomplete="off"
       :name="name"
     />
-    <p class="input-invalid-text">{{ errorMessage }}</p>
-  </div>
+    <p v-if="ignoreErrorMessage==false" class="input-invalid-text">{{ errorMessage }}</p>
+  </template>
 </template>
 
 
@@ -123,6 +125,10 @@ const props = defineProps({
     default: "",
   },
   showCheckBox: {
+    type: Boolean,
+    default: false,
+  },
+  ignoreErrorMessage: {
     type: Boolean,
     default: false,
   },

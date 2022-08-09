@@ -24,13 +24,13 @@ export async function FetchApi<T>(
     config.headers["Authorization"] = `Bearer ${store.accessToken}`;
   }
   function showError(result: IApiResponse<any>) {
-    const { showToast } = useToast();
-    console.log(customConfig.ignoreErrors);
+    const toast = useToast();
     if (
       customConfig.ignoreErrors == false ||
       customConfig.ignoreErrors == undefined
     ) {
-      showToast(result.metaData.message, ToastType.error, 3000);
+      console.log(result.metaData.message);
+      toast.showToast(result.metaData.message, ToastType.error, 3000);
     }
   }
   return $fetch<IApiResponse<T>>(url, config)
@@ -44,26 +44,6 @@ export async function FetchApi<T>(
     .catch((e: FetchError) => {
       customConfig.onError?.(e);
 
-      if (e.response?.status == 401) {
-        showError({
-          isSuccess: false,
-          data: undefined,
-          metaData: {
-            message: "دسترسی غیر مجاز",
-            appStatusCode: ApiStatusCodes.UnAuthorize,
-          },
-        });
-      }
-      if (e.response?.status == 400) {
-        showError({
-          isSuccess: false,
-          data: undefined,
-          metaData: {
-            message: "اطلاعات نامعتبر است",
-            appStatusCode: ApiStatusCodes.BadRequest,
-          },
-        });
-      }
       var response = {
         data: undefined,
         isSuccess: false,
@@ -72,8 +52,36 @@ export async function FetchApi<T>(
           appStatusCode: e.response?._data?.MetaData?.AppStatusCode,
         },
       };
-      console.log(response);
-      if (e.response?._data == undefined) {
+      if (e.response?.status == 401) {
+        response.metaData.appStatusCode = ApiStatusCodes.UnAuthorize;
+        showError({
+          isSuccess: false,
+          data: undefined,
+          metaData: {
+            message: "دسترسی غیر مجاز",
+            appStatusCode: ApiStatusCodes.UnAuthorize,
+          },
+        });
+      } else if (e.response?.status == 400) {
+        showError({
+          isSuccess: false,
+          data: undefined,
+          metaData: {
+            message: "اطلاعات نامعتبر است",
+            appStatusCode: ApiStatusCodes.BadRequest,
+          },
+        });
+      } else if (e.response?.status == 429) {
+        showError({
+          isSuccess: false,
+          data: undefined,
+          metaData: {
+            message:
+              "تعداد درخواست های شما بیشتر از حد مجاز است ، چند دقیقه بعد تلاش کنید",
+            appStatusCode: ApiStatusCodes.ServerError,
+          },
+        });
+      } else if (e.response?._data == undefined) {
         showError({
           data: undefined,
           isSuccess: false,

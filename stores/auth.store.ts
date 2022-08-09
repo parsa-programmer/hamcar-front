@@ -3,6 +3,8 @@ import { LoginResultDto } from "~~/models/auth/LoginResultDto";
 import { GetCurrenctUser } from "~/services/account.service";
 import { UserDto } from "~~/models/account/account.Models";
 import { use } from "h3";
+import { useAuth } from "~~/composables/auth/useAuth";
+import { ApiStatusCodes } from "~~/models/advertisements/enums/ApiStatusCodes";
 
 const defaultState = () => ({
   refreshToken: "",
@@ -36,12 +38,22 @@ export const authStore = defineStore("auth", {
         this.loading = true;
         GetCurrenctUser()
           .then((res) => {
+            if (res.metaData.appStatusCode === ApiStatusCodes.UnAuthorize) {
+              this.logout();
+              return;
+            }
             this.user = res.data!;
           })
           .finally(() => {
             this.loading = false;
           });
       }
+    },
+    async logout() {
+      const auth = useAuth();
+      await auth.logout();
+      this.accessToken = "";
+      this.refreshToken = "";
     },
   },
 });

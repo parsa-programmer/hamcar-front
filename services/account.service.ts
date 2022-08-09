@@ -15,7 +15,7 @@ import { FetchApi } from "~~/utilities/customFetchApi";
 
 //#region Queries
 export const GetCurrenctUser = (): Promise<IApiResponse<UserDto>> => {
-  return FetchApi("/account");
+  return FetchApi("/account", {}, { ignoreErrors: true });
 };
 
 export const GetAccessNotifyCount = (): Promise<IApiResponse<number>> => {

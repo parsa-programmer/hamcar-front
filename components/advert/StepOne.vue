@@ -8,6 +8,7 @@
           :show-check-box="true"
           v-model="stepData.brandId"
           :data="brands"
+          :disabled="brands.length==0"
         />
         <h-select-box
           placeholder="انتخاب مدل"

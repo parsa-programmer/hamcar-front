@@ -66,7 +66,7 @@ onUnmounted(() => {
 });
 </script>
 
-<style scoped>
+<style>
 .fixed__loading {
   position: fixed;
   display: flex;
@@ -76,5 +76,7 @@ onUnmounted(() => {
   justify-content: center;
   align-content: center;
   z-index: 100000000;
+  top: 0;
+  align-items: center;
 }
 </style>

@@ -2,9 +2,10 @@
   <div v-if="carReview == undefined || pending">Loading ...</div>
   <div v-else>
     <Head>
-      <Title>{{ carReview.seoData.metaTitle }}</Title>
+      <Title>{{ carReview.seoData.metaTitle }} {{carReview.id}}</Title>
       <Link href="/css/technical.css" rel="stylesheet" />
     </Head>
+    <report-bug :reportFor="BugReportFor.review" v-model="isOpenBugReportModal" :link-id="carReview.id" />
     <section class="breadcrumb">
       <nuxt-link to="/" class="breadcrumb__item">
         <icons-home></icons-home>
@@ -162,7 +163,7 @@
             </span>
             قیمت روز
           </a>
-          <a href="#" class="technical__option">
+          <a href="#" @click="toggleBugReportModal" class="technical__option">
             <span>
               <svg
                 width="26"
@@ -366,7 +367,7 @@
 </template>
 
 <script setup lang="ts">
-import { Ref, ref } from "vue";
+import { Ref } from "vue";
 import {
   CarReviewDto,
   CarReviewFilterData,
@@ -377,6 +378,9 @@ import {
   Specification,
   SpecificationDetail,
 } from "~~/models/carReviews/Specification";
+import { BugReportFor } from "~~/services/bugReport.service";
+
+const isOpenBugReportModal = ref(false);
 
 const carReview: Ref<CarReviewDto | undefined> = ref(undefined);
 const relatedCars: Ref<CarReviewFilterData[]> = ref([]);
@@ -393,6 +397,10 @@ const leftSpecifications: Ref<Specification[]> = ref([]);
 const rightSpecifications: Ref<Specification[]> = ref([]);
 
 carReview.value = data.value.data;
+
+const toggleBugReportModal = () => {
+  isOpenBugReportModal.value = !isOpenBugReportModal.value;
+};
 onMounted(async () => {
   if (data.value.isSuccess) {
     const specifications = [...data.value.data?.specifications!];

@@ -20,6 +20,8 @@ import { Year } from "../utilities/Year";
 import { Trim } from "../utilities/Trim";
 import { UserDto } from "../account/account.Models";
 import { ExhibitionDto } from "../exhibitions/Exhibition.Models";
+import { AdvertisementPlan } from "../plans/AdvertisementPlan";
+import { AdvertisementPlanType } from "./enums/AdvertisementPlanType";
 
 export interface AdvertisementFilterData {
   id: string;
@@ -66,6 +68,7 @@ export interface AdvertisementFilterParams extends FilterParams {
   country: Country | null;
 }
 export interface AdvertisementImageDto {
+  id: string;
   imageName: string;
   isMainImage: boolean;
 }
@@ -91,5 +94,11 @@ export interface AdvertisementDto {
   brand: Brand;
   year: Year;
   trim: Trim;
+  plan: AdvertPlanInfo;
   exhibition: ExhibitionDto;
+}
+export interface AdvertPlanInfo {
+  planId: string;
+  expireDate: Date;
+  planType: AdvertisementPlanType;
 }

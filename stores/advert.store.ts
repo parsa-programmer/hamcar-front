@@ -68,7 +68,7 @@ export const advertStore = defineStore("advert", {
     },
   },
   actions: {
-    createAdvert() {
+    async createCarAdvert(): Promise<void> {
       const toast = useToast();
       if (this.validateCarData() == false) {
         toast.showToast("لطفا تمامی موارد را تکمیل کنید", ToastType.error);
@@ -84,7 +84,10 @@ export const advertStore = defineStore("advert", {
         data.append("TrimId", this.steps.one.trimId);
       }
       data.append("Description", this.steps.two.description);
-      data.append("Milage", this.steps.two.milage);
+      data.append(
+        "Milage",
+        this.steps.two.milage == "" ? "0" : this.steps.two.milage
+      );
       data.append("GearBox", this.steps.two.gearBox!.toString());
       data.append(
         "CarDetail.BodyCondition",
@@ -104,7 +107,10 @@ export const advertStore = defineStore("advert", {
         "Price.AdvertisementPaymentType",
         this.steps.three.advertisementPaymentType!.toString()
       );
-      data.append("Price.StaticAmount", this.steps.three.amount);
+      data.append(
+        "Price.StaticAmount",
+        this.steps.three.amount == "" ? "0" : this.steps.three.amount
+      );
       if (
         this.steps.three.advertisementPaymentType ==
         AdvertisementPaymentType.قسطی
@@ -130,7 +136,6 @@ export const advertStore = defineStore("advert", {
       data.append("Province", this.steps.four.Province);
       data.append("City", this.steps.four.City);
       data.append("PostalAddress", this.steps.four.PostalAddress);
-
       for (let i = 0; i < this.steps.five.images.length; i++) {
         data.append(
           "Images", //PropertyName
@@ -139,41 +144,23 @@ export const advertStore = defineStore("advert", {
           this.steps.five.images[i].name //FileName
         );
       }
-      CreateAdvertisement(data)
+      return CreateAdvertisement(data)
         .then((res) => {
-          this.currentStep = 6;
+          if (res.isSuccess) {
+            this.currentStep = 6;
+            const router = useRouter();
+            router.push("/sell/selectPlan");
+          }
         })
-        .catch((err) => {})
+        .catch((err) => {
+          toast.showToast("مشکلی در عملیات رخ داده", ToastType.error);
+        })
         .finally(() => {
           this.loading = false;
         });
     },
     changeStep(step: number) {
       this.currentStep = step;
-    },
-    setStepData(stepData: any) {
-      switch (this.currentStep) {
-        case 1: {
-          this.steps.one = stepData;
-          break;
-        }
-        case 2: {
-          this.steps.two = stepData;
-          break;
-        }
-        case 3: {
-          this.steps.three = stepData;
-          break;
-        }
-        case 4: {
-          this.steps.four = stepData;
-          break;
-        }
-        case 5: {
-          this.steps.five = stepData;
-          break;
-        }
-      }
     },
     setBrands(): Promise<void> {
       return GetBrands().then((res) => {

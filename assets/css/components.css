@@ -292,9 +292,11 @@ Input & Input Group
     color: var(--color-black);
     cursor: pointer;
 }
-.btn-default-size{
+
+.btn-default-size {
     width: 12rem !important;
 }
+
 .btn-sm {
     border-radius: 12px !important;
     height: 3rem !important;
@@ -315,6 +317,11 @@ Input & Input Group
     background-color: var(--color-blue);
 }
 
+.btn-default {
+    color: var(--color-gray-500);
+    border: 2px solid var(--color-gray-400);
+    background-color: transparent;
+}
 
 .btn-error-outline {
     border: 2px solid var(--color-error);
@@ -353,7 +360,8 @@ button[disabled] {
         height: 4rem;
         padding: 0 1.2rem;
     }
-    .btn-default-size{
+
+    .btn-default-size {
         width: 7.5rem !important;
     }
 }
@@ -582,17 +590,18 @@ textarea {
    Radio Butotn
 ===================
 */
-.radio-group{
+.radio-group {
     display: flex;
     justify-content: space-between;
 }
-.radio-group__col{
+
+.radio-group__col {
     display: flex;
     flex-direction: column;
     gap: 1rem;
 }
 
-.radio{
+.radio {
     font-family: var(--t3-font-family);
     font-size: var(--t3-font-size);
     display: inline-flex;
@@ -601,10 +610,12 @@ textarea {
     flex-shrink: 0;
     min-width: 288px;
 }
-.radio__input{
+
+.radio__input {
     display: none;
 }
-.radio__circle{
+
+.radio__circle {
     width: 24px;
     height: 24px;
     display: block;
@@ -614,7 +625,8 @@ textarea {
     flex-shrink: 0;
 
 }
-.radio__input:checked + .radio__circle::before{
+
+.radio__input:checked+.radio__circle::before {
     content: "";
     position: absolute;
     top: 0;
@@ -629,31 +641,32 @@ textarea {
     background-color: var(--color-blue);
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 992px) {}
 
-}
 @media screen and (max-width: 768px) {
-    .radio-group{
+    .radio-group {
         flex-wrap: wrap;
         row-gap: 1rem;
     }
+
     .radio {
         font-family: var(--t6-font-family);
         font-size: var(--t6-font-size);
         min-width: 211px;
     }
+
     .radio__circle {
         width: 20px;
         height: 20px;
     }
-    .radio__input:checked + .radio__circle::before{
+
+    .radio__input:checked+.radio__circle::before {
         width: 0.8rem;
         height: 0.8rem;
     }
 }
-@media screen and (max-width: 576px) {
 
-}
+@media screen and (max-width: 576px) {}
 
 
 
@@ -663,10 +676,11 @@ textarea {
       Modal
 ===================
 */
-body.modal-open{
+body.modal-open {
     overflow: hidden;
 }
-.modal-wrapper{
+
+.modal-wrapper {
     display: none;
     align-items: center;
     position: fixed;
@@ -675,14 +689,14 @@ body.modal-open{
     right: 0;
     bottom: 0;
     z-index: 999;
-    background-color: rgba(15, 15, 16, 0.5);
     overflow-y: auto;
 }
 
-.modal-wrapper--open{
+.modal-wrapper--open {
     display: block;
 }
-.modal{
+
+.modal {
     border-radius: 18px;
     overflow: hidden;
     background-color: var(--color-white);
@@ -690,8 +704,11 @@ body.modal-open{
     width: 100%;
     margin: 4rem auto 2rem auto;
     flex-shrink: 0;
+    max-height: 90%;
+    overflow-y: auto;
 }
-.modal__header{
+
+.modal__header {
     position: relative;
     background-color: var(--color-gray-200);
     height: 6.5rem;
@@ -699,7 +716,8 @@ body.modal-open{
     align-items: center;
     justify-content: center;
 }
-.modal__close-btn{
+
+.modal__close-btn {
     width: 3.5rem;
     height: 3.5rem;
     background-color: var(--color-white);
@@ -712,87 +730,105 @@ body.modal-open{
     top: 1.5rem;
     cursor: pointer;
 }
-.modal__close-btn svg{
+
+.modal__close-btn svg {
     width: 18px;
     height: 18px;
     stroke-width: 2;
 }
-.modal__name{
+
+.modal__name {
     font-family: var(--t1-font-family);
     font-size: var(--t1-font-size);
 }
-.modal__caption{
+
+.modal__caption {
     display: none;
     color: var(--color-gray-600);
     font-family: var(--t6-font-family);
     font-size: var(--t6-font-size);
     margin-top: 0.5rem;
 }
-.modal__body{
+
+.modal__body {
     padding: 2.25rem 4rem 3rem 4rem;
 }
-.modal__submit-btn{
+
+.modal__submit-btn {
     min-width: 12rem;
     margin-right: auto;
     margin-top: 2rem;
 }
-.modal__line{
+
+.modal__line {
     display: none;
     background-color: var(--color-gray-200);
     height: 2px;
     margin-top: 1.5rem;
     margin-left: -2rem;
 }
+
 @media screen and (max-width: 992px) {
-    .modal{
+    .modal {
         max-width: 44rem;
     }
-    .modal__body{
+
+    .modal__body {
         padding-left: 3rem;
         padding-right: 3rem;
         padding-bottom: 2rem;
     }
-    .modal__close-btn{
+
+    .modal__close-btn {
         right: 3rem;
     }
 }
+
 @media screen and (max-width: 768px) {
-    .modal-wrapper--open{
+    .modal-wrapper--open {
         display: flex;
     }
-    .modal-wrapper{
+
+    .modal-wrapper {
         max-height: 100vh;
         align-items: flex-end;
     }
-    .modal-wrapper--normal{
+
+    .modal-wrapper--normal {
         align-items: flex-start;
         padding: 0 26px;
     }
+
     .modal-wrapper--normal .modal{
         border-radius: 20px;
-        margin-top: 6.5rem;
+        margin-top: 4rem;
     }
 
-    .modal-wrapper--normal .modal__header{
+    .modal-wrapper--normal .modal__header {
         background-color: var(--color-gray-200);
         display: flex;
         padding: 0;
     }
+
     .modal-wrapper--normal .modal__header::before {
         content: none;
     }
+
     .modal-wrapper--normal .modal__close-btn,
-    .modal-wrapper--normal .modal__caption{
+    .modal-wrapper--normal .modal__caption {
         display: none;
     }
-    .modal-wrapper--normal .modal__name{
+
+    .modal-wrapper--normal .modal__name {
         margin-top: 0;
         text-align: center;
     }
-    .modal-wrapper--normal .modal__body{
+
+    .modal-wrapper--normal .modal__body {
         padding-top: 1.5rem;
     }
-    .modal{
+
+    .modal {
         max-width: 100%;
         width: 100%;
         flex-grow: 1;
@@ -801,14 +837,15 @@ body.modal-open{
         margin-bottom: 0;
     }
 
-    .modal__header{
+    .modal__header {
         background-color: var(--color-white);
         display: block;
         height: auto;
         padding: 1.5rem 1.625rem 0 1.625rem;
         min-height: 4rem;
     }
-    .modal__header::before{
+
+    .modal__header::before {
         content: "";
         width: 4rem;
         height: 0.25rem;
@@ -820,7 +857,7 @@ body.modal-open{
         margin: auto;
     }
 
-    .modal__close-btn{
+    .modal__close-btn {
         background-color: var(--color-gray-200);
         width: 40px;
         height: 40px;
@@ -828,33 +865,42 @@ body.modal-open{
         left: 1.625rem;
         right: auto;
     }
-    .modal__close-btn svg{
+
+    .modal__close-btn svg {
         width: 12px;
         height: 12px;
         stroke-width: 1.5;
     }
-    .modal__body{
+
+    .modal__body {
         padding: 2rem 1.625rem 1.5rem 1.625rem;
     }
-    .modal__name{
+
+    .modal__name {
         font-family: var(--t3-font-family);
         font-size: var(--t3-font-size);
         text-align: right;
         margin-top: 1.75rem;
     }
-    .modal__caption{
+
+    .modal__caption {
         display: block;
     }
-    .modal__submit-btn{
+
+    .modal__submit-btn {
         width: 100%;
         margin-top: 1.5rem;
     }
-    .modal__line{
+
+    .modal__line {
         display: block;
     }
 }
-@media screen and (max-width: 576px) {
 
+@media screen and (max-width: 576px) {
+    .modal__body{
+        padding-top: 0 !important;
+    }
 }
 
 /*
@@ -862,10 +908,11 @@ body.modal-open{
  DropDown with Searchbox
 ==========================
 */
-.dropdown-wrapper{
+.dropdown-wrapper {
     position: relative;
 }
-.dropdown-box{
+
+.dropdown-box {
     position: relative;
     max-width: 13.5rem;
     width: 100%;
@@ -873,17 +920,20 @@ body.modal-open{
     cursor: pointer;
     user-select: none;
 }
-.dropdown-box--open + .dropdown{
+
+.dropdown-box--open+.dropdown {
     display: block;
 }
-.dropdown-box__icon{
+
+.dropdown-box__icon {
     position: absolute;
     left: 1.5rem;
     top: 0;
     bottom: 0;
     margin: auto;
 }
-.dropdown-box__input{
+
+.dropdown-box__input {
     font-family: var(--t6-font-family);
     font-size: var(--t6-font-size);
     color: var(--color-black);
@@ -895,10 +945,12 @@ body.modal-open{
     cursor: pointer;
 
 }
-.dropdown-box__input::placeholder{
+
+.dropdown-box__input::placeholder {
     color: var(--color-gray-600);
 }
-.dropdown{
+
+.dropdown {
     display: none;
     position: absolute;
     top: 3.5rem;
@@ -914,31 +966,36 @@ body.modal-open{
     padding-left: 0.25rem;
     z-index: 500;
 }
-.dropdown__search-box{
+
+.dropdown__search-box {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.08);
     border-radius: 12px 12px 0px 0px;
     height: 3rem;
     position: relative;
     margin-left: -0.25rem;
 }
-.dropdown__input{
+
+.dropdown__input {
     height: 100%;
     width: 100%;
     display: block;
     padding-right: 2.625rem;
     padding-left: 1rem;
 }
-.dropdown__input::placeholder{
+
+.dropdown__input::placeholder {
     color: var(--color-gray-500);
 }
-.dropdown__icon{
+
+.dropdown__icon {
     position: absolute;
     right: 1rem;
     top: 0;
     bottom: 0;
     margin: auto;
 }
-.dropdown__list{
+
+.dropdown__list {
     max-height: 18rem;
     padding: 0 1rem;
     display: flex;
@@ -947,10 +1004,12 @@ body.modal-open{
     overflow-y: auto;
     margin: 0.5rem 0;
 }
-.dropdown__item{
+
+.dropdown__item {
     color: var(--color-black-200);
     cursor: pointer;
 }
+
 .dropdown__list::-webkit-scrollbar {
     width: 4px;
 }
@@ -964,12 +1023,117 @@ body.modal-open{
     border-radius: 56px;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 992px) {}
 
-}
+@media screen and (max-width: 768px) {}
+
+@media screen and (max-width: 576px) {}
+
+
+/* ImageSelector */
 @media screen and (max-width: 768px) {
+    .img__selector {
+        width: 88px !important;
+        height: 88px !important;
+    }
 
+    .image__container img {
+        width: 88px !important;
+        height: 88px !important;
+    }
+
+    .delete__image__item {
+        left: 0.3rem !important;
+        top: 0.3rem !important;
+        font-family: var(--t6-font-family) !important;
+        font-size: var(--t6-font-size) !important;
+        width: 24px !important;
+        height: 24px !important;
+    }
+
+    .delete__image__item svg {
+        width: 10px;
+        height: 12px;
+    }
 }
-@media screen and (max-width: 576px) {
 
+
+.sm .img__selector {
+    width: 88px !important;
+    height: 88px !important;
+}
+
+.sm .image__container img {
+    width: 88px !important;
+    height: 88px !important;
+}
+
+.sm .delete__image__item {
+    left: 0.3rem !important;
+    top: 0.3rem !important;
+    font-family: var(--t6-font-family) !important;
+    font-size: var(--t6-font-size) !important;
+    width: 24px !important;
+    height: 24px !important;
+}
+
+.sm .delete__image__item svg {
+    width: 10px;
+    height: 12px;
+}
+
+
+
+.image__container {
+    flex-wrap: wrap;
+}
+
+.image__container input {
+    opacity: 0;
+}
+
+.img__selector {
+   
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 192px;
+    height: 192px;
+    cursor: pointer;
+    transition: all ease 0.2s;
+}
+
+.image__container img {
+    width: 192px;
+    height: 192px;
+    border-radius: 16px;
+}
+
+.image__item {
+    position: relative;
+}
+
+.delete__image__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    opacity: 0.7;
+    position: absolute;
+    left: 10px;
+    top: 0.5rem;
+    background: var(--color-black);
+    border-radius: 50%;
+    cursor: pointer !important;
+    transition: all ease 0.2s;
+}
+
+.delete__image__item:hover {
+    background: var(--color-black-500) !important;
+}
+
+.img__selector:hover {
+    background: var(--body-bg-color);
 }

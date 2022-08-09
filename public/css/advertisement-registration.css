@@ -238,8 +238,8 @@
         display: none;
     }
     .registration__title{
-        font-size: var(--t3-font-size);
-        font-family: var(--t3-font-family);
+        font-size: var(--t5-font-size);
+        font-family: var(--t5-font-family);
     }
     .breadcrumb,
     .registration__steps-wrapper{

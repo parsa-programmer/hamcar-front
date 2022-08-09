@@ -42,6 +42,7 @@ export enum CarReviewFilterOrderBy {
 }
 //#endregion
 export interface CarReviewDto {
+  id:string;
   slug: string;
   year: number;
   description: string;

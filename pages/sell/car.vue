@@ -12,7 +12,7 @@
       <icons-left-arrow></icons-left-arrow>
       <a class="breadcrumb__item breadcrumb__item--active">ثبت آگهی خودرو</a>
     </section>
-    <section class="registration">
+    <section class="registration" v-if="pending == false">
       <div class="registration__head">
         <h1 class="registration__title">ثبت آگهی فروش خودرو شما</h1>
         <search-advert />
@@ -56,10 +56,28 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { advertStore } from "~~/stores/advert.store";
+import {
+  GetDraftAdvert,
+  CreateAdvertisement,
+} from "~~/services/advertisement.service";
 
+const { data, pending } = await useAsyncData(
+  "ad_draft",
+  () => GetDraftAdvert(),
+  {
+    server: true,
+    initialCache: false,
+  }
+);
+if (data?.value?.data) {
+  await navigateTo("/sell/selectPlan", { redirectCode: 301 });
+}
 const store = advertStore();
+onMounted(() => {
+  store.changeStep(1);
+});
 </script>
 
 <style scoped>

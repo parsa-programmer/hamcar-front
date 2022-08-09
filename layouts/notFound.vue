@@ -1,5 +1,12 @@
 <template>
   <div class="not__found__layout">
+    <Head>
+      <Style>
+        .nav__item ul{ background: #0F0F10 !important; } .nav__register a{
+        color: white !important; } .not__found__layout .nav__wrapper a { color:
+        white; }
+      </Style>
+    </Head>
     <the-header :show-search-bar="false" showSearchIcon></the-header>
     <main class="main">
       <div class="container text-center white">
@@ -19,9 +26,6 @@ useHead({
 </script>
 
 <style scoped>
-h1{
-  color: white !important;
-}
 .not__found__layout .nav__icon {
   color: white;
 }
@@ -30,7 +34,7 @@ h1{
   top: 22%;
 }
 .not__found__layout {
-  background: #0F0F10;
+  background: #0f0f10;
   opacity: 0.9;
   height: 100vh;
   position: relative;
@@ -38,8 +42,5 @@ h1{
 }
 .not__found__layout header {
   background: transparent;
-}
-.not__found__layout .nav__wrapper a {
-  color: white;
 }
 </style>

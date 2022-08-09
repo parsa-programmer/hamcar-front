@@ -31,15 +31,16 @@
 
 <script setup lang="ts">
 import { advertStore } from "~~/stores/advert.store";
+import { ProssesAsync } from "~~/utilities/ProssesAsync";
 
 const store = advertStore();
 
 const images = ref([]);
-const loading = ref(store.loading);
+const loading = ref(false);
 
 const createAdvert = () => {
-  store.setStepData(images);
-  store.createAdvert();
+  store.steps.five.images = images.value;
+  ProssesAsync(() => store.createCarAdvert(), loading);
 };
 </script>
 
@@ -49,7 +50,6 @@ const createAdvert = () => {
     margin-top: 40px !important;
     margin-bottom: 1rem !important;
   }
- 
 }
 .w-full {
   margin-top: 6.5rem;

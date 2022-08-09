@@ -41,6 +41,7 @@ export const useAuth = () => {
     var result = await LogOut();
 
     loading.value = false;
+    localStorage.removeItem("auth-data");
     return result.isSuccess;
   };
 

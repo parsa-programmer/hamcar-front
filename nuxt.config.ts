@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     "~/assets/css/grid.css",
     "~/assets/css/components.css",
     "~/assets/css/responsive.css",
-    "~/assets/css/animation.css"
+    "~/assets/css/animation.css",
   ],
   image: {
     domains: ["dl.test13.ir", "localhost:3000"],
