@@ -18,15 +18,15 @@
         <search-advert />
       </div>
       <div class="registration__content">
-        <advert-steps />
+        <register-advert-steps />
         <div class="registration__container">
-          <advert-step-one />
+          <register-advert-step-one />
           <Transition
             name="custom-classes2"
             enter-active-class="animate__animated animate__fadeInUp "
             leave-active-class="animate__animated animate__bounceOutRight"
           >
-            <advert-step-two v-if="store.currentStep >= 2" />
+            <register-advert-step-two v-if="store.currentStep >= 2" />
           </Transition>
 
           <Transition
@@ -34,21 +34,21 @@
             enter-active-class="animate__animated animate__fadeInUp"
             leave-active-class="animate__animated animate__bounceOutRight"
           >
-            <advert-step-three v-if="store.currentStep >= 3" />
+            <register-advert-step-three v-if="store.currentStep >= 3" />
           </Transition>
           <Transition
             name="custom-classes2"
             enter-active-class="animate__animated animate__fadeInUp"
             leave-active-class="animate__animated animate__bounceOutRight"
           >
-            <advert-step-four v-if="store.currentStep >= 4" />
+            <register-advert-step-four v-if="store.currentStep >= 4" />
           </Transition>
           <Transition
             name="custom-classes2"
             enter-active-class="animate__animated animate__fadeInUp"
             leave-active-class="animate__animated animate__bounceOutRight"
           >
-            <advert-step-five v-if="store.currentStep >= 5" />
+            <register-advert-step-five v-if="store.currentStep >= 5" />
           </Transition>
         </div>
       </div>

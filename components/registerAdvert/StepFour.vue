@@ -5,7 +5,7 @@
         enter-active-class="animate__lightSpeedInRight"
         leave-active-class="animate__lightSpeedOutLeft"
       >
-        <advert-step-four-login
+        <register-advert-step-four-login
           v-if="loginStep == 1"
           @toggleLoginStep="changeAuthSteps"
         />
@@ -14,7 +14,7 @@
         enter-active-class="animate__lightSpeedInRight"
         leave-active-class="animate__lightSpeedOutLeft"
       >
-        <advert-step-four-validate-code
+        <register-advert-step-four-validate-code
           @toggleLoginStep="changeAuthSteps"
           v-if="loginStep == 2"
         />

@@ -1,7 +1,8 @@
 <template>
-  <div>
+  <div @click="changeDate">
     <Head>
-      <Link href="/css/landing.css" rel="stylesheet"/>
+      <Link href="/css/landing.css" rel="stylesheet" />
+      <Title>همکار</Title>
     </Head>
     <section class="info">
       <div class="container">
@@ -39,7 +40,7 @@
             <div class="info__item info__item--active">شاسی</div>
             <div class="info__item">
               برند
-              <div class="info-data" style="display: none;">
+              <div class="info-data" style="display: none">
                 <div class="info-data__header">
                   <input
                     type="text"
@@ -682,7 +683,7 @@
     <section class="main-content">
       <div class="container">
         <div class="main-content__wrapper">
-         <landing-sidebar />
+          <landing-sidebar />
           <div class="content">
             <h-image
               src="/static/img/car1.jpg"
@@ -695,13 +696,13 @@
           </div>
         </div>
         <div class="picture-lists">
-          <div class="picture-lists__item ">
+          <div class="picture-lists__item">
             <h-image src="/static/img/car2.jpg" alt="Hamcar.ir" />
           </div>
           <div class="picture-lists__item picture-lists__item--active">
             <h-image src="/static/img/car3.jpg" alt="Hamcar.ir" />
           </div>
-          <div class="picture-lists__item ">
+          <div class="picture-lists__item">
             <h-image src="/static/img/car4.jpg" alt="Hamcar.ir" />
           </div>
         </div>
@@ -720,7 +721,13 @@ const openModal = () => {
 };
 
 definePageMeta({
-  layout:"landing"
-})
+  layout: "landing",
+});
+const newDate = ref("");
+
+const changeDate = () => {
+  let oldDate = new Date();
+  newDate.value = oldDate.toPersianDate();
+};
 </script>
 

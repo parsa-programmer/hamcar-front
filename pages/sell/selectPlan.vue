@@ -22,7 +22,7 @@
     </Teleport>
     <icons-loading v-if="pending" />
     <div v-if="pending == false">
-      <advert-mobile-packages
+      <register-advert-mobile-packages
         v-if="isMobilePage"
         class="mt-1"
         :plans="data.data ?? []"
@@ -53,7 +53,7 @@
           </nuxt-link>
         </div>
         <hr class="d-sm-none" />
-        <advert-desktop-plan
+        <register-advert-desktop-plan
           :plans="data.data ?? []"
           @planSeleced="selectPlan"
           :selected-plan="selectedPlan"
@@ -64,9 +64,6 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  middleware: "should-login",
-});
 import { Ref } from "vue";
 import { GetAdvertisementPlans } from "~~/services/plans.service";
 import { CreateTransaction } from "~~/services/transaction.service";
@@ -78,6 +75,10 @@ import { advertStore } from "~~/stores/advert.store";
 import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models";
 import { ToastType } from "~~/composables/useToast";
 import { TransactionOrderType } from "~~/models/transactions/CreateTransactionCommand";
+
+definePageMeta({
+  middleware: "should-login",
+});
 
 const isMobilePage = ref(false);
 const isLoadingToPay = ref(false);

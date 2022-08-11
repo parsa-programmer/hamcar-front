@@ -3,7 +3,7 @@
     <Teleport to="#header">
       <the-header :show-search-bar="false" showSearchIcon></the-header>
     </Teleport>
-    <advert-steps class="mt-1" />
+    <register-advert-steps class="mt-1" />
     <div>
       <h2 class="page__sub__title">پلن موردنظر خود را انتخاب کنید:</h2>
       <div class="row" style="margin-top: 0.5rem" v-if="selectedPlan > 0">

@@ -146,6 +146,7 @@
 
 <script setup lang="ts">
 import { Form } from "vee-validate";
+import { ref } from "#imports";
 import { Ref } from "vue";
 import { BugReportFor } from "~~/services/bugReport.service";
 import { authStore } from "~~/stores/auth.store";
@@ -160,7 +161,7 @@ const phoneNumber: Ref<string> = ref("");
 const description: Ref<string> = ref("");
 const reportFor: Ref<BugReportFor | null> = ref(null);
 const aStore = authStore();
-const toast=useToast();
+const toast = useToast();
 
 const emit = defineEmits(["update:modelValue"]);
 const props = defineProps<{
@@ -192,7 +193,7 @@ const sendReport = async () => {
     loading
   );
   if (result.isSuccess) {
-    toast.showToast("گزارش شما با موفقیت ثبت شد")
+    toast.showToast("گزارش شما با موفقیت ثبت شد");
     emit("update:modelValue", false);
   }
 };

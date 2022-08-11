@@ -3,4 +3,7 @@ export interface Model {
   title: string;
   slug: string;
   imageName: string;
+  fuel: string;
 }
+
+

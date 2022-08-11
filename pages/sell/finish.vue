@@ -29,7 +29,7 @@
         <search-advert />
       </div>
       <div class="registration__content">
-        <advert-steps />
+        <register-advert-steps />
         <div v-if="loading == false">
           <h-alert type="success" class="font-2 text-right" :show-icon="true">
             آگهی توربو شما بررسی و ثبت خواهد شد
