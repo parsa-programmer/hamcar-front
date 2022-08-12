@@ -1,4 +1,4 @@
-import debounce from "lodash/debounce";
+import debounce from "lodash/debounce.js";
 
 export class Toast {
   constructor(

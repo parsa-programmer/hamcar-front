@@ -2,10 +2,14 @@
   <div v-if="carReview == undefined || pending">Loading ...</div>
   <div v-else>
     <Head>
-      <Title>{{ carReview.seoData.metaTitle }} {{carReview.id}}</Title>
+      <Title>{{ carReview.seoData.metaTitle }} {{ carReview.id }}</Title>
       <Link href="/css/technical.css" rel="stylesheet" />
     </Head>
-    <report-bug :reportFor="BugReportFor.review" v-model="isOpenBugReportModal" :link-id="carReview.id" />
+    <report-bug
+      :reportFor="BugReportFor.review"
+      v-model="isOpenBugReportModal"
+      :link-id="carReview.id"
+    />
     <section class="breadcrumb">
       <nuxt-link to="/" class="breadcrumb__item">
         <icons-home></icons-home>
@@ -368,6 +372,7 @@
 
 <script setup lang="ts">
 import { Ref } from "vue";
+import { ref } from "#imports";
 import {
   CarReviewDto,
   CarReviewFilterData,
@@ -380,7 +385,7 @@ import {
 } from "~~/models/carReviews/Specification";
 import { BugReportFor } from "~~/services/bugReport.service";
 
-const isOpenBugReportModal = ref(false);
+const isOpenBugReportModal:Ref<boolean> = ref(false);
 
 const carReview: Ref<CarReviewDto | undefined> = ref(undefined);
 const relatedCars: Ref<CarReviewFilterData[]> = ref([]);
@@ -393,6 +398,9 @@ const { data, pending } = await useAsyncData(
     initialCache: false,
   }
 );
+if (!data?.value?.data) {
+  showError({ statusCode: 404, statusMessage: "Error" });
+}
 const leftSpecifications: Ref<Specification[]> = ref([]);
 const rightSpecifications: Ref<Specification[]> = ref([]);
 
