@@ -8,17 +8,20 @@
   },
   "devDependencies": {
     "@nuxt/image-edge": "^1.0.0-27628766.3629b9a",
-    "nuxt": "3.0.0-rc.4"
+    "nuxt": "^3.0.0-rc.7"
   },
   "dependencies": {
     "@persian-tools/persian-tools": "^3.4.0",
-    "@pinia/nuxt": "^0.1.9",
+    "@pinia/nuxt": "^0.4.0",
     "@vueuse/core": "^8.9.2",
+    "apexcharts": "^3.35.4",
     "gsap": "^3.10.4",
     "lodash": "^4.17.21",
     "num2persian": "^3.2.2",
-    "pinia": "^2.0.14",
+    "pinia": "^2.0.18",
+    "swiper": "^8.3.2",
     "vee-validate": "^4.6.0",
+    "vue3-apexcharts": "^1.4.1",
     "yup": "^0.32.11"
   }
 }

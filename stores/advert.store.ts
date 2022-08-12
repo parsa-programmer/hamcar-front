@@ -1,20 +1,16 @@
-import { AdvertisementFilterParams } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
 import { BodyCondition } from "~~/models/advertisements/enums/BodyCondition";
 import { Color } from "~~/models/advertisements/enums/Color";
-import { AdvertisementPrice } from "~/models/advertisements/valueObjects/AdvertisementPrice";
-import { defineStore } from "pinia";
 import { Brand } from "~~/models/utilities/Brand";
-import { Model } from "~~/models/utilities/Model";
-import { Year } from "~~/models/utilities/Year";
-import { Trim } from "~~/models/utilities/Trim";
-import { GetBrands } from "~/services/brand.service";
 import { CarType } from "~~/models/advertisements/enums/CarType";
 import { GearBox } from "~~/models/advertisements/enums/GearBox";
 import { Ghesti } from "~~/models/advertisements/valueObjects/Ghesti";
 import { GhestiPaymentType } from "~~/models/advertisements/enums/GhestiPaymentType";
 import { ToastType } from "~~/composables/useToast";
 import { CreateAdvertisement } from "~~/services/advertisement.service";
+import { defineStore } from 'pinia';
+import { GetBrands } from "~~/services/brand.service";
+
 const defaultState = () => ({
   currentStep: 1,
   loading: false,

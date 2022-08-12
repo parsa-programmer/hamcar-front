@@ -48,7 +48,7 @@ export async function FetchApi<T>(
         data: undefined,
         isSuccess: false,
         metaData: {
-          message: e.response?._data?.MetaData?.Message,
+          message: e.response?._data?.MetaData?.Message??"مشکلی در عملیات رخ داده",
           appStatusCode: e.response?._data?.MetaData?.AppStatusCode,
         },
       };

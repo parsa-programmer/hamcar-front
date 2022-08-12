@@ -23,9 +23,20 @@
         >
           <h1 class="page__title">قیمت روز خودرو</h1>
            
-          <span class="page__sub-title">(امروز: )</span>
+          <span class="page__sub-title"
+            >(امروز: {{ new Date().toLocaleDateString("fa-IR") }})</span
+          >
         </div>
-        <search-advert class="d-sm-none" />
+        <div class="input-group advert__search-box">
+          <input
+            type="text"
+            class="form-control bg-transparent"
+            placeholder="جستجو میان همه برند ها، مدل ها و."
+            v-model="search"
+            @keydown="searchAgain"
+          />
+          <icons-search class="input-icon" hash-color="var(--color-gray-600)" />
+        </div>
       </div>
       <div class="flex wrap justify-content-space-between filter mt-1_5">
         <h-button
@@ -53,52 +64,28 @@
           >قیمت روز نمایندگی</h-button
         >
       </div>
-      <div>
-        <div class="price-list__item mt-3">
+      <div v-if="pending == false">
+        <div
+          class="price-list__item mt-3"
+          v-for="(item, index) in datas"
+          :key="index"
+        >
           <h3 class="price-list__item__header">
             <h-image
-              src="static/img/Lamborghini.png"
+              :src="GetBrandImage(item.carPriceBrand.imageName)"
               style="max-width: 100px; margin-left: 5px"
             />
-            قیمت روز خودرو های پرداید
+            قیمت روز خودرو های {{ item.carPriceBrand.title }}
           </h3>
-          <div class="price-list__item__body">
-            <div class="flex grow-1 justify-content-space-between section__1">
-              <p class="brand">SE,111</p>
-              <p>1400 <span class="text-muted">|</span> مدیران خودرو</p>
-              <p>بازار - فلان ساعت پیش</p>
-            </div>
-            <div class="flex justify-content-space-between grow-1 section__2">
-              <p class="d-sm-none price__chart">.</p>
-              <p class="font-4 color-green grow-1">
-                5.8%
-                <icons-triangle-top
-                  class="mr-0_5"
-                  hash-color="var(--color-green)"
-                />
-              </p>
-              <p class="item__price">123,456,789 تومان</p>
-            </div>
-          </div>
-          <div class="price-list__item__body">
-            <div class="flex grow-1 justify-content-space-between section__1">
-              <p class="brand">SE,111</p>
-              <p>1400 <span class="text-muted">|</span> مدیران خودرو</p>
-              <p>بازار - فلان ساعت پیش</p>
-            </div>
-            <div class="flex justify-content-space-between grow-1 section__2">
-              <p class="d-sm-none price__chart">.</p>
-              <p class="font-4 color-green grow-1">
-                5.8%
-                <icons-triangle-top
-                  class="mr-0_5"
-                  hash-color="var(--color-green)"
-                />
-              </p>
-              <p class="item__price">123,456,789 تومان</p>
-            </div>
-          </div>
+          <car-price-list-data
+            v-for="(priceDetail, index) in item.details"
+            :key="index"
+            :detail="priceDetail"
+          />
         </div>
+      </div>
+      <div v-else>
+        <icons-loading />
       </div>
     </section>
   </div>
@@ -108,47 +95,53 @@
 import { Ref } from "vue";
 import { CarPriceSearchOn } from "~~/models/carPrices/CarPriceSearchOn";
 import { GetMainPage } from "~~/services/carPrice.service";
+import { ref } from "#imports";
+import { CarPriceMainPage } from "~~/models/carPrices/CarPriceModels";
+import { GetBrandImage } from "~~/utilities/imageUtil";
+import debounce from "lodash/debounce.js";
 
 //@ts-ignore
 const searchOn: Ref<CarPriceSearchOn> = ref(CarPriceSearchOn.همه);
-
-const { data, refresh } = useAsyncData("carPrices", () =>
-  GetMainPage("", searchOn.value)
+const datas: Ref<CarPriceMainPage[]> = ref([]);
+const route = useRoute();
+const { search: s } = route.query;
+const search = ref(s?.toString());
+const { data, refresh, pending } = await useAsyncData("carPrices", () =>
+  GetMainPage(search.value, searchOn.value)
 );
+datas.value = data.value;
 
-const ReSearch = (search: CarPriceSearchOn) => {
+const ReSearch = async (search: CarPriceSearchOn) => {
   searchOn.value = search;
-  refresh();
+  await refresh();
+  datas.value = data.value;
+};
+const loadingSearch = ref(false);
+const searchAgain = async (e: any) => {
+  if (loadingSearch.value) return;
+  const deb = debounce(() => {
+    setTimeout(async () => {
+      if (e.target.value == search.value) {
+        loadingSearch.value = true;
+        await refresh();
+        setTimeout(() => {
+          loadingSearch.value = false;
+        }, 1000);
+      }
+    }, 1000);
+  }, 1000);
+  deb();
 };
 </script>
 
 <style scoped>
-.price__chart {
-  flex-grow: 1;
-  text-align: left;
-}
 .price-list__item__header {
   font-family: var(--t2-font-family);
   font-size: var(--t2-font-size);
   display: flex;
   align-items: center;
 }
-.price-list__item__body .item__price {
-  font-family: var(--t4-font-family);
-  font-size: var(--t4-font-size);
-}
-.price-list__item__body:nth-child(even) {
-  background: var(--color-white);
-}
 
-.price-list__item__body {
-  display: flex;
-  justify-content: space-between;
-  font-family: var(--t5-font-family);
-  font-size: var(--t5-font-size);
-  color: var(--color-black);
-  padding: 1.5rem 1rem;
-}
 .filter .btn-default {
   background: var(--color-white);
 }
@@ -168,6 +161,22 @@ const ReSearch = (search: CarPriceSearchOn) => {
 .price__header {
   justify-content: space-between;
 }
+.price-list__item__body .item__price {
+  font-family: var(--t4-font-family);
+  font-size: var(--t4-font-size);
+}
+.price-list__item__body:nth-child(odd) {
+  background: var(--color-white);
+}
+
+.price-list__item__body {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--t5-font-family);
+  font-size: var(--t5-font-size);
+  color: var(--color-black);
+  padding: 1.5rem 1rem;
+}
 @media screen and (max-width: 768px) {
   .price-list__item__body {
     background: var(--color-white);
@@ -181,6 +190,7 @@ const ReSearch = (search: CarPriceSearchOn) => {
     margin-top: 8px !important;
     border-radius: 12px;
   }
+
   .price-list__item__header {
     margin-bottom: 1rem;
     font-family: var(--t3-font-family);
@@ -191,37 +201,7 @@ const ReSearch = (search: CarPriceSearchOn) => {
   .price-list__item__header img {
     max-width: 55px !important;
   }
-  .price__header {
-    justify-content: flex-start !important;
-  }
-  .section__1 {
-    flex-direction: column;
-  }
-  .section__1 p {
-    margin-top: 0.5rem;
-  }
-  .section__1 p:first-child {
-    margin-top: 0 !important;
-  }
-  .section__2 {
-    flex-direction: column;
-    align-items: flex-end;
-  }
-  .item__price {
-    order: 1;
-  }
-  .section__2 .font-4 {
-    order: 2;
-    display: flex;
-    align-items: center;
-    align-content: center;
-    font-family: var(--t6-font-family) !important;
-    font-size: var(--t6-font-size) !important;
-  }
-  .price__header__title {
-    flex-grow: 1;
-    justify-content: space-between;
-  }
+
   .filter button.active {
     color: var(--color-black) !important;
     background-color: var(--color-gray-300) !important;
@@ -235,11 +215,6 @@ const ReSearch = (search: CarPriceSearchOn) => {
     line-height: 21.46px !important;
     text-align: center;
     padding: 0 1rem !important;
-  }
-  .section__1 .brand {
-    font-family: var(--t6-font-family) !important;
-    font-size: var(--t6-font-size) !important;
-    font-weight: 500;
   }
 }
 </style>

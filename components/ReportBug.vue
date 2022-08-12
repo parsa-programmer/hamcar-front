@@ -103,7 +103,7 @@
         </div>
       </div>
       <span class="modal__line"></span>
-      <div v-if="aStore.isLogin == false">
+      <div v-if="aStore.isLogin == false" class="mt-1">
         <div class="form__header">
           <svg
             width="24"

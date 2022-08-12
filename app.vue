@@ -23,7 +23,7 @@
 <script setup lang="ts">
 import { UseUtilStore } from "~~/stores/util.store";
 const store = UseUtilStore();
-const isShowBack = useHead({
+useHead({
   script: [
     {
       src: "/js/themeController.js",
