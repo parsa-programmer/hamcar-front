@@ -215,6 +215,12 @@ hr {
 }
 
 /* -- Helper Class -- */
+.w-auto{
+    width: auto;
+}
+.overflow-visible{
+    overflow: visible !important;
+}
 .rectangel {
     width: 10px;
     height: 10px;

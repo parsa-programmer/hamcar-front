@@ -67,7 +67,7 @@
       <div v-if="pending == false">
         <div
           class="price-list__item mt-3"
-          v-for="(item, index) in datas"
+          v-for="(item, index) in data"
           :key="index"
         >
           <h3 class="price-list__item__header">
@@ -102,19 +102,18 @@ import debounce from "lodash/debounce.js";
 
 //@ts-ignore
 const searchOn: Ref<CarPriceSearchOn> = ref(CarPriceSearchOn.همه);
-const datas: Ref<CarPriceMainPage[]> = ref([]);
 const route = useRoute();
 const { search: s } = route.query;
 const search = ref(s?.toString());
 const { data, refresh, pending } = await useAsyncData("carPrices", () =>
-  GetMainPage(search.value, searchOn.value)
+  GetMainPage(search.value, searchOn.value),{
+    initialCache:false
+  }
 );
-datas.value = data.value;
 
 const ReSearch = async (search: CarPriceSearchOn) => {
   searchOn.value = search;
   await refresh();
-  datas.value = data.value;
 };
 const loadingSearch = ref(false);
 const searchAgain = async (e: any) => {
@@ -129,7 +128,7 @@ const searchAgain = async (e: any) => {
         }, 1000);
       }
     }, 1000);
-  }, 1000);
+  }, 500);
   deb();
 };
 </script>

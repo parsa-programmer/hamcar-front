@@ -22,7 +22,7 @@
     <section class="technical">
       <div class="technical__head">
         <h1 class="technical__title">مشخصات فنی و مقایسه خودرو ها</h1>
-        <div class="input-group technical__search-box">
+        <div class="input-group advert__search-box">
           <input
             type="text"
             class="form-control bg-transparent"
@@ -74,14 +74,14 @@ let orderBy: CarReviewFilterOrderBy = CarReviewFilterOrderBy.visit;
 if (route.query.orderBy) {
   orderBy = route.query.orderBy.toString() as CarReviewFilterOrderBy;
 }
-const { data, pending, refresh } = await useLazyAsyncData(
+const { data, pending, refresh } = await useAsyncData(
   "filter-reviews",
   () =>
     GetByFilter({
       brandSlug: "",
       orderBy: orderBy,
       pageId: pageId.value,
-      take: 1,
+      take: 12,
       search: searchValue.value,
     })
 );

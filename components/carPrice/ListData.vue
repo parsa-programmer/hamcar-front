@@ -50,10 +50,9 @@
         <icons-triangle-down
           class="mr-0_5"
           hash-color="var(--color-error)"
-          v-else-if="percentage<0"
+          v-else-if="percentage < 0"
         />
-         <span v-else-if="percentage==0"  class="mr-0_5 rectangel"></span>          
-      
+        <span v-else-if="percentage == 0" class="mr-0_5 rectangel"></span>
       </p>
       <p class="item__price">{{ splitNumber(detail.lastPrice) }} تومان</p>
     </div>
@@ -68,12 +67,16 @@ import { TimeAgo } from "~~/utilities/dateUtil";
 const props = defineProps<{
   detail: CarPriceDetail;
 }>();
-const percentage = ref(-2);
+const percentage = ref(0);
+const detailPrices = [...props.detail.prices];
+if(detailPrices.length>1){
 percentage.value =
-  ((props.detail.prices[props.detail.prices.length - 1] -
-    props.detail.prices[props.detail.prices.length - 2]) /
-    props.detail.prices[props.detail.prices.length - 2]) *
+  ((detailPrices[detailPrices.length - 1] -
+    detailPrices[detailPrices.length - 2]) /
+    detailPrices[detailPrices.length - 2]) *
   100;
+}
+
 const options = ref({
   chart: {
     id: "vuechart-example",
@@ -94,7 +97,7 @@ const options = ref({
 
 const series = ref([
   {
-    data: props.detail.prices,
+    data: [...props.detail.prices],
   },
 ]);
 const router = useRouter();

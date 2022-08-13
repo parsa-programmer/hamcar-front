@@ -153,5 +153,8 @@ const { data } = await useAsyncData("reviews", () => GetMainPageData());
   .mt__mobile__24 {
     margin-top: 24px;
   }
+  .brand__model__box{
+    margin-bottom: 1.5rem;
+  }
 }
 </style>
