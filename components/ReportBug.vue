@@ -137,6 +137,7 @@
       <h-button
         class="modal__submit-btn"
         :disabled="loading || meta.valid == false"
+        :loading="loading"
       >
         ارسال گزارش
       </h-button>
@@ -172,7 +173,7 @@ const props = defineProps<{
 
 reportFor.value = props.reportFor;
 const reportSchema = Yup.object().shape({
-  description: Yup.string().required("لطفا توضیحات خود را وارد کنید"),
+  description: Yup.string().min(10,'توضیحات باید بیشتر از 10 کاراکتر باشد').required("لطفا توضیحات خود را وارد کنید"),
   title: Yup.string().required("لطفا عنوان خود را وارد کنید"),
 });
 watch(

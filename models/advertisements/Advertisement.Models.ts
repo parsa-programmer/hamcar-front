@@ -40,17 +40,18 @@ export interface AdvertisementFilterData {
   price: AdvertisementPrice;
 }
 export interface AdvertisementFilterParams extends FilterParams {
-  brandId: string | null;
-  modelId: string | null;
-  yearId: string | null;
+  brand: string | null;
+  model: string | null;
+  year: string | null;
+  trim: string | null;
   search: string | null;
   province: string | null;
   city: string | null;
   exhibitionTitle: string | null;
-  startMileage: number;
-  endMileage: number;
-  startPrice: number;
-  endPrice: number;
+  startMileage: string | null;
+  endMileage: string | null;
+  startPrice: string | null;
+  endPrice: string | null;
   haveImage: boolean | null;
   havePrice: boolean | null;
   isPersonalAdvertisement: boolean | null;
@@ -101,4 +102,16 @@ export interface AdvertPlanInfo {
   planId: string;
   expireDate: Date;
   planType: AdvertisementPlanType;
+}
+
+export interface GetAdvertisementCountParams {
+  model: string | null;
+  modelType: BodyType | null;
+  exhibitionId: string | null;
+}
+export enum GetAdvertisementType {
+  All = "all",
+  model = "model",
+  modelType = "modelType",
+  exhibition = "exhibition",
 }

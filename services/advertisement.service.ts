@@ -6,6 +6,8 @@ import {
   AdvertisementDto,
   AdvertisementFilterData,
   AdvertisementFilterParams,
+  GetAdvertisementCountParams,
+  GetAdvertisementType,
 } from "~~/models/advertisements/Advertisement.Models";
 import { FilterResult, IApiResponse } from "~~/models/IApiResponse";
 import { FetchApi } from "~~/utilities/customFetchApi";
@@ -13,8 +15,17 @@ import { FetchApi } from "~~/utilities/customFetchApi";
 export const GetByFilter = (
   filterParams: AdvertisementFilterParams
 ): Promise<IApiResponse<FilterResult<AdvertisementFilterData>>> => {
+  var params={...filterParams};
+
+  for (const key in params) {
+    //@ts-ignore
+    if (params[key] == '' || params[key]==null) {
+    //@ts-ignore
+      delete params[key];
+    }
+  }
   return FetchApi("/advertisement", {
-    params: filterParams,
+    params:params,
   });
 };
 
@@ -26,6 +37,17 @@ export const GetByShortLink = (
   shortLink: string
 ): Promise<IApiResponse<AdvertisementDto>> => {
   return FetchApi(`/advertisement/${shortLink}`);
+};
+export const GetAdvertCount = (
+  type: GetAdvertisementType,
+  params: GetAdvertisementCountParams
+): Promise<IApiResponse<number>> => {
+  return FetchApi(`/advertisement/utils/getCount`, {
+    params: {
+      type,
+      params,
+    },
+  });
 };
 export const GetById = (
   id: string

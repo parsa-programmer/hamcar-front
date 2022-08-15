@@ -1,5 +1,12 @@
 <template>
   <div v-if="advert">
+    <client-only>
+      <single-advert-gallery
+        :advert="advert"
+        v-model="isOpenGallery"
+        :isAdvertSaved="isSavedAdvert"
+      />
+    </client-only>
     <Head>
       <Title
         >همکار - {{ advert.brand.title }} {{ advert.model.title }}
@@ -62,7 +69,7 @@
         >
           <path
             d="M61.458 10.5463C56.4236 5.51108 50.009 2.08183 43.0255 0.692225C36.042 -0.697375 28.8033 0.0151666 22.2249 2.73972C15.6464 5.46428 10.0236 10.0786 6.06754 15.9988C2.11153 21.9191 0 28.8796 0 36C0 43.1204 2.11153 50.0809 6.06754 56.0012C10.0236 61.9214 15.6464 66.5357 22.2249 69.2603C28.8033 71.9848 36.042 72.6974 43.0255 71.3078C50.009 69.9182 56.4236 66.4889 61.458 61.4537C68.208 54.7025 72 45.5467 72 36C72 26.4533 68.208 17.2975 61.458 10.5463ZM9.38893 23.8172C11.2029 19.7937 13.8909 16.2249 17.2574 13.3707C20.6238 10.5164 24.584 8.44816 28.85 7.31661C33.1161 6.18505 37.5808 6.01855 41.9193 6.8292C46.2578 7.63984 50.361 9.40718 53.9308 12.0028C45.0944 11.1682 34.0326 15.6846 25.0654 24.6354C21.681 28.0143 18.8137 31.8741 16.5563 36.09C13.4859 32.437 11.0619 28.2863 9.38893 23.8172ZM29.238 65.5772C22.4052 63.7465 16.449 59.5396 12.4392 53.7121C8.42927 47.8847 6.62838 40.8186 7.35995 33.7826C11.0744 41.85 20.4508 49.1809 32.7563 52.4537C37.3501 53.6998 42.1046 54.2513 46.8617 54.09C45.2449 58.5622 42.8824 62.7285 39.8744 66.4118C36.3057 66.7728 32.7011 66.4789 29.238 65.5445V65.5772ZM51.6399 31.3609C50.4269 26.7463 48.5412 22.3354 46.0435 18.27C50.7222 17.4371 55.5083 17.4039 60.198 18.1718C62.2972 21.0779 63.8447 24.3449 64.7635 27.81C66.5973 34.6438 65.934 41.9076 62.8926 48.2962C59.8513 54.6848 54.6314 59.7793 48.1708 62.6646C53.2763 55.4482 54.9126 43.6172 51.6399 31.3609Z"
-            fill="#1D1D1F"
+            fill="var(--color-black-600)"
           ></path>
         </svg>
 
@@ -78,83 +85,65 @@
             >
               <path
                 d="M14.7353 1.0613L14.7802 0.0623055L14.7353 1.0613ZM2 12.0047C2 14.1489 2.06944 15.827 2.27251 17.1531C2.4756 18.4792 2.80123 19.3719 3.25548 20.0005C4.12249 21.2004 5.72274 21.7866 9.29525 21.9484L9.20475 23.9463C5.63042 23.7844 3.10567 23.208 1.63439 21.1719C0.919489 20.1825 0.522655 18.9388 0.295561 17.4558C0.068451 15.9728 0 14.1692 0 12.0047H2ZM9.29525 21.9484C10.1072 21.9852 11.0052 22 12 22V24C10.9872 24 10.057 23.9849 9.20475 23.9463L9.29525 21.9484ZM8.25 22.9474V19.75H10.25V22.9474H8.25ZM12 22C12.9948 22 13.8928 21.9852 14.7047 21.9484L14.7953 23.9463C13.943 23.9849 13.0128 24 12 24V22ZM14.7047 21.9484C18.2773 21.7866 19.8775 21.2004 20.7445 20.0005C21.1988 19.3719 21.5244 18.4792 21.7275 17.1531C21.9306 15.827 22 14.1489 22 12.0047H24C24 14.1692 23.9315 15.9728 23.7044 17.4558C23.4773 18.9388 23.0805 20.1825 22.3656 21.1719C20.8943 23.208 18.3696 23.7844 14.7953 23.9463L14.7047 21.9484ZM15.75 19.75V22.9474H13.75V19.75H15.75ZM12 11.0047C12.9174 11.0047 13.6917 10.7232 14.2254 10.2356C14.7444 9.76132 15.125 9.01175 15.125 7.88141H17.125C17.125 9.4999 16.5596 10.812 15.5744 11.7121C14.6039 12.5989 13.3157 13.0047 12 13.0047V11.0047ZM8.875 7.88141C8.875 9.01175 9.25556 9.76132 9.77463 10.2356C10.3083 10.7232 11.0826 11.0047 12 11.0047V13.0047C10.6843 13.0047 9.39613 12.5989 8.42557 11.7121C7.44041 10.812 6.875 9.4999 6.875 7.88141H8.875ZM9.30956 2.06029C5.72969 2.22111 4.12598 2.8064 3.25734 4.00623C2.80245 4.63456 2.47632 5.52703 2.27293 6.85354C2.06954 8.17998 2 9.85897 2 12.0047H0C0 9.83863 0.0685425 8.03405 0.296032 6.55042C0.52351 5.06686 0.921055 3.82276 1.63733 2.83339C3.11103 0.797808 5.63966 0.223141 9.2198 0.0623055L9.30956 2.06029ZM9.26468 1.0613C10.2111 1.38434 10.2111 1.38426 10.2111 1.38419C10.2111 1.38419 10.2111 1.38414 10.2111 1.38414C10.2111 1.38414 10.2111 1.38419 10.2111 1.38431C10.211 1.38455 10.2108 1.38503 10.2106 1.38575C10.2101 1.3872 10.2093 1.38962 10.2081 1.39298C10.2059 1.3997 10.2023 1.41021 10.1976 1.42434C10.1882 1.4526 10.174 1.49534 10.1558 1.55124C10.1194 1.66306 10.0669 1.82737 10.0036 2.0337C9.8768 2.44686 9.70769 3.02595 9.53879 3.68781C9.19523 5.03408 8.875 6.63831 8.875 7.88141H6.875C6.875 6.37567 7.24961 4.56984 7.60089 3.19327C7.77941 2.49371 7.95773 1.88317 8.09153 1.44707C8.15851 1.22877 8.21453 1.05353 8.25411 0.931973C8.27391 0.871178 8.28961 0.823759 8.30053 0.791044C8.30599 0.774685 8.31026 0.761997 8.31325 0.753145C8.31474 0.74872 8.31592 0.745253 8.31676 0.742765C8.31719 0.741522 8.31753 0.740522 8.31778 0.739771C8.31791 0.739395 8.31802 0.73908 8.3181 0.738829C8.31815 0.738703 8.31819 0.738562 8.31822 0.738499C8.31826 0.738371 8.3183 0.73826 9.26468 1.0613ZM22 12.0047C22 9.85897 21.9305 8.17998 21.7271 6.85354C21.5237 5.52703 21.1976 4.63456 20.7427 4.00623C19.874 2.8064 18.2703 2.22111 14.6905 2.06029L14.7802 0.0623055C18.3603 0.223141 20.889 0.79781 22.3627 2.83339C23.0789 3.82276 23.4765 5.06686 23.704 6.55042C23.9315 8.03405 24 9.83863 24 12.0047H22ZM15.125 7.88141C15.125 6.63831 14.8048 5.03408 14.4612 3.6878C14.2923 3.02594 14.1232 2.44686 13.9965 2.0337C13.9331 1.82737 13.8806 1.66306 13.8442 1.55123C13.826 1.49534 13.8118 1.4526 13.8024 1.42434C13.7977 1.41021 13.7941 1.3997 13.7919 1.39297C13.7907 1.38961 13.7899 1.3872 13.7894 1.38575C13.7892 1.38503 13.789 1.38455 13.7889 1.38431C13.7889 1.38419 13.7889 1.38413 13.7889 1.38414C13.7889 1.38414 13.7889 1.38419 13.7889 1.38419C13.7889 1.38425 13.7889 1.38433 14.7353 1.0613C15.6817 0.738264 15.6818 0.738375 15.6818 0.738501C15.6818 0.738564 15.6819 0.738707 15.6819 0.738832C15.682 0.739084 15.6821 0.739397 15.6822 0.739773C15.6825 0.740524 15.6828 0.741524 15.6833 0.742767C15.6841 0.745256 15.6853 0.748722 15.6868 0.753149C15.6898 0.761999 15.694 0.774687 15.6995 0.791046C15.7104 0.823763 15.7261 0.87118 15.7459 0.931976C15.7855 1.05354 15.8415 1.22877 15.9085 1.44707C16.0423 1.88318 16.2206 2.49371 16.3991 3.19328C16.7504 4.56984 17.125 6.37567 17.125 7.88141H15.125ZM14.6905 2.06029C12.901 1.9799 11.099 1.9799 9.30956 2.06029L9.2198 0.0623055C11.0691 -0.020771 12.9309 -0.020771 14.7802 0.0623055L14.6905 2.06029ZM3.10081 13.0047H1V11.0047H3.10081V13.0047ZM20.8992 11.0047H23V13.0047H20.8992V11.0047ZM17.125 7.88141C17.125 8.78046 17.554 9.53965 18.2592 10.1007C18.9772 10.6719 19.9492 11.0047 20.8992 11.0047V13.0047C19.5146 13.0047 18.0996 12.5294 17.0141 11.6658C15.9158 10.792 15.125 9.48957 15.125 7.88141H17.125ZM8.875 7.88141C8.875 9.48957 8.08422 10.792 6.98594 11.6658C5.90044 12.5294 4.48538 13.0047 3.10081 13.0047V11.0047C4.05077 11.0047 5.0228 10.6719 5.74076 10.1007C6.44595 9.53965 6.875 8.78046 6.875 7.88141H8.875ZM12 16C14.0711 16 15.75 17.6789 15.75 19.75H13.75C13.75 18.7835 12.9665 18 12 18V16ZM8.25 19.75C8.25 17.6789 9.92893 16 12 16V18C11.0335 18 10.25 18.7835 10.25 19.75H8.25Z"
-                fill="#85858F"
+                fill="var(--color-black-200)"
               ></path>
             </svg>
-            {{ advert.exhibition.address.Province }}،
-            {{ advert.exhibition.address.City }}،
-            {{ advert.exhibition.address.PostalAddress }}
+            {{ advert.exhibition.address.province }}،
+            {{ advert.exhibition.address.city }}،
+            {{ advert.exhibition.address.postalAddress }}
           </p>
         </div>
       </div>
       <div class="ads-company__left">
-        <p class="ads-company__stock">این نمایشگاه دارای ۱۲۳ خودرو میباشد</p>
-        <a href="#" class="ads-company__link">مشاهده تمام آگهی ها</a>
+        <p class="ads-company__stock">
+          این نمایشگاه دارای {{ exhibitionAdvertCount }} خودرو میباشد
+        </p>
+        <nuxt-link
+          :to="`/car?exhibitionTitle=${advert.exhibition.englishTitle}`"
+          class="ads-company__link"
+          >مشاهده تمام آگهی ها</nuxt-link
+        >
       </div>
     </section>
     <section class="ads">
       <div class="ads-mobile">
-        <div class="ads-mobile__slider">
+        <div class="ads-mobile__slider" @click="openGallery">
+          <span class="image__counter font-6">
+            <icons-camera class="ml-0_5" />
+            {{ advert.images.length }} عکس
+          </span>
           <h-image
-            :src="
-              GetAdvertImage(
-                advert.id,
-                advert.images.filter((f) => f.isMainImage)[0].imageName
-              )
-            "
-            :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
+            :src="GetAdvertImage(advert.id, advert.images[0].imageName)"
+            :alt="`${advert.brand.title} ${advert.model.title} ${advert.year.yearTitle}`"
           />
         </div>
         <div class="ads-mobile__info">
           <div class="ads-mobile__wrapper">
             <h2 class="ads__name" v-text="advertTitle"></h2>
-            <span class="ads__date">{{
-              `${new Date(advert.creationDate).toLocaleDateString("fa-IR", {
-                month: "2-digit",
-                day: "2-digit",
-                year: "numeric",
-              })} ${new Date(advert.creationDate).toLocaleTimeString("fa-IR")}`
-            }}</span>
+            <span class="ads__date">
+              {{ TimeAgo(advert.creationDate) }}
+            </span>
           </div>
           <div class="ads-mobile__flags">
-            <span class="ads-mobile__flag">
-              <svg
-                width="17"
-                height="20"
-                viewBox="0 0 17 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
+            <client-only>
+              <span
+                class="ads-mobile__flag"
+                v-if="isSavedAdvert == false && authStore.isLogin"
+                @click="saveAdvert"
               >
-                <path
-                  d="M3.52674 18.8753L3.52671 18.8752L3.51853 18.881C2.53806 19.569 1.1845 18.9462 1.09064 17.736C0.980297 16.3134 0.83331 13.7068 0.833334 9.91627V9.84789V9.84787C0.833307 8.34314 0.834124 7.03219 0.941477 5.93827C1.05032 4.82923 1.27623 3.83613 1.80076 3.0272C2.89764 1.33562 5.0104 0.847288 8.32988 0.833619C11.6532 0.819935 13.769 1.30595 14.867 3.00826C15.3908 3.82032 15.6164 4.81803 15.7252 5.93083C15.8326 7.02894 15.8334 8.34332 15.8333 9.84857V9.91628C15.8333 13.7068 15.6863 16.3134 15.576 17.736C15.4821 18.9462 14.1286 19.569 13.1481 18.881L13.1482 18.8809L13.1399 18.8753C12.2799 18.2871 11.484 17.6538 10.8638 17.1601L10.8527 17.1513C10.5708 16.9268 10.315 16.7232 10.1144 16.5744C9.73786 16.2954 9.42349 16.1048 9.13221 15.9875C8.81518 15.8599 8.55916 15.8325 8.33333 15.8325C8.1075 15.8325 7.85148 15.8599 7.53445 15.9875C7.24317 16.1048 6.9288 16.2954 6.5523 16.5744L7.04852 17.2439L6.55229 16.5744C6.35164 16.7232 6.09576 16.9269 5.8139 17.1513L5.80287 17.16C5.18267 17.6538 4.38678 18.287 3.52674 18.8753Z"
-                  stroke="#606066"
-                  stroke-width="1.66667"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-                <path
-                  d="M10 4.16992C10.8333 4.16992 11.25 4.16675 11.875 4.79011C12.5 5.41346 12.5 7.49985 12.5 8.33313"
-                  stroke="#606066"
-                  stroke-width="1.66667"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            </span>
-            <span class="ads-mobile__flag">
-              <svg
-                width="19"
-                height="20"
-                viewBox="0 0 19 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11.4384 6.91945C12.1253 7.67485 13.1303 8.15129 14.25 8.15129C16.3205 8.15129 17.9989 6.52222 17.9989 4.51266C17.9989 2.5031 16.3205 0.874023 14.25 0.874023C12.1796 0.874023 10.5011 2.5031 10.5011 4.51266C10.5011 5.43546 10.8551 6.27802 11.4384 6.91945ZM11.4384 6.91945L6.59226 9.97061M6.59226 9.97061C6.20628 8.91068 5.1648 8.15129 3.94058 8.15129C2.38773 8.15129 1.12891 9.37309 1.12891 10.8803C1.12891 12.3874 2.38773 13.6092 3.94058 13.6092C5.1648 13.6092 6.20628 12.8499 6.59226 11.7899M6.59226 9.97061C6.69587 10.2551 6.75225 10.5613 6.75225 10.8803C6.75225 11.1992 6.69587 11.5054 6.59226 11.7899M6.59226 11.7899L12.7517 14.9737M12.7517 14.9737C12.5125 15.3751 12.3756 15.8412 12.3756 16.3382C12.3756 17.8454 13.6344 19.0672 15.1873 19.0672C16.7401 19.0672 17.9989 17.8454 17.9989 16.3382C17.9989 14.831 16.7401 13.6092 15.1873 13.6092C14.1465 13.6092 13.2379 14.158 12.7517 14.9737Z"
-                  stroke="#606066"
-                  stroke-width="1.64244"
-                ></path>
-              </svg>
+                <icons-save
+                  hash-color="var(--color-black-300)"
+                  :width="17"
+                  :height="20"
+                />
+              </span>
+            </client-only>
+            <span class="ads-mobile__flag" @click="toggleShareModal">
+              <icons-share
+                :width="19"
+                :height="20"
+                hash-color="var(--color-black-300)"
+              />
             </span>
           </div>
         </div>
@@ -162,7 +151,7 @@
       <div class="ads__right">
         <div class="ads__header">
           <h2 class="ads__name" v-text="advertTitle"></h2>
-          <span class="ads__date">۱۰ دقیقه پیش</span>
+          <span class="ads__date">{{ TimeAgo(advert.creationDate) }}</span>
         </div>
         <div class="ads-info">
           <div class="ads-info__item">
@@ -171,11 +160,12 @@
           </div>
           <div class="ads-info__item">
             <span class="ads-info__name">کارکرد</span>
-            <span class="ads-info__value">
+            <span class="ads-info__value" v-if="advert.mileage > 0">
               {{ advert.mileage }}
               <span class="ads-info__unit">کیلومتر</span>
               <span class="ads-info__mobile-unit">KM</span>
             </span>
+            <span class="ads-info__value" v-else> صفر </span>
           </div>
           <div class="ads-info__item">
             <span class="ads-info__name">گیربکس</span>
@@ -188,87 +178,11 @@
         <single-advert-detail :advert="advert" />
         <div class="ads-caption">
           <div class="ads-caption__header">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12 1C14.4525 1 16.3618 1.11137 17.855 1.39866C19.3432 1.68498 20.3438 2.13251 21.0445 2.75018C22.4367 3.97734 23 6.19513 23 10.6667C23 13.5482 22.7413 15.6685 22.0447 17.0498C21.7104 17.7127 21.2871 18.1797 20.7543 18.4903C20.2159 18.8042 19.494 19 18.5002 19C17.2191 19 16.2575 19.2877 15.5056 19.7971C14.7717 20.2944 14.329 20.9455 13.9997 21.4637C13.9499 21.542 13.9032 21.6161 13.8591 21.6862C13.583 22.1245 13.4043 22.4082 13.1562 22.6307C12.9352 22.8291 12.6262 23 12.0003 23C11.3744 23 11.0654 22.8291 10.8443 22.6307C10.5963 22.4081 10.4176 22.1245 10.1415 21.6862C10.0974 21.6161 10.0507 21.542 10.0009 21.4636C9.67154 20.9454 9.22884 20.2944 8.4949 19.7971C7.74298 19.2877 6.7814 19 5.50024 19C4.51174 19 3.79218 18.7993 3.25388 18.4789C2.71963 18.1609 2.29353 17.6832 1.95707 17.0102C1.25807 15.612 1 13.488 1 10.6667C1 6.25195 1.56175 4.02841 2.95861 2.78674C3.66142 2.16203 4.66352 1.70608 6.14984 1.41246C7.64154 1.11777 9.54955 1 12 1Z"
-                stroke="#0F0F10"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M13 9H17"
-                stroke="#0F0F10"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M7 13H17"
-                stroke="#0F0F10"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
+            <icons-message hash-color="var(--color-black)" />
             توضیحات
           </div>
           <p class="ads-caption__text" v-text="advert.description"></p>
         </div>
-        <div class="ads-alert">
-          <svg
-            class="ads-alert__icon"
-            width="34"
-            height="41"
-            viewBox="0 0 34 41"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M31.2432 4.8834L18.3232 0.453683C17.4656 0.159629 16.5344 0.159629 15.6768 0.453683L2.75676 4.8834C1.10766 5.4488 0 6.99854 0 8.74187V23.3143C0 33.4089 10.1984 37.8579 15.1403 39.9732C16.3209 40.4785 17.6791 40.4785 18.8597 39.9732C23.8016 37.8579 34 33.4089 34 23.3143V8.74187C34 6.99854 32.8923 5.4488 31.2432 4.8834Z"
-              fill="#69CE91"
-            ></path>
-            <path
-              d="M11.5586 21.079L15.6386 25.159L23.7986 16.999"
-              stroke="white"
-              stroke-width="2.72"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-          <h4 class="ads-alert__title">خرید امن</h4>
-          <p class="ads-alert__caption">
-            کارشناسی و تایید سلامت خودرو توسط شرکتX صورت گرفته است.
-          </p>
-        </div>
-        <a href="#" class="btn btn-orange ads__show-report-btn">
-          <svg
-            width="26"
-            height="26"
-            viewBox="0 0 26 26"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M11.3426 2.18583C12.1749 1.08815 13.8251 1.08815 14.6574 2.18583L15.7472 3.62307C16.2013 4.222 16.9433 4.52933 17.6879 4.42695L19.4748 4.18126C20.8395 3.99362 22.0064 5.16048 21.8187 6.5252L21.5731 8.31207C21.4707 9.05671 21.778 9.79866 22.3769 10.2528L23.8142 11.3426C24.9118 12.1749 24.9119 13.8251 23.8142 14.6574L22.3769 15.7472C21.778 16.2013 21.4707 16.9433 21.5731 17.6879L21.8187 19.4748C22.0064 20.8395 20.8395 22.0064 19.4748 21.8187L17.6879 21.5731C16.9433 21.4707 16.2013 21.778 15.7472 22.3769L14.6574 23.8142C13.8251 24.9118 12.1749 24.9119 11.3426 23.8142L10.2528 22.3769C9.79866 21.778 9.05671 21.4707 8.31207 21.5731L6.5252 21.8187C5.16048 22.0064 3.99362 20.8395 4.18126 19.4748L4.42695 17.6879C4.52933 16.9433 4.222 16.2013 3.62307 15.7472L2.18583 14.6574C1.08815 13.8251 1.08815 12.1749 2.18583 11.3426L3.62307 10.2528C4.222 9.79866 4.52933 9.05671 4.42695 8.31207L4.18126 6.5252C3.99362 5.16048 5.16048 3.99362 6.5252 4.18126L8.31207 4.42695C9.05671 4.52933 9.79866 4.222 10.2528 3.62307L11.3426 2.18583Z"
-              fill="white"
-            ></path>
-            <path
-              d="M10.1113 13.361L12.278 15.5277L16.6113 11.1943"
-              stroke="#FF9500"
-              stroke-width="1.44444"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-          مشاهده کامل گزارش کارشناس
-        </a>
         <a href="#" class="btn btn-primary-outline ads__show-report-btn">
           <svg
             width="24"
@@ -288,7 +202,7 @@
               mask="url(#path-1-inside-1_864_1910)"
             ></path>
           </svg>
-          مشاهده کامل گزارش کارشناسی
+          مشاهده کامل مشخصات فنی
         </a>
       </div>
       <div class="ads__left">
@@ -297,6 +211,7 @@
         <div class="ads-slider">
           <div class="ads-slider__picture">
             <h-image
+              @click="openGallery"
               :src="
                 GetAdvertImage(
                   advert.id,
@@ -306,43 +221,70 @@
               :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
             />
             <div class="ads-slider__flags">
-              <span class="ads-slider__flag">
-                <icons-save />
-              </span>
-              <span class="ads-slider__flag">
+              <client-only>
+                <span
+                  class="ads-slider__flag"
+                  v-if="isSavedAdvert == false && authStore.isLogin"
+                  @click="saveAdvert"
+                >
+                  <icons-save />
+                </span>
+              </client-only>
+              <span class="ads-slider__flag" @click="toggleShareModal">
                 <icons-share />
               </span>
             </div>
           </div>
-          <div class="ads-slider__list">
-            <h-slider :items="advert.images" :dots="true" :arrows="false">
-              <template #item="{ item, index }">
-                <div
-                  :class="[
-                    'ads-slider__item',
-                    { 'ads-slider__item--active': index == 0 },
-                  ]"
-                >
-                  <h-image
-                    :src="GetAdvertImage(advert.id, item.imageName)"
-                    :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
-                  />
-                </div>
-              </template>
-            </h-slider>
-          </div>
+
+          <h-slider
+            class="ads-slider__list"
+            :items="advert.images"
+            :dots="true"
+            :arrows="false"
+          >
+            <template #item="{ item, index }">
+              <div
+                @click="openGallery"
+                :class="[
+                  'ads-slider__item',
+                  { 'ads-slider__item--active': index == 0 },
+                ]"
+              >
+                <h-image
+                  :src="GetAdvertImage(advert.id, item.imageName)"
+                  :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
+                />
+              </div>
+            </template>
+          </h-slider>
         </div>
 
-        <form action="" class="ads__form">
-          <textarea
-            class="form-control ads__note-input"
+        <Form
+          class="ads__form"
+          :validation-schema="validationSchema"
+          v-slot="{ meta }"
+        >
+          <h-textarea
+            name="note"
+            class-value="ads__note-input"
             placeholder="یادداشت من..."
-          ></textarea>
+            v-model="advertNote"
+            :trans-parent="false"
+          ></h-textarea>
+          <div class="row" style="flex-direction: row-reverse">
+            <h-button
+              type="button"
+              :disabled="loadingButton || meta.valid == false"
+              :loading="loadingButton"
+              @click="setAdvertNote"
+              >ثبت یادداشت</h-button
+            >
+          </div>
           <span class="ads__form-info"
             >یادداشت در پنل کاربری شما ذخیره می‌شود، و فقط برای شما قابل مشاهده
             است.</span
           >
-        </form>
+        </Form>
         <div class="ads__warning">
           <p class="ads__warning-text">
             <span>
@@ -382,160 +324,22 @@
             پیش از انجام معاملات و پرداخت هرگونه وجه، از صحت خودرو اطمینان حاصل
             فرمایید.
           </p>
-          <a href="javascript:void(0)" @click="toggleBugModal" class="ads__warning-link">
+          <a
+            href="javascript:void(0)"
+            @click="toggleBugModal"
+            class="ads__warning-link"
+          >
             (گزارش اشکال)
           </a>
         </div>
         <div class="ads__mobile-connection">
-          <a href="#" class="btn btn-primary ads__contact-btn">اطلاعات تماس</a>
-          <a href="#" class="btn btn-primary-outline ads__chat-btn">چت</a>
-        </div>
-      </div>
-    </section>
-    <section class="ads-gallery">
-      <div class="container">
-        <div class="ads-gallery__header">
-          <svg
-            class="ads-gallery__close-btn"
-            width="36"
-            height="36"
-            viewBox="0 0 36 36"
+          <button
+            @click="togglePhoneModal"
+            class="btn btn-primary ads__contact-btn"
           >
-            <path
-              d="M34 2L18 18M18 18L2 34M18 18L34 34M18 18L2 2"
-              stroke="white"
-              stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </svg>
-          <h3 class="ads-gallery__ads-name">
-            {{ advert.brand.title }} {{ advert.model.title }}
-            {{ advert.trim.title }} {{ advert.year.yearTitle }}
-          </h3>
-          <div class="ads-gallery__flags">
-            <span class="ads-gallery__flag">
-              <svg
-                width="20"
-                height="24"
-                viewBox="0 0 20 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M4.23207 22.6515L4.23203 22.6514L4.22222 22.6583C3.04571 23.4839 1.4214 22.7367 1.30876 21.2843C1.17636 19.577 0.999972 16.4489 1 11.9001V11.818V11.818C0.999969 10.0123 1.00095 8.43904 1.12977 7.12626C1.26038 5.79534 1.53147 4.60354 2.16092 3.63277C3.47718 1.60276 6.0125 1.01675 9.99586 1.00034C13.9839 0.983921 16.5228 1.56716 17.8404 3.61005C18.4689 4.58457 18.7397 5.7819 18.8703 7.11733C18.9991 8.43513 19 10.0125 19 11.8189V11.9001C19 16.4489 18.8236 19.577 18.6912 21.2843C18.5785 22.7367 16.9543 23.4839 15.7778 22.6583L15.7778 22.6583L15.7679 22.6515C14.7359 21.9456 13.7808 21.1856 13.0366 20.5931L13.0231 20.5824C12.6849 20.3132 12.378 20.0688 12.1372 19.8903C11.6855 19.5554 11.3082 19.3268 10.9587 19.186C10.5782 19.0328 10.271 19 10 19C9.729 19 9.42177 19.0328 9.04133 19.186C8.69178 19.3268 8.31454 19.5554 7.86274 19.8903L8.45823 20.6937L7.86274 19.8903C7.62195 20.0688 7.31488 20.3133 6.97665 20.5826L6.96343 20.5931C6.21919 21.1856 5.26412 21.9456 4.23207 22.6515Z"
-                  stroke="#0F0F10"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-                <path
-                  d="M12 5.00391C13 5.00391 13.5 5.00011 14.25 5.74817C15 6.49623 15 9.00001 15 10"
-                  stroke="#0F0F10"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                ></path>
-              </svg>
-            </span>
-            <span class="ads-gallery__flag">
-              <svg
-                width="23"
-                height="26"
-                viewBox="0 0 23 26"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M13.292 9.28438C14.1039 10.2042 15.2918 10.7844 16.6151 10.7844C19.0622 10.7844 21.0459 8.80067 21.0459 6.35362C21.0459 3.90657 19.0622 1.92285 16.6151 1.92285C14.1681 1.92285 12.1843 3.90657 12.1843 6.35362C12.1843 7.47731 12.6027 8.50331 13.292 9.28438ZM13.292 9.28438L7.56449 12.9998M7.56449 12.9998C7.1083 11.7091 5.87739 10.7844 4.4305 10.7844C2.59521 10.7844 1.10742 12.2722 1.10742 14.1075C1.10742 15.9427 2.59521 17.4305 4.4305 17.4305C5.87739 17.4305 7.1083 16.5058 7.56449 15.2152M7.56449 12.9998C7.68694 13.3462 7.75358 13.7191 7.75358 14.1075C7.75358 14.4959 7.68694 14.8687 7.56449 15.2152M7.56449 15.2152L14.8443 19.0921M14.8443 19.0921C14.5616 19.5809 14.3997 20.1483 14.3997 20.7536C14.3997 22.5889 15.8875 24.0767 17.7228 24.0767C19.5581 24.0767 21.0459 22.5889 21.0459 20.7536C21.0459 18.9183 19.5581 17.4305 17.7228 17.4305C16.4928 17.4305 15.4189 18.0988 14.8443 19.0921Z"
-                  stroke="#0F0F10"
-                  stroke-width="2"
-                ></path>
-              </svg>
-            </span>
-          </div>
-        </div>
-        <div class="gallery-slider">
-          <div class="gallery-slider__picture-box">
-            <img
-              src="https://s101.divarcdn.com/static/pictures/1658347169/gYXvPP2D.1.jpg"
-              alt=""
-              class="gallery-slider__img"
-            />
-            <svg
-              class="gallery-slider__nav gallery-slider__nav--right"
-              fill="none"
-              width="31"
-              height="51"
-              viewBox="0 0 31 51"
-            >
-              <path
-                d="M3.49988 3.38086L25.9999 24.8094L3.49988 46.238"
-                stroke="#F0EFEF"
-                stroke-width="6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-            <svg
-              class="gallery-slider__nav gallery-slider__nav--left"
-              fill="none"
-              width="31"
-              height="51"
-              viewBox="0 0 31 51"
-            >
-              <path
-                d="M27.5002 3.38086L5.00025 24.8094L27.5002 46.238"
-                stroke="#F0EFEF"
-                stroke-width="6"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-          </div>
-          <span class="gallery-slider__pagination">4/6</span>
-        </div>
-      </div>
-      <div class="ads-gallery__footer">
-        <div class="container">
-          <div class="ads-gallery__list">
-            <div class="ads-gallery__item ads-gallery__item--active">
-              <img
-                src="https://s101.divarcdn.com/static/pictures/1658345929/gYYflVjK.jpg"
-                alt=""
-              />
-            </div>
-            <div class="ads-gallery__item">
-              <img
-                src="https://s101.divarcdn.com/static/pictures/1658345929/gYYflVjK.jpg"
-                alt=""
-              />
-            </div>
-            <div class="ads-gallery__item">
-              <img
-                src="https://s101.divarcdn.com/static/pictures/1658345929/gYYflVjK.jpg"
-                alt=""
-              />
-            </div>
-            <div class="ads-gallery__item">
-              <img
-                src="https://s101.divarcdn.com/static/pictures/1658345929/gYYflVjK.jpg"
-                alt=""
-              />
-            </div>
-            <div class="ads-gallery__item">
-              <img
-                src="https://s101.divarcdn.com/static/pictures/1658345929/gYYflVjK.jpg"
-                alt=""
-              />
-            </div>
-            <div class="ads-gallery__item">
-              <img
-                src="https://s101.divarcdn.com/static/pictures/1658345929/gYYflVjK.jpg"
-                alt=""
-              />
-            </div>
-          </div>
+            اطلاعات تماس
+          </button>
+          <a href="#" class="btn btn-primary-outline ads__chat-btn">چت</a>
         </div>
       </div>
     </section>
@@ -545,6 +349,57 @@
       :report-for="BugReportFor.advertisement"
       :model-value="isOpenModal"
     />
+    <share-modal
+      v-model="isOpenShareModal"
+      :link="`/car/detail/${advert.shortLink}`"
+    />
+    <h-modal v-model="isOpenPhoneModal">
+      <div class="phone__list">
+        <div class="row">
+          <div class="phone__title">
+            <icons-phone :width="20" :height="20" />
+            <span class="text-muted font-6">شماره تماس 1</span>
+          </div>
+          <div class="copy__phone">
+            {{ advert.userDto.phoneNumber }}
+            <h-copy hash-color="#C4C4C4" :text="advert.userDto.phoneNumber" />
+          </div>
+        </div>
+        <div class="row" v-if="advert.exhibition != null">
+          <div class="phone__title">
+            <icons-phone :width="20" :height="20" />
+            <span class="text-muted font-6">شماره تماس 2</span>
+          </div>
+          <div class="copy__phone">
+            {{ advert.exhibition.phoneNumbers.mobilePhone }}
+            <h-copy
+              hash-color="#C4C4C4"
+              :text="advert.exhibition.phoneNumbers.mobilePhone"
+            />
+          </div>
+        </div>
+
+        <div
+          class="row"
+          v-if="
+            advert.exhibition != null &&
+            advert.exhibition.phoneNumbers.telephone
+          "
+        >
+          <div class="phone__title">
+            <icons-phone :width="20" :height="20" />
+            <span class="text-muted font-6">شماره تماس 3</span>
+          </div>
+          <div class="copy__phone">
+            {{ advert.exhibition.phoneNumbers.telephone }}
+            <h-copy
+              hash-color="#C4C4C4"
+              :text="advert.exhibition.phoneNumbers.telephone"
+            />
+          </div>
+        </div>
+      </div>
+    </h-modal>
   </div>
 </template>
 
@@ -555,18 +410,44 @@ import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models"
 import { GetByShortLink } from "~~/services/advertisement.service";
 import { BugReportFor } from "~~/services/bugReport.service";
 import { GetAdvertImage } from "~~/utilities/imageUtil";
-import { timeAgo } from "@persian-tools/persian-tools";
+import { TimeAgo } from "~~/utilities/dateUtil";
+import {
+  SaveAdvertisement,
+  GetNoteByAdvertId,
+  SetNote,
+} from "~~/services/account.service";
+import { authStore as useAuthStore } from "~~/stores/auth.store";
+import { AlertType } from "~~/models/utilities/AlertType";
+import { ToastType } from "~~/composables/useToast";
+import { ProssesAsync } from "~~/utilities/ProssesAsync";
+import { IApiResponse } from "~~/models/IApiResponse";
+import { Form } from "vee-validate";
+import * as Yup from "yup";
 
 const advert: Ref<AdvertisementDto | undefined> = ref(undefined);
 const isOpenModal = ref(false);
+const isOpenPhoneModal = ref(false);
+const isOpenShareModal = ref(false);
+const isOpenGallery = ref(false);
+const advertNote = ref("");
+const loadingButton = ref(false);
 
+const toast = useToast();
+const isSavedAdvert = ref(false);
+const authStore = useAuthStore();
 const route = useRoute();
 var slug = route.params.slug;
 const shortLink = slug.toString().split("-")[0];
 const advertTitle = ref("");
+const exhibitionAdvertCount = ref(0);
 
 const searchUrl = ref("car");
 
+const validationSchema = Yup.object().shape({
+  note: Yup.string()
+    .min(5, "توضیحات باید حداقل 5 کاراکتر باشد")
+    .required("لطفا یادداشت خود را بنویسید"),
+});
 const { data, pending } = await useAsyncData(
   "single-advert",
   () => GetByShortLink(shortLink),
@@ -580,8 +461,94 @@ if (data.value.data) {
   searchUrl.value =
     advert.value.motorCycleDetail == null ? "car" : "motorcycle";
 }
-
+const saveAdvert = async () => {
+  var res = await SaveAdvertisement(advert.value!.id);
+  if (res.isSuccess) {
+    isSavedAdvert.value = true;
+    toast.showToast("آگهی شما با موفقیت ذخیره شد", ToastType.success);
+  }
+};
 const toggleBugModal = () => {
   isOpenModal.value = !isOpenModal.value;
 };
+const togglePhoneModal = () => {
+  isOpenPhoneModal.value = !isOpenPhoneModal.value;
+};
+const toggleShareModal = () => {
+  isOpenShareModal.value = !isOpenShareModal.value;
+};
+const openGallery = () => {
+  isOpenGallery.value = true;
+};
+const setAdvertNote = async () => {
+  if (advertNote.value.length < 5) {
+    toast.showToast("توضیحات باید حداقل 5 کاراکتر باشد", ToastType.error);
+    return;
+  }
+  var res = await ProssesAsync<IApiResponse<undefined>>(
+    () =>
+      SetNote({
+        advertisementId: advert.value!.id,
+        description: advertNote.value,
+      }),
+    loadingButton
+  );
+  if (res.isSuccess) {
+    toast.showToast("یادداشت با موفقیت ذخیره شد", ToastType.success);
+  }
+};
+watch(
+  () => authStore.advertSaved,
+  (val) => {
+    console.log("s");
+    var saved = val.find((f) => f.advertisementId == advert.value!.id);
+    if (saved) {
+      isSavedAdvert.value = true;
+    }
+  }
+);
+onMounted(async () => {
+  if (authStore.isLogin) {
+    var res = await GetNoteByAdvertId(advert.value!.id);
+    if (res.isSuccess) {
+      advertNote.value = res.data?.text ?? "";
+    }
+  }
+});
 </script>
+<style scoped>
+.phone__list {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.phone__title {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+}
+.text-muted {
+  color: var(--color-gray-600) !important;
+}
+.phone__list .row {
+  flex-direction: row;
+  border-bottom: 1px solid var(--color-gray-200);
+  justify-content: space-between;
+  padding-bottom: 1.4rem;
+  padding-top: 1.4rem;
+}
+.phone__list .row:last-child {
+  border-bottom: none;
+  padding-bottom: 0rem;
+}
+.copy__phone {
+  align-items: flex-end;
+  display: flex;
+  gap: 1rem;
+  color: var(--color-blue);
+}
+.copy__phone div {
+  top: 6px;
+  position: relative;
+}
+</style>

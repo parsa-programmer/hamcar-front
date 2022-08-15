@@ -218,6 +218,12 @@ hr {
 .w-auto{
     width: auto;
 }
+.align-items-start{
+    align-items: flex-start;
+}
+.color_black_200{
+    color: var(--color-black-200);
+}
 .overflow-visible{
     overflow: visible !important;
 }

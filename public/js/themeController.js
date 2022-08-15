@@ -84,3 +84,12 @@ function closeSelectOutsideArea() {
     }
   }
 }
+
+
+//    DropDown
+// const dropdownItems = document.querySelectorAll(".dropdown__item");
+// let isDropdownOpen = false;
+
+// dropdownItems.forEach(item => {
+//     item.addEventListener("click",selectDropdownItem)
+// })

@@ -34,7 +34,10 @@ Input & Input Group
     border-color: var(--color-green);
     color: var(--color-black);
 }
-
+input[disabled]{
+    color: var(--color-gray-600) !important; 
+    border-color: var(--color-gray-400) !important;
+}
 .form-control:hover {
     color: var(--color-gray-600);
     border-color: var(--color-gray-400);

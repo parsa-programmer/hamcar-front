@@ -9,10 +9,14 @@
         <icons-home></icons-home>
         همکار
       </nuxt-link>
+
       <icons-left-arrow></icons-left-arrow>
       <nuxt-link to="/car-reviews" class="breadcrumb__item"
         >مشخصات فنی خودرو</nuxt-link
       >
+
+      <icons-left-arrow></icons-left-arrow>
+      <a class="breadcrumb__item breadcrumb__item--active">مقایسه خودرو ها</a>
     </section>
     <section class="technical">
       <div class="technical__head">
@@ -249,19 +253,17 @@
         </template>
         <div v-else>
           <h-alert :type="AlertType.Warning">
-            برای نمایش جزئیات خودرو  روی افزودن خودرو به مقایسه کلیک کنید و یک
+            برای نمایش جزئیات خودرو روی افزودن خودرو به مقایسه کلیک کنید و یک
             خودرو دیگه انتخاب کنید
           </h-alert>
         </div>
       </div>
     </section>
     <client-only>
-      <Transition name="bounce" mode="out-in">
-        <CarReviewSelectCarForComare
-          v-model="isOpenModal"
-          @selectedCar="addCar"
-        />
-      </Transition>
+      <CarReviewSelectCarForComare
+        v-model="isOpenModal"
+        @selectedCar="addCar"
+      />
     </client-only>
   </div>
 </template>
@@ -346,6 +348,9 @@ onMounted(async () => {
       }
     }
   });
+});
+onUnmounted(() => {
+  window.onscroll = null;
 });
 </script>
 <style scoped>
@@ -469,7 +474,7 @@ onMounted(async () => {
     padding: 5px 24px !important;
     background: var(--color-gray-200) !important;
   }
-  .compare__specifications h2{
+  .compare__specifications h2 {
     font-family: var(--t5-font-family);
     font-size: var(--t5-font-size);
     font-weight: 700 !important;

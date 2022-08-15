@@ -22,6 +22,11 @@
         </svg>
       </button>
     </template>
+    <slot
+      name="custom_arrows"
+      :prevSlide="clickPrev"
+      :nextSlide="clickNext"
+    ></slot>
     <div class="overflow-x-hidden">
       <div ref="sliderWrapperRef" class="row">
         <slot name="first-item"></slot>
@@ -90,23 +95,21 @@ export default defineComponent({
     const getConfig = () => {
       const el = unref(sliderWrapperRef);
       const maxX: number = el!.scrollWidth - el!.clientWidth;
-      // console.log("maxX", maxX, el!.scrollWidth, el!.clientWidth);
+      //console.log("maxX", maxX, el!.scrollWidth, el!.clientWidth);
 
       return { el, maxX };
     };
     const recalculate = () => {
       const { el, maxX } = getConfig();
       //@ts-ignore
-      if (props.items.length > 1) {
-        Draggable.get(unref(el)).applyBounds({ minX: 0, maxX });
-      }
+      Draggable.get(unref(el)).applyBounds({ minX: 0, maxX });
     };
     onUpdated(() => {
       recalculate();
     });
     onMounted(() => {
-      if (props.items.length > 1) {
-        gsap.registerPlugin(Draggable);
+      setTimeout(() => {
+          gsap.registerPlugin(Draggable);
         let { el, maxX } = getConfig();
         Draggable.create(unref(el), {
           type: "x",
@@ -115,7 +118,7 @@ export default defineComponent({
           bounds: { minX: 0, maxX },
         });
         useEventListener("resize", recalculate);
-      }
+      }, 100);
     });
     const getValidX = (x: number) => {
       const { maxX } = getConfig();
@@ -241,9 +244,6 @@ export default defineComponent({
 @media screen and (max-width: 768px) {
   .arrow-button {
     display: none;
-  }
-  .overflow-x-hidden {
-    overflow-x: unset;
   }
 }
 </style>

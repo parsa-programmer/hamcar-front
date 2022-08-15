@@ -1,7 +1,13 @@
 import { defineStore } from "pinia";
 import { LoginResultDto } from "~~/models/auth/LoginResultDto";
-import { GetCurrenctUser } from "~/services/account.service";
-import { UserDto } from "~~/models/account/account.Models";
+import {
+  GetCurrenctUser,
+  GetSavedAdvertisements,
+} from "~/services/account.service";
+import {
+  UserAdvertisementSavedDto,
+  UserDto,
+} from "~~/models/account/account.Models";
 import { use } from "h3";
 import { useAuth } from "~~/composables/auth/useAuth";
 import { ApiStatusCodes } from "~~/models/advertisements/enums/ApiStatusCodes";
@@ -12,8 +18,9 @@ const defaultState = () => ({
   isRefreshing: false,
   isRefreshSuccess: false,
   phoneNumber: "",
-  user: {} as UserDto,
   loading: false,
+  user: {} as UserDto,
+  advertSaved: [] as UserAdvertisementSavedDto[],
 });
 
 export const authStore = defineStore("auth", {
@@ -43,6 +50,11 @@ export const authStore = defineStore("auth", {
               return;
             }
             this.user = res.data!;
+            GetSavedAdvertisements().then((res) => {
+              if (res.isSuccess) {
+                this.advertSaved = res.data!;
+              }
+            });
           })
           .finally(() => {
             this.loading = false;

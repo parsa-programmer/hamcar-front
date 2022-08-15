@@ -1,6 +1,5 @@
-﻿export enum AdvertisementPaymentType
-{
-    قسطی,
-    توافقی,
-    مقطوع
+﻿export enum AdvertisementPaymentType {
+  قسطی = "قسطی",
+  توافقی = "توافقی",
+  مقطوع = "مقطوع",
 }

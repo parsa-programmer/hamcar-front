@@ -13,7 +13,7 @@ export default defineNuxtConfig({
     server: {
       //@ts-ignore
       proxy: PROXY_CONFIG,
-    },
+    }
   },
   css: [
     "~/assets/css/dark.css",

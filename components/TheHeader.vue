@@ -27,6 +27,9 @@
                   <nuxt-link to="/sell/car">ثبت آگهی خودرو</nuxt-link>
                 </li>
                 <li>
+                  <nuxt-link to="/car">خرید خودرو</nuxt-link>
+                </li>
+                <li>
                   <nuxt-link to="/car-reviews">مشخصات فنی خودرو</nuxt-link>
                 </li>
                 <li>

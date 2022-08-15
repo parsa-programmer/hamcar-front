@@ -33,7 +33,11 @@ export const GetNotes = (
     params: filterParams,
   });
 };
-
+export const GetNoteByAdvertId = (
+  advertId: string
+): Promise<IApiResponse<UserNoteFilterData>> => {
+  return FetchApi("/account/notes/" + advertId, {}, { ignoreErrors: true });
+};
 export const GetSavedAdvertisements = (): Promise<
   IApiResponse<UserAdvertisementSavedDto[]>
 > => {

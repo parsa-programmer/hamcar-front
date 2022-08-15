@@ -163,9 +163,9 @@ body {
 }
 
 .selected-filters__delete-btn {
-    color: #EF3838;
+    color: #EF3838 !important;
     border: 2px solid var(--color-gray-400);
-    padding: 0;
+    padding: 0 !important;
     flex-grow: 1;
 
 }
@@ -316,35 +316,66 @@ body {
     max-height: 23rem;
     overflow-y: auto;
 }
+.filter__body--scroll-disable{
+    max-height: 100%;
+    overflow-y: unset;
+
+}
 .filter__body::-webkit-scrollbar {
     width: 4px;
-    margin-top: 20px;
 }
 
-/* Track */
 .filter__body::-webkit-scrollbar-track {
     background: transparent;
 }
 
-/* Handle */
 .filter__body::-webkit-scrollbar-thumb {
     background: var(--color-gray-400);
     border-radius: 56px;
-    height: 10px;
 }
 
-/* Handle on hover */
 .filter__body::-webkit-scrollbar-thumb:hover {
     background: #555;
 }
 .filter__wrapper {
     display: flex;
-    align-items: center;
-    gap: 22px;
+    flex-direction: column;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+.filter__space{
+    display: flex;
+    justify-content: space-between;
+}
+.filter__right{
+    font-family: var(--t5-font-family);
+    font-size: var(--t5-font-size);
+    color: var(--color-black-200);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 0.8rem 0;
+    position: relative;
+}
+.filter__right::after{
+    content: " ";
+    display: block;
+    height: 23px;
+    width: 5px;
+    border-right: 2px dashed var(--color-gray-300);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 4px;
+}
+.dropdown-box{
+    width: 13.5rem;
 }
 
 .filter__search {
     margin-bottom: 1.5rem;
+
 }
 
 .filter__search input {
@@ -1041,7 +1072,12 @@ body {
     .advertising__sidebar {
         width: 14rem;
     }
-
+    .dropdown-box{
+        width: 100%;
+    }
+    .dropdown-wrapper{
+        width: 9rem;
+    }
 }
 
 @media screen and (max-width: 576px) {
@@ -1167,5 +1203,14 @@ body {
     }
     .advert__flag--place{
         display: none;
+    }
+    .filter__wrapper{
+        width: 90%;
+    }
+    .dropdown-wrapper{
+        width: 100%;
+    }
+    .dropdown-box{
+        max-width: 100%;
     }
 }

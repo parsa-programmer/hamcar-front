@@ -1,33 +1,16 @@
 <template>
-  <div>
-    <swiper
-      :slides-per-view="3"
-      :space-between="50"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
-    >
-      <swiper-slide>Slide 1</swiper-slide>
-      <swiper-slide>Slide 2</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      ...
-    </swiper>
-  </div>
+  <h-button :loading="loading" @click="toggle">salam</h-button>
+  <h-button  @click="toggle">salam</h-button>
 </template>
 
-<script setup>
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/css";
-const onSwiper = (swiper) => {
-  console.log(swiper);
-};
-const onSlideChange = () => {
-  console.log("slide change");
-};
+<script setup >
+import { Carousel, Navigation, Pagination, Slide } from "vue3-carousel";
+import "vue3-carousel/dist/carousel.css";
+
+const loading=ref(false);
+const toggle=()=>{
+  loading.value=!loading.value;
+}
 </script>
 
 <style>

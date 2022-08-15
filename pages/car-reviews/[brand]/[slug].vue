@@ -10,6 +10,10 @@
       v-model="isOpenBugReportModal"
       :link-id="carReview.id"
     />
+    <share-modal
+      v-model="isOpenShareModal"
+      :link="`/car-review/${carReview.carReviewBrand.slug}/${carReview.slug}`"
+    />
     <section class="breadcrumb">
       <nuxt-link to="/" class="breadcrumb__item">
         <icons-home></icons-home>
@@ -94,7 +98,7 @@
           </h-slider>
         </div>
         <div class="technical__options-list">
-          <a href="#" class="technical__option">
+          <a href="javascript:void(0)" @click="toggleShareModal" class="technical__option">
             <span>
               <svg
                 width="24"
@@ -167,7 +171,7 @@
             </span>
             قیمت روز
           </a>
-          <a href="#" @click="toggleBugReportModal" class="technical__option">
+          <a href="javascript:void(0)" @click="toggleBugReportModal" class="technical__option">
             <span>
               <svg
                 width="26"
@@ -385,7 +389,8 @@ import {
 } from "~~/models/carReviews/Specification";
 import { BugReportFor } from "~~/services/bugReport.service";
 
-const isOpenBugReportModal:Ref<boolean> = ref(false);
+const isOpenBugReportModal: Ref<boolean> = ref(false);
+const isOpenShareModal: Ref<boolean> = ref(false);
 
 const carReview: Ref<CarReviewDto | undefined> = ref(undefined);
 const relatedCars: Ref<CarReviewFilterData[]> = ref([]);
@@ -408,6 +413,9 @@ carReview.value = data.value.data;
 
 const toggleBugReportModal = () => {
   isOpenBugReportModal.value = !isOpenBugReportModal.value;
+};
+const toggleShareModal = () => {
+  isOpenShareModal.value = !isOpenShareModal.value;
 };
 onMounted(async () => {
   if (data.value.isSuccess) {

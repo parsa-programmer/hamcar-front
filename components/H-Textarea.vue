@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div >
     <textarea
       :class="[
-        'form-control bg-transparent',
+        'form-control',
+        { 'bg-transparent': transParent },
         classValue,
         { 'invalid-data': !!errorMessage },
       ]"
@@ -12,6 +13,7 @@
       @input="modelValueChanged"
       :name="name"
       autocomplete="off"
+      v-bind="$attrs"
     ></textarea>
     <p class="input-invalid-text">{{ errorMessage || successMessage }}</p>
   </div>
@@ -48,6 +50,10 @@ const props = defineProps({
   classValue: {
     type: String,
     default: "",
+  },
+  transParent: {
+    type: Boolean,
+    default: true,
   },
 });
 

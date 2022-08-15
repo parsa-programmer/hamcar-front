@@ -3,12 +3,11 @@
     :class="['btn', outline ? 'btn-primary-outline' : `btn-${props.color}`]"
     :disabled="loading"
   >
-    <slot v-if="loading == false" />
-    <div class="snippet" v-else data-title=".dot-elastic">
-      <div class="stage">
-        <div class="dot-elastic"></div>
-      </div>
+    <div :style="loading==true?`opacity:0`:null">
+      <slot />
     </div>
+
+    <div class="sp sp-3balls" v-if="loading"></div>
   </button>
 </template>
 
@@ -30,95 +29,113 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.dot-elastic {
-  position: relative;
+.sp-3balls,
+.sp-3balls:before,
+.sp-3balls:after {
+  border-radius: 50%;
+  background-color: white;
   width: 10px;
   height: 10px;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #fff;
-  animation: dotElastic 1s infinite linear;
-}
-
-.dot-elastic::before,
-.dot-elastic::after {
-  content: "";
+  transform-origin: center center;
   display: inline-block;
+}
+.sp-3balls {
   position: absolute;
-  top: 0;
+  width: 10px !important;
+  height: 10px !important;
+  background-color: white;
+  opacity: 1;
+  -webkit-animation: spScaleAlpha 1s infinite linear;
+  animation: spScaleAlpha 1s infinite linear;
 }
-
-.dot-elastic::before {
-  left: -15px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #fff;
-  animation: dotElasticBefore 1s infinite linear;
+.sp-3balls:before,
+.sp-3balls:after {
+  content: "";
+  position: relative;
+  opacity: 0.25;
 }
-
-.dot-elastic::after {
-  left: 15px;
-  width: 10px;
-  height: 10px;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #fff;
-  animation: dotElasticAfter 1s infinite linear;
+.sp-3balls:before {
+  left: 18px;
+  top: -6px;
+  -webkit-animation: spScaleAlphaBefore 1s infinite linear;
+  animation: spScaleAlphaBefore 1s infinite linear;
 }
-
-@keyframes dotElasticBefore {
+.sp-3balls:after {
+  left: -18px;
+  top: -29px;
+  -webkit-animation: spScaleAlphaAfter 1s infinite linear;
+  animation: spScaleAlphaAfter 1s infinite linear;
+}
+@-webkit-keyframes spScaleAlpha {
   0% {
-    transform: scale(1, 1);
+    opacity: 1;
   }
-  25% {
-    transform: scale(1, 1.5);
+  33% {
+    opacity: 0.25;
   }
-  50% {
-    transform: scale(1, 0.67);
-  }
-  75% {
-    transform: scale(1, 1);
+  66% {
+    opacity: 0.25;
   }
   100% {
-    transform: scale(1, 1);
+    opacity: 1;
   }
 }
-
-@keyframes dotElastic {
+@keyframes spScaleAlpha {
   0% {
-    transform: scale(1, 1);
+    opacity: 1;
   }
-  25% {
-    transform: scale(1, 1);
+  33% {
+    opacity: 0.25;
   }
-  50% {
-    transform: scale(1, 1.5);
-  }
-  75% {
-    transform: scale(1, 1);
+  66% {
+    opacity: 0.25;
   }
   100% {
-    transform: scale(1, 1);
+    opacity: 1;
   }
 }
-
-@keyframes dotElasticAfter {
+@-webkit-keyframes spScaleAlphaBefore {
   0% {
-    transform: scale(1, 1);
+    opacity: 0.25;
   }
-  25% {
-    transform: scale(1, 1);
+  33% {
+    opacity: 1;
   }
-  50% {
-    transform: scale(1, 0.67);
+  66% {
+    opacity: 0.25;
   }
-  75% {
-    transform: scale(1, 1.5);
+}
+@keyframes spScaleAlphaBefore {
+  0% {
+    opacity: 0.25;
+  }
+  33% {
+    opacity: 1;
+  }
+  66% {
+    opacity: 0.25;
+  }
+}
+@-webkit-keyframes spScaleAlphaAfter {
+  33% {
+    opacity: 0.25;
+  }
+  66% {
+    opacity: 1;
   }
   100% {
-    transform: scale(1, 1);
+    opacity: 0.25;
+  }
+}
+@keyframes spScaleAlphaAfter {
+  33% {
+    opacity: 0.25;
+  }
+  66% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.25;
   }
 }
 </style>

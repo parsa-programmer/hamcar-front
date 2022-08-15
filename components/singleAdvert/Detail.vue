@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="ads__connection">
-      <button class="btn btn-primary ads__contact-btn" :disabled="isShowPhones" @click="showPhone">
+      <button
+        class="btn btn-primary ads__contact-btn"
+        :disabled="isShowPhones"
+        @click="showPhone"
+      >
         اطلاعات تماس
       </button>
       <nuxt-link class="btn btn-primary-outline ads__chat-btn">چت</nuxt-link>
@@ -18,7 +22,10 @@
             </span>
             <span class="ads__detail-value">
               {{ advert.userDto.phoneNumber }}
-              <h-copy :text="advert.userDto.phoneNumber" />
+              <h-copy
+                hash-color="var(--color-black)"
+                :text="advert.userDto.phoneNumber"
+              />
             </span>
           </div>
           <div class="ads__detail" v-if="advert.exhibition != null">
@@ -28,13 +35,16 @@
             </span>
             <span class="ads__detail-value">
               {{ advert.exhibition.phoneNumbers.mobilePhone }}
-              <h-copy :text="advert.exhibition.phoneNumbers.mobilePhone" />
+              <h-copy
+                hash-color="var(--color-black)"
+                :text="advert.exhibition.phoneNumbers.mobilePhone"
+              />
             </span>
           </div>
         </div>
       </Transition>
       <div class="ads__details-list">
-        <div class="ads__detail">
+        <div class="ads__detail align-items-start">
           <span class="ads__detail-name">
             <svg
               width="24"
@@ -58,7 +68,48 @@
             </svg>
             قیمت
           </span>
-          <span class="ads__detail-value"> ۱,۶۰۰,۰۰۰,۰۰۰ </span>
+          <span
+            class="ads__detail-value"
+            v-if="
+              advert.price.advertisementPaymentType ==
+              AdvertisementPaymentType.مقطوع
+            "
+          >
+            {{ splitNumber(advert.price.amount) }} تومان
+          </span>
+          <span
+            class="ads__detail-value"
+            v-else-if="
+              advert.price.advertisementPaymentType ==
+              AdvertisementPaymentType.توافقی
+            "
+            >توافقی</span
+          >
+
+          <div
+            class="prices"
+            v-if="
+              advert.price.advertisementPaymentType ==
+              AdvertisementPaymentType.قسطی
+            "
+          >
+            <span class="ads__detail-value">
+              ت {{ splitNumber(advert.price.ghest?.pishPardakht) }}
+              <small
+                class="font-4 color_black_200"
+                style="position: relative; top: 4px"
+                >پیش</small
+              ></span
+            >
+            <span class="ads__detail-value mt-1">
+              ت {{ splitNumber(advert.price.ghest?.amountPricePerGhest) }}
+              <small
+                class="font-4 color_black_200"
+                style="position: relative; top: 4px"
+                >ماهیانه</small
+              ></span
+            >
+          </div>
         </div>
         <div class="ads__detail">
           <span class="ads__detail-name">
@@ -121,8 +172,8 @@
             مکان
           </span>
           <span class="ads__detail-value">
-            {{ advert.address.Province }}، {{ advert.address.City }}،
-            {{ advert.address.PostalAddress }}
+            {{ advert.address.province }}، {{ advert.address.city }}
+            <!-- {{ advert.address.postalAddress }} -->
           </span>
         </div>
         <div class="ads__detail">
@@ -147,9 +198,11 @@
                 fill="currentColor"
               ></path>
             </svg>
-            {{ advert.carDetail.exteriorColor.replace("_", " ") }}
+            رنگ
           </span>
-          <span class="ads__detail-value">سفید</span>
+          <span class="ads__detail-value">{{
+            advert.carDetail.exteriorColor.replace("_", " ")
+          }}</span>
         </div>
         <div class="ads__detail">
           <span class="ads__detail-name">
@@ -175,7 +228,10 @@
 </template>
 
 <script setup lang="ts">
+import { it } from "node:test";
 import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models";
+import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
+import { splitNumber } from "~~/utilities/numberUtils";
 const isShowPhones = ref(false);
 
 const showPhone = () => {

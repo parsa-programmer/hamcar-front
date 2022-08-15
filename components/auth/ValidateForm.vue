@@ -97,14 +97,14 @@ const setAnimation = (): void => {
     unref(target),
     { width: 0 + "%" },
     {
-      duration: 130,
+      duration: 125,
       width: 100 + "%",
-      ease: "power2",
+      ease: "power0",
     }
   );
 };
 const code = ref("");
-const time = ref(120000);
+const time = ref(125000);
 const phoneNumber = store.phoneNumber;
 const schema = Yup.object().shape({
   code: Yup.string()
@@ -115,7 +115,7 @@ const schema = Yup.object().shape({
 const sendAgain = async () => {
   var isSuccess = await login(phoneNumber);
   if (isSuccess) {
-    time.value = 120000;
+    time.value = 125000;
     clearInterval(counterInterval);
     animation.restart();
     setTimer();
