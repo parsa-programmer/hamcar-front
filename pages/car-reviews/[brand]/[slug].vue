@@ -63,7 +63,7 @@
           </div>
           <div
             class="technical__rating-stars-value"
-            style="width: calc(var(--star-length) * 3 + var(--star-half-width))"
+          :style="`width: calc(var(--star-length) * ${commentRate})`"
           >
             <div class="technical__star">
               <img src="/img/star-full.svg" />
@@ -205,7 +205,7 @@
             گزارش اشکال
           </a>
           <div class="technical__rating">
-            <div class="technical__comment-counter">
+            <div class="technical__comment-counter" v-if="commentDataLoading==false">
               <svg
                 width="24"
                 height="24"
@@ -236,7 +236,9 @@
               </svg>
               {{ commentCount }} دیدگاه
             </div>
-            <div class="technical__rating-stars">
+            <h-skeletor width="100px" style="height: 15px" v-if="commentDataLoading"/>
+            <h-skeletor width="150px" style="height: 15px" v-if="commentDataLoading"/>
+            <div class="technical__rating-stars" v-if="commentDataLoading==false">
               <div class="technical__star">
                 <img src="/img/star-outline.svg" />
               </div>
@@ -254,9 +256,7 @@
               </div>
               <div
                 class="technical__rating-stars-value"
-                style="
-                  width: calc(var(--star-length) * 3 + var(--star-half-width));
-                "
+                :style="`width: calc(var(--star-length) * ${commentRate})`"
               >
                 <div class="technical__star">
                   <img src="/img/star-full.svg" />
@@ -369,7 +369,8 @@
         <comments
           :link-id="carReview.id"
           :type="CommentType.review"
-          @get-comment-count="getCommentCounts"
+          @get-comment-data="getCommentsData"
+          @loading="(load) => (commentDataLoading = load)"
         />
         <nuxt-link
           v-if="relatedAdvertCount > 0"
@@ -403,6 +404,7 @@ import { CommentType } from "~~/models/comments/CommentType.Enum";
 
 const isOpenBugReportModal: Ref<boolean> = ref(false);
 const isOpenShareModal: Ref<boolean> = ref(false);
+const commentDataLoading = ref(true);
 
 const carReview: Ref<CarReviewDto | undefined> = ref(undefined);
 const relatedCars: Ref<CarReviewFilterData[]> = ref([]);
@@ -422,6 +424,7 @@ const leftSpecifications: Ref<Specification[]> = ref([]);
 const rightSpecifications: Ref<Specification[]> = ref([]);
 const relatedAdvertCount = ref(0);
 const commentCount = ref(0);
+const commentRate = ref(0);
 
 carReview.value = data.value.data;
 
@@ -431,8 +434,9 @@ const toggleBugReportModal = () => {
 const toggleShareModal = () => {
   isOpenShareModal.value = !isOpenShareModal.value;
 };
-const getCommentCounts = (count: number) => {
+const getCommentsData = (count: number, rate: number) => {
   commentCount.value = count;
+  commentRate.value = rate;
 };
 onMounted(async () => {
   if (data.value.isSuccess) {

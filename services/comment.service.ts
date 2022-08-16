@@ -2,7 +2,7 @@ import { FetchApi } from "~/utilities/customFetchApi";
 import { CreateCommentCommand } from "~~/models/comments/CreateCommentCommand";
 import { ReactionToCommentCommand } from "~~/models/comments/ReactionToCommentCommand";
 import { IApiResponse, FilterResult } from "~~/models/IApiResponse";
-import { CommentDto, CommentFilterParams } from "~/models/comments/CommentDto";
+import { CommentDto, CommentFilterParams, CommentFilterResult } from "~/models/comments/CommentDto";
 
 export const CreateComment = async (
   command: CreateCommentCommand
@@ -24,10 +24,10 @@ export const ReactionToComment = async (
   return result;
 };
 
-export const DeleteComment = async (
-  id: string
+export const DeleteCommentReaction = async (
+  commentId: string
 ): Promise<IApiResponse<undefined>> => {
-  var result = await FetchApi<undefined>(`/comment?commentId=${id}`, {
+  var result = await FetchApi<undefined>(`/comment?commentId=${commentId}`, {
     method: "delete",
   });
   return result;
@@ -35,8 +35,8 @@ export const DeleteComment = async (
 
 export const GetCommentByFilter = async (
   filterParams: CommentFilterParams
-): Promise<IApiResponse<FilterResult<CommentDto>>> => {
-  var result =  FetchApi<FilterResult<CommentDto>>("comment", {
+): Promise<IApiResponse<CommentFilterResult>> => {
+  var result =  FetchApi<CommentFilterResult>("comment", {
     params: {
       pageId: filterParams.pageId,
       take: filterParams.take,
