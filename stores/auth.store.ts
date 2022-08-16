@@ -38,27 +38,26 @@ export const authStore = defineStore("auth", {
     setPhoneNumber(phneNumber: string) {
       this.phoneNumber = phneNumber;
     },
-    initData() {
+    async initData() {
       if (localStorage.getItem("auth-data")) {
         const data = localStorage.getItem("auth-data");
         this.setLoginData(JSON.parse(data!));
         this.loading = true;
-        GetCurrenctUser()
-          .then((res) => {
-            if (res.metaData.appStatusCode === ApiStatusCodes.UnAuthorize) {
-              this.logout();
-              return;
-            }
-            this.user = res.data!;
-            GetSavedAdvertisements().then((res) => {
-              if (res.isSuccess) {
-                this.advertSaved = res.data!;
-              }
-            });
-          })
-          .finally(() => {
-            this.loading = false;
-          });
+
+        var res = await GetCurrenctUser();
+        if (res.metaData.appStatusCode === ApiStatusCodes.UnAuthorize) {
+          this.logout();
+          this.loading = false;
+          return;
+        }
+        this.user = res.data!;
+        if (this.user) {
+          var result = await GetSavedAdvertisements();
+          if (result.isSuccess) {
+            this.advertSaved = result.data!;
+          }
+        }
+        this.loading = false;
       }
     },
     async logout() {

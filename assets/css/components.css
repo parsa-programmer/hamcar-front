@@ -584,10 +584,46 @@ textarea {
     padding: 24px 2rem !important;
     min-height: 200px;
 }
+/* Modern Select Box */
 
-
-
-
+.modern-select__box {
+    background-color: var(--color-white);
+    border-radius: var(--app-border-radius);
+    height: 4.5rem;
+    width: 18.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    font-size: var(--t4-font-size);
+    font-family: var(--t4-font-family);
+    cursor: pointer;
+    position: relative;
+}
+.modern-select__box .select__list{
+    top: calc(100% + .5rem) !important;
+    padding: .5rem .0rem .5rem 0px;
+    width: 80%;
+    left: 0 !important;
+    float: left;
+    position: absolute;
+    right: unset;
+}
+.modern-select__box .select__item:last-child{
+    border-bottom: none;
+}
+.modern-select__box .select__item{
+    border-bottom:1px solid var(--color-gray-300) ;
+    padding:1.2rem 0;
+    border-radius: 0;
+    padding-right: 2rem;
+    font-family: var(--t4-font-family);
+    font-size: var(--t4-font-size);
+    height: unset;
+}
+.modern-select__box .select__list__wrapper{
+    padding: 0;
+}
 /*
 ===================
    Radio Butotn

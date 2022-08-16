@@ -686,7 +686,7 @@
           <landing-sidebar />
           <div class="content">
             <h-image
-              src="/static/img/car1.jpg"
+              src="static/img/car1.jpg"
               alt="Hamcar.ir"
               class="content__img"
             />
@@ -697,13 +697,13 @@
         </div>
         <div class="picture-lists">
           <div class="picture-lists__item">
-            <h-image src="/static/img/car2.jpg" alt="Hamcar.ir" />
+            <h-image src="static/img/car2.jpg" alt="Hamcar.ir" />
           </div>
           <div class="picture-lists__item picture-lists__item--active">
-            <h-image src="/static/img/car3.jpg" alt="Hamcar.ir" />
+            <h-image src="static/img/car3.jpg" alt="Hamcar.ir" />
           </div>
           <div class="picture-lists__item">
-            <h-image src="/static/img/car4.jpg" alt="Hamcar.ir" />
+            <h-image src="static/img/car4.jpg" alt="Hamcar.ir" />
           </div>
         </div>
         <a href="#" class="btn btn-primary main-content__link"

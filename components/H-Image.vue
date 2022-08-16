@@ -1,8 +1,9 @@
 <template>
-  <nuxt-img placeholder="/img/placeholder.png" :src="src" />
+  <nuxt-img placeholder  :src="src == null ? '' : src" />
 </template>
 
 <script setup>
+import placeholder from "~~/assets/img/placeholder.png"
 defineProps({
   src: {
     type: String,

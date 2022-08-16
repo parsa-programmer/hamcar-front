@@ -215,18 +215,22 @@ hr {
 }
 
 /* -- Helper Class -- */
-.w-auto{
+.w-auto {
     width: auto;
 }
-.align-items-start{
+
+.align-items-start {
     align-items: flex-start;
 }
-.color_black_200{
+
+.color_black_200 {
     color: var(--color-black-200);
 }
-.overflow-visible{
+
+.overflow-visible {
     overflow: visible !important;
 }
+
 .rectangel {
     width: 10px;
     height: 10px;
@@ -1285,4 +1289,23 @@ button {
     width: 24px;
     height: 24px;
     right: 2rem;
+}
+
+/* Public */
+.btn__submit {
+    margin-top: 2rem;
+    margin-right: auto;
+    width: 12rem;
+}
+@media screen and (max-width: 768px) {
+    .btn__submit {
+        margin-top: 1rem !important;
+        font-family: var(--t6-font-family) !important;
+        font-size: var(--t6-font-size) !important;
+        background-color: var(--color-green) !important;
+        height: 3rem !important;
+        width: 100% !important;
+    }
+
+
 }

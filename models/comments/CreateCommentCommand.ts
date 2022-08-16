@@ -1,8 +1,11 @@
+import { CommentType } from "./CommentType.Enum";
+
 export class CreateCommentCommand {
   constructor(
-    text: string,
-    linkId: string,
-    phoneNumber: string,
-    fullName: string
+    public text: string,
+    public linkId: string,
+    public phoneNumber: string,
+    public fullName: string,
+    public commentType: CommentType
   ) {}
 }

@@ -210,18 +210,6 @@ body {
     margin: 0 14px;
 }
 
-.other-filters__btn {
-    background-color: var(--color-white);
-    border-radius: var(--app-border-radius);
-    height: 4.5rem;
-    width: 18.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 2rem;
-    font-size: var(--t4-font-size);
-    font-family: var(--t4-font-family);
-}
 
 .advertising__wrapper {
     display: flex;

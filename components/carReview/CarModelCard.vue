@@ -19,3 +19,8 @@ defineProps<{
   item: CarReviewFilterData;
 }>();
 </script>
+<style scoped>
+a{
+  color: unset;
+}
+</style>

@@ -2,7 +2,7 @@
   <div v-if="carReview == undefined || pending">Loading ...</div>
   <div v-else>
     <Head>
-      <Title>{{ carReview.seoData.metaTitle }} {{ carReview.id }}</Title>
+      <Title>{{ carReview.seoData.metaTitle }}</Title>
       <Link href="/css/technical.css" rel="stylesheet" />
     </Head>
     <report-bug
@@ -98,7 +98,11 @@
           </h-slider>
         </div>
         <div class="technical__options-list">
-          <a href="javascript:void(0)" @click="toggleShareModal" class="technical__option">
+          <a
+            href="javascript:void(0)"
+            @click="toggleShareModal"
+            class="technical__option"
+          >
             <span>
               <svg
                 width="24"
@@ -171,7 +175,11 @@
             </span>
             قیمت روز
           </a>
-          <a href="javascript:void(0)" @click="toggleBugReportModal" class="technical__option">
+          <a
+            href="javascript:void(0)"
+            @click="toggleBugReportModal"
+            class="technical__option"
+          >
             <span>
               <svg
                 width="26"
@@ -226,7 +234,7 @@
                   fill="var(--color-black)"
                 ></circle>
               </svg>
-              32 دیدگاه
+              {{ commentCount }} دیدگاه
             </div>
             <div class="technical__rating-stars">
               <div class="technical__star">
@@ -323,8 +331,11 @@
             </ul>
           </div>
         </div>
-        <nuxt-link to="/" class="btn btn-primary technical__link"
-          >مشاهده 16 آگهی مرتبط
+        <nuxt-link
+          to="/"
+          v-if="relatedAdvertCount > 0"
+          class="btn btn-primary technical__link"
+          >مشاهده {{ relatedAdvertCount }} آگهی مرتبط
         </nuxt-link>
         <CarReviewSpecifications
           :leftSide="leftSpecifications"
@@ -334,40 +345,37 @@
         <div class="technical__same-cars">
           <span class="technical__section-title">خودرو های هم رده</span>
 
-          <div class="car__row">
-            <div class="car" v-for="item in relatedCars" :key="item.id">
-              <nuxt-link
-                :to="`/car-reviews/${item.brandSlug}/${item.slug}`"
-                class="car__link"
-              >
-                <h-image
-                  :src="GetModelImage(item.imageName)"
-                  :alt="`${item.brand}, ${item.model}`"
-                  class="car__img"
-                />
-                <h3 class="car__name">{{ item.brand }}،{{ item.model }}</h3>
-                <span class="car__en-name">{{
-                  item.slug.replace("-", " ")
-                }}</span>
-              </nuxt-link>
-            </div>
-          </div>
+          <h-slider class="car__row" :items="relatedCars" :arrows="false">
+            <template #item="{ item }">
+              <div class="car">
+                <nuxt-link
+                  :to="`/car-reviews/${item.brandSlug}/${item.slug}`"
+                  class="car__link"
+                >
+                  <h-image
+                    :src="GetModelImage(item.imageName)"
+                    :alt="`${item.brand}, ${item.model}`"
+                    class="car__img"
+                  />
+                  <h3 class="car__name">{{ item.brand }}،{{ item.model }}</h3>
+                  <span class="car__en-name">{{
+                    item.slug.replace("-", " ")
+                  }}</span>
+                </nuxt-link>
+              </div>
+            </template>
+          </h-slider>
         </div>
-        <div class="technical__comment">
-          <form class="technical__form" action="">
-            <textarea
-              class="form-control technical__textarea"
-              placeholder="دیدگاه یا تجربه رانندگی خود را با دیگران به اشتراک بگذارید ..."
-            ></textarea>
-            <button class="btn btn-primary technical__submit">
-              افزودن دیدگاه
-            </button>
-          </form>
-        </div>
-        <a
-          href="#"
+        <comments
+          :link-id="carReview.id"
+          :type="CommentType.review"
+          @get-comment-count="getCommentCounts"
+        />
+        <nuxt-link
+          v-if="relatedAdvertCount > 0"
+          :to="`/car/${carReview.carReviewBrand.slug}-${carReview.carReviewModel.slug}`"
           class="btn btn-primary technical__link technical__link--mobile"
-          >مشاهده 16 آگهی مرتبط</a
+          >مشاهده {{ relatedAdvertCount }} آگهی مرتبط</nuxt-link
         >
       </div>
     </section>
@@ -380,14 +388,18 @@ import { ref } from "#imports";
 import {
   CarReviewDto,
   CarReviewFilterData,
-} from "../../../models/carReviews/CarReviewModels";
-import { GetBySlug, GetRelatedCars } from "../../../services/carReview.service";
+} from "~~/models/carReviews/CarReviewModels";
+
+import { GetBySlug, GetRelatedCars } from "~~/services/carReview.service";
+import { GetAdvertCount } from "~~/services/advertisement.service";
 import { GetCarReviewImage, GetModelImage } from "~/utilities/imageUtil";
 import {
   Specification,
   SpecificationDetail,
 } from "~~/models/carReviews/Specification";
 import { BugReportFor } from "~~/services/bugReport.service";
+import { GetAdvertisementType } from "~~/models/advertisements/Advertisement.Models";
+import { CommentType } from "~~/models/comments/CommentType.Enum";
 
 const isOpenBugReportModal: Ref<boolean> = ref(false);
 const isOpenShareModal: Ref<boolean> = ref(false);
@@ -408,6 +420,8 @@ if (!data?.value?.data) {
 }
 const leftSpecifications: Ref<Specification[]> = ref([]);
 const rightSpecifications: Ref<Specification[]> = ref([]);
+const relatedAdvertCount = ref(0);
+const commentCount = ref(0);
 
 carReview.value = data.value.data;
 
@@ -416,6 +430,9 @@ const toggleBugReportModal = () => {
 };
 const toggleShareModal = () => {
   isOpenShareModal.value = !isOpenShareModal.value;
+};
+const getCommentCounts = (count: number) => {
+  commentCount.value = count;
 };
 onMounted(async () => {
   if (data.value.isSuccess) {
@@ -442,6 +459,12 @@ onMounted(async () => {
           .classList.remove("technical__description--limited");
       });
   }, 100);
+  var res = await GetAdvertCount(GetAdvertisementType.model, {
+    model: carReview.value!.carReviewModel.slug,
+    modelType: null,
+    exhibitionId: null,
+  });
+  relatedAdvertCount.value = res.data!;
 });
 </script>
 <style scoped>

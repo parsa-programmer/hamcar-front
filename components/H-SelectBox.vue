@@ -7,6 +7,7 @@
       { 'select--valid': !errorMessage && !disabled && modelValue },
     ]"
     @click="openBox"
+    v-if="!type || type == 'normal'"
   >
     <div class="select__box">
       <span class="select__name" v-if="modelValue">{{
@@ -61,11 +62,50 @@
       />
     </svg>
   </div>
+  <template v-else>
+    <client-only>
+    <div
+      v-click-outside="closed"
+      :class="[
+        'modern-select__box',
+        { 'select--disabled': disabled },
+        { 'select--error': !!errorMessage },
+        { 'select--valid': !errorMessage && !disabled && modelValue },
+      ]"
+      v-bind="$attrs"
+      @click="openBox"
+    >
+      <template v-if="modelValue">
+        {{ data.filter((f) => f.value == modelValue)[0]?.label ?? placeholder }}
+      </template>
+      <icons-chevron-up
+        :width="14"
+        :height="8"
+        hash-color="#ABADB3"
+        v-if="isOpen"
+      />
+      <icons-chevron-down :width="14" :height="8" hash-color="#ABADB3" v-else />
+      <ul class="select__list" @click="(e) => e.stopPropagation()">
+        <ul class="select__list__wrapper">
+          <li
+            class="select__item"
+            v-for="(item, index) in data"
+            :key="index"
+            @click="(e) => selectItem(item, e)"
+          >
+            {{ item.label }}
+          </li>
+        </ul>
+      </ul>
+    </div>
+  </client-only>
+  </template>
 </template>
 
 <script setup lang="ts">
 import { SelectData } from "~~/models/utilities/SelectData";
 import { useField } from "vee-validate";
+import { Ref } from "vue";
 
 const isOpen = ref(false);
 const emit = defineEmits(["update:modelValue", "selectedItem"]);
@@ -79,6 +119,7 @@ const props = defineProps<{
   classValue?: string;
   disabled?: boolean;
   data: SelectData[];
+  type?: string;
 }>();
 const { disabled, name, modelValue } = toRefs(props);
 
@@ -102,6 +143,7 @@ watch(
     setValue(value);
   }
 );
+
 watch(
   () => props.data,
   (value) => {
@@ -112,6 +154,7 @@ watch(
 );
 const openBox = (event: any) => {
   if (disabled?.value) return;
+  isOpen.value = !isOpen.value;
   openSelectBox(event);
 };
 
@@ -123,6 +166,12 @@ const selectItem = (item: SelectData, event: any) => {
   selectedValue.value = item.value;
   emit("selectedItem", item);
 };
+
+const closed = () => {
+  isOpen.value = false;
+  console.log(isOpen.value);
+};
+
 </script>
 
 <style>

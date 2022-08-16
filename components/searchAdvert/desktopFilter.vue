@@ -1,5 +1,8 @@
 <template>
-  <aside class="advertising__sidebar">
+  <aside class="advertising__sidebar" v-if="loading">
+    <h-skeletor  width="100%" height="800px"/>
+  </aside>
+  <aside class="advertising__sidebar" v-else>
     <div class="filter-group">
       <div class="filter">
         <div class="filter__header">
@@ -908,8 +911,14 @@
   </aside>
 </template>
 
-<script>
-export default {};
+<script setup lang="ts">
+const loading=ref(true);
+
+onMounted(()=>{
+  setTimeout(()=>{
+    loading.value=false;
+  },1000);
+})
 </script>
 
 <style>

@@ -9,7 +9,7 @@ export const CreateComment = async (
 ): Promise<IApiResponse<undefined>> => {
   var result = await FetchApi<undefined>("/comment", {
     method: "post",
-    body: command,
+    body: JSON.stringify(command)
   });
   return result;
 };
@@ -19,7 +19,7 @@ export const ReactionToComment = async (
 ): Promise<IApiResponse<undefined>> => {
   var result = await FetchApi<undefined>(`/comment`, {
     method: "put",
-    body: command,
+    body: JSON.stringify(command),
   });
   return result;
 };

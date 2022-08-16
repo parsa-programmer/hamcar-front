@@ -10,6 +10,7 @@ export interface CommentDto {
   likeCount: number;
   disLikeCount: number;
   userReaction: ReactionType | "";
+  sender: Sender | null;
 }
 interface Sender {
   fullName: string;

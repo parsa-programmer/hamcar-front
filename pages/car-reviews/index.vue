@@ -30,7 +30,7 @@
             ></icons-chevron-left>
           </nuxt-link>
         </div>
-        <h-slider :items="data.data?.brands">
+        <h-slider :items="data.data?.brands" v-if="data?.data">
           <template #item="{ item }" class="row">
             <nuxt-link :to="`/car-reviews/${item.slug}`" class="brand__card">
               <h-image
@@ -43,8 +43,16 @@
             </nuxt-link>
           </template>
         </h-slider>
+        <h-skeletor v-else width="100%" style="height: 100px" />
         <hr />
-        <div class="brand__heading row justify-content-space-between mt__mobile__24">
+        <div
+          class="
+            brand__heading
+            row
+            justify-content-space-between
+            mt__mobile__24
+          "
+        >
           <h2 class="page__sub__title">مدل های پربازدید</h2>
           <nuxt-link
             to="/car-reviews/filter?orderBy=visit"
@@ -58,56 +66,65 @@
             ></icons-chevron-left>
           </nuxt-link>
         </div>
-        <h-slider :items="data.data?.topVisitReviews" :arrows="false">
+        <h-slider
+          :items="data?.data?.topVisitReviews"
+          :arrows="false"
+          v-if="data?.data"
+        >
           <template #item="{ item }" class="row">
             <CarModelCard :item="item"></CarModelCard>
           </template>
         </h-slider>
+        <h-skeletor v-else width="100%" style="height: 100px" />
+
         <hr />
-        <div
-          class="brand__model__box"
-          v-for="brandData in data.data?.carReviews"
-          :key="brandData.brand.id"
-        >
-          <h-slider :items="brandData.carReviews" :arrows="false">
-            <template #first-item>
-              <div class="slider-item">
-                <div class="brand__card spec">
-                  <div class="spec__header">
-                    <h-image
-                      class="brand__card-img"
-                      placeholder
-                      :src="GetBrandImage(brandData.brand.imageName)"
-                    />
-                    <div class="spec__header-title text-center">
-                      <h3 class="brand__card-title">
-                        {{ brandData.brand.title }}
-                      </h3>
-                      <h3 class="brand__card-sub-title">
-                        {{ brandData.brand.slug }}
-                      </h3>
+        <template v-if="data?.data">
+          <div
+            class="brand__model__box"
+            v-for="brandData in data?.data?.carReviews"
+            :key="brandData.brand.id"
+          >
+            <h-slider :items="brandData.carReviews" :arrows="false">
+              <template #first-item>
+                <div class="slider-item">
+                  <div class="brand__card spec">
+                    <div class="spec__header">
+                      <h-image
+                        class="brand__card-img"
+                        placeholder
+                        :src="GetBrandImage(brandData.brand.imageName)"
+                      />
+                      <div class="spec__header-title text-center">
+                        <h3 class="brand__card-title">
+                          {{ brandData.brand.title }}
+                        </h3>
+                        <h3 class="brand__card-sub-title">
+                          {{ brandData.brand.slug }}
+                        </h3>
+                      </div>
                     </div>
+                    <nuxt-link
+                      :to="`/car-reviews/${brandData.brand.slug}`"
+                      class="btn btn-primary-outline"
+                    >
+                      مشاهده همه
+                      <icons-chevron-left
+                        hash-color="#007AFF"
+                        :width="8"
+                        :height="13"
+                        class="mr"
+                      ></icons-chevron-left>
+                    </nuxt-link>
                   </div>
-                  <nuxt-link
-                    :to="`/car-reviews/${brandData.brand.slug}`"
-                    class="btn btn-primary-outline"
-                  >
-                    مشاهده همه
-                    <icons-chevron-left
-                      hash-color="#007AFF"
-                      :width="8"
-                      :height="13"
-                      class="mr"
-                    ></icons-chevron-left>
-                  </nuxt-link>
                 </div>
-              </div>
-            </template>
-            <template #item="{ item }" class="row">
-              <CarModelCard :item="item"></CarModelCard>
-            </template>
-          </h-slider>
-        </div>
+              </template>
+              <template #item="{ item }" class="row">
+                <CarModelCard :item="item"></CarModelCard>
+              </template>
+            </h-slider>
+          </div>
+        </template>
+        <h-skeletor v-else width="100%" style="height: 300px" />
       </div>
     </section>
   </div>
@@ -116,8 +133,11 @@
 <script setup lang="ts">
 import { GetMainPageData } from "~/services/carReview.service";
 import { GetBrandImage, GetModelImage } from "~~/utilities/imageUtil";
-const { data } = await useAsyncData("reviews", () => GetMainPageData());
-
+const { data } = await useAsyncData("reviews", () => GetMainPageData(), {
+  server: true,
+  lazy: true,
+  initialCache: false,
+});
 </script>
 
 
@@ -153,7 +173,7 @@ const { data } = await useAsyncData("reviews", () => GetMainPageData());
   .mt__mobile__24 {
     margin-top: 24px;
   }
-  .brand__model__box{
+  .brand__model__box {
     margin-bottom: 1.5rem;
   }
 }

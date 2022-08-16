@@ -45,7 +45,9 @@ export const GetAdvertCount = (
   return FetchApi(`/advertisement/utils/getCount`, {
     params: {
       type,
-      params,
+      ExhibitionId: params.exhibitionId,
+      Model:params.model,
+      ModelType:params.modelType
     },
   });
 };
