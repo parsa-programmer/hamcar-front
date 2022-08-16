@@ -218,7 +218,9 @@ hr {
 .w-auto {
     width: auto;
 }
-
+.p-0{
+    padding: 0;
+}
 .align-items-start {
     align-items: flex-start;
 }

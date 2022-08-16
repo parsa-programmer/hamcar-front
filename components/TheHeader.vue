@@ -59,38 +59,43 @@
           </ul>
         </div>
         <div :class="['nav__register', { 'disable-element': showSearchIcon }]">
-          <div class="row align-items-center" v-if="store.loading">
-            <h-skeletor style="height: 15px" type="box" width="120px" />
-            <h-skeletor style="height: 72px" type="box" width="180px" />
-          </div>
-          <template v-else>
-            <nuxt-link
-              to="/auth/login"
-              class="
-                btn btn-transparent
-                nav__register-link nav__register-link--login
-              "
-              v-if="isLogin == false"
-            >
-              ورود / ثبت نام
-            </nuxt-link>
-            <nuxt-link
-              to="/auth/login"
-              class="
-                btn btn-transparent
-                nav__register-link nav__register-link--login
-              "
-              v-else
-            >
-              حساب کاربری
-            </nuxt-link>
-            <nuxt-link
-              href="/sell/car"
-              class="btn btn-primary nav__register-link nav__register-link--new"
-            >
-              ثبت آگهی رایگان
-            </nuxt-link>
-          </template>
+          <client-only>
+            <div class="row align-items-center" v-if="store.loading">
+              <h-skeletor style="height: 15px" type="box" width="120px" />
+              <h-skeletor style="height: 72px" type="box" width="180px" />
+            </div>
+            <template v-else>
+              <nuxt-link
+                to="/auth/login"
+                class="
+                  btn btn-transparent
+                  nav__register-link nav__register-link--login
+                "
+                v-if="isLogin == false"
+              >
+                ورود / ثبت نام
+              </nuxt-link>
+              <nuxt-link
+                to="/auth/login"
+                class="
+                  btn btn-transparent
+                  nav__register-link nav__register-link--login
+                "
+                v-else
+              >
+                حساب کاربری
+              </nuxt-link>
+              <nuxt-link
+                href="/sell/car"
+                class="
+                  btn btn-primary
+                  nav__register-link nav__register-link--new
+                "
+              >
+                ثبت آگهی رایگان
+              </nuxt-link>
+            </template>
+          </client-only>
         </div>
         <div class="nav__icons-wrapper" v-if="showSearchIcon">
           <div class="nav__icon nav__icon--bars-icon">

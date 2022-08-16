@@ -169,7 +169,6 @@ const selectItem = (item: SelectData, event: any) => {
 
 const closed = () => {
   isOpen.value = false;
-  console.log(isOpen.value);
 };
 
 </script>

@@ -85,7 +85,6 @@ function closeSelectOutsideArea() {
   }
 }
 
-
 //    DropDown
 // const dropdownItems = document.querySelectorAll(".dropdown__item");
 // let isDropdownOpen = false;
