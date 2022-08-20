@@ -4,6 +4,7 @@ export interface Model {
   slug: string;
   imageName: string;
   fuel: string;
+  brandId:string;
 }
 
 

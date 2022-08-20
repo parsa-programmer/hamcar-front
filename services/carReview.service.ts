@@ -21,6 +21,23 @@ export const GetBySlug = (
   return FetchApi(`/carReview/GetBySlug/${slug}`);
 };
 
+export const GetByModel = (
+  modelId: string,
+  trimId: string | null
+): Promise<IApiResponse<CarReviewDto>> => {
+  return FetchApi(
+    `/carReview/GetByModel/${modelId}`,
+    {
+      params: {
+        trimId,
+      },
+    },
+    {
+      ignoreErrors: true,
+    }
+  );
+};
+
 export const GetByFilter = (
   filterParams: CarReviewFilterParams
 ): Promise<IApiResponse<FilterResult<CarReviewFilterData>>> => {
@@ -32,6 +49,8 @@ export const GetByFilter = (
 export const GetSpecifications = (): Promise<IApiResponse<Specification[]>> => {
   return FetchApi("/carReview/specifications");
 };
-export const GetRelatedCars = (brandId:string): Promise<IApiResponse<CarReviewFilterData[]>> => {
+export const GetRelatedCars = (
+  brandId: string
+): Promise<IApiResponse<CarReviewFilterData[]>> => {
   return FetchApi(`/carReview/RelatedCars?brandId=${brandId}&take=6`);
 };

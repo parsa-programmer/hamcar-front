@@ -714,7 +714,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const isOpen = ref(false);
 const openModal = () => {
   isOpen.value = true;

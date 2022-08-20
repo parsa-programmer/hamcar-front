@@ -8,7 +8,8 @@
   </div>
 </template>
 
-<script setup >
+<script setup lang="ts">
+
 const value = ref([0, 10]);
 const loading = ref(false);
 const toggle = () => {

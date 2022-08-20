@@ -9,6 +9,8 @@
           :step="step"
           v-model="modelValue[0]"
           type="range"
+          @mouseup="changePrice"
+          @touchend="changePrice"
         />
         <input
           class="range-input"
@@ -17,6 +19,8 @@
           :step="step"
           v-model="modelValue[1]"
           type="range"
+          @mouseup="changePrice"
+          @touchend="changePrice"
         />
       </div>
     </div>
@@ -35,16 +39,14 @@ const {
   min: number;
   max: number;
   step: number;
-  modelValue: number[];
+  modelValue: string[] | number[];
 }>();
 const first = ref(modelValue[0]);
 const last = ref(modelValue[1]);
 onMounted(() => {
   RangeSlider();
 });
-const emit = defineEmits([
-  "update:modelValue",
-]);
+const emit = defineEmits(["update:modelValue", "valueChanged"]);
 watch(first, (val) => {
   emit("update:modelValue", [Number(val), unref(last)]);
 });
@@ -58,6 +60,9 @@ watch(
     last.value = val[1];
   }
 );
+const changePrice = () => {
+  emit("valueChanged", [first, last]);
+};
 </script>
 
 <style scoped>

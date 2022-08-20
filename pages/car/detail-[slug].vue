@@ -183,7 +183,11 @@
           </div>
           <p class="ads-caption__text" v-text="advert.description"></p>
         </div>
-        <a href="#" class="btn btn-primary-outline ads__show-report-btn">
+        <nuxt-link
+          :to="`/car-reviews/${advert.brand.slug}/${carReview.slug}`"
+          class="btn btn-primary-outline ads__show-report-btn"
+          v-if="carReview"
+        >
           <svg
             width="24"
             height="24"
@@ -203,7 +207,7 @@
             ></path>
           </svg>
           مشاهده کامل مشخصات فنی
-        </a>
+        </nuxt-link>
       </div>
       <div class="ads__left">
         <search-advert class="ads__search-box" />
@@ -423,6 +427,8 @@ import { ProssesAsync } from "~~/utilities/ProssesAsync";
 import { IApiResponse } from "~~/models/IApiResponse";
 import { Form } from "vee-validate";
 import * as Yup from "yup";
+import { GetByModel } from "~~/services/carReview.service";
+import { CarReviewDto } from "~~/models/carReviews/CarReviewModels";
 
 const advert: Ref<AdvertisementDto | undefined> = ref(undefined);
 const isOpenModal = ref(false);
@@ -431,6 +437,7 @@ const isOpenShareModal = ref(false);
 const isOpenGallery = ref(false);
 const advertNote = ref("");
 const loadingButton = ref(false);
+const carReview: Ref<CarReviewDto | null> = ref(null);
 
 const toast = useToast();
 const isSavedAdvert = ref(false);
@@ -513,6 +520,11 @@ onMounted(async () => {
     if (res.isSuccess) {
       advertNote.value = res.data?.text ?? "";
     }
+  }
+
+  var res2 = await GetByModel(advert.value!.model.id, advert.value!.trim?.id);
+  if (res2.data) {
+    carReview.value = res2.data;
   }
 });
 </script>

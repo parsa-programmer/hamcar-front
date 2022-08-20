@@ -57,7 +57,7 @@ const { data } = await useAsyncData(
     GetByFilter({
       pageId: 1,
       brandSlug: brand.toString(),
-      take: 20,
+      take: 100,
       orderBy: CarReviewFilterOrderBy.visit,
       search: "",
     }),

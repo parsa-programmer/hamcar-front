@@ -63,7 +63,7 @@
           </div>
           <div
             class="technical__rating-stars-value"
-          :style="`width: calc(var(--star-length) * ${commentRate})`"
+            :style="`width: calc(var(--star-length) * ${commentRate})`"
           >
             <div class="technical__star">
               <img src="/img/star-full.svg" />
@@ -150,7 +150,7 @@
             </span>
             مقایسه
           </nuxt-link>
-          <a href="#" class="technical__option">
+          <nuxt-link v-if="carPrice" :to="`/price/${carPrice?.carPriceSlug}`" class="technical__option">
             <span>
               <svg
                 width="24"
@@ -174,7 +174,32 @@
               </svg>
             </span>
             قیمت روز
-          </a>
+          </nuxt-link>
+          <nuxt-link v-else to="/price" class="technical__option">
+            <span>
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2.53226 9.81714C1.99621 9.81714 1.88312 9.81162 1.80519 9.7949L1.59548 10.7727L1.80518 9.7949C1.42451 9.71326 1.10117 9.3799 1.03118 8.99691C1.01667 8.91751 1.01446 8.81602 1.02975 8.31505C1.07994 6.67112 1.21244 5.68251 1.50847 4.88721C2.06444 3.39359 2.82688 2.52367 3.98895 1.87231C4.99755 1.30697 6.57368 1 9.7782 1H14.2218C17.4263 1 19.0025 1.30697 20.0111 1.87231C21.1731 2.52367 21.9356 3.39359 22.4915 4.88721C22.7876 5.68251 22.9201 6.67111 22.9702 8.31504C22.9855 8.81602 22.9833 8.91751 22.9688 8.99691L23.9525 9.17669L22.9688 8.99691C22.8988 9.3799 22.5755 9.71325 22.1948 9.7949C22.1169 9.81162 22.0038 9.81714 21.4677 9.81714C20.0787 9.81714 19.2814 11.1177 19.2814 12.2729C19.2814 13.4282 20.0787 14.7287 21.4677 14.7287C21.9927 14.7287 22.1024 14.7341 22.1802 14.7507C22.5602 14.8318 22.8946 15.182 22.9581 15.5654C22.9713 15.6454 22.9721 15.7386 22.9503 16.2127C22.8885 17.5507 22.7531 18.41 22.4915 19.1128C21.9356 20.6064 21.1731 21.4763 20.0111 22.1277C19.0025 22.693 17.4263 23 14.2218 23H9.7782C6.57368 23 4.99755 22.693 3.98895 22.1277C2.82688 21.4763 2.06444 20.6064 1.50847 19.1128C1.24688 18.41 1.11151 17.5507 1.04974 16.2127C1.02786 15.7386 1.02865 15.6454 1.0419 15.5654C1.10537 15.182 1.43977 14.8318 1.81982 14.7507C1.8976 14.7341 2.00728 14.7287 2.53226 14.7287C3.92132 14.7287 4.7186 13.4282 4.7186 12.2729C4.7186 11.1177 3.92132 9.81714 2.53226 9.81714Z"
+                  stroke="var(--color-black)"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M15 9L9 15M9 9V10M15 14V15"
+                  stroke="var(--color-black)"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+            </span>
+            قیمت روز
+          </nuxt-link>
           <a
             href="javascript:void(0)"
             @click="toggleBugReportModal"
@@ -205,7 +230,10 @@
             گزارش اشکال
           </a>
           <div class="technical__rating">
-            <div class="technical__comment-counter" v-if="commentDataLoading==false">
+            <div
+              class="technical__comment-counter"
+              v-if="commentDataLoading == false"
+            >
               <svg
                 width="24"
                 height="24"
@@ -236,9 +264,20 @@
               </svg>
               {{ commentCount }} دیدگاه
             </div>
-            <h-skeletor width="100px" style="height: 15px" v-if="commentDataLoading"/>
-            <h-skeletor width="150px" style="height: 15px" v-if="commentDataLoading"/>
-            <div class="technical__rating-stars" v-if="commentDataLoading==false">
+            <h-skeletor
+              width="100px"
+              style="height: 15px"
+              v-if="commentDataLoading"
+            />
+            <h-skeletor
+              width="150px"
+              style="height: 15px"
+              v-if="commentDataLoading"
+            />
+            <div
+              class="technical__rating-stars"
+              v-if="commentDataLoading == false"
+            >
               <div class="technical__star">
                 <img src="/img/star-outline.svg" />
               </div>
@@ -342,7 +381,7 @@
           :rightSide="rightSpecifications"
         />
 
-        <div class="technical__same-cars">
+        <div class="technical__same-cars" v-if="relatedCars.length > 0">
           <span class="technical__section-title">خودرو های هم رده</span>
 
           <h-slider class="car__row" :items="relatedCars" :arrows="false">
@@ -371,6 +410,7 @@
           :type="CommentType.review"
           @get-comment-data="getCommentsData"
           @loading="(load) => (commentDataLoading = load)"
+          class="mt-2"
         />
         <nuxt-link
           v-if="relatedAdvertCount > 0"
@@ -401,6 +441,8 @@ import {
 import { BugReportFor } from "~~/services/bugReport.service";
 import { GetAdvertisementType } from "~~/models/advertisements/Advertisement.Models";
 import { CommentType } from "~~/models/comments/CommentType.Enum";
+import { CarPriceDetail } from "~~/models/carPrices/CarPriceModels";
+import { GetByBrand } from "~~/services/carPrice.service";
 
 const isOpenBugReportModal: Ref<boolean> = ref(false);
 const isOpenShareModal: Ref<boolean> = ref(false);
@@ -408,6 +450,8 @@ const commentDataLoading = ref(true);
 
 const carReview: Ref<CarReviewDto | undefined> = ref(undefined);
 const relatedCars: Ref<CarReviewFilterData[]> = ref([]);
+const carPrice: Ref<CarPriceDetail | null> = ref(null);
+
 const route = useRoute();
 const slug = route.params.slug.toString();
 const { data, pending } = await useAsyncData(
@@ -451,6 +495,11 @@ onMounted(async () => {
   }
   var relatedResult = await GetRelatedCars(carReview.value!.carReviewBrand.id);
   relatedCars.value = relatedResult.data!;
+  if (relatedCars.value.length > 0) {
+    relatedCars.value = [
+      ...relatedCars.value.filter((x) => x.id != carReview.value!.id),
+    ];
+  }
   setTimeout(() => {
     window.scrollTo(0, 0);
     //@ts-ignore
@@ -469,6 +518,13 @@ onMounted(async () => {
     exhibitionId: null,
   });
   relatedAdvertCount.value = res.data!;
+
+  var carPriceResult = await GetByBrand(
+    carReview.value!.carReviewBrand.slug,
+    carReview.value!.carReviewModel.slug,
+    carReview.value!.trim?.englishTitle
+  );
+  carPrice.value = carPriceResult ?? null;
 });
 </script>
 <style scoped>

@@ -218,9 +218,11 @@ hr {
 .w-auto {
     width: auto;
 }
-.p-0{
+
+.p-0 {
     padding: 0;
 }
+
 .align-items-start {
     align-items: flex-start;
 }
@@ -228,7 +230,9 @@ hr {
 .color_black_200 {
     color: var(--color-black-200);
 }
-
+.color_gray_600 {
+    color: var(--color-gray-600);
+}
 .overflow-visible {
     overflow: visible !important;
 }
@@ -289,9 +293,14 @@ hr {
 }
 
 .font-6 {
-    font-size: var(--t6-font-size);
-    font-family: var(--t6-font-family);
+    font-size: var(--t6-font-size) !important;
+    font-family: var(--t6-font-family) !important;
 
+}
+
+.sticky-top {
+    position: sticky;
+    top: 0px;
 }
 
 .pull-left {
@@ -301,7 +310,9 @@ hr {
 .justify-content-space-between {
     justify-content: space-between;
 }
-
+.justify-content-space-around{
+    justify-content: space-around;
+}
 .justify-content-center {
     justify-content: center;
 }
@@ -339,7 +350,9 @@ hr {
 .my-1 {
     margin: 1rem 0;
 }
-
+.p-2{
+    padding: 2rem;
+}
 .py-1 {
     padding: 1rem 0;
 }
@@ -1299,6 +1312,7 @@ button {
     margin-right: auto;
     width: 12rem;
 }
+
 @media screen and (max-width: 768px) {
     .btn__submit {
         margin-top: 1rem !important;

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="registration__steps-wrapper">
+  <div ref="sticky" class="z-index-100">
+    <div class="registration__steps-wrapper bg-white" ref="wrapper">
       <div class="step step--complete">
         <span class="step__name">مشخصات کلی</span>
         <span class="step__number">1</span>
@@ -30,7 +30,7 @@
         <span class="step__number">7</span>
       </div>
     </div>
-    <div class="progress">
+    <div class="progress bg-white">
       <div class="progress__bar">
         <span
           class="progress__value"
@@ -92,20 +92,42 @@
 
 <script setup lang="ts">
 import { advertStore } from "~~/stores/advert.store";
+import { ref } from "#imports";
+import { Ref } from "vue";
 
+const wrapper: Ref<HTMLDivElement | null> = ref(null);
+const sticky: Ref<HTMLElement | null> = ref(null);
 const store = advertStore();
 const progressPercentage = ref(14);
 
-onMounted(()=>{
-    progressPercentage.value = (store.currentStep * 14)+2;
-})
+onMounted(() => {
+  store.changeStep(5);
+  progressPercentage.value = store.currentStep * 14 + 2;
+  window.onscroll = function () {
+    myFunction();
+  };
+});
+function myFunction() {
+  var st = sticky.value?.offsetTop;
+
+  if (window.pageYOffset > st! + 200) {
+    sticky.value?.classList.add("sticky-container");
+    wrapper.value?.classList.add("p-2")
+  } else {
+    sticky.value?.classList.remove("sticky-container");
+    wrapper.value?.classList.remove("p-2");
+  }
+}
 watch(
   () => store.currentStep,
-  (newVal) => {
-    progressPercentage.value = (newVal * 14)+2;
+  (newVal) => { 
+    progressPercentage.value = newVal * 14 + 2;
   }
 );
 </script>
 
-<style>
+<style scoped>
+.z-index-100 {
+  z-index: 1000;
+}
 </style>

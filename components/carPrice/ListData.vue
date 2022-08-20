@@ -64,18 +64,29 @@ import { CarPriceDetail } from "~~/models/carPrices/CarPriceModels";
 import { splitNumber } from "~~/utilities/numberUtils";
 import { ref } from "#imports";
 import { TimeAgo } from "~~/utilities/dateUtil";
+import { orderBy } from "lodash";
+
 const props = defineProps<{
   detail: CarPriceDetail;
 }>();
 const percentage = ref(0);
-const detailPrices = [...props.detail.prices];
-if(detailPrices.length>1){
-percentage.value =
-  ((detailPrices[detailPrices.length - 1] -
-    detailPrices[detailPrices.length - 2]) /
-    detailPrices[detailPrices.length - 2]) *
-  100;
-}
+const data = unref(props.detail);
+
+onMounted(() => {
+  const detailPrices = data?.prices.reverse();
+  if (detailPrices.length > 1) {
+    percentage.value =
+      ((detailPrices[detailPrices.length - 1] -
+        detailPrices[detailPrices.length - 2]) /
+        detailPrices[detailPrices.length - 2]) *
+      100;
+  }
+  series.value = [
+    {
+      data: detailPrices,
+    },
+  ];
+});
 
 const options = ref({
   chart: {
@@ -95,14 +106,10 @@ const options = ref({
   },
 });
 
-const series = ref([
-  {
-    data: [...props.detail.prices],
-  },
-]);
+const series = ref();
 const router = useRouter();
 const showDetail = () => {
-  router.push(`/carPrice/${props.detail.carPriceSlug}`);
+  router.push(`/carPrice/${data.carPriceSlug}`);
 };
 </script>
 

@@ -140,9 +140,12 @@ const disLike = async (id: string) => {
     toast.showToast("برای انجام اعملیات باید وارد حساب کاربری خود شوید");
     return;
   }
-  var res = await ReactionToComment(
-    new ReactionToCommentCommand(id, ReactionType.disLike)
+  var res = await ProssesAsync<IApiResponse<undefined>>(
+    () =>
+      ReactionToComment(new ReactionToCommentCommand(id, ReactionType.disLike)),
+    reactionLoading
   );
+
   if (res.isSuccess) {
     var comments = [...props.modelValue];
     var comment = comments.find((x) => x.id == id);
@@ -196,7 +199,7 @@ h4 {
   margin-left: 1rem;
 }
 @media screen and (max-width: 768px) {
-  .comment-list__item p{
+  .comment-list__item p {
     font-family: var(--t4-font-family) !important;
     font-size: var(--t4-font-size) !important;
     text-align: justify !important;

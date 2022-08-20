@@ -1,8 +1,8 @@
 export enum CylinderCount {
-  None,
-  Three,
-  Four,
-  Five,
-  Six,
-  Eight,
+  None='none',
+  Three='three',
+  Four='four',
+  Five='five',
+  Six='six',
+  Eight='eight',
 }

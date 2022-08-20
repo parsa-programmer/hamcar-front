@@ -23,13 +23,27 @@
         </h2>
         <search-advert class="advertising__serach-box" />
 
-        <button class="advertising__filter-btn">
-          جدیدترین آگهی ها
+        <button
+          class="advertising__filter-btn"
+          @click="() => (isOpenModal = true)"
+        >
+          <template v-if="orderBy == AdvertisementFilterOrderBy.latest">
+            جدیدترین آگهی ها
+          </template>
+          <template v-if="orderBy == AdvertisementFilterOrderBy.popular">
+            محبوب ترین آگهی ها
+          </template>
+          <template v-if="orderBy == AdvertisementFilterOrderBy.visit">
+            پر بازدید ترین آگهی ها
+          </template>
           <icons-chevron-down />
         </button>
       </div>
       <div class="advertising__middle">
-        <div class="selected-filters">
+        <div
+          class="selected-filters"
+          v-click-outside="() => (isOpenFilterDropDown = false)"
+        >
           <span class="selected-filters__title">
             <svg width="20" height="24" viewBox="0 0 20 24" fill="none">
               <mask id="path-1-inside-1_679_1631" fill="white">
@@ -53,10 +67,11 @@
                 stroke-linejoin="round"
               ></path>
             </svg>
-            فیلتر های انتخاب شده (0)
+            فیلتر های انتخاب شده ({{ advertFilter.getFilterCount() }})
           </span>
           <span
             class="selected-filters__btn"
+            v-if="advertFilter.getFilterCount() > 0"
             @click="() => (isOpenFilterDropDown = !isOpenFilterDropDown)"
           >
             مشاهده
@@ -82,42 +97,9 @@
               v-if="isOpenFilterDropDown"
               class="selected-filters__content selected-filters__content--open"
             >
-              <div class="selected-filters__item">
-                <label class="selected-filters__name" for="100"
-                  >فیلتر انتخاب شده اول</label
-                >
-                <h-input type="checkbox" input-id="100" name="filter" />
-              </div>
-
-              <div class="selected-filters__action">
-                <button
-                  class="
-                    btn btn-sm btn-transparent
-                    selected-filters__delete-btn
-                  "
-                >
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0.75 3.75H6M17.25 3.75H12M2.25 3.75L3.32985 14.5485C3.48321 16.0821 4.77371 17.25 6.31497 17.25H11.685C13.2263 17.25 14.5168 16.0821 14.6701 14.5485L15.75 3.75M9 8.25V12.75M12.375 8.25L12 12.75M5.625 8.25L6 12.75M12 3.75H9H6M12 3.75H6M12 3.75V2.25C12 1.42157 11.3284 0.75 10.5 0.75H7.5C6.67157 0.75 6 1.42157 6 2.25V3.75"
-                      stroke="#EF3838"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                    ></path>
-                  </svg>
-                  حذف همه
-                </button>
-                <button
-                  class="btn btn-sm btn-primary selected-filters__submit-btn"
-                >
-                  اعمال
-                </button>
-              </div>
+              <search-advert-selected-filters
+                @closed="() => (isOpenFilterDropDown = false)"
+              />
             </div>
           </Transition>
         </div>
@@ -126,57 +108,13 @@
             :class="['order-btn', { active: showType == 1 }]"
             @click="() => (showType = 1)"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M4 1H20C21.6569 1 23 2.34315 23 4V7C23 8.65685 21.6569 10 20 10H4C2.34315 10 1 8.65685 1 7V4C1 2.34315 2.34315 1 4 1Z"
-                stroke="var(--color-black)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M4 14H20C21.6569 14 23 15.3431 23 17V20C23 21.6569 21.6569 23 20 23H4C2.34315 23 1 21.6569 1 20V17C1 15.3431 2.34315 14 4 14Z"
-                stroke="var(--color-black)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
+            <icons-lines />
           </div>
           <div
             :class="['order-btn', { active: showType == 0 }]"
             @click="() => (showType = 0)"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M1 5.5C1 6.60949 1.06075 7.43281 1.19863 8.0532C1.33399 8.66225 1.53001 9.01274 1.75864 9.24136C1.98726 9.46999 2.33775 9.66601 2.9468 9.80137C3.56719 9.93925 4.39051 10 5.5 10C6.60949 10 7.43281 9.93925 8.0532 9.80137C8.66225 9.66601 9.01274 9.46999 9.24136 9.24136C9.46999 9.01274 9.66601 8.66225 9.80137 8.0532C9.93925 7.43281 10 6.60949 10 5.5C10 4.39051 9.93925 3.56719 9.80137 2.9468C9.66601 2.33775 9.46999 1.98726 9.24136 1.75864C9.01274 1.53001 8.66225 1.33399 8.0532 1.19863C7.43281 1.06075 6.60949 1 5.5 1C4.39051 1 3.56719 1.06075 2.9468 1.19863C2.33775 1.33399 1.98726 1.53001 1.75864 1.75864C1.53001 1.98726 1.33399 2.33775 1.19863 2.9468C1.06075 3.56719 1 4.39051 1 5.5Z"
-                stroke="var(--color-black)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M1 18.5C1 19.6095 1.06075 20.4328 1.19863 21.0532C1.33399 21.6622 1.53001 22.0127 1.75864 22.2414C1.98726 22.47 2.33775 22.666 2.9468 22.8014C3.56719 22.9392 4.39051 23 5.5 23C6.60949 23 7.43281 22.9392 8.0532 22.8014C8.66225 22.666 9.01274 22.47 9.24136 22.2414C9.46999 22.0127 9.66601 21.6622 9.80137 21.0532C9.93925 20.4328 10 19.6095 10 18.5C10 17.3905 9.93925 16.5672 9.80137 15.9468C9.66601 15.3378 9.46999 14.9873 9.24136 14.7586C9.01274 14.53 8.66225 14.334 8.0532 14.1986C7.43281 14.0608 6.60949 14 5.5 14C4.39051 14 3.56719 14.0608 2.9468 14.1986C2.33775 14.334 1.98726 14.53 1.75864 14.7586C1.53001 14.9873 1.33399 15.3378 1.19863 15.9468C1.06075 16.5672 1 17.3905 1 18.5Z"
-                stroke="var(--color-black)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M14 5.5C14 6.60949 14.0608 7.43281 14.1986 8.0532C14.334 8.66225 14.53 9.01274 14.7586 9.24136C14.9873 9.46999 15.3378 9.66601 15.9468 9.80137C16.5672 9.93925 17.3905 10 18.5 10C19.6095 10 20.4328 9.93925 21.0532 9.80137C21.6622 9.66601 22.0127 9.46999 22.2414 9.24136C22.47 9.01274 22.666 8.66225 22.8014 8.0532C22.9392 7.43281 23 6.60949 23 5.5C23 4.39051 22.9392 3.56719 22.8014 2.9468C22.666 2.33775 22.47 1.98726 22.2414 1.75864C22.0127 1.53001 21.6622 1.33399 21.0532 1.19863C20.4328 1.06075 19.6095 1 18.5 1C17.3905 1 16.5672 1.06075 15.9468 1.19863C15.3378 1.33399 14.9873 1.53001 14.7586 1.75864C14.53 1.98726 14.334 2.33775 14.1986 2.9468C14.0608 3.56719 14 4.39051 14 5.5Z"
-                stroke="var(--color-black)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-              <path
-                d="M14 18.5C14 19.6095 14.0608 20.4328 14.1986 21.0532C14.334 21.6622 14.53 22.0127 14.7586 22.2414C14.9873 22.47 15.3378 22.666 15.9468 22.8014C16.5672 22.9392 17.3905 23 18.5 23C19.6095 23 20.4328 22.9392 21.0532 22.8014C21.6622 22.666 22.0127 22.47 22.2414 22.2414C22.47 22.0127 22.666 21.6622 22.8014 21.0532C22.9392 20.4328 23 19.6095 23 18.5C23 17.3905 22.9392 16.5672 22.8014 15.9468C22.666 15.3378 22.47 14.9873 22.2414 14.7586C22.0127 14.53 21.6622 14.334 21.0532 14.1986C20.4328 14.0608 19.6095 14 18.5 14C17.3905 14 16.5672 14.0608 15.9468 14.1986C15.3378 14.334 14.9873 14.53 14.7586 14.7586C14.53 14.9873 14.334 15.3378 14.1986 15.9468C14.0608 16.5672 14 17.3905 14 18.5Z"
-                stroke="var(--color-black)"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
+            <icons-boxs />
           </div>
           <span class="other-filters__line"></span>
           <h-select-box
@@ -184,114 +122,180 @@
             type="modern"
             class="other-filters__btn"
             :data="[
-              { label: 'پربازدید ترین آگهی', value: 'visit' },
-              { label: 'محبوب ترین آگهی ها', value: 'popular' },
-              { label: 'جدید ترین آگهی ها', value: 'latest' },
+              {
+                label: 'پربازدید ترین آگهی',
+                value: AdvertisementFilterOrderBy.visit,
+              },
+              {
+                label: 'محبوب ترین آگهی ها',
+                value: AdvertisementFilterOrderBy.popular,
+              },
+              {
+                label: 'جدید ترین آگهی ها',
+                value: AdvertisementFilterOrderBy.latest,
+              },
             ]"
             v-model="orderBy"
           ></h-select-box>
         </div>
       </div>
       <div class="advertising__wrapper">
-        <search-advert-desktop-filter />
+        <search-advert-desktop-filter
+          :model="model ?? ''"
+          :brand="brand ?? ''"
+          v-if="isMobile == false"
+        />
         <div class="advertising__container">
-          <!--   (advertising__row--wide-item) class name for wide carts   -->
+          <search-advert-car-price />
+          <skeleton-loading-search-advert
+            :show-type="showType"
+            v-if="pending && pageId == 1"
+          />
+
           <div
             :class="[
               'advertising__row',
               { 'advertising__row--wide-item': showType == 1 },
             ]"
-            v-if="data?.data?.data?.length ?? 0 >= 1"
+            v-else-if="cars.length >= 1"
           >
-            <advert-card
-              v-for="item in data?.data?.data ?? []"
-              :key="item.id"
-              :advert="item"
-            />
+            <advert-card v-for="item in cars" :key="item.id" :advert="item" />
           </div>
-          <search-advert-no-result v-else />
+          <skeleton-loading-search-advert
+            :show-type="showType"
+            v-if="nextPageLoading"
+          />
+          <search-advert-no-result
+            v-if="pending == false && cars.length == 0"
+          />
         </div>
       </div>
-      <search-advert-mobile-filter />
+      <search-advert-mobile-filter
+        :advert-count="data?.data?.entityCount"
+        v-if="isMobile"
+      />
     </section>
+    <h-modal title="مرتب سازی بر اساس" v-model="isOpenModal">
+      <br />
+      <div class="row justify-content-space-between">
+        <label for="vis">پر بازدید ترین آگهی ها</label>
+        <h-switch
+          id="vis"
+          type="radio"
+          name="orderBy_"
+          @click="() => (orderBy = AdvertisementFilterOrderBy.visit)"
+        />
+      </div>
+      <div class="row justify-content-space-between mt-1">
+        <label for="pop">محبوب ترین آگهی ها</label>
+        <h-switch
+          id="pop"
+          type="radio"
+          name="orderBy_"
+          @click="() => (orderBy = AdvertisementFilterOrderBy.popular)"
+        />
+      </div>
+      <div class="row justify-content-space-between mt-1">
+        <label for="late">جدید ترین آگهی ها</label>
+        <h-switch
+          type="radio"
+          name="orderBy_"
+          id="late"
+          @click="() => (orderBy = AdvertisementFilterOrderBy.latest)"
+        />
+      </div>
+    </h-modal>
   </div>
 </template>
 
 <script setup lang="ts">
-import { AdvertisementType } from "~~/models/advertisements/enums/AdvertisementType";
-import { BodyType } from "~~/models/advertisements/enums/BodyType";
-import { CarFuel } from "~~/models/advertisements/enums/CarFuel";
-import { Differential } from "~~/models/advertisements/enums/Differential";
-import { Fuel } from "~~/models/advertisements/enums/Fuel";
-import { GearBox } from "~~/models/advertisements/enums/GearBox";
-import { Manufacture } from "~~/models/advertisements/enums/Manufacture";
-import { ModelCarType } from "~~/models/advertisements/enums/ModelCarType";
-import { SpecialCases } from "~~/models/advertisements/enums/SpecialCases";
-import { Country } from "~~/models/utilities/Country";
-import { GetByFilter } from "~~/services/advertisement.service";
 import { splitNumber } from "~~/utilities/numberUtils";
+import { AdvertisementFilterOrderBy } from "~~/models/advertisements/enums/AdvertisementFilterOrderBy";
+import { Ref } from "vue";
+import { ref } from "#imports";
+import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
+import {
+  containsObject,
+  RemoveDubplicateObjects,
+} from "~~/utilities/objectUtils";
 
 const showType = ref(0);
+const isOpenModal = ref(false);
 const isOpenFilterDropDown = ref(false);
 const route = useRoute();
-const router = useRouter();
-const queryParams = route.query;
-const { slug } = route.params;
-if (slug[1]) {
-  router.push("/car");
-}
-var params = (slug[0] ?? "").split("-");
-const brand = params[0];
-const model = params[1];
-const trim = params[2];
-const fuel = (queryParams.fuel as CarFuel | null) ?? null;
-const orderBy = ref("latest");
-const { data } = useAsyncData(
+const advertFilter = useAdverFilter();
+const nextPageLoading = ref(false);
+const pageId = ref(advertFilter.getFilterQueryParams().pageId);
+const selectedFilters = advertFilter.getFilterQueryParams();
+
+const brand = selectedFilters.brand;
+const model = selectedFilters.model;
+const trim = selectedFilters.trim;
+const isMobile = ref(false);
+const cars: Ref<AdvertisementFilterData[]> = ref([]);
+const orderBy: Ref<AdvertisementFilterOrderBy> = ref(
+  AdvertisementFilterOrderBy.latest
+);
+
+const { data, refresh, pending } = await useAsyncData(
   "carFilter",
-  () =>
-    GetByFilter({
-      advertisementType: AdvertisementType.car,
-      brand,
-      model,
-      trim,
-      year: queryParams.year?.toString() ?? null,
-      fuel,
-      bodyType: (queryParams.bodyType as BodyType | null) ?? null,
-      startPrice: queryParams.startPrice?.toString() ?? null,
-      endPrice: queryParams.endPrice?.toString() ?? null,
-      pageId: (queryParams.pageId as number | null) ?? 1,
-      take: (queryParams.take as number | null) ?? 10,
-      havePrice: (queryParams.havePrice as boolean | null) ?? false,
-      haveImage: (queryParams.haveImage as boolean | null) ?? false,
-      city: (queryParams.city as string) ?? null,
-      province: (queryParams.province as string) ?? null,
-      differential: (queryParams.differential as Differential | null) ?? null,
-      engineVolume: (queryParams.engineVolume as number | null) ?? null,
-      country: (queryParams.country as Country | null) ?? null,
-      startMileage: queryParams.startMileage?.toString() ?? null,
-      endMileage: queryParams.endMileage?.toString() ?? null,
-      isPersonalAdvertisement:
-        (queryParams.isPersonalAdvertisement as boolean | null) ?? false,
-      modelType: (queryParams.modelType as BodyType | null) ?? null,
-      gearBox: (queryParams.gearbox as GearBox | null) ?? null,
-      specialCases: (queryParams.specialCases as SpecialCases | null) ?? null,
-      carType: (queryParams.carType as ModelCarType | null) ?? null,
-      cylinderCount: (queryParams.cylinderCount as number | null) ?? null,
-      exhibitionTitle: (queryParams.exhibitionTitle as string | null) ?? null,
-      manufacture: (queryParams.manufacturer as Manufacture | null) ?? null,
-      search: (queryParams.search as string | null) ?? null,
-    }),
+  () => advertFilter.getAdverts(pageId.value, 12),
   {
     initialCache: false,
     server: true,
     lazy: true,
   }
 );
+cars.value = data?.value?.data?.data ?? [];
 
-let isDropdownOpen = false;
+watch(data, async (val) => {
+  if (val.data?.data?.length ?? 0 > 0) {
+    cars.value.push(...(val.data?.data ?? []));
+    cars.value = RemoveDubplicateObjects(cars.value);
+  } else {
+    cars.value = [];
+  }
+});
+watch(orderBy, (val) => {
+  advertFilter.changeOrderBy(val);
+});
+watch(
+  () => route.query,
+  async (newVal) => {
+    await refresh();
+  }
+);
+const onResize = () => {
+  if (window.innerWidth <= 600) {
+    isMobile.value = true;
+  } else {
+    isMobile.value = false;
+  }
+};
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", onResize);
+});
+onMounted(async () => {
+  onResize();
+  nextTick(() => {
+    window.addEventListener("resize", onResize);
+  });
 
-onMounted(() => {
- 
+  window.onscroll = async () => {
+    let bottomOfWindow =
+      Math.ceil(document.documentElement.scrollTop + window.innerHeight) ===
+      document.documentElement.offsetHeight;
+
+    if (bottomOfWindow) {
+      if (pageId.value < (data.value.data?.pageCount ?? 1)) {
+        pageId.value += 1;
+        nextPageLoading.value = true;
+        refresh().finally(() => {
+          nextPageLoading.value = false;
+        });
+      }
+    }
+  };
 });
 </script>
 

@@ -339,12 +339,17 @@ onMounted(async () => {
     };
     var element = sticky.value!.offsetTop;
     function myFunction() {
+      // if (window.pageYOffset > element + 100) {
+      //   sticky.value!.classList.add("sticky");
+      //   sticky.value!.classList.add("container");
+      // } else {
+      //   sticky.value!.classList.remove("sticky");
+      //   sticky.value!.classList.remove("container");
+      // }
       if (window.pageYOffset > element + 100) {
-        sticky.value!.classList.add("sticky");
-        sticky.value!.classList.add("container");
+        sticky.value!.classList.add("sticky-container");
       } else {
-        sticky.value!.classList.remove("sticky");
-        sticky.value!.classList.remove("container");
+        sticky.value!.classList.remove("sticky-container");
       }
     }
   });
@@ -354,6 +359,10 @@ onUnmounted(() => {
 });
 </script>
 <style scoped>
+.sticky-container{
+  background: var(--body-bg-color);
+  z-index: 1000;
+}
 @media screen and (max-width: 420px) {
   .sticky {
     width: 100% !important;

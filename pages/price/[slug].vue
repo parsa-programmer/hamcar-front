@@ -90,7 +90,10 @@
                         'prices__percent',
                         { 'prices__percent--up': item.growPercentage >= 0 },
                         { 'prices__percent--down': item.growPercentage < 0 },
-                        { 'prices__percent--rectangel': item.growPercentage == 0 },
+                        {
+                          'prices__percent--rectangel':
+                            item.growPercentage == 0,
+                        },
                       ]"
                     >
                       <template v-if="item.growPercentage % 1 == 0">
@@ -129,7 +132,11 @@
           </client-only>
         </div>
         <div class="price-list__links">
-          <a href="#" class="btn btn-primary-outline price-list__link">
+          <nuxt-link
+            :to="`/car-reviews/${carPriceData.brand.slug}/${carReview.slug}`"
+            class="btn btn-primary-outline price-list__link"
+            v-if="carReview"
+          >
             <svg
               width="24"
               height="24"
@@ -148,10 +155,19 @@
                 mask="url(#path-1-inside-1_1721_19054)"
               ></path>
             </svg>
-            مشاهده مشخصات فنی پراید 132 , SE
-          </a>
-          <a href="#" class="btn btn-primary price-list__link">
-            همه آگهی های پراید 132 , SE
+            مشاهده مشخصات فنی {{ carPriceData.brand.title }}
+            {{ carPriceData.model.title }}
+            <template v-if="carPriceData.trim"
+              >، {{ carPriceData.trim.title }}</template
+            >
+          </nuxt-link>
+          <a
+            href="#"
+            class="btn btn-primary price-list__link"
+            v-if="haveAdvert"
+          >
+            همه آگهی های {{ carPriceData.brand.title }}
+            {{ carPriceData.model.title }}
           </a>
         </div>
       </div>
@@ -172,6 +188,11 @@ import {
 import { GetBrandImage, GetModelImage } from "~~/utilities/imageUtil";
 import { getPersianDate, TimeAgo, toPersianDate } from "~~/utilities/dateUtil";
 import orderBy from "lodash/orderBy.js";
+import { GetAdvertCount } from "~~/services/advertisement.service";
+import { GetAdvertisementType } from "~~/models/advertisements/Advertisement.Models";
+import { GetByModel } from "~~/services/carReview.service";
+import carReviewVue from "~~/components/skeletonLoading/carReview.vue";
+import { CarReviewDto } from "~~/models/carReviews/CarReviewModels";
 
 const route = useRoute();
 const { slug } = route.params;
@@ -192,6 +213,7 @@ const carPriceData: Ref<CarPrice> = ref(data!.value);
 const options = ref({
   chart: {
     id: "vuechart-example",
+    background: "transparent",
     toolbar: {
       show: false,
     },
@@ -208,7 +230,34 @@ const options = ref({
       opacity: 0.2,
     },
   },
-  xaxis: {},
+  xaxis: {
+    type: "datetime",
+    labels: {
+      formatter: (val: any) => {
+        return getPersianDate(val, "M/dd");
+      },
+    },
+    style: {
+      fontSize: "var(--t5-font-size)",
+      fontFamily: "var(--t5-font-family)",
+    },
+    tooltip: {
+      enabled: true,
+      offsetY: 0,
+    },
+  },
+  yaxis: {
+    labels: {
+      formatter: (value: any) => {
+        return `${splitNumber(value)}`;
+      },
+      align: "center",
+      style: {
+        fontSize: "var(--t5-font-size)",
+        fontFamily: "var(--t5-font-family)",
+      },
+    },
+  },
   theme: {
     mode: "light",
   },
@@ -248,10 +297,13 @@ const options = ref({
 });
 const series: Ref<any[]> = ref([]);
 const router = useRouter();
+const haveAdvert = ref(false);
+const carReview: Ref<CarReviewDto | null> = ref(null);
+
 const search = (e: any) => {
   router.push("/price?search=" + e.target.value);
 };
-onMounted(() => {
+onMounted(async () => {
   var chartdata: any[] = [];
   var index = 0;
   const theme = localStorage.getItem("theme");
@@ -278,9 +330,10 @@ onMounted(() => {
       }
     });
 
-    orderBy(f.details,'date','asc').map((r) => {
+    orderBy(f.details, "date", "asc").map((r) => {
       data.push({
-        x: getPersianDate(r.date, "M/dd"),
+        //x: getPersianDate(r.date, "M/dd"),
+        x: r.date,
         y: r.price,
       });
     });
@@ -295,6 +348,22 @@ onMounted(() => {
   setTimeout(() => {
     series.value = chartdata;
   }, 100);
+
+  var res = await GetAdvertCount(GetAdvertisementType.model, {
+    model: carPriceData.value.model.slug,
+    exhibitionId: null,
+    modelType: null,
+  });
+  if ((res.data ?? 0) > 0) {
+    haveAdvert.value = true;
+  }
+  var res2 = await GetByModel(
+    carPriceData.value!.model.id,
+    carPriceData.value.trim?.id
+  );
+  if (res2.data) {
+    carReview.value = res2.data;
+  }
 });
 
 const getAllDate = (data: CarPriceChartData[]): Date[] => {

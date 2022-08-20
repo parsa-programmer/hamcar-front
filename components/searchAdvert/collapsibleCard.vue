@@ -8,7 +8,7 @@
     </div>
     <Transition mode="in-out" enter-active-class="animate__animated animate__fadeIn animate__faster"
     >
-      <div class="filter__body" style="display: block !important;" v-if="Open">
+      <div :class="['filter__body',bodyClass]" style="display: block !important;" v-if="Open">
         <slot />
       </div>
     </Transition>
@@ -26,6 +26,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    bodyClass:{
+      type:String,
+      default:''
+    }
   },
   data() {
     return {

@@ -94,7 +94,7 @@ export default defineComponent({
     });
     const getConfig = () => {
       const el = unref(sliderWrapperRef);
-      const maxX: number = el!.scrollWidth - el!.clientWidth;
+      const maxX: number = el?.scrollWidth - el?.clientWidth;
       //console.log("maxX", maxX, el!.scrollWidth, el!.clientWidth);
 
       return { el, maxX };

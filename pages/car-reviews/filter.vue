@@ -56,6 +56,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { Ref } from "vue";
 import { GetByFilter } from "~/services/carReview.service";
 import {
@@ -74,16 +75,14 @@ let orderBy: CarReviewFilterOrderBy = CarReviewFilterOrderBy.visit;
 if (route.query.orderBy) {
   orderBy = route.query.orderBy.toString() as CarReviewFilterOrderBy;
 }
-const { data, pending, refresh } = await useAsyncData(
-  "filter-reviews",
-  () =>
-    GetByFilter({
-      brandSlug: "",
-      orderBy: orderBy,
-      pageId: pageId.value,
-      take: 12,
-      search: searchValue.value,
-    })
+const { data, pending, refresh } = await useAsyncData("filter-reviews", () =>
+  GetByFilter({
+    brandSlug: "",
+    orderBy: orderBy,
+    pageId: pageId.value,
+    take: 12,
+    search: searchValue.value,
+  })
 );
 cars.value = data.value.data?.data ?? [];
 

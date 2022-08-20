@@ -22,6 +22,8 @@ import { UserDto } from "../account/account.Models";
 import { ExhibitionDto } from "../exhibitions/Exhibition.Models";
 import { AdvertisementPlan } from "../plans/AdvertisementPlan";
 import { AdvertisementPlanType } from "./enums/AdvertisementPlanType";
+import { AdvertisementFilterOrderBy } from "./enums/AdvertisementFilterOrderBy";
+import { Color } from "csstype";
 
 export interface AdvertisementFilterData {
   id: string;
@@ -55,18 +57,22 @@ export interface AdvertisementFilterParams extends FilterParams {
   haveImage: boolean | null;
   havePrice: boolean | null;
   isPersonalAdvertisement: boolean | null;
-  gearBox: GearBox | null;
-  modelType: BodyType | null;
+  gearBox: GearBox[] | null;
+  modelType: BodyType[] | null;
   advertisementType: AdvertisementType | null;
-  fuel: CarFuel | null;
-  carType: ModelCarType | null;
-  cylinderCount: CylinderCount | null;
-  differential: Differential | null;
-  engineVolume: EngineVolume | null;
-  manufacture: Manufacture | null;
-  specialCases: SpecialCases | null;
-  bodyType: BodyType | null;
-  country: Country | null;
+  fuel: CarFuel[] | null;
+  carType: ModelCarType[] | null;
+  cylinderCount: CylinderCount[] | null;
+  differential: Differential[] | null;
+  engineVolume: EngineVolume[] | null;
+  manufacture: Manufacture[] | null;
+  specialCases: SpecialCases[] | null;
+  colors: Color[] | null;
+  country: Country[] | null;
+  startYear: string | null;
+  endYear: string | null;
+  orderBy: AdvertisementFilterOrderBy | null;
+  justGhesti: boolean | null;
 }
 export interface AdvertisementImageDto {
   id: string;

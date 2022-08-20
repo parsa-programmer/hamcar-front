@@ -1,0 +1,512 @@
+<template>
+  <template v-if="selectedFilter.brand || selectedFilter.model">
+    <h5 class="text-center">فیلتر برند و مدل</h5>
+    <div class="selected-filters__item" v-if="selectedFilter.brand">
+      <label class="selected-filters__name" for="brand_filter">
+        {{ utilStore.getBrandBySlug(selectedFilter.brand ?? "").title }}
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="brand_filter"
+        name="brand_filter"
+        :value="selectedFilter.brand"
+      />
+    </div>
+
+    <div class="selected-filters__item" v-if="selectedFilter.model">
+      <label class="selected-filters__name" for="model_filter">
+        {{ utilStore.getModelBySlug(selectedFilter.model ?? "")?.title }}
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="model_filter"
+        name="model_filter"
+        :value="selectedFilter.model"
+      />
+    </div>
+  </template>
+  <template v-if="selectedFilter.startYear || selectedFilter.endYear">
+    <h5 class="text-center">فیلتر سال تولید</h5>
+    <div class="selected-filters__item" v-if="selectedFilter.startYear">
+      <label class="selected-filters__name" for="start_year">
+        از سال {{ selectedFilter.startYear }}
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="start_year"
+        name="start_year"
+        :value="selectedFilter.startYear"
+      />
+    </div>
+
+    <div class="selected-filters__item" v-if="selectedFilter.endYear">
+      <label class="selected-filters__name" for="end_year">
+        تا سال {{ selectedFilter.endYear }}
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="end_year"
+        name="end_year"
+        :value="selectedFilter.endYear"
+      />
+    </div>
+  </template>
+  <template v-if="selectedFilter.startPrice || selectedFilter.endPrice">
+    <h5 class="text-center">فیلتر قیمت</h5>
+    <div class="selected-filters__item" v-if="selectedFilter.startPrice">
+      <label class="selected-filters__name" for="start_Price">
+        از {{ splitNumber(selectedFilter.startPrice) }}
+        <small>تومان</small>
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="start_Price"
+        name="start_Price"
+        :value="selectedFilter.startPrice"
+      />
+    </div>
+
+    <div class="selected-filters__item" v-if="selectedFilter.endPrice">
+      <label class="selected-filters__name" for="end_Price">
+        <span v-if="!selectedFilter.startPrice">از 0 <small>تومان</small></span>
+
+        تا {{ splitNumber(selectedFilter.endPrice) }}
+        <small>تومان</small>
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="end_Price"
+        name="end_Price"
+        :value="selectedFilter.endPrice"
+      />
+    </div>
+  </template>
+  <template v-if="selectedFilter.startMileage || selectedFilter.endMileage">
+    <h5 class="text-center">فیلتر کارکرد</h5>
+    <div class="selected-filters__item" v-if="selectedFilter.startMileage">
+      <label class="selected-filters__name" for="start_Mileage">
+        از {{ splitNumber(selectedFilter.startMileage) }}
+        <small>کیلومتر</small>
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="start_Mileage"
+        name="start_Mileage"
+        :value="selectedFilter.startMileage"
+      />
+    </div>
+    <div class="selected-filters__item" v-if="selectedFilter.endMileage == '0'">
+      <label class="selected-filters__name" for="start_Mileage">
+        صفر
+        <small>کیلومتر</small>
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="start_Mileage"
+        name="start_Mileage"
+        :value="0"
+      />
+      <h-input
+        type="checkbox"
+        input-id="end_Mileage"
+        name="end_Mileage"
+        :value="0"
+        style="position: fixed; left: -100%; opacity: 0; z-index: -10000"
+      />
+    </div>
+    <div
+      class="selected-filters__item"
+      v-else-if="
+        selectedFilter.endMileage && selectedFilter.endMileage != '500000'
+      "
+    >
+      <label class="selected-filters__name" for="end_Mileage">
+        <span v-if="!selectedFilter.startMileage"
+          >از 0 <small>کیلومتر </small></span
+        >
+        تا {{ splitNumber(selectedFilter.endMileage) }}
+        <small>کیلومتر</small>
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="end_Mileage"
+        name="end_Mileage"
+        :value="selectedFilter.endMileage"
+      />
+    </div>
+  </template>
+
+  <template v-if="selectedFilter.cylinderCount?.length ?? 0 > 0">
+    <h5 class="text-center">فیلتر سیلندر</h5>
+    <div
+      class="selected-filters__item"
+      v-for="(item, index) in selectedFilter.cylinderCount"
+      :key="index"
+    >
+      <label
+        class="selected-filters__name"
+        :for="`fcy_${index}`"
+        v-if="item == 'three'"
+        >3 سیلندر</label
+      >
+      <label
+        class="selected-filters__name"
+        :for="`fcy_${index}`"
+        v-if="item == 'four'"
+        >4 سیلندر</label
+      >
+      <label
+        class="selected-filters__name"
+        :for="`fcy_${index}`"
+        v-if="item == 'five'"
+        >5 سیلندر</label
+      >
+      <label
+        class="selected-filters__name"
+        :for="`fcy_${index}`"
+        v-if="item == 'six'"
+        >6 سیلندر</label
+      >
+      <label
+        class="selected-filters__name"
+        :for="`fcy_${index}`"
+        v-if="item == 'eight'"
+        >8 سیلندر</label
+      >
+      <h-input
+        type="checkbox"
+        checked
+        :input-id="`fcy_${index}`"
+        :value="item"
+        name="cylinderCount_"
+      />
+    </div>
+  </template>
+  <template
+    v-if="
+      selectedFilter.haveImage ||
+      selectedFilter.havePrice ||
+      selectedFilter.justGhesti
+    "
+  >
+    <hr
+      class="mt-0_5"
+      style="margin-bottom: 1rem"
+      v-if="advertFilter.getFilterCount() > 1"
+    />
+    <div class="selected-filters__item" v-if="selectedFilter.haveImage">
+      <label class="selected-filters__name" for="just_have_Image">
+        عکس دار
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="just_have_Image"
+        name="just_have_Image"
+      />
+    </div>
+    <div class="selected-filters__item" v-if="selectedFilter.havePrice">
+      <label class="selected-filters__name" for="just_havePrice_">
+        قیمت دار
+      </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="just_havePrice_"
+        name="just_havePrice_"
+      />
+    </div>
+    <div class="selected-filters__item" v-if="selectedFilter.justGhesti">
+      <label class="selected-filters__name" for="_just_Gesti_"> اقساطی </label>
+      <h-input
+        type="checkbox"
+        checked
+        input-id="_just_Gesti_"
+        name="_just_Gesti_"
+      />
+    </div>
+  </template>
+  <template v-if="selectedFilter.colors?.length ?? 0 > 0">
+    <h5 class="text-center">فیلتر رنگ</h5>
+    <div
+      class="selected-filters__item"
+      v-for="(item, index) in selectedFilter.colors"
+      :key="index"
+    >
+      <label class="selected-filters__name" :for="`fc_${index}`">{{
+        item.replace("_", " ")
+      }}</label>
+      <h-input
+        type="checkbox"
+        checked
+        :value="item"
+        :input-id="`fc_${index}`"
+        name="color_"
+      />
+    </div>
+  </template>
+  <template v-if="selectedFilter.modelType?.length ?? 0 > 0">
+    <h5 class="text-center">فیلتر شاسی</h5>
+    <div
+      class="selected-filters__item"
+      v-for="(item, index) in selectedFilter.modelType"
+      :key="index"
+    >
+      <label class="selected-filters__name" :for="`fmt_${item}`">{{
+        item.toString().replace("_", " ")
+      }}</label>
+      <h-input
+        type="checkbox"
+        checked
+        :input-id="`fmt_${item}`"
+        name="modelType_"
+        :value="item"
+      />
+    </div>
+  </template>
+  <div class="selected-filters__action">
+    <button
+      @click="removeFilters"
+      class="btn btn-sm btn-transparent selected-filters__delete-btn"
+    >
+      <svg
+        width="18"
+        height="18"
+        viewBox="0 0 18 18"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0.75 3.75H6M17.25 3.75H12M2.25 3.75L3.32985 14.5485C3.48321 16.0821 4.77371 17.25 6.31497 17.25H11.685C13.2263 17.25 14.5168 16.0821 14.6701 14.5485L15.75 3.75M9 8.25V12.75M12.375 8.25L12 12.75M5.625 8.25L6 12.75M12 3.75H9H6M12 3.75H6M12 3.75V2.25C12 1.42157 11.3284 0.75 10.5 0.75H7.5C6.67157 0.75 6 1.42157 6 2.25V3.75"
+          stroke="#EF3838"
+          stroke-width="1.5"
+          stroke-linecap="round"
+        ></path>
+      </svg>
+      حذف همه
+    </button>
+    <button
+      class="btn btn-sm btn-primary selected-filters__submit-btn"
+      @click="setFilters"
+    >
+      اعمال
+    </button>
+  </div>
+</template>
+
+<script setup lang="ts">
+import {ref} from "#imports";
+import { filter } from "lodash";
+import { UseUtilStore } from "~~/stores/util.store";
+import { splitNumber } from "~~/utilities/numberUtils";
+import { RemoveEmptyProps } from "~~/utilities/objectUtils";
+const emit = defineEmits(["closed"]);
+
+const advertFilter = useAdverFilter();
+const selectedFilter = ref(advertFilter.getFilterQueryParams());
+const utilStore = UseUtilStore();
+const setFilters = async () => {
+  const justGhesti =
+    document.querySelector("input[name=_just_Gesti_]:checked") != null;
+  const justHavePrice =
+    document.querySelector("input[name=just_havePrice_]:checked") != null;
+
+  const justHaveImage =
+    document.querySelector("input[name=just_have_Image]:checked") != null;
+
+  const haveBrand =
+    document.querySelector("input[name=brand_filter]:checked") != null &&
+    selectedFilter.value.brand;
+
+  const haveModel =
+    document.querySelector("input[name=model_filter]:checked") != null;
+
+  const startYear =
+    document.querySelector("input[name=start_year]:checked") != null;
+
+  const endYear =
+    document.querySelector("input[name=end_year]:checked") != null;
+
+  const startPrice =
+    document.querySelector("input[name=start_Price]:checked") != null;
+
+  const endPrice =
+    document.querySelector("input[name=end_Price]:checked") != null;
+
+  const startMileage =
+    document.querySelector("input[name=start_Mileage]:checked") != null;
+
+  const endMileage =
+    document.querySelector("input[name=end_Mileage]:checked") != null;
+
+
+  
+
+  //#region Brand And Model
+  if (haveBrand == false && selectedFilter.value.brand) {
+    await advertFilter.removeBrandFilter();
+    return;
+  }
+  if (haveModel == false && selectedFilter.value.model) {
+    await advertFilter.removeModel();
+    return;
+  }
+  //#endregion
+  
+  // Price
+  if (startPrice == false && selectedFilter.value.startPrice) {
+    await advertFilter.changePrice(
+      "0",
+      selectedFilter.value.endPrice ?? "5000000000"
+    );
+  }
+  if (endPrice == false && selectedFilter.value.endPrice) {
+    await advertFilter.changePrice(
+      selectedFilter.value.startPrice ?? "0",
+      "5000000000"
+    );
+  }
+
+  //Mileage
+  if (startMileage == false && selectedFilter.value.startMileage) {
+    await advertFilter.changeMilage(
+      "0",
+      selectedFilter.value.endMileage ?? "500000"
+    );
+  }
+  if (endMileage == false && selectedFilter.value.endMileage) {
+    await advertFilter.changeMilage(
+      selectedFilter.value.startMileage ?? "0",
+      "500000"
+    );
+  }
+
+  //Year
+  if (startYear == false && selectedFilter.value.startYear) {
+    await advertFilter.changeYear("", selectedFilter.value.year);
+  }
+  if (endYear == false && selectedFilter.value.endYear) {
+    await advertFilter.changeYear(selectedFilter.value.startYear, null);
+  }
+
+  if (justGhesti == false && selectedFilter.value.justGhesti) {
+    await advertFilter.justGhesti(false);
+  }
+  if (justHaveImage == false && selectedFilter.value.haveImage) {
+    await advertFilter.justHaveImage(false);
+  }
+  if (justHavePrice == false && selectedFilter.value.havePrice) {
+    await advertFilter.justHavePrice(false);
+  }
+
+  const cylinderChecked = document.querySelectorAll(
+    "input[name=cylinderCount_]:checked"
+  );
+
+  let cylValues: any[] = [];
+  cylinderChecked.forEach((checkbox) => {
+    //@ts-ignorex
+    cylValues.push(checkbox.value);
+  });
+  if (cylValues.length != selectedFilter.value.cylinderCount?.length ?? 0) {
+    await advertFilter.changeCylinderCount(cylValues);
+  }
+
+  const colorChecked = document.querySelectorAll("input[name=color_]:checked");
+  let coValues: any[] = [];
+  colorChecked.forEach((checkbox) => {
+    //@ts-ignore
+    coValues.push(checkbox.value);
+  });
+  if (coValues.length != selectedFilter.value.colors?.length ?? 0) {
+    await advertFilter.changeColor(coValues);
+  }
+
+  const modelTypeChecked = document.querySelectorAll(
+    "input[name=modelType_]:checked"
+  );
+  let modValues: any[] = [];
+  modelTypeChecked.forEach((checkbox) => {
+    //@ts-ignore
+    modValues.push(checkbox.value);
+  });
+  if (modValues?.length != selectedFilter.value.modelType?.length ?? 0) {
+    await advertFilter.changeModelTypes(modValues);
+  }
+};
+const route = useRoute();
+watch(
+  () => route.query,
+  () => {
+    emit("closed");
+  }
+);
+const removeFilters = () => {
+  advertFilter.removeAllFilters();
+  emit("closed");
+};
+onMounted(() => {
+  fixFilters();
+});
+const fixFilters = () => {
+  RemoveEmptyProps(selectedFilter);
+  if (typeof selectedFilter.value.colors == "string") {
+    selectedFilter.value.colors = [selectedFilter.value.colors];
+  }
+  if (typeof selectedFilter.value.cylinderCount == "string") {
+    selectedFilter.value.cylinderCount = [selectedFilter.value.cylinderCount];
+  }
+  //@ts-ignore
+  delete selectedFilter.value["take"];
+  //@ts-ignore
+  delete selectedFilter.value["pageId"];
+  //@ts-ignore
+  delete selectedFilter.value["orderBy"];
+  //@ts-ignore
+  delete selectedFilter.value["advertisementType"];
+
+  if (selectedFilter.value.startMileage == "0") {
+    //@ts-ignore
+    delete selectedFilter.value["startMileage"];
+  }
+  if (selectedFilter.value.startPrice == "0") {
+    //@ts-ignore
+    delete selectedFilter.value["startPrice"];
+  }
+  if (selectedFilter.value.endPrice == "5000000000") {
+    //@ts-ignore
+    delete selectedFilter.value["endPrice"];
+  }
+  if (selectedFilter.value.endMileage == "500000") {
+    //@ts-ignore
+    delete selectedFilter.value["endMileage"];
+  }
+  if (selectedFilter.value.haveImage?.toString() == "false") {
+    //@ts-ignore
+    delete selectedFilter.value["haveImage"];
+  }
+  if (selectedFilter.value.havePrice?.toString() == "false") {
+    //@ts-ignore
+    delete selectedFilter.value["havePrice"];
+  }
+  if (selectedFilter.value.justGhesti?.toString() == "false") {
+    //@ts-ignore
+    delete selectedFilter.value["justGhesti"];
+  }
+};
+</script>
+
+<style scoped>
+h5 {
+  margin-bottom: 1rem;
+}
+</style>

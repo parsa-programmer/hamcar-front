@@ -9,17 +9,29 @@
         <icons-brands-whats-app />
         واتساپ
       </a>
-      <a target="_blank" :href="`https://t.me/share/Url?url=${url}`" class="telegram">
+      <a
+        target="_blank"
+        :href="`https://t.me/share/Url?url=${url}`"
+        class="telegram"
+      >
         <icons-brands-telegram />
         تلگرام
       </a>
-      <a class="message">
+
+      <a
+        target="_blank"
+        :href="`https://twitter.com/intent/tweet?url=${url}`"
+        class="twitter"
+      >
+        <icons-brands-twitter hash-color="white" />
+        توییتر
+      </a>
+      <a
+        class="message"
+        :href="`mailto:?subject=لینک صفحه در سایت همکار&body=${url}`"
+      >
         <icons-message hash-color="white" />
         ایمیل
-      </a>
-      <a target="_blank" :href="`https://twitter.com/intent/tweet?url=${url}`" class="twitter">
-        <icons-brands-twitter hash-color="white"/>
-        توییتر
       </a>
     </div>
     <h-input
@@ -60,7 +72,6 @@ watch(
   .share__items a {
     width: 165px !important;
   }
- 
 }
 @media screen and (max-width: 760px) {
   .share__items {

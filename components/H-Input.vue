@@ -7,6 +7,7 @@
         :name="name"
         @input="modelValueChanged"
         :id="inputId"
+        v-bind="$attrs"
       />
       <span class="checkmark"></span>
       <svg width="12" height="12" viewBox="0 0 12 12">
@@ -18,6 +19,35 @@
           stroke-linejoin="round"
         ></path>
       </svg>
+    </label>
+    <label v-if="hasSlot()" :for="inputId">
+      <slot />
+    </label>
+  </div>
+  <div v-else-if="type == 'radio'" class="checkbox__wrap">
+    <label class="checkbox">
+      <input
+        type="radio"
+        :value="modelValue"
+        :name="name"
+        v-bind="$attrs"
+        @input="modelValueChanged"
+        :id="inputId"
+      />
+      <slot name="custom_marker" v-if="$.slots.custom_marker" />
+      
+      <template v-else>
+        <span class="checkmark"></span>
+        <svg width="12" height="12" viewBox="0 0 12 12">
+          <path
+            d="M1 1L6 6M11 11L6 6M6 6L11 1M6 6L1 11"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></path>
+        </svg>
+      </template>
     </label>
     <label v-if="hasSlot()" :for="inputId">
       <slot />
@@ -208,12 +238,11 @@ const hasSlot = () => {
 };
 </script>
 <style scoped>
-.checkbox__wrap{
+.checkbox__wrap {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
 }
-.checkbox__wrap label{
+.checkbox__wrap label {
   cursor: pointer;
-
 }
 </style>

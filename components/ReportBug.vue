@@ -7,99 +7,108 @@
     >
       <div class="radio-group mt-1">
         <div class="radio-group__col">
-          <label for="radio1" class="radio">
-            <h-input
-              type="radio"
-              class="radio__input"
-              id="radio1"
-              value="برند یا مدل صحیح نیست"
-              name="title"
-              :ignore-error-message="true"
-              v-model="title"
-            />
-            <span class="radio__circle"></span>
+          <h-input
+            type="radio"
+            class="radio__input radio"
+            value="برند یا مدل صحیح نیست"
+            name="title"
+            :ignore-error-message="true"
+            v-model="title"
+            input-id="radio1"
+          >
             برند یا مدل صحیح نیست
-          </label>
-          <label for="radio2" class="radio">
-            <h-input
-              type="radio"
-              class="radio__input"
-              id="radio2"
-              value="عکس‌های خودرو مناسب نیست"
-              name="title"
-              v-model="title"
-              :ignore-error-message="true"
-            />
-            <span class="radio__circle"></span>
+            <template #custom_marker>
+              <span class="radio__circle"></span>
+            </template>
+          </h-input>
+          <h-input
+            type="radio"
+            class="radio__input radio"
+            input-id="radio2"
+            value="عکس‌های خودرو مناسب نیست"
+            name="title"
+            v-model="title"
+            :ignore-error-message="true"
+          >
+            <template #custom_marker>
+              <span class="radio__circle"></span>
+            </template>
             عکس‌های خودرو مناسب نیست
-          </label>
-          <label for="radio3" class="radio">
-            <h-input
-              type="radio"
-              class="radio__input"
-              id="radio3"
-              value="مشخصات فنی صحیح نیست"
-              name="title"
-              v-model="title"
-              :ignore-error-message="true"
-            />
-            <span class="radio__circle"></span>
+          </h-input>
+          <h-input
+            type="radio"
+            class="radio__input radio"
+            input-id="radio3"
+            value="مشخصات فنی صحیح نیست"
+            name="title"
+            v-model="title"
+            :ignore-error-message="true"
+          >
             مشخصات فنی صحیح نیست
-          </label>
-          <label for="radio4" class="radio">
-            <h-input
-              type="radio"
-              class="radio__input"
-              id="radio4"
-              value="توضیحات خودرو صحیح نیست"
-              name="title"
-              v-model="title"
-              :ignore-error-message="true"
-            />
-            <span class="radio__circle"></span>
+
+            <template #custom_marker>
+              <span class="radio__circle"></span>
+            </template>
+          </h-input>
+          <h-input
+            type="radio"
+            class="radio__input radio"
+            input-id="radio4"
+            value="توضیحات خودرو صحیح نیست"
+            name="title"
+            v-model="title"
+            :ignore-error-message="true"
+          >
             توضیحات خودرو صحیح نیست
-          </label>
+
+            <template #custom_marker>
+              <span class="radio__circle"></span>
+            </template>
+          </h-input>
         </div>
         <div class="radio-group__col">
-          <label for="radio5" class="radio">
-            <h-input
-              type="radio"
-              class="radio__input"
-              id="radio5"
-              value="کارکرد صحیح نیست"
-              name="title"
-              v-model="title"
-              :ignore-error-message="true"
-            />
-            <span class="radio__circle"></span>
+          <h-input
+            type="radio"
+            class="radio__input radio"
+            input-id="radio5"
+            value="کارکرد صحیح نیست"
+            name="title"
+            v-model="title"
+            :ignore-error-message="true"
+          >
+            <template #custom_marker>
+              <span class="radio__circle"></span>
+            </template>
             کارکرد صحیح نیست
-          </label>
-          <label for="radio6" class="radio">
-            <h-input
-              type="radio"
-              class="radio__input"
-              id="radio6"
-              value="قیمت صحیح نیست"
-              name="title"
-              v-model="title"
-              :ignore-error-message="true"
-            />
-            <span class="radio__circle"></span>
+          </h-input>
+          <h-input
+            type="radio"
+            class="radio__input radio"
+            input-id="radio6"
+            value="قیمت صحیح نیست"
+            name="title"
+            v-model="title"
+            :ignore-error-message="true"
+          >
+            <template #custom_marker>
+              <span class="radio__circle"></span>
+            </template>
             قیمت صحیح نیست
-          </label>
-          <label for="radio7" class="radio">
-            <h-input
-              type="radio"
-              class="radio__input"
-              id="radio7"
-              value="سایر موارد"
-              name="title"
-              v-model="title"
-              :ignore-error-message="true"
-            />
-            <span class="radio__circle"></span>
+          </h-input>
+          <h-input
+            type="radio"
+            class="radio__input radio"
+            input-id="radio7"
+            value="سایر موارد"
+            name="title"
+            v-model="title"
+            :ignore-error-message="true"
+          >
+            <template #custom_marker>
+              <span class="radio__circle"></span>
+            </template>
             سایر موارد
-          </label>
+          </h-input>
         </div>
       </div>
       <span class="modal__line"></span>
@@ -173,7 +182,9 @@ const props = defineProps<{
 
 reportFor.value = props.reportFor;
 const reportSchema = Yup.object().shape({
-  description: Yup.string().min(10,'توضیحات باید بیشتر از 10 کاراکتر باشد').required("لطفا توضیحات خود را وارد کنید"),
+  description: Yup.string()
+    .min(10, "توضیحات باید بیشتر از 10 کاراکتر باشد")
+    .required("لطفا توضیحات خود را وارد کنید"),
   title: Yup.string().required("لطفا عنوان خود را وارد کنید"),
 });
 watch(

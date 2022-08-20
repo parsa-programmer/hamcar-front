@@ -17,7 +17,6 @@ export interface CarPriceDetail {
   priceType: string;
   dateTime:Date;
   prices: number[];
-
 }
 export interface CarPrice {
   id: string;

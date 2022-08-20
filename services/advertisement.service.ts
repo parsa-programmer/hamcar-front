@@ -16,7 +16,6 @@ export const GetByFilter = (
   filterParams: AdvertisementFilterParams
 ): Promise<IApiResponse<FilterResult<AdvertisementFilterData>>> => {
   var params={...filterParams};
-
   for (const key in params) {
     //@ts-ignore
     if (params[key] == '' || params[key]==null) {

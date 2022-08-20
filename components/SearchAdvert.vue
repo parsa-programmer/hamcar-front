@@ -4,7 +4,11 @@
       type="text"
       class="form-control bg-transparent"
       placeholder="جستجو میان همه آگهی ها..."
+      @keyup.enter="(e) => $router.push(`/car?search=${e.target.value}`)"
     />
-    <icons-search class="input-icon" hash-color="var(--color-gray-500)"></icons-search>
+    <icons-search
+      class="input-icon"
+      hash-color="var(--color-gray-500)"
+    ></icons-search>
   </div>
 </template>
