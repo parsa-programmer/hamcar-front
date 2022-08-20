@@ -26,7 +26,7 @@
 const props = defineProps({
   hashColor: {
     type: String,
-    default: "#0F0F10",
+    default: "var(--color-black)",
   },
   width: {
     type: Number,

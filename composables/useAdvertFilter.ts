@@ -25,7 +25,6 @@ export const useAdverFilter = () => {
 
   const url = route.path.toLowerCase().startsWith("/car") ? "/car" : "/motor";
 
-  const queryParams = route.query;
   const { slug } = route.params;
   if (slug[1]) {
     router.push(url);
@@ -97,24 +96,6 @@ export const useAdverFilter = () => {
       },
     });
   };
-  const changeCylinderCount = async (cylinderCount: CylinderCount[]) => {
-    await router.push({
-      path: route.path,
-      query: {
-        ...route.query,
-        cylinderCount,
-      },
-    });
-  };
-  const changeModelTypes = async (modelType: BodyType[]) => {
-    await router.push({
-      path: route.path,
-      query: {
-        ...route.query,
-        modelType,
-      },
-    });
-  };
   const changeDifferential = async (differential: Differential[]) => {
     await router.push({
       path: route.path,
@@ -124,12 +105,12 @@ export const useAdverFilter = () => {
       },
     });
   };
-  const changeColor = async (colors: Color[]) => {
+  const changeQueryParams = async (data: any, key: string) => {
     await router.push({
       path: route.path,
       query: {
         ...route.query,
-        colors,
+        [key]: data,
       },
     });
   };
@@ -156,6 +137,7 @@ export const useAdverFilter = () => {
       },
     });
   };
+
   const changeBrand = async (e: any) => {
     await router.push(`${url}/${e.target.value}`);
   };
@@ -165,7 +147,7 @@ export const useAdverFilter = () => {
   const changeModel = async (e: any) => {
     await router.push(`/car/${brand}-${e.target.value}`);
   };
-  
+
   ////////////
   const getBrands = async (
     car: boolean = true,
@@ -214,14 +196,14 @@ export const useAdverFilter = () => {
       isPersonalAdvertisement:
         (route.query.isPersonalAdvertisement as boolean | null) ?? false,
       modelType: (route.query.modelType as BodyType[] | null) ?? null,
-      gearBox: (route.query.gearbox as GearBox[] | null) ?? null,
+      gearBox: (route.query.gearBox as GearBox[] | null) ?? null,
       specialCases: (route.query.specialCases as SpecialCases[] | null) ?? null,
       carType: (route.query.carType as ModelCarType[] | null) ?? null,
       colors: (route.query.colors as Color[] | null) ?? null,
       cylinderCount:
         (route.query.cylinderCount as CylinderCount[] | null) ?? null,
       exhibitionTitle: (route.query.exhibitionTitle as string | null) ?? null,
-      manufacture: (route.query.manufacturer as Manufacture[] | null) ?? null,
+      manufacture: (route.query.manufacture as Manufacture[] | null) ?? null,
       search: (route.query.search as string | null) ?? "",
       startYear: (route.query.startYear as string | null) ?? null,
       endYear: (route.query.endYear as string) ?? null,
@@ -254,13 +236,13 @@ export const useAdverFilter = () => {
       isPersonalAdvertisement:
         (route.query.isPersonalAdvertisement as boolean | null) ?? false,
       modelType: (route.query.modelType as BodyType[] | null) ?? null,
-      gearBox: (route.query.gearbox as GearBox[] | null) ?? null,
+      gearBox: (route.query.gearBox as GearBox[] | null) ?? null,
       specialCases: (route.query.specialCases as SpecialCases[] | null) ?? null,
       carType: (route.query.carType as ModelCarType[] | null) ?? null,
       cylinderCount:
         (route.query.cylinderCount as CylinderCount[] | null) ?? null,
       exhibitionTitle: (route.query.exhibitionTitle as string | null) ?? "",
-      manufacture: (route.query.manufacturer as Manufacture[] | null) ?? null,
+      manufacture: (route.query.manufacture as Manufacture[] | null) ?? null,
       search: (route.query.search as string | null) ?? "",
       startYear: (route.query.startYear as string | null) ?? "",
       endYear: (route.query.endYear as string) ?? "",
@@ -324,13 +306,11 @@ export const useAdverFilter = () => {
     justHaveImage,
     justHavePrice,
     changeOrderBy,
-    changeCylinderCount,
-    changeModelTypes,
-    changeColor,
     getFilterCount,
     removeAllFilters,
     removeBrandFilter,
     removeModel,
+    changeQueryParams,
     brand,
     model,
     trim,

@@ -1,310 +1,328 @@
 <template>
-  <template v-if="selectedFilter.brand || selectedFilter.model">
-    <h5 class="text-center">فیلتر برند و مدل</h5>
-    <div class="selected-filters__item" v-if="selectedFilter.brand">
-      <label class="selected-filters__name" for="brand_filter">
-        {{ utilStore.getBrandBySlug(selectedFilter.brand ?? "").title }}
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="brand_filter"
-        name="brand_filter"
-        :value="selectedFilter.brand"
-      />
-    </div>
+  <div class="selected_filter">
+    <template v-if="selectedFilter.brand || selectedFilter.model">
+      <h5 class="text-center">فیلتر برند و مدل</h5>
+      <div class="selected-filters__item" v-if="selectedFilter.brand">
+        <label class="selected-filters__name" for="brand_filter">
+          {{ utilStore.getBrandBySlug(selectedFilter.brand ?? "").title }}
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="brand_filter"
+          name="brand_filter"
+          :value="selectedFilter.brand"
+        />
+      </div>
 
-    <div class="selected-filters__item" v-if="selectedFilter.model">
-      <label class="selected-filters__name" for="model_filter">
-        {{ utilStore.getModelBySlug(selectedFilter.model ?? "")?.title }}
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="model_filter"
-        name="model_filter"
-        :value="selectedFilter.model"
-      />
-    </div>
-  </template>
-  <template v-if="selectedFilter.startYear || selectedFilter.endYear">
-    <h5 class="text-center">فیلتر سال تولید</h5>
-    <div class="selected-filters__item" v-if="selectedFilter.startYear">
-      <label class="selected-filters__name" for="start_year">
-        از سال {{ selectedFilter.startYear }}
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="start_year"
-        name="start_year"
-        :value="selectedFilter.startYear"
-      />
-    </div>
+      <div class="selected-filters__item" v-if="selectedFilter.model">
+        <label class="selected-filters__name" for="model_filter">
+          {{ utilStore.getModelBySlug(selectedFilter.model ?? "")?.title }}
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="model_filter"
+          name="model_filter"
+          :value="selectedFilter.model"
+        />
+      </div>
+    </template>
+    <template v-if="selectedFilter.startYear || selectedFilter.endYear">
+      <h5 class="text-center">فیلتر سال تولید</h5>
+      <div class="selected-filters__item" v-if="selectedFilter.startYear">
+        <label class="selected-filters__name" for="start_year">
+          از سال {{ selectedFilter.startYear }}
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="start_year"
+          name="start_year"
+          :value="selectedFilter.startYear"
+        />
+      </div>
 
-    <div class="selected-filters__item" v-if="selectedFilter.endYear">
-      <label class="selected-filters__name" for="end_year">
-        تا سال {{ selectedFilter.endYear }}
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="end_year"
-        name="end_year"
-        :value="selectedFilter.endYear"
-      />
-    </div>
-  </template>
-  <template v-if="selectedFilter.startPrice || selectedFilter.endPrice">
-    <h5 class="text-center">فیلتر قیمت</h5>
-    <div class="selected-filters__item" v-if="selectedFilter.startPrice">
-      <label class="selected-filters__name" for="start_Price">
-        از {{ splitNumber(selectedFilter.startPrice) }}
-        <small>تومان</small>
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="start_Price"
-        name="start_Price"
-        :value="selectedFilter.startPrice"
-      />
-    </div>
+      <div class="selected-filters__item" v-if="selectedFilter.endYear">
+        <label class="selected-filters__name" for="end_year">
+          تا سال {{ selectedFilter.endYear }}
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="end_year"
+          name="end_year"
+          :value="selectedFilter.endYear"
+        />
+      </div>
+    </template>
+    <template v-if="selectedFilter.startPrice || selectedFilter.endPrice">
+      <h5 class="text-center">فیلتر قیمت</h5>
+      <div class="selected-filters__item" v-if="selectedFilter.startPrice">
+        <label class="selected-filters__name" for="start_Price">
+          از {{ splitNumber(selectedFilter.startPrice) }}
+          <small>تومان</small>
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="start_Price"
+          name="start_Price"
+          :value="selectedFilter.startPrice"
+        />
+      </div>
 
-    <div class="selected-filters__item" v-if="selectedFilter.endPrice">
-      <label class="selected-filters__name" for="end_Price">
-        <span v-if="!selectedFilter.startPrice">از 0 <small>تومان</small></span>
+      <div class="selected-filters__item" v-if="selectedFilter.endPrice">
+        <label class="selected-filters__name" for="end_Price">
+          <span v-if="!selectedFilter.startPrice"
+            >از 0 <small>تومان</small></span
+          >
 
-        تا {{ splitNumber(selectedFilter.endPrice) }}
-        <small>تومان</small>
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="end_Price"
-        name="end_Price"
-        :value="selectedFilter.endPrice"
-      />
-    </div>
-  </template>
-  <template v-if="selectedFilter.startMileage || selectedFilter.endMileage">
-    <h5 class="text-center">فیلتر کارکرد</h5>
-    <div class="selected-filters__item" v-if="selectedFilter.startMileage">
-      <label class="selected-filters__name" for="start_Mileage">
-        از {{ splitNumber(selectedFilter.startMileage) }}
-        <small>کیلومتر</small>
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="start_Mileage"
-        name="start_Mileage"
-        :value="selectedFilter.startMileage"
-      />
-    </div>
-    <div class="selected-filters__item" v-if="selectedFilter.endMileage == '0'">
-      <label class="selected-filters__name" for="start_Mileage">
-        صفر
-        <small>کیلومتر</small>
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="start_Mileage"
-        name="start_Mileage"
-        :value="0"
-      />
-      <h-input
-        type="checkbox"
-        input-id="end_Mileage"
-        name="end_Mileage"
-        :value="0"
-        style="position: fixed; left: -100%; opacity: 0; z-index: -10000"
-      />
-    </div>
-    <div
-      class="selected-filters__item"
-      v-else-if="
-        selectedFilter.endMileage && selectedFilter.endMileage != '500000'
+          تا {{ splitNumber(selectedFilter.endPrice) }}
+          <small>تومان</small>
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="end_Price"
+          name="end_Price"
+          :value="selectedFilter.endPrice"
+        />
+      </div>
+    </template>
+    <template v-if="selectedFilter.startMileage || selectedFilter.endMileage">
+      <h5 class="text-center">فیلتر کارکرد</h5>
+      <div class="selected-filters__item" v-if="selectedFilter.startMileage">
+        <label class="selected-filters__name" for="start_Mileage">
+          از {{ splitNumber(selectedFilter.startMileage) }}
+          <small>کیلومتر</small>
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="start_Mileage"
+          name="start_Mileage"
+          :value="selectedFilter.startMileage"
+        />
+      </div>
+      <div
+        class="selected-filters__item"
+        v-if="selectedFilter.endMileage == '0'"
+      >
+        <label class="selected-filters__name" for="start_Mileage">
+          صفر
+          <small>کیلومتر</small>
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="start_Mileage"
+          name="start_Mileage"
+          :value="0"
+        />
+        <h-input
+          type="checkbox"
+          input-id="end_Mileage"
+          name="end_Mileage"
+          :value="0"
+          style="position: fixed; left: -100%; opacity: 0; z-index: -10000"
+        />
+      </div>
+      <div
+        class="selected-filters__item"
+        v-else-if="
+          selectedFilter.endMileage && selectedFilter.endMileage != '500000'
+        "
+      >
+        <label class="selected-filters__name" for="end_Mileage">
+          <span v-if="!selectedFilter.startMileage"
+            >از 0 <small>کیلومتر </small></span
+          >
+          تا {{ splitNumber(selectedFilter.endMileage) }}
+          <small>کیلومتر</small>
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="end_Mileage"
+          name="end_Mileage"
+          :value="selectedFilter.endMileage"
+        />
+      </div>
+    </template>
+
+    <template v-if="selectedFilter.cylinderCount?.length ?? 0 > 0">
+      <h5 class="text-center">فیلتر سیلندر</h5>
+      <div
+        class="selected-filters__item"
+        v-for="(item, index) in selectedFilter.cylinderCount"
+        :key="index"
+      >
+        <label
+          class="selected-filters__name"
+          :for="`fcy_${index}`"
+          v-if="item == 'three'"
+          >3 سیلندر</label
+        >
+        <label
+          class="selected-filters__name"
+          :for="`fcy_${index}`"
+          v-if="item == 'four'"
+          >4 سیلندر</label
+        >
+        <label
+          class="selected-filters__name"
+          :for="`fcy_${index}`"
+          v-if="item == 'five'"
+          >5 سیلندر</label
+        >
+        <label
+          class="selected-filters__name"
+          :for="`fcy_${index}`"
+          v-if="item == 'six'"
+          >6 سیلندر</label
+        >
+        <label
+          class="selected-filters__name"
+          :for="`fcy_${index}`"
+          v-if="item == 'eight'"
+          >8 سیلندر</label
+        >
+        <h-input
+          type="checkbox"
+          checked
+          :input-id="`fcy_${index}`"
+          :value="item"
+          name="cylinderCount_"
+        />
+      </div>
+    </template>
+    <template
+      v-if="
+        selectedFilter.haveImage ||
+        selectedFilter.havePrice ||
+        selectedFilter.justGhesti
       "
     >
-      <label class="selected-filters__name" for="end_Mileage">
-        <span v-if="!selectedFilter.startMileage"
-          >از 0 <small>کیلومتر </small></span
-        >
-        تا {{ splitNumber(selectedFilter.endMileage) }}
-        <small>کیلومتر</small>
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="end_Mileage"
-        name="end_Mileage"
-        :value="selectedFilter.endMileage"
+      <hr
+        class="mt-0_5"
+        style="margin-bottom: 1rem"
+        v-if="advertFilter.getFilterCount() > 1"
       />
-    </div>
-  </template>
+      <div class="selected-filters__item" v-if="selectedFilter.haveImage">
+        <label class="selected-filters__name" for="just_have_Image">
+          عکس دار
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="just_have_Image"
+          name="just_have_Image"
+        />
+      </div>
+      <div class="selected-filters__item" v-if="selectedFilter.havePrice">
+        <label class="selected-filters__name" for="just_havePrice_">
+          قیمت دار
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="just_havePrice_"
+          name="just_havePrice_"
+        />
+      </div>
+      <div class="selected-filters__item" v-if="selectedFilter.justGhesti">
+        <label class="selected-filters__name" for="_just_Gesti_">
+          اقساطی
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="_just_Gesti_"
+          name="_just_Gesti_"
+        />
+      </div>
+    </template>
+    <template v-if="selectedFilter.colors?.length ?? 0 > 0">
+      <h5 class="text-center">فیلتر رنگ</h5>
+      <div
+        class="selected-filters__item"
+        v-for="(item, index) in selectedFilter.colors"
+        :key="index"
+      >
+        <label class="selected-filters__name" :for="`fc_${index}`">{{
+          item.replace("_", " ")
+        }}</label>
+        <h-input
+          type="checkbox"
+          checked
+          :value="item"
+          :input-id="`fc_${index}`"
+          name="color_"
+        />
+      </div>
+    </template>
+    <template v-if="selectedFilter.modelType?.length ?? 0 > 0">
+      <h5 class="text-center">فیلتر شاسی</h5>
+      <div
+        class="selected-filters__item"
+        v-for="(item, index) in selectedFilter.modelType"
+        :key="index"
+      >
+        <label class="selected-filters__name" :for="`fmt_${item}`">{{
+          item.toString().replace("_", " ")
+        }}</label>
+        <h-input
+          type="checkbox"
+          checked
+          :input-id="`fmt_${item}`"
+          name="modelType_"
+          :value="item"
+        />
+      </div>
+    </template>
+    <search-advert-selected-filters-car-fuel :filters="selectedFilter" />
+    <search-advert-selected-filters-country :filters="selectedFilter" />
+    <search-advert-selected-filters-differential :filters="selectedFilter" />
 
-  <template v-if="selectedFilter.cylinderCount?.length ?? 0 > 0">
-    <h5 class="text-center">فیلتر سیلندر</h5>
-    <div
-      class="selected-filters__item"
-      v-for="(item, index) in selectedFilter.cylinderCount"
-      :key="index"
-    >
-      <label
-        class="selected-filters__name"
-        :for="`fcy_${index}`"
-        v-if="item == 'three'"
-        >3 سیلندر</label
+    <search-advert-selected-filters-engine-volume :filters="selectedFilter" />
+    <search-advert-selected-filters-gear-box :filters="selectedFilter" />
+    <search-advert-selected-filters-manufacture :filters="selectedFilter" />
+    <search-advert-selected-filters-special-cases :filters="selectedFilter" />
+
+    <div class="selected-filters__action">
+      <button
+        @click="removeFilters"
+        class="btn btn-sm btn-transparent selected-filters__delete-btn"
       >
-      <label
-        class="selected-filters__name"
-        :for="`fcy_${index}`"
-        v-if="item == 'four'"
-        >4 سیلندر</label
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 18 18"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0.75 3.75H6M17.25 3.75H12M2.25 3.75L3.32985 14.5485C3.48321 16.0821 4.77371 17.25 6.31497 17.25H11.685C13.2263 17.25 14.5168 16.0821 14.6701 14.5485L15.75 3.75M9 8.25V12.75M12.375 8.25L12 12.75M5.625 8.25L6 12.75M12 3.75H9H6M12 3.75H6M12 3.75V2.25C12 1.42157 11.3284 0.75 10.5 0.75H7.5C6.67157 0.75 6 1.42157 6 2.25V3.75"
+            stroke="#EF3838"
+            stroke-width="1.5"
+            stroke-linecap="round"
+          ></path>
+        </svg>
+        حذف همه
+      </button>
+      <button
+        class="btn btn-sm btn-primary selected-filters__submit-btn"
+        @click="setFilters"
       >
-      <label
-        class="selected-filters__name"
-        :for="`fcy_${index}`"
-        v-if="item == 'five'"
-        >5 سیلندر</label
-      >
-      <label
-        class="selected-filters__name"
-        :for="`fcy_${index}`"
-        v-if="item == 'six'"
-        >6 سیلندر</label
-      >
-      <label
-        class="selected-filters__name"
-        :for="`fcy_${index}`"
-        v-if="item == 'eight'"
-        >8 سیلندر</label
-      >
-      <h-input
-        type="checkbox"
-        checked
-        :input-id="`fcy_${index}`"
-        :value="item"
-        name="cylinderCount_"
-      />
+        اعمال
+      </button>
     </div>
-  </template>
-  <template
-    v-if="
-      selectedFilter.haveImage ||
-      selectedFilter.havePrice ||
-      selectedFilter.justGhesti
-    "
-  >
-    <hr
-      class="mt-0_5"
-      style="margin-bottom: 1rem"
-      v-if="advertFilter.getFilterCount() > 1"
-    />
-    <div class="selected-filters__item" v-if="selectedFilter.haveImage">
-      <label class="selected-filters__name" for="just_have_Image">
-        عکس دار
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="just_have_Image"
-        name="just_have_Image"
-      />
-    </div>
-    <div class="selected-filters__item" v-if="selectedFilter.havePrice">
-      <label class="selected-filters__name" for="just_havePrice_">
-        قیمت دار
-      </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="just_havePrice_"
-        name="just_havePrice_"
-      />
-    </div>
-    <div class="selected-filters__item" v-if="selectedFilter.justGhesti">
-      <label class="selected-filters__name" for="_just_Gesti_"> اقساطی </label>
-      <h-input
-        type="checkbox"
-        checked
-        input-id="_just_Gesti_"
-        name="_just_Gesti_"
-      />
-    </div>
-  </template>
-  <template v-if="selectedFilter.colors?.length ?? 0 > 0">
-    <h5 class="text-center">فیلتر رنگ</h5>
-    <div
-      class="selected-filters__item"
-      v-for="(item, index) in selectedFilter.colors"
-      :key="index"
-    >
-      <label class="selected-filters__name" :for="`fc_${index}`">{{
-        item.replace("_", " ")
-      }}</label>
-      <h-input
-        type="checkbox"
-        checked
-        :value="item"
-        :input-id="`fc_${index}`"
-        name="color_"
-      />
-    </div>
-  </template>
-  <template v-if="selectedFilter.modelType?.length ?? 0 > 0">
-    <h5 class="text-center">فیلتر شاسی</h5>
-    <div
-      class="selected-filters__item"
-      v-for="(item, index) in selectedFilter.modelType"
-      :key="index"
-    >
-      <label class="selected-filters__name" :for="`fmt_${item}`">{{
-        item.toString().replace("_", " ")
-      }}</label>
-      <h-input
-        type="checkbox"
-        checked
-        :input-id="`fmt_${item}`"
-        name="modelType_"
-        :value="item"
-      />
-    </div>
-  </template>
-  <div class="selected-filters__action">
-    <button
-      @click="removeFilters"
-      class="btn btn-sm btn-transparent selected-filters__delete-btn"
-    >
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 18 18"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M0.75 3.75H6M17.25 3.75H12M2.25 3.75L3.32985 14.5485C3.48321 16.0821 4.77371 17.25 6.31497 17.25H11.685C13.2263 17.25 14.5168 16.0821 14.6701 14.5485L15.75 3.75M9 8.25V12.75M12.375 8.25L12 12.75M5.625 8.25L6 12.75M12 3.75H9H6M12 3.75H6M12 3.75V2.25C12 1.42157 11.3284 0.75 10.5 0.75H7.5C6.67157 0.75 6 1.42157 6 2.25V3.75"
-          stroke="#EF3838"
-          stroke-width="1.5"
-          stroke-linecap="round"
-        ></path>
-      </svg>
-      حذف همه
-    </button>
-    <button
-      class="btn btn-sm btn-primary selected-filters__submit-btn"
-      @click="setFilters"
-    >
-      اعمال
-    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from "#imports";
+import { ref } from "#imports";
 import { filter } from "lodash";
 import { UseUtilStore } from "~~/stores/util.store";
 import { splitNumber } from "~~/utilities/numberUtils";
@@ -348,9 +366,6 @@ const setFilters = async () => {
   const endMileage =
     document.querySelector("input[name=end_Mileage]:checked") != null;
 
-
-  
-
   //#region Brand And Model
   if (haveBrand == false && selectedFilter.value.brand) {
     await advertFilter.removeBrandFilter();
@@ -361,7 +376,7 @@ const setFilters = async () => {
     return;
   }
   //#endregion
-  
+
   // Price
   if (startPrice == false && selectedFilter.value.startPrice) {
     await advertFilter.changePrice(
@@ -408,41 +423,54 @@ const setFilters = async () => {
     await advertFilter.justHavePrice(false);
   }
 
-  const cylinderChecked = document.querySelectorAll(
-    "input[name=cylinderCount_]:checked"
+  //cylinderCount
+  await GetDataAndChangeQueryParam("cylinderCount_", "cylinderCount");
+
+  //colors
+  await GetDataAndChangeQueryParam("color_", "colors");
+
+  //modelType_
+  await GetDataAndChangeQueryParam("modelType_", "modelType");
+
+  //Fuel
+  await GetDataAndChangeQueryParam("fuel_", "fuel");
+
+  //country
+  await GetDataAndChangeQueryParam("country_", "country");
+
+  //differential
+  await GetDataAndChangeQueryParam("differential_", "differential");
+
+  //engineVolume
+  await GetDataAndChangeQueryParam("engineVolume_", "engineVolume");
+
+  //gearBox
+  await GetDataAndChangeQueryParam("gearBox_", "gearBox");
+
+  //manufacture
+  await GetDataAndChangeQueryParam("manufacture_", "manufacture");
+
+  //specialCases
+  await GetDataAndChangeQueryParam("specialCases_", "specialCases");
+};
+
+const GetDataAndChangeQueryParam = async (
+  inputName: string,
+  queryParamKey: string
+) => {
+  const fuelChecked = document.querySelectorAll(
+    `input[name=${inputName}]:checked`
   );
-
-  let cylValues: any[] = [];
-  cylinderChecked.forEach((checkbox) => {
-    //@ts-ignorex
-    cylValues.push(checkbox.value);
-  });
-  if (cylValues.length != selectedFilter.value.cylinderCount?.length ?? 0) {
-    await advertFilter.changeCylinderCount(cylValues);
-  }
-
-  const colorChecked = document.querySelectorAll("input[name=color_]:checked");
-  let coValues: any[] = [];
-  colorChecked.forEach((checkbox) => {
+  let fuelValues: any[] = [];
+  fuelChecked.forEach((checkbox) => {
     //@ts-ignore
-    coValues.push(checkbox.value);
+    fuelValues.push(checkbox.value);
   });
-  if (coValues.length != selectedFilter.value.colors?.length ?? 0) {
-    await advertFilter.changeColor(coValues);
-  }
-
-  const modelTypeChecked = document.querySelectorAll(
-    "input[name=modelType_]:checked"
-  );
-  let modValues: any[] = [];
-  modelTypeChecked.forEach((checkbox) => {
-    //@ts-ignore
-    modValues.push(checkbox.value);
-  });
-  if (modValues?.length != selectedFilter.value.modelType?.length ?? 0) {
-    await advertFilter.changeModelTypes(modValues);
+  if (fuelValues?.length != selectedFilter.value.fuel?.length ?? 0) {
+    await advertFilter.changeQueryParams(fuelValues, queryParamKey);
   }
 };
+
 const route = useRoute();
 watch(
   () => route.query,
@@ -465,6 +493,34 @@ const fixFilters = () => {
   if (typeof selectedFilter.value.cylinderCount == "string") {
     selectedFilter.value.cylinderCount = [selectedFilter.value.cylinderCount];
   }
+
+  if (typeof selectedFilter.value.modelType == "string") {
+    selectedFilter.value.modelType = [selectedFilter.value.modelType];
+  }
+  if (typeof selectedFilter.value.fuel == "string") {
+    selectedFilter.value.fuel = [selectedFilter.value.fuel];
+  }
+  if (typeof selectedFilter.value.country == "string") {
+    selectedFilter.value.country = [selectedFilter.value.country];
+  }
+  if (typeof selectedFilter.value.differential == "string") {
+    selectedFilter.value.differential = [selectedFilter.value.differential];
+  }
+  if (typeof selectedFilter.value.engineVolume == "string") {
+    selectedFilter.value.engineVolume = [selectedFilter.value.engineVolume];
+  }
+  if (typeof selectedFilter.value.gearBox == "string") {
+    selectedFilter.value.gearBox = [selectedFilter.value.gearBox];
+  }
+  if (typeof selectedFilter.value.manufacture == "string") {
+    console.log(selectedFilter.value.manufacture);
+    selectedFilter.value.manufacture = [selectedFilter.value.manufacture];
+  }
+
+  if (typeof selectedFilter.value.specialCases == "string") {
+    selectedFilter.value.specialCases = [selectedFilter.value.specialCases];
+  }
+
   //@ts-ignore
   delete selectedFilter.value["take"];
   //@ts-ignore
@@ -505,8 +561,8 @@ const fixFilters = () => {
 };
 </script>
 
-<style scoped>
-h5 {
+<style>
+.selected_filter h5 {
   margin-bottom: 1rem;
 }
 </style>

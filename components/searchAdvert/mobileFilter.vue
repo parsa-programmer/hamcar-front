@@ -465,6 +465,13 @@
             </div>
           </template>
         </search-advert-collapsible-card>
+        <search-advert-filters-gear-box />
+        <search-advert-filters-country />
+        <search-advert-filters-car-fuel />
+        <search-advert-filters-engine-volume />
+        <search-advert-filters-differential />
+        <search-advert-filters-manufacture />
+        <search-advert-filters-special-cases />
       </main>
       <footer class="filter-page__footer">
         <button
@@ -639,7 +646,7 @@ function changeCylinderCount() {
     //@ts-ignore
     values.push(checkbox.value);
   });
-  advertFilter.changeCylinderCount(values);
+  advertFilter.changeQueryParams(values,'cylinderCount');
 }
 function changeBodyType() {
   var values: any[] = [];
@@ -648,7 +655,7 @@ function changeBodyType() {
     //@ts-ignore
     values.push(checkbox.value);
   });
-  advertFilter.changeModelTypes(values);
+  advertFilter.changeQueryParams(values,'modelTypes');
 }
 function colorChanged() {
   var values: any[] = [];
@@ -657,7 +664,7 @@ function colorChanged() {
     //@ts-ignore
     values.push(checkbox.value);
   });
-  advertFilter.changeColor(values);
+  advertFilter.changeQueryParams(values,'colors');
 }
 
 const isOpen: Ref<boolean> = ref(false);
