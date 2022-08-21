@@ -4,65 +4,9 @@
   </aside>
   <aside class="advertising__sidebar" v-else>
     <div class="filter-group">
-      <search-advert-collapsible-card title="برند" :is-open="brand != ''">
-        <div class="filter__search">
-          <form action="">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="جستجوی نام برند"
-              @input="(e) => searchBrands(e)"
-            />
-          </form>
-        </div>
-        <div class="filter__item" v-for="item in brands" :key="item.id">
-          <h-input
-            name="brand"
-            :value="item.slug"
-            :input-id="item.id"
-            type="radio"
-            :checked="item.slug == brand"
-            @change="(e) => advertFilter.changeBrand(e)"
-          >
-            <span class="filter__data p-0">{{ item.title }}</span>
-          </h-input>
-        </div>
-        <div class="filter__item" v-if="brands.length == 0">
-          <h-alert class="font-6" :type="AlertType.Warning"
-            >برندی برای نمایش وجود ندارد</h-alert
-          >
-        </div>
-      </search-advert-collapsible-card>
+      <search-advert-filters-brands :brands="brands" />
 
-      <search-advert-collapsible-card title="مدل">
-        <div class="filter__search">
-          <form action="">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="جستجوی نام مدل"
-              @input="(e) => searchModels(e)"
-            />
-          </form>
-        </div>
-        <div class="filter__item" v-for="(item, index) in models" :key="index">
-          <h-input
-            name="model"
-            :value="item?.slug"
-            :input-id="item?.id"
-            :checked="item?.slug == model"
-            type="radio"
-            @change="(e) => advertFilter.changeModel(e)"
-          >
-            <span class="filter__data p-0">{{ item?.title }}</span>
-          </h-input>
-        </div>
-        <div class="filter__item" v-if="models.length == 0">
-          <h-alert class="font-6" :type="AlertType.Warning"
-            >مدلی برای نمایش وجود ندارد</h-alert
-          >
-        </div>
-      </search-advert-collapsible-card>
+      <search-advert-filters-models :models="models" />
       <search-advert-collapsible-card
         title="سال تولید"
         body-class="filter__body--scroll-disable"
@@ -414,7 +358,9 @@ import { Color } from "~~/models/advertisements/enums/Color";
 import { ConvertColorNameToHashColor } from "~~/utilities/colorUtils";
 import { GearBox } from "~~/models/advertisements/enums/GearBox";
 
+const emit = defineEmits(["loading"]);
 const loading = ref(true);
+
 const advertFilter = useAdverFilter();
 
 const startYear = ref(advertFilter.getFilterQueryParams().startYear ?? "0");
@@ -425,12 +371,7 @@ const endYearsData = ref(
     new Date().getFullYear() - 621
   )
 );
-watch(startYear, (val) => {
-  endYearsData.value = GenerateYear(
-    Number(val),
-    new Date().getFullYear() - 621
-  );
-});
+
 var filters = advertFilter.getFilterQueryParams();
 const price: Ref<string[]> = ref([
   filters.startPrice ?? "0",
@@ -447,8 +388,8 @@ const router = useRouter();
 const utilStore = UseUtilStore();
 
 const props = defineProps<{
-  brand: string;
-  model: string;
+  brand: string[];
+  model: string[];
 }>();
 const changeCarType = (type: CarType | null) => {
   carType.value = type;
@@ -463,6 +404,16 @@ const changeCarType = (type: CarType | null) => {
 watch(startYear, (val) => {
   advertFilter.changeYear(val, endYear.value);
 });
+watch(
+  () => router.currentRoute.value.query.brands,
+  async (val) => {
+    var brands = val;
+    if (typeof brands == "string") {
+      brands = [brands];
+    }
+    models.value = await advertFilter.GetModels("", brands as string[]);
+  }
+);
 watch(endYear, (val) => {
   advertFilter.changeYear(startYear.value, val);
 });
@@ -479,26 +430,26 @@ watch(
     endYear.value = val.endYear?.toString() ?? "";
   }
 );
-const searchBrands = (e: any) => {
-  brands.value = utilStore.getCarBrands(e.target.value);
-};
-const searchModels = (e: any) => {
-  models.value = utilStore.getModels(e.target.value);
-};
+watch(loading, (val) => {
+  emit("loading", val);
+});
+watch(startYear, (val) => {
+  endYearsData.value = GenerateYear(
+    Number(val),
+    new Date().getFullYear() - 621
+  );
+});
 
 onMounted(async () => {
-  brands.value = await ProssesAsync(
-    () => advertFilter.getBrands(true, ""),
-    loading
-  );
-  arraymove();
-  models.value = await advertFilter.GetModels();
-  ModelArraymove();
+  brands.value = await advertFilter.getBrands(true, "");
+  //arraymove();
+  models.value = await ProssesAsync(() => advertFilter.GetModels(), loading);
+  //ModelArraymove();
 });
 
 function arraymove() {
   if (props.brand) {
-    var fromIndex = brands.value.findIndex((f) => f.slug == props.brand);
+    var fromIndex = brands.value.findIndex((f) => f.slug == props.brand[0]);
     if (fromIndex) {
       var element = brands.value[fromIndex];
       brands.value.splice(fromIndex, 1);
@@ -508,7 +459,7 @@ function arraymove() {
 }
 function ModelArraymove() {
   if (props.model) {
-    var fromIndex = models.value.findIndex((f) => f.slug == props.model);
+    var fromIndex = models.value.findIndex((f) => f.slug == props.model[0]);
     if (fromIndex) {
       var element = models.value[fromIndex];
       models.value.splice(fromIndex, 1);

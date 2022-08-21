@@ -128,7 +128,11 @@
             <client-only>
               <span
                 class="ads-mobile__flag"
-                v-if="isSavedAdvert == false && authStore.isLogin"
+                v-if="
+                  isSavedAdvert == false &&
+                  authStore.isLogin &&
+                  saveAdvertLoading == false
+                "
                 @click="saveAdvert"
               >
                 <icons-save
@@ -228,7 +232,11 @@
               <client-only>
                 <span
                   class="ads-slider__flag"
-                  v-if="isSavedAdvert == false && authStore.isLogin"
+                  v-if="
+                    isSavedAdvert == false &&
+                    authStore.isLogin &&
+                    saveAdvertLoading == false
+                  "
                   @click="saveAdvert"
                 >
                   <icons-save />
@@ -262,11 +270,21 @@
             </template>
           </h-slider>
         </div>
-
+        <div class="ads__form mb-2" v-if="noteLoading">
+          <h-skeletor width="100%" style="height: 160px" />
+          <div class="row" style="flex-direction: row-reverse">
+            <h-skeletor
+              class="btn-sm mt-0_5"
+              width="140px"
+              style="height: 60px !important"
+            />
+          </div>
+        </div>
         <Form
           class="ads__form"
           :validation-schema="validationSchema"
           v-slot="{ meta }"
+          v-else
         >
           <h-textarea
             name="note"
@@ -351,7 +369,7 @@
     <report-bug
       :link-id="advert.id"
       :report-for="BugReportFor.advertisement"
-      :model-value="isOpenModal"
+      v-model="isOpenModal"
     />
     <share-modal
       v-model="isOpenShareModal"
@@ -419,6 +437,7 @@ import {
   SaveAdvertisement,
   GetNoteByAdvertId,
   SetNote,
+  GetSavedAdvertisements,
 } from "~~/services/account.service";
 import { authStore as useAuthStore } from "~~/stores/auth.store";
 import { AlertType } from "~~/models/utilities/AlertType";
@@ -429,7 +448,12 @@ import { Form } from "vee-validate";
 import * as Yup from "yup";
 import { GetByModel } from "~~/services/carReview.service";
 import { CarReviewDto } from "~~/models/carReviews/CarReviewModels";
+import {
+  UserAdvertisementSavedDto,
+  UserNoteFilterData,
+} from "~~/models/account/account.Models";
 
+const noteLoading = ref(true);
 const advert: Ref<AdvertisementDto | undefined> = ref(undefined);
 const isOpenModal = ref(false);
 const isOpenPhoneModal = ref(false);
@@ -438,6 +462,7 @@ const isOpenGallery = ref(false);
 const advertNote = ref("");
 const loadingButton = ref(false);
 const carReview: Ref<CarReviewDto | null> = ref(null);
+const saveAdvertLoading = ref(true);
 
 const toast = useToast();
 const isSavedAdvert = ref(false);
@@ -504,19 +529,12 @@ const setAdvertNote = async () => {
     toast.showToast("یادداشت با موفقیت ذخیره شد", ToastType.success);
   }
 };
-watch(
-  () => authStore.advertSaved,
-  (val) => {
-    console.log("s");
-    var saved = val.find((f) => f.advertisementId == advert.value!.id);
-    if (saved) {
-      isSavedAdvert.value = true;
-    }
-  }
-);
 onMounted(async () => {
   if (authStore.isLogin) {
-    var res = await GetNoteByAdvertId(advert.value!.id);
+    var res = await ProssesAsync<IApiResponse<UserNoteFilterData>>(
+      () => GetNoteByAdvertId(advert.value!.id),
+      noteLoading
+    );
     if (res.isSuccess) {
       advertNote.value = res.data?.text ?? "";
     }
@@ -525,6 +543,20 @@ onMounted(async () => {
   var res2 = await GetByModel(advert.value!.model.id, advert.value!.trim?.id);
   if (res2.data) {
     carReview.value = res2.data;
+  }
+
+  var result = await ProssesAsync<IApiResponse<UserAdvertisementSavedDto[]>>(
+    () => GetSavedAdvertisements(),
+    saveAdvertLoading
+  );
+  if (result.isSuccess) {
+    authStore.advertSaved = result.data!;
+    var saved = authStore.advertSaved.find(
+      (f) => f.advertisementId == advert.value!.id
+    );
+    if (saved) {
+      isSavedAdvert.value = true;
+    }
   }
 });
 </script>

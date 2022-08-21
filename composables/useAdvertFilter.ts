@@ -31,10 +31,13 @@ export const useAdverFilter = () => {
   }
 
   var params = (slug[0] ?? "").split("-");
-  const brand = params[0];
-  const model = params[1];
+  const brand: string | null = params[0] ?? null;
+  const model: string | null = params[1] ?? null;
   const trim = params[2];
 
+  const isCarFilter = () => {
+    return url === "/car";
+  };
   const justGhesti = async (val: boolean) => {
     await router.push({
       path: route.path,
@@ -105,9 +108,13 @@ export const useAdverFilter = () => {
       },
     });
   };
-  const changeQueryParams = async (data: any, key: string) => {
+  const changeQueryParams = async (
+    data: any,
+    key: string,
+    isRemoveBrandAndModel: boolean = false
+  ) => {
     await router.push({
-      path: route.path,
+      path: isRemoveBrandAndModel ? url : route.path,
       query: {
         ...route.query,
         [key]: data,
@@ -138,14 +145,14 @@ export const useAdverFilter = () => {
     });
   };
 
-  const changeBrand = async (e: any) => {
-    await router.push(`${url}/${e.target.value}`);
+  const changeBrand = async (brand: string) => {
+    await router.push(`${url}/${brand}`);
   };
   const removeAllFilters = async () => {
     await router.push(url);
   };
-  const changeModel = async (e: any) => {
-    await router.push(`/car/${brand}-${e.target.value}`);
+  const changeModel = async (model: string) => {
+    await router.push(`${url}/${brand}-${model}`);
   };
 
   ////////////
@@ -160,12 +167,29 @@ export const useAdverFilter = () => {
       return utilStore.getMotorBrands("");
     }
   };
-  const GetModels = async (search: string = ""): Promise<Model[]> => {
+
+  const GetModels = async (
+    search: string = "",
+    brands: string[] | null = null
+  ): Promise<Model[]> => {
     if (brand) {
       var b = utilStore.getBrandBySlug(brand);
-      if (brand) {
+      if (b) {
         await utilStore.setModels(b.id);
-        return utilStore.getModels(search);
+        return utilStore.getModels(search, [b.id]);
+      }
+    } else {
+      var currentBrands = brands ?? getFilterQueryParams().brand;
+      if (currentBrands?.length ?? 0 > 0) {
+        var bradIds: string[] = [];
+        currentBrands?.map(async (f) => {
+          var bran = utilStore.getBrandBySlug(f);
+          if (bran) {
+            bradIds.push(bran.id);
+            await utilStore.setModels(bran.id);
+          }
+        });
+        return utilStore.getModels(search, bradIds);
       }
     }
     return [];
@@ -174,8 +198,14 @@ export const useAdverFilter = () => {
   const getAdverts = (pageId: number = 1, take: number = 12) => {
     return GetByFilter({
       advertisementType: AdvertisementType.car,
-      brand,
-      model,
+      brand:
+        brand == null || brand == ""
+          ? (route.query.brands as string[] | null) ?? null
+          : [brand],
+      model:
+        model == null || model == ""
+          ? (route.query.models as string[] | null) ?? null
+          : [model],
       trim,
       year: route.query.year?.toString() ?? null,
       fuel: (route.query.fuel as CarFuel[] | null) ?? null,
@@ -211,10 +241,16 @@ export const useAdverFilter = () => {
     });
   };
   const getFilterQueryParams = (): AdvertisementFilterParams => {
-    return {
+    var res = {
       advertisementType: AdvertisementType.car,
-      brand,
-      model,
+      brand:
+        brand == null || brand == ""
+          ? (route.query.brands as string[] | null) ?? null
+          : [brand],
+      model:
+        model == null || model == ""
+          ? (route.query.models as string[] | null) ?? null
+          : [model],
       trim,
       year: route.query.year?.toString() ?? "",
       fuel: (route.query.fuel as CarFuel[] | null) ?? null,
@@ -248,6 +284,17 @@ export const useAdverFilter = () => {
       endYear: (route.query.endYear as string) ?? "",
       orderBy: (route.query.orderBy as AdvertisementFilterOrderBy) ?? null,
     };
+    if (res.brand) {
+      if (typeof res.brand == "string") {
+        res.brand = [res.brand];
+      }
+    }
+    if (res.model && res.model != null) {
+      if (typeof res.model == "string") {
+        res.model = [res.model];
+      }
+    }
+    return res;
   };
 
   const getFilterCount = (): number => {
@@ -314,5 +361,6 @@ export const useAdverFilter = () => {
     brand,
     model,
     trim,
+    isCarFilter,
   };
 };

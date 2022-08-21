@@ -2,7 +2,6 @@
   <div>
     <Head>
       <Title>قیمت روز خودرو</Title>
-      <Link href="/css/price-list.css" rel="stylesheet" />
     </Head>
     <section class="breadcrumb">
       <nuxt-link to="/" class="breadcrumb__item">
@@ -377,6 +376,6 @@ const getAllDate = (data: CarPriceChartData[]): Date[] => {
 };
 </script>
 
-<style scoped>
+<style src="~/assets/css/price-list.css" scoped>
 /* price list head */
 </style>

@@ -1,5 +1,8 @@
 <template>
-  <nuxt-link :to="`/car/detail-${advert.shortLink}-model`" class="advert">
+  <nuxt-link
+    :to="link"
+    class="advert"
+  >
     <div class="advert__badge" v-if="false">
       <svg
         class="advert__safe-badge"
@@ -44,7 +47,11 @@
       </svg>
     </div>
     <div class="advert__banner">
-      <h-image :src="GetBitMapAdvertImage(advert.id,advert.imageName)" :alt="advert.imageName" class="advert__img" />
+      <h-image
+        :src="GetBitMapAdvertImage(advert.id, advert.imageName)"
+        :alt="advert.imageName"
+        class="advert__img"
+      />
       <span class="advert__flag advert__flag--place" v-if="advert.isExhibition">
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
           <path
@@ -75,19 +82,21 @@
             stroke-width="1.5"
           ></path>
         </svg>
-        {{advert.imageCount}}
+        {{ advert.imageCount }}
       </span>
     </div>
     <div class="advert__body">
       <div class="advert__header">
-        <h3 class="advert__name">{{advert.title}}</h3>
-        <span class="advert__date">{{TimeAgo(advert.creationDate)}}</span>
-        <span class="advert__date-wide">{{TimeAgo(advert.creationDate)}}</span>
+        <h3 class="advert__name">{{ advert.title }}</h3>
+        <span class="advert__date">{{ TimeAgo(advert.creationDate) }}</span>
+        <span class="advert__date-wide">{{
+          TimeAgo(advert.creationDate)
+        }}</span>
       </div>
       <div class="advert__info">
-        <span>مدل {{advert.year}}</span>
-        <span>{{advert.mileage}} کیلومتر</span>
-        <span>{{advert.gearBox.toString().replace("_"," ")}}</span>
+        <span>مدل {{ advert.year }}</span>
+        <span>{{ advert.mileage }} کیلومتر</span>
+        <span>{{ advert.gearBox.toString().replace("_", " ") }}</span>
       </div>
       <span class="advert__location">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -123,23 +132,29 @@
           </svg>
           نمایشگاه
         </span>
-        <div class="advert__wrapper" v-if="advert.price.advertisementPaymentType==AdvertisementPaymentType.قسطی">
+        <div
+          class="advert__wrapper"
+          v-if="
+            advert.price.advertisementPaymentType ==
+            AdvertisementPaymentType.قسطی
+          "
+        >
           <p class="advert__price">
-            {{splitNumber(advert.price.ghest.pishPardakht)}}
+            {{ splitNumber(advert.price.ghest.pishPardakht) }}
             <span>پیش</span>
           </p>
           <p class="advert__price">
-                        {{splitNumber(advert.price.ghest.amountPricePerGhest)}}
+            {{ splitNumber(advert.price.ghest.amountPricePerGhest) }}
 
             <span>ماهیانه</span>
           </p>
         </div>
-         <div class="advert__wrapper" v-else>
-          <p class="advert__price" v-if="advert.price.amount>0">
-            {{splitNumber(advert.price.amount)}}
+        <div class="advert__wrapper" v-else>
+          <p class="advert__price" v-if="advert.price.amount > 0">
+            {{ splitNumber(advert.price.amount) }}
             <span>تومان</span>
           </p>
-            <p class="advert__price" v-else>
+          <p class="advert__price" v-else>
             <span>توافقی</span>
           </p>
         </div>
@@ -156,13 +171,27 @@ import { TimeAgo } from "~~/utilities/dateUtil";
 import { GetAdvertImage, GetBitMapAdvertImage } from "~~/utilities/imageUtil";
 import { splitNumber } from "~~/utilities/numberUtils";
 
+const link = ref("");
 const props = defineProps<{
   advert: AdvertisementFilterData;
+  isCar: boolean;
 }>();
+
+if (props.isCar) {
+  link.value = `/car/detail-${props.advert.shortLink}-${props.advert.brand_Model}`;
+  if (props.advert.trim) {
+    link.value += `-${props.advert.trim}`;
+  }
+}else{
+   link.value = `/motorcycle/detail-${props.advert.shortLink}-${props.advert.brand_Model}`;
+  if (props.advert.trim) {
+    link.value += `-${props.advert.trim}`;
+  }
+}
 </script>
 
 <style scoped>
-a:-webkit-any-link{
-  color:inherit;
+a:-webkit-any-link {
+  color: inherit;
 }
 </style>

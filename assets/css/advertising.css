@@ -594,6 +594,7 @@
 
 .advert__flag--picture-number {
     display: none;
+    color: #fff !important;
 }
 
 .advert__body {

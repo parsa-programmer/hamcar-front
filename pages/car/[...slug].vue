@@ -1,26 +1,24 @@
 <template>
   <div class="">
     <Head>
-      <Title>همه آگهی های فروش خودرو</Title>
-      <Link href="/css/advertising.css" rel="stylesheet" />
+      <Title>همه آگهی های فروش خودرو {{ data?.data?.title }}</Title>
     </Head>
-    <section class="breadcrumb">
-      <nuxt-link to="/" class="breadcrumb__item">
-        <icons-home />
-        همکار
-      </nuxt-link>
-
-      <icons-chevron-left />
-      <a href="#" class="breadcrumb__item breadcrumb__item--active"
-        >آگهی های خودرو</a
-      >
+    <section class="breadcrumb" v-if="pending">
+      <h-skeletor width="400px" style="height: 10px" />
     </section>
+    <search-advert-bread-crumb
+      v-else
+      :breadcrumb="data?.data?.breadcrumb ?? []"
+    />
     <section class="advertising">
       <div class="advertising__head">
-        <h2 class="advertising__title">
-          همه آگهی های فروش خودرو
-          <span>( {{ splitNumber(data?.data?.entityCount ?? 0) }} آگهی )</span>
-        </h2>
+        <h1 class="advertising__title">
+          همه آگهی های فروش خودرو {{ data?.data?.title }}
+          <span
+            >( {{ splitNumber(data?.data?.filterResult.entityCount ?? 0) }} آگهی
+            )</span
+          >
+        </h1>
         <search-advert class="advertising__serach-box" />
 
         <button
@@ -39,8 +37,13 @@
           <icons-chevron-down />
         </button>
       </div>
-      <div class="advertising__middle">
+
+      <div class="advertising__middle" v-if="isMobile == false">
+        <div class="advertising__middle" v-if="sideBarLoading">
+          <h-skeletor width="300px" style="height: 55px" />
+        </div>
         <div
+          v-else
           class="selected-filters"
           v-click-outside="() => (isOpenFilterDropDown = false)"
         >
@@ -141,9 +144,10 @@
       </div>
       <div class="advertising__wrapper">
         <search-advert-desktop-filter
-          :model="model ?? ''"
-          :brand="brand ?? ''"
+          :model="model ?? []"
+          :brand="brand ?? []"
           v-if="isMobile == false"
+          @loading="(val) => (sideBarLoading = val)"
         />
         <div class="advertising__container">
           <search-advert-car-price />
@@ -159,7 +163,12 @@
             ]"
             v-else-if="cars.length >= 1"
           >
-            <advert-card v-for="item in cars" :key="item.id" :advert="item" />
+            <advert-card
+              v-for="item in cars"
+              :key="item.id"
+              :advert="item"
+              :is-car="advertFilter.isCarFilter()"
+            />
           </div>
           <skeleton-loading-search-advert
             :show-type="showType"
@@ -171,7 +180,7 @@
         </div>
       </div>
       <search-advert-mobile-filter
-        :advert-count="data?.data?.entityCount"
+        :advert-count="data?.data?.filterResult.entityCount"
         v-if="isMobile"
       />
     </section>
@@ -218,13 +227,18 @@ import {
   containsObject,
   RemoveDubplicateObjects,
 } from "~~/utilities/objectUtils";
+import { UseUtilStore } from "~~/stores/util.store";
 
+const advertFilter = useAdverFilter();
+const route = useRoute();
+const utilStore = UseUtilStore();
+
+const sideBarLoading = ref(true);
 const showType = ref(0);
+const nextPageLoading = ref(false);
 const isOpenModal = ref(false);
 const isOpenFilterDropDown = ref(false);
-const route = useRoute();
-const advertFilter = useAdverFilter();
-const nextPageLoading = ref(false);
+
 const pageId = ref(advertFilter.getFilterQueryParams().pageId);
 const selectedFilters = advertFilter.getFilterQueryParams();
 
@@ -246,12 +260,16 @@ const { data, refresh, pending } = await useAsyncData(
     lazy: true,
   }
 );
-cars.value = data?.value?.data?.data ?? [];
+cars.value = data?.value?.data?.filterResult.data ?? [];
 
 watch(data, async (val) => {
-  if (val.data?.data?.length ?? 0 > 0) {
-    cars.value.push(...(val.data?.data ?? []));
-    cars.value = RemoveDubplicateObjects(cars.value);
+  if (val.data?.filterResult.data?.length ?? 0 > 0) {
+    if (pageId.value == 1) {
+      cars.value = val.data?.filterResult.data ?? [];
+    } else {
+      cars.value.push(...(val.data?.filterResult.data ?? []));
+      cars.value = RemoveDubplicateObjects(cars.value);
+    }
   } else {
     cars.value = [];
   }
@@ -274,6 +292,7 @@ const onResize = () => {
 };
 onBeforeUnmount(() => {
   window.removeEventListener("resize", onResize);
+  cars.value = [];
 });
 onMounted(async () => {
   onResize();
@@ -287,7 +306,7 @@ onMounted(async () => {
       document.documentElement.offsetHeight;
 
     if (bottomOfWindow) {
-      if (pageId.value < (data.value.data?.pageCount ?? 1)) {
+      if (pageId.value < (data.value.data?.filterResult?.pageCount ?? 1)) {
         pageId.value += 1;
         nextPageLoading.value = true;
         refresh().finally(() => {
@@ -299,7 +318,7 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
+<style  scoped>
 .order-btn {
   cursor: pointer;
 }

@@ -51,12 +51,6 @@ export const authStore = defineStore("auth", {
           return;
         }
         this.user = res.data!;
-        if (this.user) {
-          var result = await GetSavedAdvertisements();
-          if (result.isSuccess) {
-            this.advertSaved = result.data!;
-          }
-        }
         this.loading = false;
       }
     },

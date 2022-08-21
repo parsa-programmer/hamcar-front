@@ -6,6 +6,7 @@ import {
   AdvertisementDto,
   AdvertisementFilterData,
   AdvertisementFilterParams,
+  AdvertisementFilterResult,
   GetAdvertisementCountParams,
   GetAdvertisementType,
 } from "~~/models/advertisements/Advertisement.Models";
@@ -14,17 +15,17 @@ import { FetchApi } from "~~/utilities/customFetchApi";
 
 export const GetByFilter = (
   filterParams: AdvertisementFilterParams
-): Promise<IApiResponse<FilterResult<AdvertisementFilterData>>> => {
-  var params={...filterParams};
+): Promise<IApiResponse<AdvertisementFilterResult>> => {
+  var params = { ...filterParams };
   for (const key in params) {
     //@ts-ignore
-    if (params[key] == '' || params[key]==null) {
-    //@ts-ignore
+    if (params[key] == "" || params[key] == null) {
+      //@ts-ignore
       delete params[key];
     }
   }
   return FetchApi("/advertisement", {
-    params:params,
+    params: params,
   });
 };
 
@@ -45,8 +46,8 @@ export const GetAdvertCount = (
     params: {
       type,
       ExhibitionId: params.exhibitionId,
-      Model:params.model,
-      ModelType:params.modelType
+      Model: params.model,
+      ModelType: params.modelType,
     },
   });
 };

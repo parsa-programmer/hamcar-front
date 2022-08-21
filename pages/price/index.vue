@@ -38,7 +38,7 @@
           <icons-search class="input-icon" hash-color="var(--color-gray-600)" />
         </div>
       </div>
-      <div class="flex wrap justify-content-space-between filter mt-1_5">
+      <div class="flex wrap justify-content-space-between price__filter mt-1_5">
         <h-button
           color="default"
           @click="ReSearch(CarPriceSearchOn.همه)"
@@ -141,10 +141,10 @@ const searchAgain = async (e: any) => {
   align-items: center;
 }
 
-.filter .btn-default {
+.price__filter .btn-default {
   background: var(--color-white);
 }
-.price__content .filter button {
+.price__content .price__filter button {
   font-family: var(--t3-font-family) !important;
   font-size: var(--t3-font-size) !important;
   width: 296px;
@@ -153,7 +153,7 @@ const searchAgain = async (e: any) => {
   letter-spacing: -0.02em;
   line-height: 180%;
 }
-.filter button.active {
+.price__filter button.active {
   color: var(--color-white) !important;
   background-color: var(--color-blue) !important;
 }
@@ -201,11 +201,11 @@ const searchAgain = async (e: any) => {
     max-width: 55px !important;
   }
 
-  .filter button.active {
+  .price__filter button.active {
     color: var(--color-black) !important;
     background-color: var(--color-gray-300) !important;
   }
-  .price__content .filter button {
+  .price__content .price__filter button {
     margin-top: 1rem;
     width: 184px !important;
     height: 48px !important;

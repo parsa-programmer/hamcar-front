@@ -1,4 +1,4 @@
-import { FilterParams } from "../IApiResponse";
+import { FilterParams, FilterResult } from "../IApiResponse";
 import { BodyType } from "./enums/BodyType";
 import { GearBox } from "./enums/GearBox";
 import { AdvertisementType } from "./enums/AdvertisementType";
@@ -37,13 +37,24 @@ export interface AdvertisementFilterData {
   city: string;
   gearBox: string;
   imageCount: number;
+  brand_Model: string;
+  trim: string;
   isExhibition: boolean;
   status: string;
   price: AdvertisementPrice;
 }
+export interface AdvertisementFilterResult {
+  filterResult: FilterResult<AdvertisementFilterData>;
+  breadcrumb: BreadCrumb[];
+  title: string;
+}
+export interface BreadCrumb {
+  title: string;
+  url: string;
+}
 export interface AdvertisementFilterParams extends FilterParams {
-  brand: string | null;
-  model: string | null;
+  brand: string[] | null;
+  model: string[] | null;
   year: string | null;
   trim: string | null;
   search: string | null;

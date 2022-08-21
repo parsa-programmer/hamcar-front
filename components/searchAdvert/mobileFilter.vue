@@ -66,74 +66,8 @@
       </header>
       <main class="filter-page__main">
         <div class="filter-group">
-          <search-advert-collapsible-card
-            title="برند"
-            :is-open="advertFilter.brand != ''"
-          >
-            <div class="filter__search">
-              <form action="">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="جستجوی نام برند"
-                  @input="(e) => searchBrands(e)"
-                />
-              </form>
-            </div>
-            <div class="filter__item" v-for="item in brands" :key="item.id">
-              <h-input
-                name="brand"
-                :value="item.slug"
-                :input-id="`b${item.id}`"
-                type="radio"
-                :checked="item.slug == advertFilter.brand"
-                @change="(e) => advertFilter.changeBrand(e)"
-              >
-                <span class="filter__data p-0">{{ item.title }}</span>
-              </h-input>
-            </div>
-            <div class="filter__item" v-if="brands.length == 0">
-              <h-alert class="font-6" :type="AlertType.Warning"
-                >برندی برای نمایش وجود ندارد</h-alert
-              >
-            </div>
-          </search-advert-collapsible-card>
-          <search-advert-collapsible-card
-            title="مدل"
-            :is-open="advertFilter.model != ''"
-          >
-            <div class="filter__search">
-              <form action="">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="جستجوی نام مدل"
-                  @input="(e) => searchModels(e)"
-                />
-              </form>
-            </div>
-            <div
-              class="filter__item"
-              v-for="(item, index) in models"
-              :key="index"
-            >
-              <h-input
-                name="model"
-                :value="item?.slug"
-                :input-id="`m${item?.id}`"
-                :checked="item?.slug == advertFilter.model"
-                type="radio"
-                @change="(e) => advertFilter.changeModel(e)"
-              >
-                <span class="filter__data p-0">{{ item?.title }}</span>
-              </h-input>
-            </div>
-            <div class="filter__item" v-if="models.length == 0">
-              <h-alert class="font-6" :type="AlertType.Warning"
-                >مدلی برای نمایش وجود ندارد</h-alert
-              >
-            </div>
-          </search-advert-collapsible-card>
+          <search-advert-filters-brands :brands="brands" />
+          <search-advert-filters-models :models="models" />
           <search-advert-collapsible-card
             title="سال تولید"
             body-class="filter__body--scroll-disable"
@@ -585,43 +519,20 @@ watch(
     endYear.value = val.endYear?.toString() ?? "";
   }
 );
-const searchBrands = (e: any) => {
-  brands.value = utilStore.getCarBrands(e.target.value);
-};
-const searchModels = (e: any) => {
-  models.value = utilStore.getModels(e.target.value);
-};
-
+watch(
+  () => router.currentRoute.value.query.brands,
+  async (val) => {
+    var brands = val;
+    if (typeof brands == "string") {
+      brands = [brands];
+    }
+    models.value = await advertFilter.GetModels("", brands as string[]);
+  }
+);
 onMounted(async () => {
-  brands.value = await ProssesAsync(
-    () => advertFilter.getBrands(true, ""),
-    loading
-  );
-  arraymove();
-  models.value = await advertFilter.GetModels();
-  ModelArraymove();
+  brands.value = await advertFilter.getBrands(true, "");
+  models.value = await ProssesAsync(() => advertFilter.GetModels(), loading);
 });
-
-function arraymove() {
-  if (advertFilter.brand) {
-    var fromIndex = brands.value.findIndex((f) => f.slug == advertFilter.brand);
-    if (fromIndex) {
-      var element = brands.value[fromIndex];
-      brands.value.splice(fromIndex, 1);
-      brands.value.splice(0, 0, element);
-    }
-  }
-}
-function ModelArraymove() {
-  if (advertFilter.model) {
-    var fromIndex = models.value.findIndex((f) => f.slug == advertFilter.model);
-    if (fromIndex) {
-      var element = models.value[fromIndex];
-      models.value.splice(fromIndex, 1);
-      models.value.splice(0, 0, element);
-    }
-  }
-}
 
 function changeJustGhesti() {
   const checked = document.querySelector("#ghesti:checked") !== null;
@@ -646,7 +557,7 @@ function changeCylinderCount() {
     //@ts-ignore
     values.push(checkbox.value);
   });
-  advertFilter.changeQueryParams(values,'cylinderCount');
+  advertFilter.changeQueryParams(values, "cylinderCount");
 }
 function changeBodyType() {
   var values: any[] = [];
@@ -655,7 +566,7 @@ function changeBodyType() {
     //@ts-ignore
     values.push(checkbox.value);
   });
-  advertFilter.changeQueryParams(values,'modelTypes');
+  advertFilter.changeQueryParams(values, "modelTypes");
 }
 function colorChanged() {
   var values: any[] = [];
@@ -664,7 +575,7 @@ function colorChanged() {
     //@ts-ignore
     values.push(checkbox.value);
   });
-  advertFilter.changeQueryParams(values,'colors');
+  advertFilter.changeQueryParams(values, "colors");
 }
 
 const isOpen: Ref<boolean> = ref(false);

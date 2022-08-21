@@ -2,31 +2,70 @@
   <div class="selected_filter">
     <template v-if="selectedFilter.brand || selectedFilter.model">
       <h5 class="text-center">فیلتر برند و مدل</h5>
-      <div class="selected-filters__item" v-if="selectedFilter.brand">
-        <label class="selected-filters__name" for="brand_filter">
-          {{ utilStore.getBrandBySlug(selectedFilter.brand ?? "").title }}
-        </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="brand_filter"
-          name="brand_filter"
-          :value="selectedFilter.brand"
-        />
-      </div>
-
-      <div class="selected-filters__item" v-if="selectedFilter.model">
-        <label class="selected-filters__name" for="model_filter">
-          {{ utilStore.getModelBySlug(selectedFilter.model ?? "")?.title }}
-        </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="model_filter"
-          name="model_filter"
-          :value="selectedFilter.model"
-        />
-      </div>
+      <template v-if="advertFilter.brand">
+        <div class="selected-filters__item">
+          <label class="selected-filters__name" :for="`brand_filter`">
+            {{ utilStore.getBrandBySlug(advertFilter.brand)?.title }}
+          </label>
+          <h-input
+            type="checkbox"
+            checked
+            :input-id="`brand_filter`"
+            name="brand_filter"
+            :value="selectedFilter.brand"
+          />
+        </div>
+      </template>
+      <template v-else-if="selectedFilter.brand">
+        <div
+          class="selected-filters__item"
+          v-for="(item, index) in selectedFilter.brand"
+          :key="index"
+        >
+          <label class="selected-filters__name" :for="`brand_filters${index}`">
+            {{ utilStore.getBrandBySlug(item)?.title }}
+          </label>
+          <h-input
+            type="checkbox"
+            checked
+            :input-id="`brand_filters${index}`"
+            name="brand_filters"
+            :value="item"
+          />
+        </div>
+      </template>
+      <template v-if="advertFilter.model">
+        <div class="selected-filters__item">
+          <label class="selected-filters__name" :for="`model_filter`">
+            {{ utilStore.getModelBySlug(advertFilter.model)?.title }}
+          </label>
+          <h-input
+            type="checkbox"
+            checked
+            :input-id="`model_filter`"
+            name="model_filter"
+            :value="selectedFilter.model"
+          />
+        </div>
+      </template>
+      <template v-else-if="selectedFilter.model">
+        <div
+          class="selected-filters__item"
+          v-for="(item, index) in selectedFilter.model"
+          :key="index"
+        >
+          <label class="selected-filters__name" :for="`model_filters${index}`">
+            {{ utilStore.getModelBySlug(item)?.title }}
+          </label>
+          <h-input
+            type="checkbox"
+            checked
+            :input-id="`model_filters${index}`"
+            name="model_filters"
+            :value="selectedFilter.model"
+          />
+        </div>
+      </template>
     </template>
     <template v-if="selectedFilter.startYear || selectedFilter.endYear">
       <h5 class="text-center">فیلتر سال تولید</h5>
@@ -342,8 +381,7 @@ const setFilters = async () => {
     document.querySelector("input[name=just_have_Image]:checked") != null;
 
   const haveBrand =
-    document.querySelector("input[name=brand_filter]:checked") != null &&
-    selectedFilter.value.brand;
+    document.querySelector("input[name=brand_filter]:checked") != null;
 
   const haveModel =
     document.querySelector("input[name=model_filter]:checked") != null;
@@ -367,11 +405,11 @@ const setFilters = async () => {
     document.querySelector("input[name=end_Mileage]:checked") != null;
 
   //#region Brand And Model
-  if (haveBrand == false && selectedFilter.value.brand) {
+  if (haveBrand == false && advertFilter.brand) {
     await advertFilter.removeBrandFilter();
     return;
   }
-  if (haveModel == false && selectedFilter.value.model) {
+  if (haveModel == false && advertFilter.model) {
     await advertFilter.removeModel();
     return;
   }
@@ -424,39 +462,90 @@ const setFilters = async () => {
   }
 
   //cylinderCount
-  await GetDataAndChangeQueryParam("cylinderCount_", "cylinderCount");
+  await GetDataAndChangeQueryParam(
+    "cylinderCount_",
+    "cylinderCount",
+    selectedFilter.value.cylinderCount
+  );
 
   //colors
-  await GetDataAndChangeQueryParam("color_", "colors");
+  await GetDataAndChangeQueryParam(
+    "color_",
+    "colors",
+    selectedFilter.value.colors
+  );
 
   //modelType_
-  await GetDataAndChangeQueryParam("modelType_", "modelType");
+  await GetDataAndChangeQueryParam(
+    "modelType_",
+    "modelType",
+    selectedFilter.value.modelType
+  );
 
   //Fuel
-  await GetDataAndChangeQueryParam("fuel_", "fuel");
+  await GetDataAndChangeQueryParam("fuel_", "fuel", selectedFilter.value.fuel);
 
   //country
-  await GetDataAndChangeQueryParam("country_", "country");
+  await GetDataAndChangeQueryParam(
+    "country_",
+    "country",
+    selectedFilter.value.country
+  );
 
   //differential
-  await GetDataAndChangeQueryParam("differential_", "differential");
+  await GetDataAndChangeQueryParam(
+    "differential_",
+    "differential",
+    selectedFilter.value.differential
+  );
 
   //engineVolume
-  await GetDataAndChangeQueryParam("engineVolume_", "engineVolume");
+  await GetDataAndChangeQueryParam(
+    "engineVolume_",
+    "engineVolume",
+    selectedFilter.value.engineVolume
+  );
 
   //gearBox
-  await GetDataAndChangeQueryParam("gearBox_", "gearBox");
+  await GetDataAndChangeQueryParam(
+    "gearBox_",
+    "gearBox",
+    selectedFilter.value.gearBox
+  );
 
   //manufacture
-  await GetDataAndChangeQueryParam("manufacture_", "manufacture");
+  await GetDataAndChangeQueryParam(
+    "manufacture_",
+    "manufacture",
+    selectedFilter.value.manufacture
+  );
 
   //specialCases
-  await GetDataAndChangeQueryParam("specialCases_", "specialCases");
+  await GetDataAndChangeQueryParam(
+    "specialCases_",
+    "specialCases",
+    selectedFilter.value.specialCases
+  );
+
+  //brands
+  await GetDataAndChangeQueryParam(
+    "brand_filters",
+    "brands",
+    selectedFilter.value.brand
+  );
+
+  //brands
+  await GetDataAndChangeQueryParam(
+    "model_filters",
+    "models",
+    selectedFilter.value.model
+  );
 };
 
 const GetDataAndChangeQueryParam = async (
   inputName: string,
-  queryParamKey: string
+  queryParamKey: string,
+  oldValue: any[] | null
 ) => {
   const fuelChecked = document.querySelectorAll(
     `input[name=${inputName}]:checked`
@@ -466,7 +555,7 @@ const GetDataAndChangeQueryParam = async (
     //@ts-ignore
     fuelValues.push(checkbox.value);
   });
-  if (fuelValues?.length != selectedFilter.value.fuel?.length ?? 0) {
+  if (fuelValues?.length != oldValue?.length ?? 0) {
     await advertFilter.changeQueryParams(fuelValues, queryParamKey);
   }
 };

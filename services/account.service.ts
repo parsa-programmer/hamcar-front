@@ -41,7 +41,9 @@ export const GetNoteByAdvertId = (
 export const GetSavedAdvertisements = (): Promise<
   IApiResponse<UserAdvertisementSavedDto[]>
 > => {
-  return FetchApi("/account/saved");
+  return FetchApi("/account/saved",{},{
+    ignoreErrors: true
+  });
 };
 
 //#endregion

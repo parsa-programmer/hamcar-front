@@ -45,28 +45,34 @@
       </Transition>
       <div class="ads__details-list">
         <div class="ads__detail align-items-start">
-          <span class="ads__detail-name">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M2.53226 9.81714C1.99621 9.81714 1.88312 9.81162 1.80519 9.7949L1.59548 10.7727L1.80518 9.7949C1.42451 9.71326 1.10117 9.3799 1.03118 8.99691C1.01667 8.91751 1.01446 8.81602 1.02975 8.31505C1.07994 6.67112 1.21244 5.68251 1.50847 4.88721C2.06444 3.39359 2.82688 2.52367 3.98895 1.87231C4.99755 1.30697 6.57368 1 9.7782 1H14.2218C17.4263 1 19.0025 1.30697 20.0111 1.87231C21.1731 2.52367 21.9356 3.39359 22.4915 4.88721C22.7876 5.68251 22.9201 6.67111 22.9702 8.31504C22.9855 8.81602 22.9833 8.91751 22.9688 8.99691L23.9525 9.17669L22.9688 8.99691C22.8988 9.3799 22.5755 9.71325 22.1948 9.7949C22.1169 9.81162 22.0038 9.81714 21.4677 9.81714C20.0787 9.81714 19.2814 11.1177 19.2814 12.2729C19.2814 13.4282 20.0787 14.7287 21.4677 14.7287C21.9927 14.7287 22.1024 14.7341 22.1802 14.7507C22.5602 14.8318 22.8946 15.182 22.9581 15.5654C22.9713 15.6454 22.9721 15.7386 22.9503 16.2127C22.8885 17.5507 22.7531 18.41 22.4915 19.1128C21.9356 20.6064 21.1731 21.4763 20.0111 22.1277C19.0025 22.693 17.4263 23 14.2218 23H9.7782C6.57368 23 4.99755 22.693 3.98895 22.1277C2.82688 21.4763 2.06444 20.6064 1.50847 19.1128C1.24688 18.41 1.11151 17.5507 1.04974 16.2127C1.02786 15.7386 1.02865 15.6454 1.0419 15.5654C1.10537 15.182 1.43977 14.8318 1.81982 14.7507C1.8976 14.7341 2.00728 14.7287 2.53226 14.7287C3.92132 14.7287 4.7186 13.4282 4.7186 12.2729C4.7186 11.1177 3.92132 9.81714 2.53226 9.81714Z"
-                stroke="currentColor"
-                stroke-width="2"
-              ></path>
-              <path
-                d="M15 9L9 15M9 9V10M15 14V15"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              ></path>
-            </svg>
-            قیمت
+          <span class="ads__detail-name row-price">
+            <div class="row">
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M2.53226 9.81714C1.99621 9.81714 1.88312 9.81162 1.80519 9.7949L1.59548 10.7727L1.80518 9.7949C1.42451 9.71326 1.10117 9.3799 1.03118 8.99691C1.01667 8.91751 1.01446 8.81602 1.02975 8.31505C1.07994 6.67112 1.21244 5.68251 1.50847 4.88721C2.06444 3.39359 2.82688 2.52367 3.98895 1.87231C4.99755 1.30697 6.57368 1 9.7782 1H14.2218C17.4263 1 19.0025 1.30697 20.0111 1.87231C21.1731 2.52367 21.9356 3.39359 22.4915 4.88721C22.7876 5.68251 22.9201 6.67111 22.9702 8.31504C22.9855 8.81602 22.9833 8.91751 22.9688 8.99691L23.9525 9.17669L22.9688 8.99691C22.8988 9.3799 22.5755 9.71325 22.1948 9.7949C22.1169 9.81162 22.0038 9.81714 21.4677 9.81714C20.0787 9.81714 19.2814 11.1177 19.2814 12.2729C19.2814 13.4282 20.0787 14.7287 21.4677 14.7287C21.9927 14.7287 22.1024 14.7341 22.1802 14.7507C22.5602 14.8318 22.8946 15.182 22.9581 15.5654C22.9713 15.6454 22.9721 15.7386 22.9503 16.2127C22.8885 17.5507 22.7531 18.41 22.4915 19.1128C21.9356 20.6064 21.1731 21.4763 20.0111 22.1277C19.0025 22.693 17.4263 23 14.2218 23H9.7782C6.57368 23 4.99755 22.693 3.98895 22.1277C2.82688 21.4763 2.06444 20.6064 1.50847 19.1128C1.24688 18.41 1.11151 17.5507 1.04974 16.2127C1.02786 15.7386 1.02865 15.6454 1.0419 15.5654C1.10537 15.182 1.43977 14.8318 1.81982 14.7507C1.8976 14.7341 2.00728 14.7287 2.53226 14.7287C3.92132 14.7287 4.7186 13.4282 4.7186 12.2729C4.7186 11.1177 3.92132 9.81714 2.53226 9.81714Z"
+                  stroke="currentColor"
+                  stroke-width="2"
+                ></path>
+                <path
+                  d="M15 9L9 15M9 9V10M15 14V15"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></path>
+              </svg>
+              قیمت
+            </div>
+            <span class="delivery__date--desktop font-5">
+              {{ advert.price.ghest?.tedadeGhestHa }} قسط، تحویل
+              {{ advert.price.ghest?.deliveryDate }} روزه
+            </span>
           </span>
           <span
             class="ads__detail-value"
@@ -106,9 +112,14 @@
               <small
                 class="font-4 color_black_200"
                 style="position: relative; top: 4px"
-                >ماهیانه</small
-              ></span
-            >
+              >
+                ماهیانه
+              </small>
+            </span>
+            <span class="ads__detail-value mt-1 delivery__date">
+              {{ advert.price.ghest?.tedadeGhestHa }} قسط، تحویل
+              {{ advert.price.ghest?.deliveryDate }} روزه
+            </span>
           </div>
         </div>
         <div class="ads__detail">
@@ -228,10 +239,11 @@
 </template>
 
 <script setup lang="ts">
-import { it } from "node:test";
+import { ref } from "#imports";
 import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
 import { splitNumber } from "~~/utilities/numberUtils";
+
 const isShowPhones = ref(false);
 
 const showPhone = () => {
@@ -242,5 +254,50 @@ const props = defineProps<{
 }>();
 </script>
 
-<style>
+<style scoped>
+.ads__detail-value-info {
+  position: absolute;
+}
+.delivery__date {
+  display: none;
+  background: var(--color-gray-200);
+  border-radius: 60px;
+  font-family: var(--t7-font-family);
+  font-size: var(--t7-font-size);
+  text-align: center;
+  width: 131px;
+  height: 26px;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-gray-600);
+  margin-top: 8px !important;
+}
+@media screen and (max-width: 768px) {
+  .delivery__date {
+    display: flex;
+  }
+  .ads__detail-value.mt-1 {
+    margin-top: 5px;
+  }
+  .ads__detail-value small {
+    font-family: var(--t6-font-family) !important;
+    font-size: var(--t5-font-size) !important;
+  }
+  .delivery__date--desktop{
+    display: none !important;
+  }
+}
+.row-price {
+  display: block !important;
+  
+}
+.delivery__date--desktop {
+  background: var(--color-gray-300);
+  border-radius: 60px;
+  color: var(--color-gray-600);
+  padding: .5rem 1rem;
+  margin-top: 5px !important;
+  display: block;
+}
 </style>

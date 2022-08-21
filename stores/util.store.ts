@@ -32,7 +32,7 @@ export const UseUtilStore = defineStore("util", {
         return new Promise((resolve) => resolve());
       }
       return GetModels(brandId).then((res) => {
-        this.models = res.data!;
+        this.models.push(...res.data!);
       });
     },
   },
@@ -56,7 +56,7 @@ export const UseUtilStore = defineStore("util", {
             f.slug.includes(search)
         );
     },
-    
+
     getBrandBySlug() {
       return (slug: string): Brand =>
         this.brands.filter((f) => f.slug == slug)[0];
@@ -66,9 +66,11 @@ export const UseUtilStore = defineStore("util", {
         this.models.filter((f) => f.slug == slug)[0];
     },
     getModels() {
-      return (search: string): Model[] =>
+      return (search: string, brands: string[] = []): Model[] =>
         this.models.filter(
-          (f) => f.title.includes(search) || f.slug.includes(search)
+          (f) =>
+            (f.title.includes(search) || f.slug.includes(search)) &&
+            brands.includes(f.brandId)
         );
     },
   },
