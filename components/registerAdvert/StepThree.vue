@@ -39,19 +39,22 @@
       enter-active-class="animate__animated animate__fadeInUp animate__faster"
       leave-active-class="animate__animated animate__fadeOutRight animate__faster"
     >
-      <h-input
-        :message="Num2persian(stepData.amount) + ' تومان'"
-        name="price"
-        :number="true"
-        suffix="تومان"
-        placeholder="قیمت"
-        class="mt-1"
-        v-model="stepData.amount"
-        show-check-box
+      <div
         v-if="
           stepData.advertisementPaymentType == AdvertisementPaymentType.مقطوع
         "
-      />
+      >
+        <h-input
+          :message="Num2persian(stepData.amount) + ' تومان'"
+          name="price"
+          :number="true"
+          suffix="تومان"
+          placeholder="قیمت"
+          class="mt-1"
+          v-model="stepData.amount"
+          show-check-box
+        />
+      </div>
     </Transition>
     <Transition
       enter-active-class="animate__animated animate__fadeInUp animate__faster"

@@ -32,7 +32,7 @@
         <register-advert-steps />
         <div v-if="loading == false">
           <h-alert type="success" class="font-2 text-right" :show-icon="true">
-            آگهی توربو شما بررسی و ثبت خواهد شد
+            آگهی توربو شما بررسی و ثبت خواهد شد __ اینجا باید درست شود
           </h-alert>
           <p class="text__description font-5 mt-1 d-none d-sm-block">
             تمامی اطلاع‌رسانی های «همکار» در خصوص آگهی شما از طریق شماره
@@ -200,7 +200,9 @@
                 <b>{{ advert?.userDto.phoneNumber }}</b> اطلاع شما خواهد رسید.
               </p>
             </div>
-            <h-button class="pull-left pay__btn">مشاهده آگهی</h-button>
+            <h-button class="pull-left pay__btn" @click="showAdvert"
+              >مشاهده آگهی</h-button
+            >
           </div>
         </div>
         <div class="text-center" v-else>
@@ -212,6 +214,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { advertStore } from "~~/stores/advert.store";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
 import {
@@ -225,10 +228,6 @@ import { IApiResponse } from "~~/models/IApiResponse";
 import { AdvertisementPlan } from "~~/models/plans/AdvertisementPlan";
 import { GetBitMapAdvertImage } from "~~/utilities/imageUtil";
 import { UseUtilStore } from "~~/stores/util.store";
-
-definePageMeta({
-  middleware: "should-login",
-});
 
 const toast = useToast();
 const store = advertStore();
@@ -264,14 +263,15 @@ const UploadNewImage = async (file: any): Promise<boolean> => {
   formData.append("Images", file);
   var result = await AddImage(formData);
   if (result.isSuccess) {
-    return true;
+    await getAdvert();
   }
-
   return false;
 };
 onMounted(async () => {
   store.changeStep(7);
-
+  await getAdvert();
+});
+const getAdvert = async () => {
   const result = await ProssesAsync<IApiResponse<AdvertisementDto>>(
     () => GetById(id!.toString()),
     loading
@@ -280,13 +280,25 @@ onMounted(async () => {
     await navigateTo("/");
   }
   advert.value = result.data!;
-});
+};
+const showAdvert = () => {
+  const router = useRouter();
+  const isCar = advert.value?.carDetail != null;
+  if (isCar) {
+    var url = `/car/detail-${advert.value?.shortLink}-${advert.value?.brand.slug}-${advert.value?.model.slug}`;
+    if (advert.value?.trim) {
+      url += "-" + advert.value.trim.englishTitle;
+    }
+    router.push(url);
+  }
+};
 </script>
 
 <style scoped>
 @media screen and (max-width: 768px) {
   .image__count__container {
     justify-content: space-between;
+    align-items: center;
   }
   .footer .row {
     display: none;

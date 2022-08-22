@@ -23,19 +23,19 @@
       >
     </div>
     <Transition
-      name="custom-classes"
       enter-active-class="animate__animated animate__tada"
       leave-active-class="animate__animated animate__bounceOutRight"
     >
-      <h-input
-        name="milage"
-        number
-        suffix="کیلومتر"
-        placeholder="کیلومتر"
-        class="mt-1"
-        v-model="stepData.milage"
-        v-if="stepData.carType == CarType.کارکرده"
-      />
+      <div v-if="stepData.carType == CarType.کارکرده">
+        <h-input
+          name="milage"
+          number
+          suffix="کیلومتر"
+          placeholder="کیلومتر"
+          class="mt-1"
+          v-model="stepData.milage"
+        />
+      </div>
     </Transition>
     <h-select-box
       class="mt-1"

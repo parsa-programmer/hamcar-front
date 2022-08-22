@@ -1,5 +1,5 @@
 <template>
-  <Form  @submit.prevent="validate" :validation-schema="schema" v-slot="{ meta }" class="login__container">
+  <Form  @submit="validate" :validation-schema="schema" v-slot="{ meta }" class="login__container">
     <p class="login__label">
       کد تایید یکبار مصرف به شماره {{ phoneNumber }} پیامک شد; لطفا کد ارسال شده
       را در کادر زیر وارد نمایید.
@@ -40,6 +40,7 @@
 </template>
 
 <script setup lang="ts">
+import {ref} from "#imports"
 import { useAuth } from "~~/composables/auth/useAuth";
 import { authStore } from "~~/stores/auth.store";
 import { Form } from "vee-validate";

@@ -17,6 +17,7 @@
         <register-advert-step-four-validate-code
           @toggleLoginStep="changeAuthSteps"
           v-if="loginStep == 2"
+          @successed="registerSuccess"
         />
       </Transition>
     </div>
@@ -49,6 +50,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { Ref } from "vue";
 import { useIranDivision } from "~~/composables/iranDivistion/useIranDivision";
 import { ProvinceModel } from "~~/models/iranDivision/province";
@@ -71,14 +73,16 @@ const changeAuthSteps = (step: number) => {
 const provinceChnaged = async (data: SelectData) => {
   cities.value = await getCities(data.value);
 };
-
+const registerSuccess = () => {
+  isLogin.value = true;  
+};
 onMounted(async () => {
   isLogin.value = auth.isLogin;
   provinces.value = await getProvinces();
-  if(auth.user.address){
-    userAddress.Province = auth.user.address.Province;
-    userAddress.City = auth.user.address.City;
-    userAddress.PostalAddress = auth.user.address.PostalAddress;
+  if (auth.user.address) {
+    userAddress.Province = auth.user.address.province;
+    userAddress.City = auth.user.address.city;
+    userAddress.PostalAddress = auth.user.address.postalAddress;
   }
 });
 watch(userAddress, (val) => {

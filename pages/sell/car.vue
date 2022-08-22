@@ -1,8 +1,9 @@
 <template>
   <div>
     <Head>
-      <link href="/css/advertisement-registration.css" rel="stylesheet" />
+      <link href="" rel="stylesheet" />
       <Title>ثبت آگهی فروش خودرو شما</Title>
+      <Link href="/css/advertisement-registration.css" rel="stylesheet"/>
     </Head>
     <section class="breadcrumb">
       <nuxt-link href="/" class="breadcrumb__item">

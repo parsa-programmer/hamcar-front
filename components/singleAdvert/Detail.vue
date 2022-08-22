@@ -69,7 +69,7 @@
               </svg>
               قیمت
             </div>
-            <span class="delivery__date--desktop font-5">
+            <span class="delivery__date--desktop font-5" v-if="advert.price.advertisementPaymentType==AdvertisementPaymentType.قسطی">
               {{ advert.price.ghest?.tedadeGhestHa }} قسط، تحویل
               {{ advert.price.ghest?.deliveryDate }} روزه
             </span>

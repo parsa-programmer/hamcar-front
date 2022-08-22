@@ -54,11 +54,16 @@ export const authStore = defineStore("auth", {
         this.loading = false;
       }
     },
-    async logout() {
+    async logout(isRedirected: boolean = false) {
       const auth = useAuth();
       await auth.logout();
+      const router = useRouter();
+
       this.accessToken = "";
       this.refreshToken = "";
+      if (isRedirected) {
+        router.push("/");
+      }
     },
   },
 });

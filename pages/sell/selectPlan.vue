@@ -64,6 +64,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { Ref } from "vue";
 import { GetAdvertisementPlans } from "~~/services/plans.service";
 import { CreateTransaction } from "~~/services/transaction.service";
@@ -78,6 +79,7 @@ import { TransactionOrderType } from "~~/models/transactions/CreateTransactionCo
 
 definePageMeta({
   middleware: "should-login",
+  layout: "full-screen",
 });
 
 const isMobilePage = ref(false);
@@ -139,9 +141,6 @@ onMounted(async () => {
   store.changeStep(6);
 });
 
-definePageMeta({
-  layout: "full-screen",
-});
 </script>
 
 

@@ -32,9 +32,7 @@
                 <li>
                   <nuxt-link to="/car-reviews">مشخصات فنی خودرو</nuxt-link>
                 </li>
-                <li>
-                  <nuxt-link to="/price"> قیمت روز خودرو</nuxt-link>
-                </li>
+              
                 <li>
                   <nuxt-link to="/">گوش به زنگ خودرو</nuxt-link>
                 </li>
@@ -51,7 +49,7 @@
               <a href="#" class="nav__link">موتور سیکلت</a>
             </li>
             <li class="nav__item">
-              <a href="#" class="nav__link">قیمت ها</a>
+              <nuxt-link to="/price" class="nav__link">قیمت ها</nuxt-link>
             </li>
             <li class="nav__item">
               <a href="#" class="nav__link">همکار من</a>

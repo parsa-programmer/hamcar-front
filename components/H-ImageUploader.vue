@@ -71,6 +71,10 @@ const props = defineProps({
     type: Function,
     default: () => true,
   },
+  onDeleteImage: {
+    type: Function,
+    default: () => true,
+  },
 });
 const loading = ref(false);
 const selectedData = ref([]);
@@ -81,7 +85,7 @@ const OpenSelectBox = () => {
   fileUpload.value!.click();
 };
 
-const DeleteImage = (index: number) => {
+const DeleteImage = async (index: number) => {
   imageNames.value.splice(index, 1);
   selectedData.value.splice(index, 1);
   emit("update:modelValue", selectedData.value);
