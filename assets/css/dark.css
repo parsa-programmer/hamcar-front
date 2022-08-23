@@ -21,9 +21,12 @@
 [data-theme="dark"] .header {
     background-color: var(--color-white) !important;
 }
+
 [data-theme="dark"] .sidebar {
     background-color: var(--body-bg-color) !important;
 }
+
+
 [data-theme="dark"] .btn-primary {
     color: var(--color-black) !important;
 }
@@ -73,10 +76,52 @@
 [data-theme="dark"] .input-group-suffix {
     background: var(--color-dark-black-600) !important;
 }
-[data-theme="dark"] .info-data{
+
+[data-theme="dark"] .info-data {
     background: var(--color-dark-black-600) !important;
 }
-[data-theme="dark"] .info__item--active{
+
+[data-theme="dark"] .info__item--active {
     background: var(--color-dark-black-600) !important;
     border: none;
+}
+
+@media screen and (max-width: 768px) {
+    .advert {
+        background-color: var(--body-bg-color) !important;
+    }
+
+    .advertising__filter-btn {
+        background-color: var(--body-bg-color) !important;
+        color: #fff;
+    }
+    [data-theme="dark"] .technical__description--limited::before {
+        background-image: linear-gradient(to bottom, transparent, var(--color-white) 80%) !important;
+    }
+    [data-theme="dark"] .technical__properties{
+        background-color: var(--body-bg-color) !important;
+    }
+    [data-theme="dark"] .card-color-dark{
+        background-color: var(--body-bg-color) !important;
+    }
+}
+
+[data-theme="dark"] .filters-page__header {
+    background: #0F0F10;
+}
+
+[data-theme="dark"] .filters-page__header .nav__icon {
+    background: transparent !important;
+}
+
+[data-theme="dark"] .filter-page__footer {
+    background: transparent !important;
+}
+
+[data-theme="dark"] .dropdown-box__input {
+    background-color: var(--body-bg-color) !important;
+}
+
+[data-theme="dark"] .nav__icon {
+    background: transparent !important;
 }

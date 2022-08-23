@@ -849,7 +849,7 @@
     height: 24px;
     background-color: #EF3838;
     border-radius: 100%;
-    color: var(--color-white);
+    color: #fff;
     font-family: var(--t6-font-family);
     font-size: var(--t6-font-size);
     display: flex;
@@ -1004,22 +1004,6 @@
 
 @media screen and (max-width: 768px) {
 
-    .header {
-        background-color: var(--color-gray-200);
-    }
-
-    .nav__icon {
-        background-color: var(--color-white);
-    }
-
-    .main {
-        padding-top: 1rem;
-    }
-
-    .breadcrumb {
-        display: none;
-    }
-
     .advertising__title {
         max-width: 100%;
         font-family: var(--t5-font-family);
@@ -1056,10 +1040,7 @@
 }
 
 @media screen and (max-width: 576px) {
-    body {
-        background-color: #fff;
-    }
-
+   
     .advert {
         box-shadow: 0px 10px 40px rgba(0, 0, 0, 0.08);
         padding: 0;

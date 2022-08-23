@@ -34,7 +34,7 @@
           <template v-if="orderBy == AdvertisementFilterOrderBy.visit">
             پر بازدید ترین آگهی ها
           </template>
-          <icons-chevron-down />
+          <icons-chevron-down :width="14" :height="8" hash-color="#ABADB3"/>
         </button>
       </div>
 
@@ -257,7 +257,6 @@ const { data, refresh, pending } = await useAsyncData(
   {
     initialCache: false,
     server: true,
-    lazy: true,
   }
 );
 cars.value = data?.value?.data?.filterResult.data ?? [];

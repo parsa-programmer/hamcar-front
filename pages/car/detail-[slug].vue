@@ -286,26 +286,39 @@
           v-slot="{ meta }"
           v-else
         >
-          <h-textarea
-            name="note"
-            class-value="ads__note-input"
-            placeholder="یادداشت من..."
-            v-model="advertNote"
-            :trans-parent="false"
-          ></h-textarea>
-          <div class="row" style="flex-direction: row-reverse">
-            <h-button
-              type="button"
-              :disabled="loadingButton || meta.valid == false"
-              :loading="loadingButton"
-              @click="setAdvertNote"
-              >ثبت یادداشت</h-button
+          <client-only>
+            <h-textarea
+              name="note"
+              class-value="ads__note-input"
+              placeholder="یادداشت من..."
+              v-model="advertNote"
+              :trans-parent="false"
+              v-if="authStore.isLogin"
+            ></h-textarea>
+            <h-textarea
+              name="note"
+              class-value="ads__note-input"
+              placeholder="برای ثبت یادداشت روی آگهی ها باید وارد حساب کاربری خود شوید"
+              disabled
+              v-model="advertNote"
+              :trans-parent="false"
+              v-else
+            ></h-textarea>
+
+            <div class="row" style="flex-direction: row-reverse">
+              <h-button
+                type="button"
+                :disabled="loadingButton || meta.valid == false"
+                :loading="loadingButton"
+                @click="setAdvertNote"
+                >ثبت یادداشت</h-button
+              >
+            </div>
+            <span class="ads__form-info"
+              >یادداشت در پنل کاربری شما ذخیره می‌شود، و فقط برای شما قابل
+              مشاهده است.</span
             >
-          </div>
-          <span class="ads__form-info"
-            >یادداشت در پنل کاربری شما ذخیره می‌شود، و فقط برای شما قابل مشاهده
-            است.</span
-          >
+          </client-only>
         </Form>
         <div class="ads__warning">
           <p class="ads__warning-text">
@@ -538,6 +551,8 @@ onMounted(async () => {
     if (res.isSuccess) {
       advertNote.value = res.data?.text ?? "";
     }
+  } else {
+    noteLoading.value = false;
   }
 
   var res2 = await GetByModel(advert.value!.model.id, advert.value!.trim?.id);
@@ -550,10 +565,7 @@ onMounted(async () => {
     saveAdvertLoading
   );
   if (result.isSuccess) {
-    authStore.advertSaved = result.data!;
-    var saved = authStore.advertSaved.find(
-      (f) => f.advertisementId == advert.value!.id
-    );
+    var saved = result.data!.find((f) => f.advertisementId == advert.value!.id);
     if (saved) {
       isSavedAdvert.value = true;
     }

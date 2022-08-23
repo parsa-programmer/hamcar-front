@@ -1,7 +1,7 @@
 <template>
   <nuxt-link
-    :to="`/price/${detail.carPriceSlug}`"
-    class="price-list__item__body"
+    :to="`/price/${detail.carPriceSlug}?year=${detail.year}`"
+    class="price-list__item__body card-color-dark"
   >
     <div class="flex grow-1 justify-content-space-between section__1">
       <p class="brand">
@@ -13,10 +13,13 @@
         <span class="text-muted" v-if="detail.builderOrSeller">|</span
         >{{ detail.builderOrSeller }}
       </p>
-      <p>{{ detail.priceType }} - {{ TimeAgo(detail.dateTime) }}</p>
+      <p class="d-sm__none desc">
+        {{ detail.priceType }} - {{ TimeAgo(detail.dateTime) }}
+      </p>
+      <p class="d-sm__block d-none desc">{{ TimeAgo(detail.dateTime) }}</p>
     </div>
     <div class="flex justify-content-space-between grow-1 section__2">
-      <p class="d-sm-none price__chart">
+      <p class="price__chart">
         <client-only>
           <apexchart
             width="59"
@@ -55,6 +58,9 @@
         <span v-else-if="percentage == 0" class="mr-0_5 rectangel"></span>
       </p>
       <p class="item__price">{{ splitNumber(detail.lastPrice) }} تومان</p>
+      <p class="d-sm__block d-none desc" style="order: 4">
+        {{ detail.priceType }}
+      </p>
     </div>
   </nuxt-link>
 </template>
@@ -129,6 +135,18 @@ const showDetail = () => {
   align-content: space-around;
 }
 @media screen and (max-width: 768px) {
+  .desc {
+    color: var(--color-black-200) !important;
+  }
+  .d-sm__block {
+    display: block !important;
+  }
+  [data-theme="dark"] .desc {
+    color: #606066 !important;
+  }
+  .d-sm__none {
+    display: none !important;
+  }
   .price__header {
     justify-content: flex-start !important;
   }
@@ -164,6 +182,9 @@ const showDetail = () => {
     font-family: var(--t6-font-family) !important;
     font-size: var(--t6-font-size) !important;
     font-weight: 500;
+  }
+  .price__chart {
+    display: none;
   }
 }
 </style>

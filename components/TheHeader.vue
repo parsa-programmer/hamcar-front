@@ -100,7 +100,7 @@
             <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
               <path
                 d="M1.42969 1.42847H18.574M1.42969 7.14323H18.574M1.42969 12.858H18.574"
-                stroke="#0F0F10"
+                stroke="var(--color-black)"
                 stroke-width="1.50012"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -108,7 +108,7 @@
             </svg>
           </div>
           <div class="nav__icon nav__icon--search-icon">
-            <h-icon :icon="Icon.search"></h-icon>
+            <h-icon hash-color="var(--color-black)" :icon="Icon.search"></h-icon>
           </div>
         </div>
         <div class="nav__icon nav__icon--bars-icon" v-else>

@@ -346,14 +346,7 @@ body {
     background-color: var(--color-white);
 }
 
-.content span:before,
-.content span:after {
-    content: "";
-    position: absolute;
-    height: 10px;
-    width: 20px;
-    bottom: 0;
-}
+
 
 .content span:after {
     right: -20px;

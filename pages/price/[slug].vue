@@ -118,12 +118,11 @@
             </div>
           </div>
         </div>
-        <div class="chart-wrapper">
+        <div class="chart-wrapper ">
           <client-only>
             <apexchart
               id="price-list-chart"
               width="100%"
-              height="600"
               type="line"
               :options="options"
               :series="series"
@@ -211,7 +210,6 @@ const carPriceData: Ref<CarPrice> = ref(data!.value);
 
 const options = ref({
   chart: {
-    id: "vuechart-example",
     background: "transparent",
     toolbar: {
       show: false,
@@ -228,6 +226,27 @@ const options = ref({
       blur: 10,
       opacity: 0.2,
     },
+  },
+  theme: {
+    mode: "light",
+  },
+  markers: {
+    colors: ["#007aff", "#ff9500", "#ef5da8", "#66d3cf"],
+  },
+  fill: {
+    type: "gradient",
+    opacity: 1,
+    gradient: {
+      shadeIntensity: 0,
+      opacityFrom: 0.8,
+      type: "vertical",
+      opacityTo: 0.2,
+      stops: [0, 100],
+    },
+  },
+  stroke: {
+    colors: ["#007aff", "#ff9500", "#ef5da8", "#66d3cf"],
+    width: 2,
   },
   xaxis: {
     type: "datetime",
@@ -247,8 +266,9 @@ const options = ref({
   },
   yaxis: {
     labels: {
+      //@ts-ignore
       formatter: (value: any) => {
-        return `${splitNumber(value)}`;
+        return `${splitNumber(value / 1000000)}`;
       },
       align: "center",
       style: {
@@ -256,22 +276,6 @@ const options = ref({
         fontFamily: "var(--t5-font-family)",
       },
     },
-  },
-  theme: {
-    mode: "light",
-  },
-  markers: {
-    colors: ["#007aff", "#ff9500", "#ef5da8", "#66d3cf"],
-  },
-  fill: {
-    colors: ["#007aff", "#ff9500", "#ef5da8", "#66d3cf"],
-  },
-  stroke: {
-    show: true,
-    lineCap: "butt",
-    colors: ["#007aff", "#ff9500", "#ef5da8", "#66d3cf"],
-    width: 2,
-    dashArray: 0,
   },
   tooltip: {
     enabled: true,
@@ -293,6 +297,56 @@ const options = ref({
       },
     },
   },
+  responsive: [
+    {
+      breakpoint: 5000,
+      options: {
+        chart: {
+          height: 450,
+        },
+      },
+    },
+    {
+      breakpoint: 768,
+      options: {
+        chart: {
+          height: 200,
+        },
+        xaxis: {
+          type: "datetime",
+          labels: {
+            formatter: (val: any) => {
+              return getPersianDate(val, "M/dd");
+            },
+          },
+          style: {
+            fontSize: "var(--t7-font-size)",
+            fontFamily: "var(--t7-font-family)",
+          },
+          tooltip: {
+            enabled: true,
+            offsetY: 0,
+          },
+          tickAmount: 4,
+        },
+        yaxis: {
+          labels: {
+            //@ts-ignore
+            formatter: (value: any) => {
+              return `${splitNumber(value / 1000000)}`;
+            },
+            align: "center",
+            style: {
+              fontSize: "var(--t7-font-size)",
+              fontFamily: "var(--t7-font-family)",
+            },
+          },
+          tickAmount: 4,
+          logBase: 0,
+        },
+      },
+    },
+  ],
 });
 const series: Ref<any[]> = ref([]);
 const router = useRouter();
@@ -328,7 +382,6 @@ onMounted(async () => {
         });
       }
     });
-
     orderBy(f.details, "date", "asc").map((r) => {
       data.push({
         //x: getPersianDate(r.date, "M/dd"),
@@ -336,12 +389,13 @@ onMounted(async () => {
         y: r.price,
       });
     });
-
     chartdata.push({
       name: `مدل ${f.year}`,
       data: data,
       color: color,
+      type: "area",
     });
+
     index += 1;
   });
   setTimeout(() => {

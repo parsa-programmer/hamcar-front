@@ -303,7 +303,11 @@
   .price-list__title {
     display: none;
   }
-
+  .chart-wrapper {
+    position: relative;
+    left: 7%;
+    width: 115%;
+  }
   .price-list__search-box {
     display: none;
   }
@@ -391,7 +395,6 @@
 
 @media screen and (max-width: 576px) {
   .prices__item {
-    flex-wrap: wrap;
     gap: 1rem;
   }
 }

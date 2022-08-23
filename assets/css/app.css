@@ -197,6 +197,9 @@ hr {
     height: 1px;
     background: var(--color-gray-400);
 }
+.card-color{
+    background: var(--color-white);
+}
 
 .logo {
     width: 128px;

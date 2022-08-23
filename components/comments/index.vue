@@ -92,6 +92,9 @@ const sendComment = async (test: any, t: any) => {
   if (fullName == "" || fullName == " ") {
     fullName = "کاربر مهمان";
   }
+  if(!commentText || !props.linkId){
+    return;
+  }
   var res = await ProssesAsync<IApiResponse<undefined>>(
     () =>
       CreateComment(

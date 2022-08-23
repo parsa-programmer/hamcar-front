@@ -15,22 +15,6 @@ export interface NotifyFilterData {
   advertisementType: string;
   advertisementCount: number;
 }
-
-export interface NotifyAdvertisementFilterData {
-  id: string;
-  creationDate: Date;
-  brandId: string;
-  modelId: string;
-  trimId: string;
-  brandTitle: string;
-  modelTitle: string;
-  trimTitle: string;
-  shortLink: string;
-  address: string;
-  mileage: number;
-  price: number;
-  year: string;
-}
 export interface NotifyAdvertisementFilterParams extends FilterParams {
   notifyId: string;
   isVisited: boolean | undefined;

@@ -1,5 +1,5 @@
 <template>
-  <div @click="changeDate">
+  <div>
     <Head>
       <Link href="/css/landing.css" rel="stylesheet" />
       <Title>همکار</Title>
@@ -706,9 +706,9 @@
             <h-image src="static/img/car4.jpg" alt="Hamcar.ir" />
           </div>
         </div>
-        <a href="#" class="btn btn-primary main-content__link"
-          >نمایش 54613 آگهی موتور سیکلت</a
-        >
+        <nuxt-link to="/car" class="btn btn-primary main-content__link"
+          >نمایش 54613 آگهی موتور سیکلت
+        </nuxt-link>
       </div>
     </section>
   </div>
@@ -723,11 +723,5 @@ const openModal = () => {
 definePageMeta({
   layout: "landing",
 });
-const newDate = ref("");
-
-const changeDate = () => {
-  let oldDate = new Date();
-  newDate.value = oldDate.toPersianDate();
-};
 </script>
 

@@ -20,7 +20,6 @@ const defaultState = () => ({
   phoneNumber: "",
   loading: false,
   user: {} as UserDto,
-  advertSaved: [] as UserAdvertisementSavedDto[],
 });
 
 export const authStore = defineStore("auth", {

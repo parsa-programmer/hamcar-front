@@ -34,14 +34,14 @@
           <svg width="16" height="21" viewBox="0 0 16 21" fill="none">
             <path
               d="M2.66989 1.25H13.3301C14.0863 1.25 14.7099 1.71261 15.0326 2.41337C15.3561 3.11591 15.3388 3.98905 14.845 4.70389L10.4033 11.1346C10.0835 11.5976 9.91505 12.1533 9.91505 12.7184V16.9594C9.91505 17.3316 9.76214 17.6686 9.52255 17.8854L7.74585 19.493C7.41311 19.7941 7.02357 19.8112 6.69804 19.6457C6.36477 19.4762 6.08495 19.1016 6.08495 18.5671V12.7184C6.08495 12.1533 5.9165 11.5976 5.59671 11.1346L1.15496 4.70389C0.661207 3.98905 0.64394 3.11591 0.967442 2.41337C1.29012 1.71261 1.91365 1.25 2.66989 1.25Z"
-              stroke="#0F0F10"
+              stroke="var(--color-black)"
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
             ></path>
             <path
               d="M5.59766 4.66669H10.3977"
-              stroke="#0F0F10"
+              stroke="var(--color-black)"
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -64,7 +64,10 @@
           </svg>
         </div>
       </header>
-      <main class="filter-page__main">
+      <div class="filter-page__main" v-if="loading">
+        <h-skeletor width="100%" style="height: 500px;"/>
+      </div>
+      <main class="filter-page__main" v-else>
         <div class="filter-group">
           <search-advert-filters-brands :brands="brands" />
           <search-advert-filters-models :models="models" />
@@ -450,6 +453,7 @@ import { CylinderCount } from "~~/models/advertisements/enums/CylinderCount";
 import { BodyType } from "~~/models/advertisements/enums/BodyType";
 import { Color } from "~~/models/advertisements/enums/Color";
 import { ConvertColorNameToHashColor } from "~~/utilities/colorUtils";
+import HSkeletor1 from "../H-Skeletor.vue";
 
 const loading = ref(true);
 const advertFilter = useAdverFilter();

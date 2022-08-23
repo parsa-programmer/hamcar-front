@@ -10,6 +10,8 @@ import {
   GetAdvertisementCountParams,
   GetAdvertisementType,
 } from "~~/models/advertisements/Advertisement.Models";
+import { AdvertisementType } from "~~/models/advertisements/enums/AdvertisementType";
+import { BodyType } from "~~/models/advertisements/enums/BodyType";
 import { FilterResult, IApiResponse } from "~~/models/IApiResponse";
 import { FetchApi } from "~~/utilities/customFetchApi";
 
@@ -40,7 +42,12 @@ export const GetByShortLink = (
 };
 export const GetAdvertCount = (
   type: GetAdvertisementType,
-  params: GetAdvertisementCountParams
+  advertType: AdvertisementType = AdvertisementType.car,
+  params: GetAdvertisementCountParams = {
+    exhibitionId: "",
+    model: "",
+    modelType: null,
+  }
 ): Promise<IApiResponse<number>> => {
   return FetchApi(`/advertisement/utils/getCount`, {
     params: {
@@ -48,6 +55,7 @@ export const GetAdvertCount = (
       ExhibitionId: params.exhibitionId,
       Model: params.model,
       ModelType: params.modelType,
+      advertType,
     },
   });
 };
