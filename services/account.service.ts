@@ -1,6 +1,7 @@
 import exp from "constants";
 import { SetNoteCommand } from "~~/models/account/account.Commands";
 import {
+  NardebanDto,
   UserAdvertisementSavedDto,
   UserDto,
   UserNoteFilterData,
@@ -25,7 +26,15 @@ export const GetAccessNotifyCount = (): Promise<IApiResponse<number>> => {
 export const GetNardebanCount = (): Promise<IApiResponse<number>> => {
   return FetchApi("/account/nardebans");
 };
-
+export const GetNardebanHistory = (
+  take: Number = 20
+): Promise<IApiResponse<NardebanDto[]>> => {
+  return FetchApi("/account/nardebans/Byfilter", {
+    params: {
+      take,
+    },
+  });
+};
 export const GetNotes = (
   filterParams: FilterParams
 ): Promise<IApiResponse<FilterResult<UserNoteFilterData>>> => {
@@ -41,9 +50,13 @@ export const GetNoteByAdvertId = (
 export const GetSavedAdvertisements = (): Promise<
   IApiResponse<UserAdvertisementSavedDto[]>
 > => {
-  return FetchApi("/account/saved",{},{
-    ignoreErrors: true
-  });
+  return FetchApi(
+    "/account/saved",
+    {},
+    {
+      ignoreErrors: true,
+    }
+  );
 };
 
 //#endregion

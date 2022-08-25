@@ -2,7 +2,8 @@ import { timeAgo } from "@persian-tools/persian-tools";
 
 export const toPersianDate = (
   date: Date,
-  withTime: boolean = false
+  withTime: boolean = false,
+  withDashBetweenTimeAndDate: boolean = false
 ): string => {
   let pDate = new Date(date).toLocaleDateString("fa-IR", {
     day: "2-digit",
@@ -16,6 +17,9 @@ export const toPersianDate = (
       minute: "2-digit",
       second: "2-digit",
     });
+    if(withDashBetweenTimeAndDate){
+      return pDate + " ـ " + time;
+    }
     return pDate + " " + time;
   } else {
     return pDate;

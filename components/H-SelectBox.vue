@@ -28,7 +28,7 @@
     </div>
     <ul class="select__list" @click="(e) => e.stopPropagation()">
       <ul class="select__list__wrapper">
-        <li class="select__item disable">
+        <li class="select__item disable" v-if="placeholder">
           {{ placeholder }}
         </li>
         <li

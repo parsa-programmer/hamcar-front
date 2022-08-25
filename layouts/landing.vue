@@ -4,6 +4,5 @@
     <main class="main">
       <slot></slot>
     </main>
-    <the-toast></the-toast>
   </div>
 </template>

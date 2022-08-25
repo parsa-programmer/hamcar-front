@@ -76,6 +76,7 @@ import { advertStore } from "~~/stores/advert.store";
 import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models";
 import { ToastType } from "~~/composables/useToast";
 import { TransactionOrderType } from "~~/models/transactions/CreateTransactionCommand";
+import { CurrentDomainUrl } from "~~/utilities/api.config";
 
 definePageMeta({
   middleware: "should-login",
@@ -112,8 +113,9 @@ const selectPlan = async (id: number) => {
       orderId: advert.value!.id,
       orderType: TransactionOrderType.advertisementPlan,
       planId: id,
-      successCallBack: `http://localhost:3000/sell/finish?id=${advert.value?.id}`,
-      errorCallBack: "http://localhost:3000/transactions/error",
+      successCallBack: `${CurrentDomainUrl}/sell/finish?id=${advert.value?.id}`,
+      errorCallBack: `${CurrentDomainUrl}/transactions/error`,
+      nardebanCount: 0,
     }).finally(() => {
       isLoadingToPay.value = false;
     });
@@ -140,7 +142,6 @@ onMounted(async () => {
   advert.value = res.data!;
   store.changeStep(6);
 });
-
 </script>
 
 

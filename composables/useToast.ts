@@ -1,15 +1,14 @@
-import debounce from "lodash/debounce.js";
+import { useToast as Toaster } from "vue-toastification";
 
 export class Toast {
   constructor(
     public message: string,
     public type: ToastType,
-    public show: boolean = true,
     public duration: number = 3000
   ) {}
 
   public static Error(message: string, duration: number = 3000) {
-    return new Toast(message, ToastType.error, true, duration);
+    return new Toast(message, ToastType.error, duration);
   }
 }
 export enum ToastType {
@@ -18,31 +17,33 @@ export enum ToastType {
   warning = "warning",
   error = "error",
 }
+
 export const useToast = () => {
-  const toastRef = useState<Toast>("--toast--", () => ({
-    show: false,
-    message: "",
-    type: ToastType.info,
-    duration: 3000,
-  }));
-
-  const debounceClose = debounce(() => {
-    toastRef.value = { ...toastRef.value, show: false };
-  }, toastRef.value.duration);
-
   const showToast = (
     message: string,
     type: ToastType = ToastType.success,
     duration: number = 3000
   ) => {
-    toastRef.value = {
-      duration: duration,
-      message: message,
-      show: true,
-      type: type,
-    };
-    debounceClose();
+    const toast = Toaster();
+    switch (type) {
+      case ToastType.success: {
+        toast.success(message, { timeout: duration });
+        break;
+      }
+      case ToastType.error: {
+        toast.error(message, { timeout: duration });
+        break;
+      }
+      case ToastType.warning: {
+        toast.warning(message, { timeout: duration });
+        break;
+      }
+      case ToastType.info: {
+        toast.info(message, { timeout: duration });
+        break;
+      }
+    }
   };
 
-  return { showToast, toastRef };
+  return { showToast };
 };

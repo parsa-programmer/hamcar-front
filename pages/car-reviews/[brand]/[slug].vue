@@ -376,6 +376,7 @@
           class="btn btn-primary technical__link"
           >مشاهده {{ relatedAdvertCount }} آگهی مرتبط
         </nuxt-link>
+        <div class="technical__link" v-else></div>
         <CarReviewSpecifications
           :leftSide="leftSpecifications"
           :rightSide="rightSpecifications"

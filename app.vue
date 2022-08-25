@@ -22,6 +22,7 @@
 </template>
 <script setup lang="ts">
 import { UseUtilStore } from "~~/stores/util.store";
+
 const store = UseUtilStore();
 useHead({
   script: [

@@ -7,7 +7,6 @@
         <slot></slot>
       </div>
     </main>
-    <the-toast></the-toast>
   </div>
 </template>
 <script setup>

@@ -41,3 +41,15 @@ export interface UserAdvertisementSavedDto {
   advertisementId: string;
   advertisement: AdvertisementCard;
 }
+export interface NardebanDto {
+  count: number;
+  description: string;
+  usedDate?: any;
+  type: NardebanType;
+  id: string;
+  creationDate: Date;
+}
+export enum NardebanType {
+  buy = "buy",
+  use = "use",
+}
