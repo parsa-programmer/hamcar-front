@@ -25,6 +25,12 @@ const defaultState = () => ({
 export const useAccountStore = defineStore("account", {
   state: defaultState,
   actions: {
+    deleteSavedItem(id: string) {
+      this.advertSaved = this.advertSaved.filter((f) => f.id != id);
+    },
+    deleteAllSavedItem() {
+      this.advertSaved = []
+    },
     async initData() {
       var carCount = await GetAdvertCount(
         GetAdvertisementType.All,

@@ -7,6 +7,11 @@ import {
   UserNoteFilterData,
 } from "~~/models/account/account.Models";
 import {
+  AdvertisementFilterData,
+  AdvertisementFilterResult,
+} from "~~/models/advertisements/Advertisement.Models";
+import { AdvertisementFilterOrderBy } from "~~/models/advertisements/enums/AdvertisementFilterOrderBy";
+import {
   FilterParams,
   FilterResult,
   IApiResponse,
@@ -107,5 +112,27 @@ export const DeleteSavedItem = (
 ): Promise<IApiResponse<undefined>> => {
   return FetchApi(`/account/saved/${id}`, {
     method: "delete",
+  });
+};
+
+export const DeleteAllSavedItem = (
+  id: string
+): Promise<IApiResponse<undefined>> => {
+  return FetchApi(`/account/saved`, {
+    method: "delete",
+  });
+};
+
+export const GetUserAdvertisements = (
+  pageId: number = 1,
+  take: number = 1,
+  orderBy: AdvertisementFilterOrderBy = AdvertisementFilterOrderBy.latest
+): Promise<IApiResponse<FilterResult<AdvertisementFilterData>>> => {
+  return FetchApi(`/account/adverts`, {
+    params: {
+      pageId,
+      take,
+      orderBy,
+    },
   });
 };

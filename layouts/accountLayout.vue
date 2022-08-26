@@ -57,6 +57,7 @@ onMounted( async() => {
 @media screen and (max-width: 768px) {
   .page__wraper {
     overflow: unset !important;
+    padding-bottom: 4rem;
   }
 }
 </style>

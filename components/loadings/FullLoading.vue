@@ -78,5 +78,6 @@ onUnmounted(() => {
   z-index: 100000000;
   top: 0;
   align-items: center;
+  left: 0;
 }
 </style>

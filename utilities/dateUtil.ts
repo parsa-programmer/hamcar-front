@@ -26,7 +26,7 @@ export const toPersianDate = (
   }
 };
 export const TimeAgo = (date: Date) => {
-  return timeAgo(fixNumbers(toPersianDate(date, true)));
+  return timeAgo(fixNumbers(toPersianDate(date, true))).replace("حدود ","");
 };
 
 var persianNumbers = [

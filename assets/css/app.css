@@ -228,7 +228,9 @@ hr {
 .w-auto {
     width: auto;
 }
-
+.gap-0_5{
+    gap: .5rem !important;
+}
 .p-0 {
     padding: 0;
 }

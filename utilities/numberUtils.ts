@@ -11,7 +11,7 @@ export function convertMsToMinutesSeconds(milliseconds: number) {
     : `${padTo2Digits(minutes)}:${padTo2Digits(seconds)}`;
 }
 export function splitNumber(value: number | string | null) {
-  if(value === null) {
+  if (value === null || value == undefined || value == 0) {
     return "0";
   }
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");

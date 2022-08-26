@@ -16,5 +16,6 @@ export interface AdvertisementCard {
   gearBox: string;
   imageCount: number;
   isExhibition: boolean;
+  isCar:boolean;
   price: AdvertisementPrice;
 }
