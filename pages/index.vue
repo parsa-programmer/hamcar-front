@@ -5,6 +5,8 @@
       <Title>همکار</Title>
     </Head>
     <section class="info">
+      <nuxt-link to="/test">Test</nuxt-link>
+
       <div class="container">
         <div class="info__wrapper">
           <div class="input-group info__search-box">
@@ -719,7 +721,10 @@ const isOpen = ref(false);
 const openModal = () => {
   isOpen.value = true;
 };
+onMounted(()=>{
+console.log("1233")
 
+})
 definePageMeta({
   layout: "landing",
 });

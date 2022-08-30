@@ -74,7 +74,7 @@
             TimeAgo(advert.creationDate)
           }}</span>
         </div>
-        <div class="advert__info">
+        <div class="advert__info text-center">
           <span>مدل {{ advert.year }}</span>
           <span>{{ advert.mileage }} کیلومتر</span>
           <span>{{ advert.gearBox.toString().replace("_", " ") }}</span>
@@ -103,72 +103,82 @@
           </svg>
           {{ advert.city }}، {{ advert.province }}
         </span>
+        <slot name="text" />
         <div class="advert__footer">
-          <div
-            class="advert__wrapper"
-            v-if="
-              advert.price.advertisementPaymentType ==
-              AdvertisementPaymentType.قسطی
-            "
-          >
-            <p class="advert__price">
-              {{ splitNumber(advert.price.ghest?.pishPardakht) }}
-              <span>پیش</span>
-            </p>
-            <p class="advert__price">
-              {{ splitNumber(advert.price.ghest?.amountPricePerGhest) }}
+          <template v-if="showPrice">
+            <div
+              class="advert__wrapper"
+              v-if="
+                advert.price.advertisementPaymentType ==
+                AdvertisementPaymentType.قسطی
+              "
+            >
+              <p class="advert__price">
+                {{ splitNumber(advert.price.ghest?.pishPardakht) }}
+                <span>پیش</span>
+              </p>
+              <p class="advert__price">
+                {{ splitNumber(advert.price.ghest?.amountPricePerGhest) }}
 
-              <span>ماهیانه</span>
-            </p>
-          </div>
-          <div class="advert__wrapper" v-else>
-            <p class="advert__price" v-if="advert.price.amount > 0">
-              {{ splitNumber(advert.price.amount) }}
-              <span>تومان</span>
-            </p>
-            <p class="advert__price" v-else>
-              <span class="d-mobile-none">برای اطلاع از قیمت تماس بگیرید</span>
-              <span class="d-mobile-block">توافقی</span>
-            </p>
-          </div>
+                <span>ماهیانه</span>
+              </p>
+            </div>
+            <div class="advert__wrapper" v-else>
+              <p class="advert__price" v-if="advert.price.amount > 0">
+                {{ splitNumber(advert.price.amount) }}
+                <span>تومان</span>
+              </p>
+              <p class="advert__price" v-else>
+                <span class="d-mobile-none"
+                  >برای اطلاع از قیمت تماس بگیرید</span
+                >
+                <span class="d-mobile-block">توافقی</span>
+              </p>
+            </div>
+          </template>
+          <div v-else class="advert__wrapper"></div>
           <div>
             <slot name="actions" />
           </div>
         </div>
       </div>
     </div>
-    <custom-card-mobile :advert="advert" v-else>
+    <advert-custom-card-mobile :advert="advert" v-else :show-price="showPrice">
+      <template #text v-if="$slots.text">
+        <slot name="text" />
+      </template>
       <template #actions v-if="$slots.actions">
         <slot name="actions" />
       </template>
-    </custom-card-mobile>
+    </advert-custom-card-mobile>
   </div>
 </template>
 
 <script setup lang="ts">
 import { split } from "lodash";
+import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
 import { TimeAgo } from "~~/utilities/dateUtil";
 import { GetAdvertImage, GetBitMapAdvertImage } from "~~/utilities/imageUtil";
 import { splitNumber } from "~~/utilities/numberUtils";
-import CustomCardMobile from "./customCardMobile.vue";
 
 const link = ref("");
 const isMobile = ref(false);
-const props = defineProps<{
-  advert: AdvertisementCard;
+const { advert, showPrice = true } = defineProps<{
+  advert: AdvertisementCard | AdvertisementFilterData;
+  showPrice: boolean;
 }>();
 
-if (props.advert.isCar) {
-  link.value = `/car/detail-${props.advert.shortLink}-${props.advert.brand_Model}`;
-  if (props.advert.trim) {
-    link.value += `-${props.advert.trim}`;
+if (advert.isCar) {
+  link.value = `/car/detail-${advert.shortLink}-${advert.brand_Model}`;
+  if (advert.trim) {
+    link.value += `-${advert.trim}`;
   }
 } else {
-  link.value = `/motorcycle/detail-${props.advert.shortLink}-${props.advert.brand_Model}`;
-  if (props.advert.trim) {
-    link.value += `-${props.advert.trim}`;
+  link.value = `/motorcycle/detail-${advert.shortLink}-${advert.brand_Model}`;
+  if (advert.trim) {
+    link.value += `-${advert.trim}`;
   }
 }
 

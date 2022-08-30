@@ -30,29 +30,6 @@
         :selected-plan="selectedPlan"
       />
       <div v-else>
-        <div class="row justify-content-space-between">
-          <nuxt-link to="/">
-            <img src="/img/Persian-HamCar-Logo.png" alt="همکار" class="logo" />
-          </nuxt-link>
-          <nuxt-link to="/" class="bg-white close-btn">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="26"
-              height="26"
-              viewBox="0 0 26 26"
-              fill="none"
-            >
-              <path
-                d="M23.6654 2.33398L12.9987 13.0007M12.9987 13.0007L2.33203 23.6673M12.9987 13.0007L23.6654 23.6673M12.9987 13.0007L2.33203 2.33398"
-                stroke="var(--color-gray-500)"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </nuxt-link>
-        </div>
-        <hr class="d-sm-none" />
         <register-advert-desktop-plan
           :plans="data.data ?? []"
           @planSeleced="selectPlan"
@@ -79,8 +56,8 @@ import { TransactionOrderType } from "~~/models/transactions/CreateTransactionCo
 import { CurrentDomainUrl } from "~~/utilities/api.config";
 
 definePageMeta({
-  middleware: "should-login",
   layout: "full-screen",
+  layoutTransition: { name: "slide", mode: "out-in" },
 });
 
 const isMobilePage = ref(false);
@@ -145,17 +122,3 @@ onMounted(async () => {
 </script>
 
 
-<style scoped>
-.close-btn {
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-}
-.logo {
-  position: relative;
-  top: 10px;
-}
-</style>

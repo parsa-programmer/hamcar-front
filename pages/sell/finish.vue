@@ -1,8 +1,5 @@
 <template>
   <div>
-    <Head>
-      <Link href="/css/plan.css" rel="stylesheet" />
-    </Head>
     <Teleport to="body">
       <h-delete-popup
         v-model="isShowDeletePopup"
@@ -12,6 +9,7 @@
       />
     </Teleport>
     <Head>
+      <Link href="/css/plan.css" rel="stylesheet" />
       <link href="/css/advertisement-registration.css" rel="stylesheet" />
       <Title>ثبت آگهی فروش خودرو شما</Title>
     </Head>
@@ -283,14 +281,7 @@ const getAdvert = async () => {
 };
 const showAdvert = () => {
   const router = useRouter();
-  const isCar = advert.value?.carDetail != null;
-  if (isCar) {
-    var url = `/car/detail-${advert.value?.shortLink}-${advert.value?.brand.slug}-${advert.value?.model.slug}`;
-    if (advert.value?.trim) {
-      url += "-" + advert.value.trim.englishTitle;
-    }
-    router.push(url);
-  }
+  router.push(`/profile/adverts/${advert.value?.id}`);
 };
 </script>
 

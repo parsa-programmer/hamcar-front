@@ -17,6 +17,7 @@ import {
   IApiResponse,
 } from "~~/models/IApiResponse";
 import { Address } from "~~/models/utilities/Address";
+import { BASE_URL } from "~~/utilities/api.config";
 import { FetchApi } from "~~/utilities/customFetchApi";
 
 //#region Queries
@@ -24,9 +25,6 @@ export const GetCurrenctUser = (): Promise<IApiResponse<UserDto>> => {
   return FetchApi("/account", {}, { ignoreErrors: true });
 };
 
-export const GetAccessNotifyCount = (): Promise<IApiResponse<number>> => {
-  return FetchApi("/account/notifyAccessCount");
-};
 
 export const GetNardebanCount = (): Promise<IApiResponse<number>> => {
   return FetchApi("/account/nardebans");
@@ -99,6 +97,12 @@ export const DeleteNote = (id: string): Promise<IApiResponse<undefined>> => {
   });
 };
 
+export const DeleteAllNote = (): Promise<IApiResponse<undefined>> => {
+  return FetchApi(`/account/notes`, {
+    method: "delete",
+  });
+};
+
 export const SaveAdvertisement = (
   advertId: string
 ): Promise<IApiResponse<undefined>> => {
@@ -133,6 +137,7 @@ export const GetUserAdvertisements = (
       pageId,
       take,
       orderBy,
+      ShowInActiveAdverts: false,
     },
   });
 };

@@ -1,18 +1,20 @@
 <template>
   <div class="profile__content">
+    <Head>
+      <Title>یادداشت ها</Title>
+    </Head>
     <client-only>
       <account-top-bar :is-show-cards="false" />
       <div class="card row justify-content-space-between">
         <div>
           <p class="font-4">
-            ذخیره شده ها
-
+            یادداشت ها
             <small class="text__description font-5"
-              >( {{ accountStore.advertSaved.length }} آگهی ذخیره شده)</small
+              >( {{ notes.length }} یادداشت)</small
             >
           </p>
         </div>
-        <div class="d-mobile-none" v-if="accountStore.advertSaved.length>=1">
+        <div class="d-mobile-none" v-if="notes.length >= 1">
           <p
             class="color-error font-4 cursor-pointer"
             @click="openDeletePopup('all')"
@@ -24,19 +26,22 @@
       <skeleton-loading-search-advert
         :show-type="1"
         style="width: 100%; overflow: hidden"
-        v-if="accountStore.loading"
+        v-if="dataLoading"
       />
       <div
         class="advertising__row advertising__row--wide-item"
-        v-else-if="accountStore.advertSaved.length >= 1"
+        v-else-if="notes.length >= 1"
       >
         <advert-custom-card
-          v-for="item in accountStore.advertSaved"
+          v-for="item in notes"
           :key="item.id"
           :advert="item.advertisement"
           class="mobile-card"
-          :show-price="true"
+          :show-price="false"
         >
+          <template #text>
+            <p class="mt-1 font-6 mb-1" v-text="item.text"></p>
+          </template>
           <template #actions>
             <p
               class="
@@ -70,8 +75,9 @@
         </advert-custom-card>
       </div>
       <h-delete-popup
-        @accepted="deleteSaved"
+        @accepted="deleteNote"
         v-model="isOpenModal"
+        description="آیا از حذف یادداشت مطمعا هستید ؟"
       ></h-delete-popup>
     </client-only>
     <loadings-full-loading v-if="loading" />
@@ -80,49 +86,61 @@
 
 <script lang="ts" setup>
 import { Ref } from "vue";
-import { IApiResponse } from "~~/models/IApiResponse";
-import {
-  DeleteAllSavedItem,
-  DeleteSavedItem,
-} from "~~/services/account.service";
+import { UserNoteFilterData } from "~~/models/account/account.Models";
+import { FilterResult, IApiResponse } from "~~/models/IApiResponse";
+import { GetNotes, DeleteNote, DeleteAllNote } from "~~/services/account.service";
 import { useAccountStore } from "~~/stores/account.store";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
 
 const accountStore = useAccountStore();
 const selectedItem: Ref<string> = ref("");
 
+const notes: Ref<UserNoteFilterData[]> = ref([]);
 const isOpenModal = ref(false);
 const loading = ref(false);
 const toast = useToast();
+const dataLoading = ref(false);
 
 const openDeletePopup = (id: string) => {
   selectedItem.value = id;
   isOpenModal.value = true;
 };
-const deleteSaved = async () => {
+const deleteNote = async () => {
   if (selectedItem.value == "all") {
     var res = await ProssesAsync<IApiResponse<undefined>>(
-      () => DeleteAllSavedItem(selectedItem.value),
+      () => DeleteAllNote(),
       loading
     );
     if (res.isSuccess) {
       toast.showToast("عملیات با موفقیت انجام شد");
-      accountStore.deleteAllSavedItem();
+      notes.value=[];
       selectedItem.value = "";
     }
   } else {
     var res = await ProssesAsync<IApiResponse<undefined>>(
-      () => DeleteSavedItem(selectedItem.value),
+      () => DeleteNote(selectedItem.value),
       loading
     );
     if (res.isSuccess) {
       toast.showToast("عملیات با موفقیت انجام شد");
-      accountStore.deleteSavedItem(selectedItem.value);
+      notes.value = notes.value.filter((f) => f.id != selectedItem.value);
       selectedItem.value = "";
     }
   }
 };
-
+onMounted(async () => {
+  var result = await ProssesAsync<
+    IApiResponse<FilterResult<UserNoteFilterData>>
+  >(
+    () =>
+      GetNotes({
+        pageId: 1,
+        take: 100,
+      }),
+    dataLoading
+  );
+  notes.value = result.data?.data ?? [];
+});
 definePageMeta({
   layout: "account-layout",
 });

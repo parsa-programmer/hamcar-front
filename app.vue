@@ -13,9 +13,13 @@
         rel="stylesheet"
       />
     </Head>
-    <ThePageLoading />
     <NuxtLayout>
-      <TheLoadingBar :height="5" :duration="10000" />
+      <!-- <TheLoadingBar :height="5" :duration="10000" /> -->
+      <NuxtLoadingIndicator
+        :height="5"
+        :duration="10000"
+        color="repeating-linear-gradient(to right,#00dc82 0%, #34cdfe 50%, #0047e1 100%)"
+      />
       <NuxtPage />
     </NuxtLayout>
   </div>

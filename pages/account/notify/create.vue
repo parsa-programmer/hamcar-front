@@ -1,16 +1,16 @@
 <template>
-  <div class="bg-white">
-    <h-button>Salam</h-button>
+  <div>
+    <account-notify-create />
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
+
 definePageMeta({
   layout: "full-screen",
   layoutTransition: { name: "slide", mode: "out-in" },
 });
 </script>
 
-<style >
-
+<style>
 </style>

@@ -12,7 +12,7 @@
           <account-the-side-bar />
           <account-the-mobile-side-bar />
           <div class="page__wraper">
-            <slot></slot>
+            <slot />
           </div>
         </section>
       </div>
@@ -28,10 +28,14 @@ const route = useRoute();
 const toast = useToast();
 const router = useRouter();
 
-
 const accountStore = useAccountStore();
-
-onMounted( async() => {
+definePageMeta({
+  layoutTransition: {
+    enterActiveClass: "animate__animated animate__slideInUp animate__faster",
+    leaveActiveClass: "animate__animated animate__slideOutDown animate__faster",
+  },
+});
+onMounted(async () => {
   await accountStore.initData();
 
   var { transaction } = route.query;
@@ -58,6 +62,9 @@ onMounted( async() => {
   .page__wraper {
     overflow: unset !important;
     padding-bottom: 4rem;
+  }
+  .main {
+    padding-top: 0.5rem !important;
   }
 }
 </style>

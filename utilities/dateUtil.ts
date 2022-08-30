@@ -1,4 +1,5 @@
-import { timeAgo } from "@persian-tools/persian-tools";
+import { remainingTime, timeAgo } from "@persian-tools/persian-tools";
+import { padTo2Digits } from "./numberUtils";
 
 export const toPersianDate = (
   date: Date,
@@ -17,7 +18,7 @@ export const toPersianDate = (
       minute: "2-digit",
       second: "2-digit",
     });
-    if(withDashBetweenTimeAndDate){
+    if (withDashBetweenTimeAndDate) {
       return pDate + " ـ " + time;
     }
     return pDate + " " + time;
@@ -26,9 +27,14 @@ export const toPersianDate = (
   }
 };
 export const TimeAgo = (date: Date) => {
-  return timeAgo(fixNumbers(toPersianDate(date, true))).replace("حدود ","");
+  return timeAgo(fixNumbers(toPersianDate(date, true))).replace("حدود ", "");
 };
-
+export const TemainingTime = (date: Date) => {
+  //console.log(date);
+  //console.log(fixNumbers(toPersianDate(date, true)));
+  var res=remainingTime(date);
+  return `${res.days}`
+};
 var persianNumbers = [
     /۰/g,
     /۱/g,
@@ -80,6 +86,7 @@ export const getPersianDate = (date: Date, format: string) => {
   let day = today.getDate();
   let month = today.getMonth() + 1;
   let year = today.getFullYear();
+
   year = window.navigator.userAgent.indexOf("MSIE") > 0 ? year : 1900 + year;
   if (year == 0) {
     year = 2000;
@@ -211,10 +218,23 @@ export const getPersianDate = (date: Date, format: string) => {
         break;
     }
   }
+
+  var ye = new Date(date).toLocaleDateString("fa-IR").split("/")[0];
   if (format === null || format === undefined)
     return `${week[d]} ${day} ${months[month - 1]} ${year}`;
   if (format === "y/m/d") return `${year}/${month}/${day}`;
   if (format === "d/m/y") return `${day}/${month}/${year}`;
-  if (format === "M/dd/D") return `${week[d]} ${day} ${months[month - 1]}`;
-  if (format === "M/dd") return `${day} ${months[month - 1]}`;
+  if (format === "M/dd/D") return `${week[d]} ${day} ${months[month - 1]}`; //چهارشنبه 12 مرداد
+  if (format === "M/dd") return `${day} ${months[month - 1]}`; //3 شهريور
+  if (format === "y/M/dd")
+    return ` ${padTo2Digits(day)} / ${months[month - 1]} / ${ye}`; //04 / شهريور / ۱۴۰۱
+};
+
+export const GetTime = (date: Date): string => {
+  var hours = date.getHours().toString();
+  hours = ("0" + hours).slice(-2);
+  var min = date.getMinutes().toString();
+  min = ("0" + min).slice(-2);
+
+  return `${hours}:${min}`;
 };

@@ -111,9 +111,9 @@
     [data-theme="dark"] .mobile-card {
         background-color: var(--body-bg-color) !important;
     }
-    [data-theme="dark"] .card {
+    /* [data-theme="dark"] .card {
         background-color: var(--body-bg-color) !important;
-    }
+    } */
     [data-theme="dark"] .item.active .item-icon {
         background-color: var(--body-bg-color) !important;
     }

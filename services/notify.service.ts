@@ -5,11 +5,12 @@ import {
 } from "~~/models/IApiResponse";
 import { CreateNotifyCommand } from "~~/models/notify/Notify.Commands";
 import {
-  NotifyAdvertisementFilterData,
   NotifyAdvertisementFilterParams,
   NotifyFilterData,
 } from "~~/models/notify/Notify.Models";
+import { BASE_URL } from "~~/utilities/api.config";
 import { FetchApi } from "~~/utilities/customFetchApi";
+import { RemoveEmptyProps } from "~~/utilities/objectUtils";
 
 export const GetNotifies = (
   filterParams: FilterParams
@@ -19,9 +20,13 @@ export const GetNotifies = (
   });
 };
 
+export const GetRemainingNotifiesCount = (): Promise<IApiResponse<number>> => {
+  return FetchApi("/notify/getRemaining");
+};
 export const CreateNotify = (
   command: CreateNotifyCommand
 ): Promise<IApiResponse<undefined>> => {
+  RemoveEmptyProps(command);
   return FetchApi("/notify", {
     method: "POST",
     body: command,
@@ -30,7 +35,7 @@ export const CreateNotify = (
 
 export const GetNotifyAdvertisements = (
   filterParams: NotifyAdvertisementFilterParams
-): Promise<IApiResponse<FilterResult<NotifyAdvertisementFilterData>>> => {
+): Promise<IApiResponse<FilterResult<NotifyFilterData>>> => {
   return FetchApi("/notify/advertisements", {
     params: filterParams,
   });

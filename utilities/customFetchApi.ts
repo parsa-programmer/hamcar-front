@@ -18,7 +18,6 @@ export async function FetchApi<T>(
   if (!config.headers) {
     config.headers = {};
   }
-
   if (store.accessToken) {
     // @ts-ignore: Unreachable code erro
     config.headers["Authorization"] = `Bearer ${store.accessToken}`;
@@ -29,8 +28,9 @@ export async function FetchApi<T>(
       customConfig.ignoreErrors == false ||
       customConfig.ignoreErrors == undefined
     ) {
-      console.log(result.metaData.message);
-      toast.showToast(result.metaData.message, ToastType.error, 3000);
+      if (process.server == false) {
+        toast.showToast(result.metaData.message, ToastType.error, 3000);
+      }
     }
   }
   return $fetch<IApiResponse<T>>(url, config)
@@ -48,7 +48,8 @@ export async function FetchApi<T>(
         data: undefined,
         isSuccess: false,
         metaData: {
-          message: e.response?._data?.MetaData?.Message??"مشکلی در عملیات رخ داده",
+          message:
+            e.response?._data?.MetaData?.Message ?? "مشکلی در عملیات رخ داده",
           appStatusCode: e.response?._data?.MetaData?.AppStatusCode,
         },
       };

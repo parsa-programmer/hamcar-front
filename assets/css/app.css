@@ -201,10 +201,11 @@ hr {
 .card-color {
     background: var(--color-white);
 }
-.card{
+
+.card {
     background: var(--color-white);
     border-radius: var(--app-border-radius);
-    padding: 2rem ;
+    padding: 2rem;
 }
 
 
@@ -228,9 +229,19 @@ hr {
 .w-auto {
     width: auto;
 }
-.gap-0_5{
+
+.text-decoration {
+    text-decoration: underline;
+}
+
+.border-none {
+    border: none !important;
+}
+
+.gap-0_5 {
     gap: .5rem !important;
 }
+
 .p-0 {
     padding: 0;
 }
@@ -267,9 +278,11 @@ hr {
 .color-error {
     color: var(--color-error);
 }
-.color-blue{
+
+.color-blue {
     color: var(--color-blue);
 }
+
 .color-green {
     color: var(--color-green);
 }
@@ -375,6 +388,10 @@ hr {
 
 .py-1 {
     padding: 1rem 0;
+}
+
+.py-2 {
+    padding: 2rem 0 !important;
 }
 
 .mt-1 {
@@ -578,7 +595,7 @@ body {
     display: block;
 }
 
-.nav__menu .nav__item:hover {
+.nav__menu .nav__item.has__menu:hover {
     border-bottom: 2px solid var(--color-black);
 
 }
@@ -1085,9 +1102,11 @@ button {
         max-width: 100%;
     }
 }
-.d-mobile-block{
+
+.d-mobile-block {
     display: none;
 }
+
 @media screen and (max-width: 768px) {
     .company__serach-box {
         display: none;
@@ -1096,16 +1115,20 @@ button {
     .d-mobile-none {
         display: none !important;
     }
-    .d-mobile-block{
+
+    .d-mobile-block {
         display: block !important;
 
     }
+
     .mobile-card {
         box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.06);
     }
-    .card{
-        padding:  0 !important;
+
+    .card {
+        padding: 0 !important;
     }
+
     body {
         background-color: var(--color-white);
     }
@@ -1358,5 +1381,43 @@ button {
         width: 100% !important;
     }
 
+    .profile__not-Found {
+        margin-top: 7rem !important;
+        text-align: center;
+    }
 
+    .profile__not-Found p {
+        font-size: var(--t3-font-size);
+        font-family: var(--t3-font-family);
+
+    }
+
+    .profile__title p {
+        font-family: var(--t5-font-family) !important;
+        font-size: var(--t5-font-size) !important;
+    }
+}
+
+.profile__not-Found {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8rem;
+}
+
+.pageTitle__row {
+    margin-top: 1rem;
+}
+
+.pageTitle__row .btn {
+    width: 48% !important;
+}
+
+@media screen and (max-width:768px) {
+
+    .pageTitle__row .btn,
+    .page__title .btn span {
+        font-family: var(--t6-font-family) !important;
+        font-size: var(--t6-font-size) !important;
+    }
 }

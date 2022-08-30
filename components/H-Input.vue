@@ -160,7 +160,7 @@ const props = defineProps({
   },
   modelValue: {
     default: "",
-    type: String,
+    type: String || null,
   },
   type: {
     default: "text",

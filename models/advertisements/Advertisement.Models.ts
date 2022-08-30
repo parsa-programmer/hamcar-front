@@ -42,6 +42,9 @@ export interface AdvertisementFilterData {
   isExhibition: boolean;
   status: string;
   price: AdvertisementPrice;
+  isCar: boolean;
+  visit: number;
+  plan: string;
 }
 export interface AdvertisementFilterResult {
   filterResult: FilterResult<AdvertisementFilterData>;
@@ -113,6 +116,7 @@ export interface AdvertisementDto {
   year: Year;
   trim: Trim;
   plan: AdvertPlanInfo;
+  status:string;
   exhibition: ExhibitionDto;
 }
 export interface AdvertPlanInfo {

@@ -134,3 +134,14 @@ export const DeleteImage = (
     },
   });
 };
+
+export const MoveToTrash = (
+  advertId: string
+): Promise<IApiResponse<undefined>> => {
+  return FetchApi(`/advertisement`, {
+    method: "DELETE",
+    params: {
+      id: advertId,
+    },
+  });
+};

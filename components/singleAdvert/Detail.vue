@@ -44,6 +44,7 @@
         </div>
       </Transition>
       <div class="ads__details-list">
+        <slot/>
         <div class="ads__detail align-items-start">
           <span class="ads__detail-name row-price">
             <div class="row">

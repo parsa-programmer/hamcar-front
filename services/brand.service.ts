@@ -17,3 +17,7 @@ export const GetYears = (modelId: string): Promise<IApiResponse<Year[]>> => {
 export const GetTrims = (yearId: string): Promise<IApiResponse<Trim[]>> => {
   return FetchApi(`/brands/getTrims/${yearId}`);
 };
+
+export const GetTrimsByModelId = (modelId: string): Promise<IApiResponse<Trim[]>> => {
+  return FetchApi(`/brands/getTrims/byModel/${modelId}`);
+};

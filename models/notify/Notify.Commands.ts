@@ -1,17 +1,15 @@
-import { AdvertisementType } from "../advertisements/enums/AdvertisementStatus";
+import { AdvertisementType } from "../advertisements/enums/AdvertisementType";
 
-export class CreateNotifyCommand {
-  constructor(
-    public advertisementType: AdvertisementType,
-    public brandId: string,
-    public modelId: string,
-    public trimId: string,
-    public modelTitle: string,
-    public brandTitle: string,
-    public trimTitle: string,
-    public startYear: number,
-    public endYear: number,
-    public startPrice: number,
-    public endPrice: number
-  ) {}
+export interface CreateNotifyCommand {
+  advertisementType: AdvertisementType;
+  brandId: string;
+  modelId: string;
+  trimId: string | null;
+  modelTitle: string;
+  brandTitle: string;
+  trimTitle: string | null;
+  startYear: number | null;
+  endYear: number | null;
+  startPrice: number | null;
+  endPrice: number | null;
 }

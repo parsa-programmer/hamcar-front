@@ -1,8 +1,5 @@
 <template>
   <div>
-    <Teleport to="#header">
-      <the-header :show-search-bar="false" showSearchIcon></the-header>
-    </Teleport>
     <register-advert-steps class="mt-1" />
     <div>
       <h2 class="page__sub__title">پلن موردنظر خود را انتخاب کنید:</h2>

@@ -4,7 +4,7 @@
       <h-image :src="GetBitMapAdvertImage(advert.id, advert.imageName)" />
     </div>
     <div class="advert__mobile-body">
-      <div class="body__top">
+      <div class="body__top font-5">
         <p>{{ advert.title }}</p>
         <span class="time__ago">({{ TimeAgo(advert.creationDate) }})</span>
       </div>
@@ -50,7 +50,6 @@
           </span>
         </div>
         <slot name="text" />
-
       </div>
       <div
         class="body__footer justify-content-space-between align-items-center"
@@ -78,13 +77,13 @@
             </p>
           </template>
           <template v-if="advert.price.amount > 0"
-            >{{ advert.price.amount }}
+            >{{ splitNumber(advert.price.amount) }}
             <span>تومان</span>
           </template>
         </div>
         <div v-else></div>
         <div class="footer--actions">
-          <slot name="actions" />
+          <slot name="actions"/>
         </div>
       </div>
     </div>
@@ -94,19 +93,21 @@
 
 <script setup lang="ts">
 import { timeAgo } from "@persian-tools/persian-tools";
-import { on } from "events";
 import { split } from "lodash";
+import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
+import { useAccountStore } from "~~/stores/account.store";
 import { TimeAgo } from "~~/utilities/dateUtil";
 import { GetAdvertImage, GetBitMapAdvertImage } from "~~/utilities/imageUtil";
 import { splitNumber } from "~~/utilities/numberUtils";
 
+const isOpenNardebanModal = ref(false);
 const link = ref("");
+const accountStore = useAccountStore();
 const props = defineProps<{
-  advert: AdvertisementCard;
+  advert: AdvertisementFilterData;
   showPrice: boolean;
-
 }>();
 
 if (props.advert.isCar) {
@@ -120,7 +121,10 @@ if (props.advert.isCar) {
     link.value += `-${props.advert.trim}`;
   }
 }
-
+const emit = defineEmits(["openNardeban"]);
+const openNardebanModal = () => {
+  emit("openNardeban", props.advert.id);
+};
 </script>
 
 
@@ -148,6 +152,13 @@ if (props.advert.isCar) {
 }
 .advert__info {
   margin: 0 !important;
+}
+.nardeban {
+  width: 64px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  font-family: var(--t6-font-family);
+  font-size: var(--t6-font-size);
 }
 .advert__mobile {
   display: flex;

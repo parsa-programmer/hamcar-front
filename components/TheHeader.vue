@@ -20,7 +20,7 @@
             </nuxt-link>
           </div>
           <ul class="nav__menu">
-            <li class="nav__item">
+            <li class="nav__item has__menu">
               <a href="#" class="nav__link title">خودرو</a>
               <ul>
                 <li>
@@ -32,15 +32,12 @@
                 <li>
                   <nuxt-link to="/car-reviews">مشخصات فنی خودرو</nuxt-link>
                 </li>
-              
+
                 <li>
                   <nuxt-link to="/">گوش به زنگ خودرو</nuxt-link>
                 </li>
                 <li>
                   <nuxt-link to="/">نمایشگاه های خودرو</nuxt-link>
-                </li>
-                <li>
-                  <ChangeTheme></ChangeTheme>
                 </li>
               </ul>
             </li>
@@ -49,11 +46,13 @@
               <a href="#" class="nav__link">موتور سیکلت</a>
             </li>
             <li class="nav__item">
-              <nuxt-link to="/price" class="nav__link">قیمت ها</nuxt-link>
-            </li>
-            <li class="nav__item">
               <a href="#" class="nav__link">همکار من</a>
             </li>
+            <client-only>
+              <li class="nav__item change__theme">
+                <ChangeTheme></ChangeTheme>
+              </li>
+            </client-only>
           </ul>
         </div>
         <div :class="['nav__register', { 'disable-element': showSearchIcon }]">
@@ -108,7 +107,10 @@
             </svg>
           </div>
           <div class="nav__icon nav__icon--search-icon">
-            <h-icon hash-color="var(--color-black)" :icon="Icon.search"></h-icon>
+            <h-icon
+              hash-color="var(--color-black)"
+              :icon="Icon.search"
+            ></h-icon>
           </div>
         </div>
         <div class="nav__icon nav__icon--bars-icon" v-else>
@@ -196,3 +198,10 @@ const props = defineProps({
   },
 });
 </script>
+<style scoped>
+.change__theme {
+  width: 48px;
+  height: 24px;
+  padding-top: 5px;
+}
+</style>

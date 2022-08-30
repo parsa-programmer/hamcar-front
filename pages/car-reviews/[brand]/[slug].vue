@@ -150,7 +150,11 @@
             </span>
             مقایسه
           </nuxt-link>
-          <nuxt-link v-if="carPrice" :to="`/price/${carPrice?.carPriceSlug}`" class="technical__option">
+          <nuxt-link
+            v-if="carPrice"
+            :to="`/price/${carPrice?.carPriceSlug}`"
+            class="technical__option"
+          >
             <span>
               <svg
                 width="24"
@@ -371,7 +375,7 @@
           </div>
         </div>
         <nuxt-link
-          to="/"
+          :to="`/car/${carReview.carReviewBrand.slug}-${carReview.carReviewModel.slug}`"
           v-if="relatedAdvertCount > 0"
           class="btn btn-primary technical__link"
           >مشاهده {{ relatedAdvertCount }} آگهی مرتبط
@@ -444,6 +448,7 @@ import { GetAdvertisementType } from "~~/models/advertisements/Advertisement.Mod
 import { CommentType } from "~~/models/comments/CommentType.Enum";
 import { CarPriceDetail } from "~~/models/carPrices/CarPriceModels";
 import { GetByBrand } from "~~/services/carPrice.service";
+import { AdvertisementType } from "~~/models/advertisements/enums/AdvertisementType";
 
 const isOpenBugReportModal: Ref<boolean> = ref(false);
 const isOpenShareModal: Ref<boolean> = ref(false);
@@ -513,11 +518,15 @@ onMounted(async () => {
           .classList.remove("technical__description--limited");
       });
   }, 100);
-  var res = await GetAdvertCount(GetAdvertisementType.model, {
-    model: carReview.value!.carReviewModel.slug,
-    modelType: null,
-    exhibitionId: null,
-  });
+  var res = await GetAdvertCount(
+    GetAdvertisementType.model,
+    AdvertisementType.car,
+    {
+      model: carReview.value!.carReviewModel.slug,
+      modelType: null,
+      exhibitionId: null,
+    }
+  );
   relatedAdvertCount.value = res.data!;
 
   var carPriceResult = await GetByBrand(
@@ -525,7 +534,9 @@ onMounted(async () => {
     carReview.value!.carReviewModel.slug,
     carReview.value!.trim?.englishTitle
   );
-  carPrice.value = carPriceResult ?? null;
+  if (carPriceResult && carPriceResult.details.length >= 1) {
+    carPrice.value = carPriceResult.details[0];
+  }
 });
 </script>
 <style scoped>

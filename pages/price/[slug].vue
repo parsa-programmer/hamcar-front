@@ -118,7 +118,7 @@
             </div>
           </div>
         </div>
-        <div class="chart-wrapper ">
+        <div class="chart-wrapper">
           <client-only>
             <apexchart
               id="price-list-chart"
@@ -191,6 +191,7 @@ import { GetAdvertisementType } from "~~/models/advertisements/Advertisement.Mod
 import { GetByModel } from "~~/services/carReview.service";
 import carReviewVue from "~~/components/skeletonLoading/carReview.vue";
 import { CarReviewDto } from "~~/models/carReviews/CarReviewModels";
+import { AdvertisementType } from "~~/models/advertisements/enums/AdvertisementType";
 
 const route = useRoute();
 const { slug } = route.params;
@@ -400,13 +401,17 @@ onMounted(async () => {
   });
   setTimeout(() => {
     series.value = chartdata;
-  }, 100);
+  }, 500);
 
-  var res = await GetAdvertCount(GetAdvertisementType.model, {
-    model: carPriceData.value.model.slug,
-    exhibitionId: null,
-    modelType: null,
-  });
+  var res = await GetAdvertCount(
+    GetAdvertisementType.model,
+    AdvertisementType.car,
+    {
+      model: carPriceData.value.model.slug,
+      exhibitionId: null,
+      modelType: null,
+    }
+  );
   if ((res.data ?? 0) > 0) {
     haveAdvert.value = true;
   }

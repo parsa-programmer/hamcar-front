@@ -157,7 +157,11 @@
         </div>
       </div>
     </div>
-    <h-modal v-model="isOpenBuyModal" :showHeader="false">
+    <h-modal
+      v-model="isOpenBuyModal"
+      :showHeader="false"
+      modalClass="overflow-none"
+    >
       <account-buy-nardeban @cancel="() => (isOpenBuyModal = false)" />
     </h-modal>
     <h-modal
@@ -353,7 +357,7 @@ const props = defineProps({
   .dashboard__top {
     display: none;
   }
- 
+
   .icon__mobile {
     display: block;
   }
@@ -387,7 +391,7 @@ const props = defineProps({
     padding: 1rem 0.5rem;
     outline: 4px solid #fefefe;
   }
- 
+
   .history {
     flex-direction: row;
     margin-top: 40px;
@@ -399,6 +403,9 @@ const props = defineProps({
   }
   .ladder__left {
     padding: 40px 2rem;
+  }
+  .cards {
+    margin-top: 1rem;
   }
 }
 </style>

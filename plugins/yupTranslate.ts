@@ -1,5 +1,7 @@
-import { setLocale, addMethod, string } from "yup";
+import { setLocale, addMethod, string, number } from "yup";
 import { phoneNumberValidator } from "@persian-tools/persian-tools";
+import { ErrorMessage } from "vee-validate";
+import { isNull } from "lodash";
 
 export default defineNuxtPlugin(() => {
   setLocale({
@@ -12,14 +14,16 @@ export default defineNuxtPlugin(() => {
     },
     number: {
       min: " حداقل مقدار ${path} ${min} است",
-      
-    }
+    },
   });
   addMethod(string, "phoneNumber", function phoneNumber(phoneNumber: string) {
-    return this.test("phoneNumber","شماره موبایل نامعتبر است",function (value) {
-        if(value===undefined) return true;
+    return this.test(
+      "phoneNumber",
+      "شماره موبایل نامعتبر است",
+      function (value) {
+        if (value === undefined) return true;
         return phoneNumberValidator(value?.toString()!);
-    });
+      }
+    );
   });
- 
 });

@@ -294,6 +294,7 @@ input[disabled]{
     font-size: var(--t4-font-size);
     color: var(--color-black);
     cursor: pointer;
+    transition: all ease .2s;
 }
 
 .btn-default-size {
@@ -319,7 +320,9 @@ input[disabled]{
     color: var(--color-white);
     background-color: var(--color-blue);
 }
-
+.btn-primary:hover{
+    background-color: #0068d6;
+}
 .btn-default {
     color: var(--color-gray-500);
     border: 2px solid var(--color-gray-400);
@@ -334,6 +337,9 @@ input[disabled]{
 .btn-error {
     color: var(--color-white);
     background-color: var(--color-error);
+}
+.btn-error:hover{
+    background-color: #d42e2e;
 }
 
 .btn-orange {
@@ -354,8 +360,8 @@ input[disabled]{
 }
 
 button[disabled] {
-    background-color: var(--color-blue-200);
     cursor: no-drop;
+    opacity: .5;
 }
 
 @media screen and (max-width: 768px) {

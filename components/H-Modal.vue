@@ -15,7 +15,7 @@
     >
       <!--  modal-wrapper--normal    -->
 
-      <div class="modal" v-if="modelValue">
+      <div :class="['modal', modalClass]" v-if="modelValue">
         <div
           :class="[
             'modal__header',
@@ -39,6 +39,9 @@
         </div>
         <div class="modal__body">
           <slot></slot>
+          <div class="modal__actions mt-1_5" v-if="$slots.actions">
+            <slot name="actions" />
+          </div>
         </div>
       </div>
     </div>
@@ -74,6 +77,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  modalClass: {
+    type: String,
+    default: "overflow-auto",
+  },
 });
 
 const store = UseUtilStore();
@@ -96,10 +103,21 @@ const closeModal = () => {
 </script>
 
 <style>
+.overflow-auto {
+  overflow: auto;
+}
+.overflow-none{
+  overflow: initial !important;
+}
+.modal__actions {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 1rem;
+}
 body.modal-open {
   overflow: hidden;
+  height: 100vh;
 }
-
 .modal-wrapper {
   display: none;
   align-items: center;
@@ -109,7 +127,6 @@ body.modal-open {
   right: 0;
   bottom: 0;
   z-index: 999;
-  overflow-y: auto;
 }
 
 .modal-wrapper--open {
@@ -125,6 +142,7 @@ body.modal-open {
   margin: 4rem auto 2rem auto;
   flex-shrink: 0;
   max-height: 90%;
+  overflow: auto;
 }
 .modal-fix-header .modal__close-btn {
   background-color: var(--color-gray-200);
@@ -152,7 +170,6 @@ body.modal-open {
   padding: 40px 40px 0 1.625rem;
   min-height: 4rem;
   border-radius: 20px;
-
 }
 .modal__header {
   position: relative;

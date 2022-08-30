@@ -16,3 +16,4 @@ export function splitNumber(value: number | string | null) {
   }
   return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+

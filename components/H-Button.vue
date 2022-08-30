@@ -1,6 +1,6 @@
 <template>
   <button
-    :class="['btn', outline ? 'btn-primary-outline' : `btn-${props.color}`]"
+    :class="['btn', outline ? `btn-${color}-outline` : `btn-${props.color}`]"
     :disabled="loading"
   >
     <div :style="loading==true?`opacity:0`:null">

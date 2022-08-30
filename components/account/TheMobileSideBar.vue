@@ -33,38 +33,38 @@
           </nuxt-link>
           ذخیره شده ها
         </div>
-        <div class="item">
-          <nuxt-link class="item-icon">
+        <div :class="['item', { active: path == '/account/notify' }]">
+          <nuxt-link to="/account/notify" class="item-icon">
             <icons-notification hash-color="#0FE784" :width="23" :height="28" />
           </nuxt-link>
           گوش به زنگ
         </div>
-        <div class="item">
-          <nuxt-link class="item-icon">
+        <div :class="['item', { active: path == '/account/parking' }]">
+          <nuxt-link to="/account/parking" class="item-icon">
             <icons-parking hash-color="#F724D5" :width="28" :height="28" />
           </nuxt-link>
           پارکینگ
         </div>
-        <div class="item">
-          <nuxt-link class="item-icon">
+        <div :class="['item', { active: path == '/account/messages' }]">
+          <nuxt-link to="/account/messages" class="item-icon">
             <account-icons-comment />
           </nuxt-link>
           پیام های من
         </div>
-        <div class="item">
-          <nuxt-link class="item-icon">
+        <div :class="['item', { active: path == '/account/transactions' }]">
+          <nuxt-link to="/account/transactions" class="item-icon">
             <icons-wallet :width="28" :height="28" hash-color="#FFD600" />
           </nuxt-link>
           لیست تراکنش ها
         </div>
-        <div class="item">
-          <nuxt-link class="item-icon">
+        <div :class="['item', { active: path == '/account/notes' }]">
+          <nuxt-link to="/account/notes" class="item-icon">
             <icons-edit :width="28" :height="28" hash-color="#5B6CFF" />
           </nuxt-link>
           یادداشت ها
         </div>
-        <div class="item">
-          <nuxt-link class="item-icon">
+        <div :class="['item', { active: path == '/account/packages' }]">
+          <nuxt-link to="/account/packages" class="item-icon">
             <icons-megaphone hash-color="#07DCD5" />
           </nuxt-link>
           پکیج ها
