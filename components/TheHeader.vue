@@ -55,75 +55,82 @@
             </client-only>
           </ul>
         </div>
-        <div :class="['nav__register', { 'disable-element': showSearchIcon }]">
-          <client-only>
-            <div class="row align-items-center" v-if="store.loading">
-              <h-skeletor style="height: 15px" type="box" width="120px" />
-              <h-skeletor style="height: 72px" type="box" width="180px" />
+        <template v-if="showMobileIcons">
+          <div
+            :class="['nav__register', { 'disable-element': showSearchIcon }]"
+          >
+            <client-only>
+              <div class="row align-items-center" v-if="store.loading">
+                <h-skeletor style="height: 15px" type="box" width="120px" />
+                <h-skeletor style="height: 72px" type="box" width="180px" />
+              </div>
+              <template v-else>
+                <nuxt-link
+                  to="/auth/login"
+                  class="
+                    btn btn-transparent
+                    nav__register-link nav__register-link--login
+                  "
+                  v-if="isLogin == false"
+                >
+                  ورود / ثبت نام
+                </nuxt-link>
+                <nuxt-link
+                  to="/account"
+                  class="
+                    btn btn-transparent
+                    nav__register-link nav__register-link--login
+                  "
+                  v-else
+                >
+                  حساب کاربری
+                </nuxt-link>
+                <nuxt-link
+                  href="/sell/car"
+                  class="
+                    btn btn-primary
+                    nav__register-link nav__register-link--new
+                  "
+                >
+                  ثبت آگهی رایگان
+                </nuxt-link>
+              </template>
+            </client-only>
+          </div>
+          <div class="nav__icons-wrapper" v-if="showSearchIcon">
+            <div class="nav__icon nav__icon--bars-icon">
+              <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
+                <path
+                  d="M1.42969 1.42847H18.574M1.42969 7.14323H18.574M1.42969 12.858H18.574"
+                  stroke="var(--color-black)"
+                  stroke-width="1.50012"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
             </div>
-            <template v-else>
-              <nuxt-link
-                to="/auth/login"
-                class="
-                  btn btn-transparent
-                  nav__register-link nav__register-link--login
-                "
-                v-if="isLogin == false"
-              >
-                ورود / ثبت نام
-              </nuxt-link>
-              <nuxt-link
-                to="/auth/login"
-                class="
-                  btn btn-transparent
-                  nav__register-link nav__register-link--login
-                "
-                v-else
-              >
-                حساب کاربری
-              </nuxt-link>
-              <nuxt-link
-                href="/sell/car"
-                class="
-                  btn btn-primary
-                  nav__register-link nav__register-link--new
-                "
-              >
-                ثبت آگهی رایگان
-              </nuxt-link>
-            </template>
-          </client-only>
-        </div>
-        <div class="nav__icons-wrapper" v-if="showSearchIcon">
-          <div class="nav__icon nav__icon--bars-icon">
+            <div class="nav__icon nav__icon--search-icon">
+              <h-icon
+                hash-color="var(--color-black)"
+                :icon="Icon.search"
+              ></h-icon>
+            </div>
+          </div>
+          <div class="nav__icon nav__icon--bars-icon" v-else>
             <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
               <path
                 d="M1.42969 1.42847H18.574M1.42969 7.14323H18.574M1.42969 12.858H18.574"
-                stroke="var(--color-black)"
+                stroke="#0F0F10"
                 stroke-width="1.50012"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               />
             </svg>
           </div>
-          <div class="nav__icon nav__icon--search-icon">
-            <h-icon
-              hash-color="var(--color-black)"
-              :icon="Icon.search"
-            ></h-icon>
-          </div>
-        </div>
-        <div class="nav__icon nav__icon--bars-icon" v-else>
-          <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
-            <path
-              d="M1.42969 1.42847H18.574M1.42969 7.14323H18.574M1.42969 12.858H18.574"
-              stroke="#0F0F10"
-              stroke-width="1.50012"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
+        </template>
+        <template v-else>
+          <slot />
+        </template>
       </nav>
 
       <div class="header__bottom" v-if="showSearchBar">
@@ -195,6 +202,10 @@ const props = defineProps({
   showSearchIcon: {
     type: Boolean,
     default: false,
+  },
+  showMobileIcons: {
+    type: Boolean,
+    default: true,
   },
 });
 </script>

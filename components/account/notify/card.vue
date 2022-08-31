@@ -26,7 +26,10 @@
         <div class="notify__name">
           {{ notify.title }}
         </div>
-        <nuxt-link :to="`/account/notify/${notify.id}`" class="notify__link "
+        <nuxt-link
+          :to="`/account/notify/${notify.id}`"
+          class="notify__link"
+          v-if="notify.advertisementCount >= 1"
           >مشاهده ({{ notify.advertisementCount }} آگهی)
         </nuxt-link>
       </div>
@@ -34,7 +37,7 @@
       <slot name="text" />
       <div class="notify__footer mt-2">
         <div class="notify__wrapper">
-          <p class="notify__price">
+          <p class="notify__price" v-if="notify.startYear || notify.endYear">
             <svg
               width="20"
               height="22"
@@ -57,10 +60,11 @@
             </svg>
             <span
               >از سال <b v-text="notify.startYear"></b> تا
-              <b v-text="notify.endYear"></b
-            ></span>
+              <b v-text="notify.endYear" v-if="notify.endYear"></b>
+              <b v-else>...</b>
+            </span>
           </p>
-          <p class="notify__price">
+          <p class="notify__price" v-if="notify.startPrice || notify.endPrice">
             <icons-discount
               :width="20"
               :height="20"
@@ -69,10 +73,13 @@
             <span v-if="notify.startPrice"
               >از <b>{{ splitNumber(notify.startPrice) }} </b> تومان
             </span>
-            <span v-if="notify.endPrice">
+            <span>
               تا
-              <b v-text="`${splitNumber(notify.endPrice)}`"> </b>
-              تومان
+              <template v-if="notify.endPrice">
+                <b v-text="`${splitNumber(notify.endPrice)}`"> </b>
+                تومان
+              </template>
+              <b v-else>...</b>
             </span>
           </p>
         </div>
@@ -165,7 +172,7 @@ const props = defineProps<{
     width: 88px !important;
     height: 88px !important;
   }
-  .notify__link{
+  .notify__link {
     display: none !important;
   }
 }
@@ -175,20 +182,19 @@ const props = defineProps<{
     width: 95% !important;
   }
 }
-.notify__header{
+.notify__header {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 .notify__link {
-  display: flex ;
+  display: flex;
   background: var(--color-blue);
   color: #fff !important;
   border-radius: 12px;
   padding: 12px 18px;
 }
-.notify__he
-a:-webkit-any-link {
+.notify__he a:-webkit-any-link {
   color: inherit;
 }
 .notify__body {

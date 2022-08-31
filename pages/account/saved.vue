@@ -12,7 +12,7 @@
             >
           </p>
         </div>
-        <div class="d-mobile-none" v-if="accountStore.advertSaved.length>=1">
+        <div class="d-mobile-none" v-if="accountStore.advertSaved.length >= 1">
           <p
             class="color-error font-4 cursor-pointer"
             @click="openDeletePopup('all')"
@@ -36,6 +36,7 @@
           :advert="item.advertisement"
           class="mobile-card"
           :show-price="true"
+          has-link
         >
           <template #actions>
             <p

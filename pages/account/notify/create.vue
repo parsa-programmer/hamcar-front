@@ -1,5 +1,8 @@
 <template>
   <div>
+    <Head>
+      <Title>ثبت گوش به زنگ جدید</Title>
+    </Head>
     <account-notify-create />
   </div>
 </template>

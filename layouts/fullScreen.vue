@@ -1,36 +1,33 @@
 <template>
-  <div>
+  <div >
     <div id="header"></div>
     <main class="main">
       <div class="container-fluid">
         <template v-if="isMobilePage">
           <Teleport to="#header">
-            <the-header :show-search-bar="false" showSearchIcon></the-header>
+            <the-header :show-search-bar="false" :show-mobile-icons="false">
+              <nuxt-link class="bg-white close-btn__mobile" @click="closePage">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="10"
+                  height="10"
+                  viewBox="0 0 26 26"
+                  fill="none"
+                >
+                  <path
+                    d="M23.6654 2.33398L12.9987 13.0007M12.9987 13.0007L2.33203 23.6673M12.9987 13.0007L23.6654 23.6673M12.9987 13.0007L2.33203 2.33398"
+                    stroke="var(--color-gray-600)"
+                    stroke-width="4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </nuxt-link>
+            </the-header>
           </Teleport>
-          <nuxt-link
-            to="/"
-            class="bg-white close-btn__mobile"
-            @click="closePage"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="10"
-              height="10"
-              viewBox="0 0 26 26"
-              fill="none"
-            >
-              <path
-                d="M23.6654 2.33398L12.9987 13.0007M12.9987 13.0007L2.33203 23.6673M12.9987 13.0007L23.6654 23.6673M12.9987 13.0007L2.33203 2.33398"
-                stroke="var(--color-gray-600)"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </nuxt-link>
           <slot></slot>
         </template>
-        <div v-else>
+        <div v-else-if="loading==false">
           <div class="row justify-content-space-between">
             <nuxt-link to="/">
               <img
@@ -39,7 +36,7 @@
                 class="logo"
               />
             </nuxt-link>
-            <nuxt-link to="/" class="bg-white close-btn" @click="closePage">
+            <nuxt-link class="bg-white close-btn" @click="closePage">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="26"
@@ -67,15 +64,20 @@
 
 <script setup lang="ts">
 const isMobilePage = ref(false);
+const loading = ref(true);
 const router = useRouter();
 const closePage = () => {
   router.back();
 };
+
 onMounted(async () => {
   let windowWidth = window.innerWidth;
   if (windowWidth <= 700) {
     isMobilePage.value = true;
+  } else {
+    isMobilePage.value = false;
   }
+  loading.value = false;
 });
 </script>
 
@@ -93,7 +95,7 @@ onMounted(async () => {
 }
 .close-btn__mobile {
   position: absolute;
-  left: 1.5rem;
+  right: 0;
   border-radius: 10px;
   background: var(--color-gray-200);
   padding: 15px !important;

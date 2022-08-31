@@ -38,6 +38,7 @@
           :advert="item.advertisement"
           class="mobile-card"
           :show-price="false"
+          has-link
         >
           <template #text>
             <p class="mt-1 font-6 mb-1" v-text="item.text"></p>
@@ -85,10 +86,15 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from "#imports";
 import { Ref } from "vue";
 import { UserNoteFilterData } from "~~/models/account/account.Models";
 import { FilterResult, IApiResponse } from "~~/models/IApiResponse";
-import { GetNotes, DeleteNote, DeleteAllNote } from "~~/services/account.service";
+import {
+  GetNotes,
+  DeleteNote,
+  DeleteAllNote,
+} from "~~/services/account.service";
 import { useAccountStore } from "~~/stores/account.store";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
 
@@ -113,7 +119,7 @@ const deleteNote = async () => {
     );
     if (res.isSuccess) {
       toast.showToast("عملیات با موفقیت انجام شد");
-      notes.value=[];
+      notes.value = [];
       selectedItem.value = "";
     }
   } else {

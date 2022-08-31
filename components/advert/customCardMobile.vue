@@ -1,11 +1,15 @@
 <template>
   <div class="advert__mobile mobile-card">
-    <div class="advert__mobile-banner">
+    <div class="advert__mobile-banner" v-if="hasLink == false">
       <h-image :src="GetBitMapAdvertImage(advert.id, advert.imageName)" />
     </div>
+    <nuxt-link :to="link" class="advert__mobile-banner" v-else>
+      <h-image :src="GetBitMapAdvertImage(advert.id, advert.imageName)" />
+    </nuxt-link>
     <div class="advert__mobile-body">
       <div class="body__top">
-        <p>{{ advert.title }}</p>
+        <p v-if="hasLink == false">{{ advert.title }}</p>
+        <nuxt-link :to="link" v-else>{{ advert.title }}</nuxt-link>
         <span class="time__ago">({{ TimeAgo(advert.creationDate) }})</span>
       </div>
       <div class="body__middel">
@@ -50,10 +54,13 @@
           </span>
         </div>
         <slot name="text" />
-
       </div>
       <div
-        class="body__footer justify-content-space-between align-items-center"
+        :class="[
+          'body__footer align-items-center',
+          { 'justify-content-flex-end': !$slots.actions },
+          { 'justify-content-space-between': $slots.actions },
+        ]"
       >
         <div class="footer__price" v-if="showPrice">
           <template
@@ -106,7 +113,7 @@ const link = ref("");
 const props = defineProps<{
   advert: AdvertisementCard;
   showPrice: boolean;
-
+  hasLink: boolean | null;
 }>();
 
 if (props.advert.isCar) {
@@ -120,11 +127,13 @@ if (props.advert.isCar) {
     link.value += `-${props.advert.trim}`;
   }
 }
-
 </script>
 
 
 <style scoped>
+  a:-webkit-any-link {
+  color: inherit;
+}
 .advert__mobile-banner {
   width: 148px;
 }
@@ -167,7 +176,6 @@ if (props.advert.isCar) {
 }
 .body__footer {
   display: flex;
-  justify-content: space-between;
   width: 100%;
 }
 .footer__price {

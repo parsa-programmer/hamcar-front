@@ -1,3 +1,4 @@
+import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import {
   FilterParams,
   FilterResult,
@@ -35,7 +36,7 @@ export const CreateNotify = (
 
 export const GetNotifyAdvertisements = (
   filterParams: NotifyAdvertisementFilterParams
-): Promise<IApiResponse<FilterResult<NotifyFilterData>>> => {
+): Promise<IApiResponse<FilterResult<AdvertisementCard>>> => {
   return FetchApi("/notify/advertisements", {
     params: filterParams,
   });

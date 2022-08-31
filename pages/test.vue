@@ -7,7 +7,6 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "full-screen",
-  layoutTransition: { name: "slide", mode: "out-in" },
 });
 </script>
 

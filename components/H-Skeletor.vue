@@ -1,5 +1,5 @@
 <template>
-  <div v-if="type == 'box'">
+  <div v-if="type == 'box'" :class="parentClass">
     <Skeletor
       width="100%"
       height="100px"
@@ -7,7 +7,7 @@
       v-bind="$attrs"
     />
   </div>
-  <div v-if="type == 'three-line'">
+  <div v-if="type == 'three-line'" :class="parentClass">
     <Skeletor width="90%" height="10" class="mt-0_5" />
     <Skeletor width="80%" class="mt-0_5" height="10" />
     <Skeletor width="70%" class="mt-0_5" height="10" />
@@ -53,6 +53,10 @@ export default {
     radius: {
       type: String,
       default: "5px",
+    },
+    parentClass: {
+      type: String,
+      default: "",
     },
   },
 };

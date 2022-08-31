@@ -108,6 +108,7 @@
 </template>
   
   <script setup lang="ts">
+import { ref, onMounted } from "#imports";
 import { Ref } from "vue";
 import { AdvertisementType } from "~~/models/advertisements/enums/AdvertisementType";
 import { FilterResult, IApiResponse } from "~~/models/IApiResponse";

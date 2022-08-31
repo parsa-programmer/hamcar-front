@@ -63,8 +63,8 @@ export const UseUtilStore = defineStore("util", {
       return (search: string = ""): Brand[] =>
         this.brands.filter(
           (f) =>
-            (f.isCar == false && f.title.includes(search)) ||
-            f.slug.includes(search)
+            f.isCar == false &&
+            (f.title.includes(search) || f.slug.includes(search))
         );
     },
     getBrandBySlug() {
@@ -76,12 +76,10 @@ export const UseUtilStore = defineStore("util", {
         this.models.filter((f) => f.slug == slug)[0];
     },
     getBrandById() {
-      return (id: string): Brand =>
-        this.brands.filter((f) => f.id == id)[0];
+      return (id: string): Brand => this.brands.filter((f) => f.id == id)[0];
     },
     getModelById() {
-      return (id: string): Model =>
-        this.models.filter((f) => f.id == id)[0];
+      return (id: string): Model => this.models.filter((f) => f.id == id)[0];
     },
     getTrimById() {
       return (id: string): Trim | null =>

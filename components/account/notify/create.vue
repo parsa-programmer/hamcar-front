@@ -29,6 +29,11 @@
         <h-skeletor width="100%" height="60px" />
       </div>
       <template v-else>
+        <h5 class="font-3 d-mobile-block">
+          گوش به زنگ
+          <span v-if="isCar">خودرو</span>
+          <span v-else>متور سیکلت</span>
+        </h5>
         <div class="header">
           <img src="/img/notification.png" />
           <p>
@@ -255,8 +260,12 @@ watch(startYear, (val) => {
 });
 onMounted(async () => {
   var remainingCount = await GetRemainingNotifiesCount();
-  if(remainingCount.data==0){
-    toast.showToast("گوش به زنگ های شما به اتمام رسیده است",ToastType.error,5000);
+  if (remainingCount.data == 0) {
+    toast.showToast(
+      "گوش به زنگ های شما به اتمام رسیده است",
+      ToastType.error,
+      5000
+    );
     router.push("/account/notify");
   }
   var type = router.currentRoute.value.query.type?.toString();
@@ -271,6 +280,8 @@ onMounted(async () => {
       return { label: b.title, value: b.id };
     });
   } else {
+    console.log(utilStore.getMotorBrands());
+
     brands.value = utilStore.getMotorBrands().map((b) => {
       return { label: b.title, value: b.id };
     });
@@ -282,6 +293,22 @@ onMounted(async () => {
 @media screen and (max-width: 768px) {
   .content {
     width: 100% !important;
+  }
+  .header{
+    flex-direction: column-reverse;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.5rem;
+   
+  }
+  .header img{
+    width: 199px !important;
+    height: 199px !important;
+  }
+  .header p{
+    font-family: var(--t4-font-family) !important;
+    font-size: var(--t4-font-size) !important;
   }
 }
 .form {

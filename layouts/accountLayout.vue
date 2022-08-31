@@ -29,12 +29,6 @@ const toast = useToast();
 const router = useRouter();
 
 const accountStore = useAccountStore();
-definePageMeta({
-  layoutTransition: {
-    enterActiveClass: "animate__animated animate__slideInUp animate__faster",
-    leaveActiveClass: "animate__animated animate__slideOutDown animate__faster",
-  },
-});
 onMounted(async () => {
   await accountStore.initData();
 

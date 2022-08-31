@@ -146,3 +146,6 @@
 [data-theme="dark"] .nav__icon {
     background: transparent !important;
 }
+[data-theme="dark"] .notify__banner{
+    background-color: var(--color-dark-black-600) !important;
+}

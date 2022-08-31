@@ -17,5 +17,5 @@ export interface NotifyFilterData {
 }
 export interface NotifyAdvertisementFilterParams extends FilterParams {
   notifyId: string;
-  isVisited: boolean | undefined;
+  visited: boolean | undefined;
 }
