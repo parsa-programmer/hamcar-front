@@ -26,16 +26,22 @@ export const useAuth = () => {
     if (result.isSuccess) {
       store.setLoginData(result.data!);
       localStorage.setItem("auth-data", JSON.stringify(result.data!));
+
+      const expiryDate = new Date();
+      var token = useCookie("token", {
+        maxAge: expiryDate.setMonth(expiryDate.getMonth() + 1),
+      });
+      token.value = result.data?.token ?? "";
     }
     return result.isSuccess;
   };
 
   const logout = async (): Promise<boolean> => {
     loading.value = true;
+    document.cookie = "token=;Max-Age=0";
 
     if (store.isLogin == false) {
       loading.value = false;
-      showToast("salam");
       return true;
     }
     var result = await LogOut();

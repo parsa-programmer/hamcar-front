@@ -11,6 +11,7 @@
     "nuxt": "^3.0.0-rc.8"
   },
   "dependencies": {
+    "@microsoft/signalr": "^5.0.17",
     "@persian-tools/persian-tools": "^3.4.0",
     "@pinia/nuxt": "^0.4.0",
     "@vueuse/core": "^8.9.2",

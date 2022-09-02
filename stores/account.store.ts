@@ -29,7 +29,7 @@ export const useAccountStore = defineStore("account", {
       this.advertSaved = this.advertSaved.filter((f) => f.id != id);
     },
     deleteAllSavedItem() {
-      this.advertSaved = []
+      this.advertSaved = [];
     },
     async initData() {
       var carCount = await GetAdvertCount(
@@ -46,6 +46,7 @@ export const useAccountStore = defineStore("account", {
         take: 1,
       });
       var saved = await GetSavedAdvertisements();
+
 
       this.carAdverts = carCount.data ?? 0;
       this.motorAdverts = motorCount.data ?? 0;

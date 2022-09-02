@@ -15,6 +15,6 @@ export const PROXY_CONFIG = isProd
       "/api": "http://test13.ir/",
     }
   : {
-      //"/api": "http://localhost:5000/",
+      //"/api": "http://localhost:5183/",
       "/api": "http://test13.ir/",
     };

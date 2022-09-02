@@ -352,6 +352,10 @@ hr {
     justify-content: flex-end !important;
 }
 
+.disable__image img {
+    filter: grayscale(1);
+}
+
 .align-items-center {
     align-items: center;
 }
@@ -639,6 +643,19 @@ body {
 
 .nav__menu ul li:hover {
     transform: translateX(-2px);
+}
+
+::-webkit-scrollbar {
+    width: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-white);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-gray-400);
+    border-radius: 10px;
 }
 
 html {

@@ -31,13 +31,20 @@
           class="btn-default btn-default-size d-mobile-none"
           >انصراف</h-button
         >
-        <h-button :loading="loadingForGateway" :disabled="loadingForGateway" class="btn-default-size pay__btn" @click="createTransaction">پرداخت</h-button>
+        <h-button
+          :loading="loadingForGateway"
+          :disabled="loadingForGateway"
+          class="btn-default-size pay__btn"
+          @click="createTransaction"
+          >پرداخت</h-button
+        >
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { IApiResponse } from "~~/models/IApiResponse";
 import { TransactionOrderType } from "~~/models/transactions/CreateTransactionCommand";
 import { SelectData } from "~~/models/utilities/SelectData";
@@ -68,7 +75,7 @@ const selectData: SelectData[] = [
     value: 10,
   },
   {
-    label: "خرید 10 نردبان (+5 رایگان)",
+    label: "خرید 20 نردبان (+5 رایگان)",
     value: 20,
   },
 ];

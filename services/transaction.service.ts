@@ -19,5 +19,7 @@ export const CreateTransaction = (
 export const GetTransactions = (
   filterParams: FilterParams
 ): Promise<IApiResponse<FilterResult<TransactionFilterData>>> => {
-  return FetchApi("/transaction");
+  return FetchApi("/transaction",{
+    params:filterParams
+  });
 };

@@ -16,8 +16,8 @@
               <div class="row flex-column gap-0">
                 <h4 class="font-2">{{ title }}</h4>
                 <p class="text__description font-3">{{ description }}</p>
-                <div class="row justify-content-space-between mt-2">
-                  <h-button @click="close" class="btn-default btn-default-size"
+                <div class="row justify-content-flex-end mt-2">
+                  <h-button @click="close" color="default" class="btn-default-size"
                     >انصراف</h-button
                   >
                   <h-button @click="Accept" class="btn-error btn-default-size"

@@ -10,6 +10,7 @@ import {
   GetAdvertisementCountParams,
   GetAdvertisementType,
 } from "~~/models/advertisements/Advertisement.Models";
+import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { AdvertisementType } from "~~/models/advertisements/enums/AdvertisementType";
 import { BodyType } from "~~/models/advertisements/enums/BodyType";
 import { FilterResult, IApiResponse } from "~~/models/IApiResponse";
@@ -63,6 +64,11 @@ export const GetById = (
   id: string
 ): Promise<IApiResponse<AdvertisementDto>> => {
   return FetchApi(`/advertisement/getById/${id}`);
+};
+export const GetParkingData = (): Promise<
+  IApiResponse<AdvertisementFilterData[]>
+> => {
+  return FetchApi(`/advertisement/GetInActive`);
 };
 export const CreateAdvertisement = (
   command: FormData

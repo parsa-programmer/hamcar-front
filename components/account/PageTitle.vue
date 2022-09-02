@@ -108,5 +108,8 @@ const toggle = () => {
     font-family: var(--t5-font-family) !important;
     font-size: var(--t5-font-size) !important;
   }
+  .card{
+    background: transparent;
+  }
 }
 </style>

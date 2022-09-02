@@ -68,6 +68,9 @@
           hash-color="var(--color-black)"
         />
         پیام های من
+        <span class="sidebar__badge" v-if="chatStore.newMessageCount > 0">{{
+          chatStore.newMessageCount
+        }}</span>
       </li>
       <li
         :class="[
@@ -110,9 +113,12 @@
 
 <script setup lang="ts">
 import { authStore } from "~~/stores/auth.store";
+import { UseChatStore } from "~~/stores/chat.store";
 
 const store = authStore();
 const route = useRoute();
+const chatStore = UseChatStore();
+
 const path = ref(route.path);
 
 watch(

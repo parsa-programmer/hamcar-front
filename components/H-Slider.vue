@@ -28,7 +28,7 @@
       :nextSlide="clickNext"
     ></slot>
     <div class="overflow-x-hidden">
-      <div ref="sliderWrapperRef" class="row">
+      <div ref="sliderWrapperRef" :class="`row ${rowClass}`">
         <slot name="first-item"></slot>
 
         <div
@@ -64,6 +64,10 @@ export default defineComponent({
     },
     itemContainerClass: {
       type: [Array, Object, String],
+      default: "",
+    },
+    rowClass: {
+      type: String,
       default: "",
     },
     config: {
@@ -109,7 +113,7 @@ export default defineComponent({
     });
     onMounted(() => {
       setTimeout(() => {
-          gsap.registerPlugin(Draggable);
+        gsap.registerPlugin(Draggable);
         let { el, maxX } = getConfig();
         Draggable.create(unref(el), {
           type: "x",

@@ -1,0 +1,123 @@
+<template>
+  <div class="chat__body__footer">
+    <h-slider
+      class="suggestions"
+      row-class="gap-0_5"
+      :arrows="false"
+      :items="[
+        'سلام وقت بخیر',
+        'سلام قیمت رو میفرمایید؟',
+        'سلام ماشین بی رنگه؟',
+        'لطفا جواب بدین',
+      ]"
+    >
+      <template #item="{ item }">
+        <div class="tag" @click="sendCustomMessage(item)">{{ item }}</div>
+      </template>
+    </h-slider>
+    <div class="footer__wrapper">
+      <button class="send__message" @click="sendMessage">
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M22.8823 1.15091C23.6339 1.91469 23.8587 2.9775 23.9439 3.74952C24.0389 4.61121 24.0062 5.59975 23.8985 6.6176C23.6817 8.6644 23.1308 11.1043 22.3931 13.4528C21.6565 15.7982 20.7032 18.1495 19.6401 19.996C19.1104 20.9161 18.5173 21.7744 17.8639 22.4514C17.2396 23.0983 16.3784 23.7693 15.2933 23.9523L15.2874 23.9533C15.0831 23.987 14.8841 23.9946 14.8139 23.9972L14.8005 23.9977C14.0919 24.0265 13.4801 23.7766 13.0624 23.5523C12.6158 23.3124 12.1968 22.9958 11.8231 22.6638C11.074 21.9982 10.3439 21.1248 9.74981 20.2138C9.4243 19.7147 9.11591 19.168 8.86383 18.6021C8.48991 17.7627 8.71819 16.809 9.28374 16.084L12.7151 12.0408C12.8908 11.8338 12.878 11.5272 12.6857 11.3355C12.4934 11.1437 12.1858 11.131 11.9782 11.3061L7.92296 14.7273C7.15001 15.3267 6.12775 15.5589 5.24372 15.139C4.67845 14.8705 4.13347 14.5469 3.63561 14.2045C2.69551 13.558 1.79475 12.7559 1.13418 11.9198C0.804601 11.5026 0.493235 11.0248 0.281161 10.5079C0.0762358 10.0084 -0.100722 9.31238 0.0663899 8.55106L0.0666665 8.5498C0.295031 7.51021 0.979412 6.68705 1.62806 6.0875C2.31111 5.45615 3.16996 4.87653 4.09209 4.35418C5.94238 3.30607 8.28544 2.35565 10.6219 1.61724C12.9595 0.878461 15.3855 0.32192 17.4203 0.102752C18.4318 -0.00620345 19.4175 -0.0398593 20.2786 0.0576169C21.0518 0.145147 22.1213 0.377548 22.8823 1.15091Z"
+            fill="white"
+          />
+        </svg>
+      </button>
+      <input
+        type="text"
+        v-model="message"
+        @keypress.enter="sendMessage"
+        placeholder="پیام خود را بنویسید ..."
+      />
+    </div>
+  </div>
+</template>
+  
+  <script setup lang="ts">
+import { useAuth } from "~~/composables/auth/useAuth";
+import { ToastType } from "~~/composables/useToast";
+import { authStore } from "~~/stores/auth.store";
+import { UseChatStore } from "~~/stores/chat.store";
+import { ref } from "#imports";
+const message = ref("");
+const chatStore = UseChatStore();
+const authData = authStore();
+const toast = useToast();
+
+const sendMessage = async () => {
+  if (!message.value || message.value == " ") {
+    toast.showToast("متن پیام خود را وارد کنید", ToastType.error);
+    return;
+  }
+  await chatStore.sendMessage(message.value, authData.user.id);
+  message.value = "";
+};
+const sendCustomMessage = (message: string) => {
+  chatStore.sendMessage(message, authData.user.id);
+};
+</script>
+  
+  <style scoped>
+.chat__body__footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+}
+.chat__body__footer input {
+  width: 90%;
+  background: var(--color-gray-300);
+  height: 56px;
+  padding-right: 1.5rem !important;
+  font-family: var(--t5-font-family);
+  font-size: var(--t5-font-size);
+  color: var(--color-black-200);
+  flex-grow: 1;
+  display: block;
+  border-radius: 50px;
+}
+.suggestions {
+  padding: 1rem 1.5rem 1rem 0;
+  gap: 0.5rem;
+}
+.footer__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--color-white);
+  box-shadow: 0px -4px 45px rgba(0, 0, 0, 0.07) !important;
+  padding: 0.5rem 26px;
+  gap: 0.5rem;
+}
+.suggestions .tag {
+  background: var(--color-white);
+  padding: 0.5rem 1rem;
+  border-radius: 18px;
+  font-family: var(--t6-font-family);
+  font-size: var(--t6-font-size);
+  color: var(--color-black-200);
+  border: 1px solid var(--color-gray-600);
+  width: max-content;
+  cursor: pointer;
+}
+.send__message {
+  background: var(--color-blue);
+  padding: 1rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all ease 0.2s;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.send__message:hover {
+  opacity: 0.8;
+}
+</style>

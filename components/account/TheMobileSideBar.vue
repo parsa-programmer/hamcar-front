@@ -162,7 +162,7 @@ const openSheet = () => {
   position: absolute;
 }
 .bottom__sheet-close {
-  z-index: 0 !important;
+  z-index: 10 !important;
   height: fit-content !important;
   bottom: 50px !important;
 }

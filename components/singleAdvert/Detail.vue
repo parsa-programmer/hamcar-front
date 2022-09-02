@@ -1,5 +1,6 @@
 <template>
   <div>
+    <loadings-full-loading v-if="pageLoading" />
     <div class="ads__connection">
       <button
         class="btn btn-primary ads__contact-btn"
@@ -8,7 +9,11 @@
       >
         اطلاعات تماس
       </button>
-      <nuxt-link class="btn btn-primary-outline ads__chat-btn">چت</nuxt-link>
+      <nuxt-link
+        @click="chatWithSeller"
+        class="btn btn-primary-outline ads__chat-btn"
+        >چت</nuxt-link
+      >
     </div>
     <div class="ads__height-wrapper">
       <Transition
@@ -44,7 +49,7 @@
         </div>
       </Transition>
       <div class="ads__details-list">
-        <slot/>
+        <slot />
         <div class="ads__detail align-items-start">
           <span class="ads__detail-name row-price">
             <div class="row">
@@ -70,7 +75,13 @@
               </svg>
               قیمت
             </div>
-            <span class="delivery__date--desktop font-5" v-if="advert.price.advertisementPaymentType==AdvertisementPaymentType.قسطی">
+            <span
+              class="delivery__date--desktop font-5"
+              v-if="
+                advert.price.advertisementPaymentType ==
+                AdvertisementPaymentType.قسطی
+              "
+            >
               {{ advert.price.ghest?.tedadeGhestHa }} قسط، تحویل
               {{ advert.price.ghest?.deliveryDate }} روزه
             </span>
@@ -241,18 +252,43 @@
 
 <script setup lang="ts">
 import { ref } from "#imports";
+import { ToastType } from "~~/composables/useToast";
 import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
+import { SendMessage } from "~~/services/chat.service";
+import { authStore } from "~~/stores/auth.store";
 import { splitNumber } from "~~/utilities/numberUtils";
 
 const isShowPhones = ref(false);
-
+const auStor = authStore();
 const showPhone = () => {
   isShowPhones.value = true;
 };
+const toast = useToast();
+const router = useRouter();
+const pageLoading = ref(false);
+
 const props = defineProps<{
   advert: AdvertisementDto;
 }>();
+
+const chatWithSeller = async () => {
+  if (auStor.isLogin == false) {
+    toast.showToast("برای شروع گفتوگو وارد حساب کاربری شوید", ToastType.error);
+    return;
+  }
+  pageLoading.value = true;
+  var res = await SendMessage({
+    message: null,
+    advertisementId: props.advert!.id,
+    groupId: null,
+  });
+  pageLoading.value = false;
+
+  if (res.isSuccess) {
+    router.push("/account/messages?id=" + res.data?.groupId);
+  }
+};
 </script>
 
 <style scoped>
@@ -285,19 +321,18 @@ const props = defineProps<{
     font-family: var(--t6-font-family) !important;
     font-size: var(--t5-font-size) !important;
   }
-  .delivery__date--desktop{
+  .delivery__date--desktop {
     display: none !important;
   }
 }
 .row-price {
   display: block !important;
-  
 }
 .delivery__date--desktop {
   background: var(--color-gray-300);
   border-radius: 60px;
   color: var(--color-gray-600);
-  padding: .5rem 1rem;
+  padding: 0.5rem 1rem;
   margin-top: 5px !important;
   display: block;
 }

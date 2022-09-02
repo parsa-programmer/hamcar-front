@@ -2,7 +2,7 @@
   <div class="mt-0_5">
     <div class="row mb-2 nar__header">
       <img src="/img/ladder.png" style="width: 73px; height: 101px" />
-      <div>
+      <div class="w-full">
         <template v-if="showTitle">
           <h3
             class="font-2 row align-items-center"
@@ -36,7 +36,8 @@
       <div class="actions">
         <h-button
           @click="coseModal"
-          class="btn-default btn-default-size d-mobile-none"
+          color="default"
+          class="btn-default-size d-mobile-none"
           >انصراف</h-button
         >
         <h-button
@@ -124,6 +125,21 @@ const useOrByNardeban = async () => {
 @media screen and (max-width: 768px) {
   .pay__btn {
     width: 100% !important;
+  }
+  .nar__header{
+    margin-bottom: 1rem !important ;
+  }
+  .nar__header img {
+    display: none;
+  }
+  p {
+    font-family: var(--t6-font-family) !important;
+    font-size: var(--t6-font-size) !important;
+    line-height: 21px;
+    text-align: justify;
+  }
+  .custom__desc {
+    position: initial !important;
   }
 }
 .custom__desc {

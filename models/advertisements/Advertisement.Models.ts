@@ -45,6 +45,9 @@ export interface AdvertisementFilterData {
   isCar: boolean;
   visit: number;
   plan: string;
+
+  //Just For Parking
+  inActiveDate:Date;
 }
 export interface AdvertisementFilterResult {
   filterResult: FilterResult<AdvertisementFilterData>;

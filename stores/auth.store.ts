@@ -19,7 +19,7 @@ const defaultState = () => ({
   isRefreshSuccess: false,
   phoneNumber: "",
   loading: false,
-  user: {} as UserDto,
+  user: {} as UserDto | null,
 });
 
 export const authStore = defineStore("auth", {
@@ -60,6 +60,7 @@ export const authStore = defineStore("auth", {
 
       this.accessToken = "";
       this.refreshToken = "";
+      this.user = null;
       if (isRedirected) {
         router.push("/");
       }

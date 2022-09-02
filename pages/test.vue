@@ -8,8 +8,8 @@
 definePageMeta({
   layout: "full-screen",
 });
+
 </script>
 
 <style >
-
 </style>

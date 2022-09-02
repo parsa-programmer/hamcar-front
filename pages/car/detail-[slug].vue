@@ -1,5 +1,6 @@
 <template>
   <div v-if="advert">
+    <loadings-full-loading v-if="pageLoading" />
     <client-only>
       <single-advert-gallery
         :advert="advert"
@@ -10,7 +11,7 @@
     <Head>
       <Title
         >همکار - {{ advert.brand.title }} {{ advert.model.title }}
-        {{ advert.trim.title }} {{ advert.year.yearTitle }}</Title
+        {{ advert.trim?.title }} {{ advert.year.yearTitle }}</Title
       >
       <Link href="/css/pdp-personal.css" rel="stylesheet" />
     </Head>
@@ -113,7 +114,7 @@
             {{ advert.images.length }} عکس
           </span>
           <h-image
-            :src="GetAdvertImage(advert.id, advert.images[0].imageName)"
+            :src="GetAdvertImage(advert.id, advert.images[0]?.imageName??'')"
             :alt="`${advert.brand.title} ${advert.model.title} ${advert.year.yearTitle}`"
           />
         </div>
@@ -223,7 +224,7 @@
               :src="
                 GetAdvertImage(
                   advert.id,
-                  advert.images.filter((f) => f.isMainImage)[0].imageName
+                  advert.images.filter((f) => f.isMainImage)[0]?.imageName??''
                 )
               "
               :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
@@ -263,7 +264,7 @@
                 ]"
               >
                 <h-image
-                  :src="GetAdvertImage(advert.id, item.imageName)"
+                  :src="GetAdvertImage(advert.id, item.imageName??'')"
                   :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
                 />
               </div>
@@ -374,7 +375,12 @@
           >
             اطلاعات تماس
           </button>
-          <a href="#" class="btn btn-primary-outline ads__chat-btn">چت</a>
+          <a
+            href="#"
+            @click="chatWithSeller"
+            class="btn btn-primary-outline ads__chat-btn"
+            >چت</a
+          >
         </div>
       </div>
     </section>
@@ -465,6 +471,8 @@ import {
   UserAdvertisementSavedDto,
   UserNoteFilterData,
 } from "~~/models/account/account.Models";
+import { SendMessage } from "~~/services/chat.service";
+import { SendChatMessageResponseDto } from "~~/models/chats/Chat.Models";
 
 const noteLoading = ref(true);
 const advert: Ref<AdvertisementDto | undefined> = ref(undefined);
@@ -476,11 +484,14 @@ const advertNote = ref("");
 const loadingButton = ref(false);
 const carReview: Ref<CarReviewDto | null> = ref(null);
 const saveAdvertLoading = ref(true);
+const isSavedAdvert = ref(false);
 
 const toast = useToast();
-const isSavedAdvert = ref(false);
 const authStore = useAuthStore();
 const route = useRoute();
+const router = useRouter();
+const pageLoading = ref(false);
+
 var slug = route.params.slug;
 const shortLink = slug.toString().split("-")[0];
 const advertTitle = ref("");
@@ -540,6 +551,24 @@ const setAdvertNote = async () => {
   );
   if (res.isSuccess) {
     toast.showToast("یادداشت با موفقیت ذخیره شد", ToastType.success);
+  }
+};
+const chatWithSeller = async () => {
+  if (authStore.isLogin == false) {
+    toast.showToast("برای شروع گفتوگو وارد حساب کاربری شوید", ToastType.error);
+    return;
+  }
+  var res = await ProssesAsync<IApiResponse<SendChatMessageResponseDto>>(
+    () =>
+      SendMessage({
+        message: null,
+        advertisementId: advert.value!.id,
+        groupId: null,
+      }),
+    pageLoading
+  );
+  if (res.isSuccess) {
+    router.push("/account/messages?id=" + res.data?.groupId);
   }
 };
 onMounted(async () => {
