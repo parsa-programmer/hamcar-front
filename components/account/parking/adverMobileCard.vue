@@ -19,7 +19,7 @@
         </div>
         <div class="tags row">
           <span class="advert__tag">
-            {{ TemainingTime(new Date(expireDate)) }} روز تا حذف کامل آگهی
+            {{ RemainingTime(new Date(expireDate)) }} روز تا حذف کامل آگهی
           </span>
         </div>
       </div>
@@ -69,7 +69,7 @@ import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
 import { useAccountStore } from "~~/stores/account.store";
-import { TemainingTime, TimeAgo } from "~~/utilities/dateUtil";
+import { RemainingTime, TimeAgo } from "~~/utilities/dateUtil";
 import { GetAdvertImage, GetBitMapAdvertImage } from "~~/utilities/imageUtil";
 import { splitNumber } from "~~/utilities/numberUtils";
 

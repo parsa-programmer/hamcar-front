@@ -29,11 +29,13 @@ export const toPersianDate = (
 export const TimeAgo = (date: Date) => {
   return timeAgo(fixNumbers(toPersianDate(date, true))).replace("حدود ", "");
 };
-export const TemainingTime = (date: Date) => {
-  //console.log(date);
-  //console.log(fixNumbers(toPersianDate(date, true)));
-  var res=remainingTime(date);
-  return `${res.days}`
+export const RemainingTime = (date: Date, justByDay: boolean = true) => {
+  var res = remainingTime(date);
+  var days = res.days;
+  if (res.months >= 1) {
+    days += res.months * 30;
+  }
+  return `${days}`;
 };
 var persianNumbers = [
     /۰/g,

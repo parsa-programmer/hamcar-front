@@ -48,6 +48,7 @@ export const GetAdvertCount = (
     exhibitionId: "",
     model: "",
     modelType: null,
+    setCurrentUserId: false,
   }
 ): Promise<IApiResponse<number>> => {
   return FetchApi(`/advertisement/utils/getCount`, {
@@ -57,6 +58,7 @@ export const GetAdvertCount = (
       Model: params.model,
       ModelType: params.modelType,
       advertType,
+      SetCurrentUserId: params.setCurrentUserId || false,
     },
   });
 };

@@ -113,7 +113,7 @@ onMounted(async () => {
   }
   var res = await GetDraftAdvert();
   if (!res.data) {
-    router.push("/");
+    //router.push("/");
     return;
   }
   advert.value = res.data!;

@@ -47,7 +47,7 @@ export interface AdvertisementFilterData {
   plan: string;
 
   //Just For Parking
-  inActiveDate:Date;
+  inActiveDate: Date;
 }
 export interface AdvertisementFilterResult {
   filterResult: FilterResult<AdvertisementFilterData>;
@@ -119,7 +119,7 @@ export interface AdvertisementDto {
   year: Year;
   trim: Trim;
   plan: AdvertPlanInfo;
-  status:string;
+  status: string;
   exhibition: ExhibitionDto;
 }
 export interface AdvertPlanInfo {
@@ -132,6 +132,7 @@ export interface GetAdvertisementCountParams {
   model: string | null;
   modelType: BodyType | null;
   exhibitionId: string | null;
+  setCurrentUserId: boolean | null;
 }
 export enum GetAdvertisementType {
   All = "all",

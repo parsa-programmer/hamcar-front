@@ -169,5 +169,11 @@
 [data-theme="dark"] .chats .content {
     background: var(--color-dark-black-600) !important;
  }
-
-
+ [data-theme="dark"] .plan__header {
+    background: var(--color-gray-500) !important;
+    color: white !important;
+ }
+ [data-theme="dark"] .plan__footer {
+    background: var(--color-gray-500) !important;
+    color: white !important;
+ }

@@ -304,6 +304,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { AdvertisementPlan } from "~~/models/plans/AdvertisementPlan";
 import { splitNumber } from "~~/utilities/numberUtils";
 

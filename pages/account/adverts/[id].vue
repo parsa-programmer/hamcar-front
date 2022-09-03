@@ -116,7 +116,7 @@
                 </span>
                 <span class="ads__detail-value">
                   <template v-if="advert.plan.expireDate">
-                    {{ TemainingTime(new Date(advert.plan.expireDate)) }} روز
+                    {{ RemainingTime(new Date(advert.plan.expireDate)) }} روز
                   </template>
                   <template v-else> نا محدود </template>
                 </span>
@@ -261,7 +261,7 @@ import {
   MoveToTrash,
 } from "~~/services/advertisement.service";
 import { GetAdvertImage } from "~~/utilities/imageUtil";
-import { TemainingTime, TimeAgo } from "~~/utilities/dateUtil";
+import { RemainingTime, TimeAgo } from "~~/utilities/dateUtil";
 import { authStore as useAuthStore } from "~~/stores/auth.store";
 import { AlertType } from "~~/models/utilities/AlertType";
 import { IApiResponse } from "~~/models/IApiResponse";

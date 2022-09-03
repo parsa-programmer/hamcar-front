@@ -75,7 +75,7 @@
         <span
           class="advert__date-wide"
           v-if="expireDate && advert.status == 'published'"
-          >{{ TemainingTime(new Date(expireDate)) }} روز تا انقضای آگهی</span
+          >{{ RemainingTime(new Date(expireDate)) }} روز تا انقضای آگهی</span
         >
         <span class="advert__date-wide mr-1">
           {{ getAdvertStatus() }}
@@ -148,7 +148,7 @@ import { remainingTime } from "@persian-tools/persian-tools";
 import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
-import { TemainingTime, TimeAgo } from "~~/utilities/dateUtil";
+import { RemainingTime, TimeAgo } from "~~/utilities/dateUtil";
 import { GetAdvertImage, GetBitMapAdvertImage } from "~~/utilities/imageUtil";
 import { splitNumber } from "~~/utilities/numberUtils";
 

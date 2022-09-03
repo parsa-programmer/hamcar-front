@@ -23,6 +23,7 @@
 <script setup lang="ts">
 import { ToastType } from "~~/composables/useToast";
 import { useAccountStore } from "~~/stores/account.store";
+import { authStore } from "~~/stores/auth.store";
 import { UseChatStore } from "~~/stores/chat.store";
 
 const route = useRoute();
@@ -31,6 +32,7 @@ const router = useRouter();
 
 const chatStore = UseChatStore();
 const accountStore = useAccountStore();
+const authData = authStore();
 
 onMounted(async () => {
   var { transaction } = route.query;
@@ -40,8 +42,6 @@ onMounted(async () => {
       path: route.path,
     });
   }
-
-  
   await accountStore.initData();
   await chatStore.initConnection();
 });

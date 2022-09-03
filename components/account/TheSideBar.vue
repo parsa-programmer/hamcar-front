@@ -158,6 +158,7 @@ const logout = async () => {
   font-size: var(--t5-font-size);
   cursor: pointer;
   user-select: none;
+  position: relative;
 }
 .sidebar__item--active {
   border-radius: 14px;
@@ -172,6 +173,8 @@ const logout = async () => {
   font-size: var(--t6-font-size);
   margin-right: auto;
   display: block;
+  position: absolute;
+  left: 0;
 }
 .dashboard__logout {
   color: var(--color-gray-600);

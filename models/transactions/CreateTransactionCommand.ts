@@ -1,8 +1,8 @@
 export class CreateTransactionsCommand {
   constructor(
-    public orderId: string | undefined,
+    public orderId: string | null | undefined,
     public orderType: TransactionOrderType,
-    public planId: number | undefined,
+    public planId: number |  null | undefined,
     public successCallBack: string,
     public errorCallBack: string,
     public nardebanCount: number | null | undefined

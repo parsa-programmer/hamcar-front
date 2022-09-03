@@ -11,6 +11,7 @@ export interface ChatGroupDto {
   lastMessage: string;
   haveNewMessage: boolean;
   lastMessageDate: Date;
+  createDate: Date;
 }
 export interface ChatMessageDto {
   id: string;

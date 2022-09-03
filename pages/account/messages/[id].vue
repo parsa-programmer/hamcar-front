@@ -1,5 +1,8 @@
 <template>
   <div>
+    <Head>
+      <Title>{{chatStore.selectedGroup?.title}}</Title>
+    </Head>
     <div class="chat__page__title">
       <div>
         <h5 class="font-5" v-text="chatStore.selectedGroup?.title"></h5>
@@ -95,7 +98,7 @@ const deleteChat = async () => {
     chatStore.selectedGroup = null;
     chatStore.chats = [];
     toast.showToast("چت با موفقیت حذف شد");
-    router.push('/account/messages')
+    router.push("/account/messages");
   }
   loading.value = false;
 };

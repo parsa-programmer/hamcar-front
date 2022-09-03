@@ -5,7 +5,14 @@
         ! توجه: اطلاعات شخصی خود را برای دیگران ارسال نکنید، درصورت مشاهده
         هرگونه تخلف آن را گزارش دهید..
       </div>
-      <p class="text-center">{{ getPersianDate(new Date(), "M/dd") }}</p>
+      <p class="text-center">
+        {{
+          getPersianDate(
+            chatStore.selectedGroup?.createDate ?? new Date(),
+            "M/dd"
+          )
+        }}
+      </p>
     </div>
     <div class="chats">
       <div

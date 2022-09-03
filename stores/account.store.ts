@@ -34,11 +34,23 @@ export const useAccountStore = defineStore("account", {
     async initData() {
       var carCount = await GetAdvertCount(
         GetAdvertisementType.All,
-        AdvertisementType.car
+        AdvertisementType.car,
+        {
+          setCurrentUserId:true,
+          exhibitionId: null,
+          model: null,
+          modelType: null,
+        }
       );
       var motorCount = await GetAdvertCount(
         GetAdvertisementType.All,
-        AdvertisementType.motorCycle
+        AdvertisementType.motorCycle,
+        {
+          setCurrentUserId:true,
+          exhibitionId: null,
+          model: null,
+          modelType: null,
+        }
       );
       var nardebans = await GetNardebanCount();
       var gooshBezangs = await GetNotifies({
@@ -46,7 +58,6 @@ export const useAccountStore = defineStore("account", {
         take: 1,
       });
       var saved = await GetSavedAdvertisements();
-
 
       this.carAdverts = carCount.data ?? 0;
       this.motorAdverts = motorCount.data ?? 0;

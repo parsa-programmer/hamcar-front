@@ -65,7 +65,7 @@
           </nuxt-link>
         </div>
         <span class="advert__date-wide"
-          >{{ TemainingTime(new Date(expireDate)) }} روز تا حذف کامل آگهی</span
+          >{{ RemainingTime(new Date(expireDate)) }} روز تا حذف کامل آگهی</span
         >
         <span class="advert__date-wide mr-1"> پارکینگ شده </span>
         <span
@@ -143,7 +143,7 @@ import { remainingTime } from "@persian-tools/persian-tools";
 import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
-import { TemainingTime, TimeAgo } from "~~/utilities/dateUtil";
+import { RemainingTime, TimeAgo } from "~~/utilities/dateUtil";
 import { GetAdvertImage, GetBitMapAdvertImage } from "~~/utilities/imageUtil";
 import { splitNumber } from "~~/utilities/numberUtils";
 
