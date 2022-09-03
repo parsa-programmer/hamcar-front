@@ -62,7 +62,7 @@
               <h3 class="profile-card__title">پکیج ها</h3>
               <nuxt-link
                 to="/account/packages"
-                class="profile-card__value color-blue"
+                class="profile-card__value mb_3-5 color-blue"
                 >خرید پکیج</nuxt-link
               >
             </template>
@@ -144,6 +144,9 @@ definePageMeta({
   font-family: var(--t5-font-family);
   font-size: var(--t5-font-size);
   color: var(--color-black-200);
+}
+.mb_3-5{
+  margin-bottom: 3.5rem;
 }
 .prof_row {
   display: flex;

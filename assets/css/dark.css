@@ -177,3 +177,9 @@
     background: var(--color-gray-500) !important;
     color: white !important;
  }
+
+
+
+ [data-theme="dark"] aside .top {
+    background: var(--color-dark-black-600) !important;
+ }

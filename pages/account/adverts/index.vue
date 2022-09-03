@@ -17,8 +17,12 @@
       >
         <nuxt-link to="/sell/car" class="grow-1 btn btn-primary w-50">
           <div class="row align-items-center">
-            <account-icons-mini-car class="d-mobile-none"/>
-            <account-icons-mini-car class="d-mobile-block" :width="30" :height="13"/>
+            <account-icons-mini-car class="d-mobile-none" />
+            <account-icons-mini-car
+              class="d-mobile-block"
+              :width="30"
+              :height="13"
+            />
             درج آگهی خودرو
           </div>
         </nuxt-link>
@@ -80,34 +84,35 @@
                     مشاهده
                   </nuxt-link>
                 </p>
-                <p
-                  class="
-                    color-blue
-                    row
-                    align-items-center
-                    gap-0_5
-                    font-5
-                    cursor-pointer
-                    d-mobile-none
-                  "
-                  @click="openDeletePopup(item)"
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                <p class="d-mobile-none">
+                  <nuxt-link
+                    class="
+                      color-blue
+                      row
+                      align-items-center
+                      gap-0_5
+                      font-5
+                      cursor-pointer
+                    "
+                    :to="`/account/adverts/edit?id=${item.id}`"
                   >
-                    <path
-                      d="M11.1577 8.18182L12.9195 6.33429C13.3244 5.90978 14.0046 5.88646 14.4388 6.2822L17.658 9.21592C18.0923 9.61167 18.1161 10.2766 17.7113 10.7011L15.8182 12.6864M11.1577 8.18182L6.28868 13.2877C6.08633 13.4999 5.98271 13.7844 6.00236 14.0738L6.20234 17.0187C6.23993 17.5724 6.71141 18.0021 7.27903 18L10.2983 17.9888C10.595 17.9877 10.8781 17.8667 11.0805 17.6545L15.8182 12.6864M11.1577 8.18182L15.8182 12.6864"
-                      stroke="#007AFF"
-                      stroke-width="1.6"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M11.1577 8.18182L12.9195 6.33429C13.3244 5.90978 14.0046 5.88646 14.4388 6.2822L17.658 9.21592C18.0923 9.61167 18.1161 10.2766 17.7113 10.7011L15.8182 12.6864M11.1577 8.18182L6.28868 13.2877C6.08633 13.4999 5.98271 13.7844 6.00236 14.0738L6.20234 17.0187C6.23993 17.5724 6.71141 18.0021 7.27903 18L10.2983 17.9888C10.595 17.9877 10.8781 17.8667 11.0805 17.6545L15.8182 12.6864M11.1577 8.18182L15.8182 12.6864"
+                        stroke="#007AFF"
+                        stroke-width="1.6"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
 
-                  ویرایش
+                    ویرایش
+                  </nuxt-link>
                 </p>
                 <p
                   class="

@@ -13,7 +13,6 @@
         <slot></slot>
       </div>
     </main>
-    <the-toast></the-toast>
     <div class="not__found__container" v-if="error?.statusCode == 404">
       <div class="not__found__container__img"></div>
       <h1 class="mb-3">متاسفانه خطای ۴۰۴ رخ داد !</h1>

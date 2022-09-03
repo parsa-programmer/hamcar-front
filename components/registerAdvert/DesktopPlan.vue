@@ -37,7 +37,11 @@
         <p>نمایش در پیشنهادات همکار</p>
       </div>
     </div>
-    <div :class="['plan__item', { active: plan == 1 }]" @click="selectPlan(1)">
+    <div
+      :class="['plan__item', { active: plan == 1 }]"
+      @click="selectPlan(1)"
+      v-if="ignorePlans.includes(1) == false"
+    >
       <div class="plan__header">
         <h4>رایگان</h4>
       </div>
@@ -73,7 +77,9 @@
         </p>
       </div>
     </div>
-    <div :class="['plan__item', { active: plan == 2 }]" @click="selectPlan(2)">
+    <div :class="['plan__item', { active: plan == 2 }]" @click="selectPlan(2)"
+    v-if="ignorePlans.includes(2) == false"
+    >
       <div class="plan__header">
         <icons-flash v-if="selectedPlan == 2" />
 
@@ -110,7 +116,9 @@
         </p>
       </div>
     </div>
-    <div :class="['plan__item', { active: plan == 3 }]" @click="selectPlan(3)">
+    <div :class="['plan__item', { active: plan == 3 }]" @click="selectPlan(3)"
+    v-if="ignorePlans.includes(3) == false"
+    >
       <div class="plan__header">
         <icons-flash v-if="selectedPlan == 3" />
         <h4>پر سرعت</h4>
@@ -140,7 +148,9 @@
         </p>
       </div>
     </div>
-    <div :class="['plan__item', { active: plan == 4 }]" @click="selectPlan(4)">
+    <div :class="['plan__item', { active: plan == 4 }]" @click="selectPlan(4)"
+    v-if="ignorePlans.includes(4) == false"
+    >
       <div class="plan__header">
         <icons-flash v-if="selectedPlan == 4" />
 
@@ -170,7 +180,12 @@
       </div>
     </div>
   </div>
-  <h-button class="pull-left pay__btn" @click="finallyPlan" :disabled="plan == 0">پرداخت</h-button>
+  <h-button
+    class="pull-left pay__btn"
+    @click="finallyPlan"
+    :disabled="plan == 0"
+    >پرداخت</h-button
+  >
 </template>
 
 <script setup lang="ts">
@@ -180,6 +195,7 @@ import { splitNumber } from "~~/utilities/numberUtils";
 const { plans, selectedPlan = 1 } = defineProps<{
   plans: AdvertisementPlan[];
   selectedPlan: number;
+  ignorePlans: any[];
 }>();
 const plan = ref(selectedPlan);
 const emit = defineEmits(["planSeleced"]);

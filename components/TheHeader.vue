@@ -1,5 +1,6 @@
 <template>
   <header class="header">
+    <mobile-side-bar v-model="isOpenSideBar" />
     <div class="container">
       <nav class="nav">
         <div class="nav__wrapper">
@@ -99,7 +100,7 @@
           </div>
           <div class="nav__icons-wrapper" v-if="showSearchIcon">
             <div class="nav__icon nav__icon--bars-icon">
-              <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
+              <svg width="20" height="15" viewBox="0 0 20 15" fill="none" @click="isOpenSideBar=true">
                 <path
                   d="M1.42969 1.42847H18.574M1.42969 7.14323H18.574M1.42969 12.858H18.574"
                   stroke="var(--color-black)"
@@ -178,6 +179,8 @@ const store = authStore();
 
 const isLogin = ref(false);
 const loading = ref(true);
+const isOpenSideBar = ref(false);
+
 onMounted(() => {
   isLogin.value = store.isLogin;
 });

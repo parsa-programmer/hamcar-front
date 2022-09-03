@@ -17,14 +17,20 @@
           <h-button class="grow-1" @click="openNardebanModal" outline
             >نردبان</h-button
           >
-          <h-button class="grow-1" outline>ارتقاع آگهی</h-button>
+          <h-button
+            class="grow-1"
+            :to="`/account/adverts/upgradePlan?id=${advert.id}`"
+            outline
+            v-if="advert.plan.planId != '4'"
+            >ارتقاع آگهی</h-button
+          >
           <h-button class="grow-1" outline>ویرایش</h-button>
           <h-button
             class="grow-1"
             @click="openDeletePopup"
             outline
             color="error"
-            v-if="advert.status!='inActive'"
+            v-if="advert.status != 'inActive'"
             >حذف</h-button
           >
         </div>

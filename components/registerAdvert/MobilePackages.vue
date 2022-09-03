@@ -16,6 +16,8 @@
       <div
         :class="['mobile__plan', { active: plan == 1 }]"
         @click="selectPlan(1)"
+        v-if="ignorePlans.includes(1) == false"
+
       >
         <div class="mobile__plan__header">
           <h2 class="font-3 row align-items-center">
@@ -80,6 +82,8 @@
       <div
         :class="['mobile__plan', { active: plan == 2 }]"
         @click="selectPlan(2)"
+        v-if="ignorePlans.includes(2) == false"
+
       >
         <div class="mobile__plan__header">
           <h2 class="font-3 row align-items-center">
@@ -154,6 +158,8 @@
       <div
         :class="['mobile__plan', { active: plan == 3 }]"
         @click="selectPlan(3)"
+        v-if="ignorePlans.includes(3) == false"
+
       >
         <div class="mobile__plan__header">
           <h2 class="font-3 row align-items-center">
@@ -228,6 +234,7 @@
       <div
         :class="['mobile__plan', { active: plan == 4 }]"
         @click="selectPlan(4)"
+        v-if="ignorePlans.includes(4) == false"
       >
         <div class="mobile__plan__header">
           <h2 class="font-3 row align-items-center">
@@ -311,6 +318,7 @@ import { splitNumber } from "~~/utilities/numberUtils";
 const { plans, selectedPlan = 0 } = defineProps<{
   plans: AdvertisementPlan[];
   selectedPlan: number;
+  ignorePlans: any[];
 }>();
 const plan = ref(selectedPlan);
 const emit = defineEmits(["planSeleced", ""]);

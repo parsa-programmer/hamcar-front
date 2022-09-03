@@ -66,8 +66,9 @@
           <span class="advert__date-type color_black_200 font-6"
             >{{ getPlan() }}
             <nuxt-link
+            v-if="planDetail[1]!='4'"
               class="text-decoration"
-              :to="`/account/adverts/upgrade/${advert.id}`"
+              :to="`/account/adverts/upgradePlan?id=${advert.id}`"
               >(ارتقاء نوع آگهی)</nuxt-link
             ></span
           >

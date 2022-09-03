@@ -1,6 +1,6 @@
 <template>
   <label>
-    <input ref="inp" type="checkbox" @change="changeColorTheme" />
+    <input id="change__them" ref="inp" type="checkbox" @change="changeColorTheme" />
     <span class="slider"></span>
   </label>
 </template>
@@ -8,7 +8,7 @@
 <script setup>
 const theme = ref("light");
 const inp = ref(null);
-
+const emit = defineEmits(["currentThem"]);
 onMounted(() => {
   theme.value = localStorage.getItem("theme") ?? "light";
   if (theme.value == "dark") {
@@ -16,6 +16,7 @@ onMounted(() => {
   } else {
     inp.value.checked = true;
   }
+  emit("currentThem", theme.value);
 });
 
 const changeColorTheme = (e) => {
@@ -25,15 +26,25 @@ const changeColorTheme = (e) => {
     localStorage.setItem("theme", "light");
     setTheme("light");
     theme.value = "light";
+
   } else {
     localStorage.setItem("theme", "dark");
     setTheme("dark");
     theme.value = "dark";
   }
+  emit("currentThem", theme.value);
 };
 </script>
 
 <style scoped>
+@media screen and (max-width: 428px) {
+  input:checked ~ .slider::before {
+    padding-top: 5px;
+  }
+  .slider::before {
+    padding-top: 4px;
+  }
+}
 .toggle-switch {
   position: relative;
   width: 200px;

@@ -79,7 +79,7 @@ const registerSuccess = () => {
 onMounted(async () => {
   isLogin.value = auth.isLogin;
   provinces.value = await getProvinces();
-  if (auth.user.address) {
+  if (auth.user?.address) {
     userAddress.Province = auth.user.address.province;
     userAddress.City = auth.user.address.city;
     userAddress.PostalAddress = auth.user.address.postalAddress;
