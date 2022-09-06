@@ -5,8 +5,6 @@
       <Title>همکار</Title>
     </Head>
     <section class="info">
-      <nuxt-link to="/test">Test</nuxt-link>
-
       <div class="container">
         <div class="info__wrapper">
           <div class="input-group info__search-box">

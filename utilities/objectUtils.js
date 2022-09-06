@@ -20,7 +20,7 @@ export function containsObject(obj, list) {
 
 export function RemoveDubplicateObjects(list) {
   const filteredArr = list.reduce((acc, current) => {
-    const x = acc.find(item => item.id === current.id);
+    const x = acc.find((item) => item.id === current.id);
     if (!x) {
       return acc.concat([current]);
     } else {
@@ -29,3 +29,21 @@ export function RemoveDubplicateObjects(list) {
   }, []);
   return filteredArr;
 }
+
+export const ImageDimensions = (file) =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+
+    // the following handler will fire after a successful loading of the image
+    img.onload = () => {
+      const { naturalWidth: width, naturalHeight: height } = img;
+      resolve({ width, height });
+    };
+
+    // and this handler will fire if there was an error with the image (like if it's not really an image or a corrupted one)
+    img.onerror = () => {
+      reject("There was some problem with the image.");
+    };
+
+    img.src = URL.createObjectURL(file);
+  });

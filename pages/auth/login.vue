@@ -36,6 +36,7 @@ const phoneNumber = store.phoneNumber;
 const loginStep = ref(1);
 definePageMeta({
   middleware: ["auth"],
+  layout:"login-layout"
 });
 const nextStep = (step: number) => {
   loginStep.value = step;
@@ -107,6 +108,7 @@ const nextStep = (step: number) => {
   max-height: 688px;
   border-radius: var(--app-border-radius);
   overflow: hidden;
+  overflow: visible !important;
 }
 
 .login-picture img {

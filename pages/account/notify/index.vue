@@ -122,6 +122,7 @@ import { authStore } from "~~/stores/auth.store";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
 definePageMeta({
   layout: "account-layout",
+  title:"گوش به زنگ"
 });
 const isOpenDeleteModal = ref(false);
 const selectedNotify: Ref<string | null> = ref(null);

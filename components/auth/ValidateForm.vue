@@ -126,7 +126,17 @@ const validate = async (d: any, actions: any) => {
   var isSuccess = await validateCode(phoneNumber, code.value);
   if (isSuccess) {
     if (props.isRedirect) {
-      router.push("/");
+      const redirectUrl = router.currentRoute.value.query.returnTo?.toString();
+      if (redirectUrl) {
+        var pat = /^https?:\/\//i;
+        if (pat.test(redirectUrl) || redirectUrl.startsWith("www")) {
+          await router.push("/");
+        } else {
+          await router.push(redirectUrl);
+        }
+      } else {
+        await router.push("/");
+      }
     } else {
       emit("successed");
     }

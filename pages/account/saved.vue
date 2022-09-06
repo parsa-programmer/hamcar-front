@@ -126,6 +126,7 @@ const deleteSaved = async () => {
 
 definePageMeta({
   layout: "account-layout",
+  title:"ذخیره شده ها"
 });
 </script>
 

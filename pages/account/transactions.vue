@@ -90,6 +90,8 @@ onMounted(async () => {
 });
 definePageMeta({
   layout: "account-layout",
+  title:"لیست تراکنش ها"
+
 });
 </script>
 

@@ -229,7 +229,9 @@ hr {
 .w-auto {
     width: auto;
 }
-
+.mt-2_5{
+    margin-top: 2.5rem;
+}
 .text-decoration {
     text-decoration: underline;
 }
@@ -1135,7 +1137,10 @@ button {
     .company__serach-box {
         display: none;
     }
-
+    .input {
+        font-family: var(--t4-font-family) !important;
+        font-size: var(--t4-font-size) !important;
+      }
     .d-mobile-none {
         display: none !important;
     }

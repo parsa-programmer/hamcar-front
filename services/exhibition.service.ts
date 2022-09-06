@@ -15,6 +15,15 @@ export const Register = (
     body: command,
   });
 };
+export const VerifyExhibitionAccount = (
+  command: FormData
+): Promise<IApiResponse<undefined>> => {
+  return FetchApi("/exhibition/CompleteAccount", {
+    method: "PUT",
+    body: command,
+  });
+};
+
 
 export const Edit = (command: FormData): Promise<IApiResponse<undefined>> => {
   return FetchApi("/exhibition", {
@@ -32,11 +41,12 @@ export const AddConsultant = (
   });
 };
 
-
 export const GetCurrentExhibition = (): Promise<
   IApiResponse<ExhibitionDto>
 > => {
-  return FetchApi("/exhibition");
+  return FetchApi("/exhibition", undefined, {
+    ignoreErrors: true,
+  });
 };
 
 export const GetByEnglishTitle = (

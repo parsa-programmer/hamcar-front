@@ -35,7 +35,7 @@
         :id="inputId"
       />
       <slot name="custom_marker" v-if="$.slots.custom_marker" />
-      
+
       <template v-else>
         <span class="checkmark"></span>
         <svg width="12" height="12" viewBox="0 0 12 12">
@@ -58,8 +58,9 @@
       <input
         :type="type"
         :class="[
-          'form-control bg-transparent',
+          'form-control ',
           classValue,
+          { 'bg-transparent': transparent },
           { 'invalid-data': !!errorMessage },
         ]"
         :placeholder="placeholder"
@@ -80,9 +81,10 @@
         <input
           :type="type"
           :class="[
-            'form-control bg-transparent',
+            'form-control',
             'has-suffix',
             classValue,
+            { 'bg-transparent': transparent },
             { 'invalid-data': !!errorMessage },
             ,
           ]"
@@ -121,8 +123,9 @@
       <input
         :type="type"
         :class="[
-          'form-control bg-transparent',
+          'form-control',
           classValue,
+          { 'bg-transparent': transparent },
           { 'invalid-data': !!errorMessage },
         ]"
         :placeholder="placeholder"
@@ -197,6 +200,10 @@ const props = defineProps({
   inputId: {
     type: String,
     default: "",
+  },
+  transparent: {
+    type: Boolean,
+    default: true,
   },
 });
 

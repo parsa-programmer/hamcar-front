@@ -1,6 +1,14 @@
 import { Plan } from "../account/account.Models";
 import { Address } from "../utilities/Address";
 
+export enum ExhibitionStatus {
+  pending = "pending",
+  rejected = "rejected",
+  active = "active",
+  deActive = "deActive",
+  shouldCompleteAccount = "shouldCompleteAccount",
+  accountEdited = "accountEdited",
+}
 export interface ExhibitionDto {
   id: string;
   creationDate: Date;
@@ -10,7 +18,7 @@ export interface ExhibitionDto {
   postalCode: string;
   logoImageName: string;
   englishTitle: string;
-  status: string;
+  status: ExhibitionStatus;
   type: string;
   phoneNumbers: PhoneNumbers;
   plan: Plan;

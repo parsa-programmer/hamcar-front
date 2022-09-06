@@ -34,10 +34,12 @@ Input & Input Group
     border-color: var(--color-green);
     color: var(--color-black);
 }
-input[disabled]{
-    color: var(--color-gray-600) !important; 
+
+input[disabled] {
+    color: var(--color-gray-600) !important;
     border-color: var(--color-gray-400) !important;
 }
+
 .form-control:hover {
     color: var(--color-gray-600);
     border-color: var(--color-gray-400);
@@ -154,8 +156,8 @@ input[disabled]{
 @media screen and (max-width: 768px) {
     .form-control {
         height: 4rem;
-        font-size: var(--t2-font-size);
-        font-family: var(--t2-font-family);
+        font-size: var(--t4-font-size);
+        font-family: var(--t4-font-family);
     }
 
     .form-control.light-border {
@@ -314,15 +316,25 @@ input[disabled]{
 .btn-primary-outline {
     border: 2px solid var(--color-blue);
     color: var(--color-blue);
+    background: transparent;
+}
+
+.btn-default-outline {
+    border: 2px solid var(--color-gray-500);
+    background: transparent;
+    color: var(--color-gray-500) !important;
+
 }
 
 .btn-primary {
     color: var(--color-white);
     background-color: var(--color-blue);
 }
-.btn-primary:hover{
+
+.btn-primary:hover {
     background-color: #0068d6;
 }
+
 .btn-default {
     color: var(--color-gray-500);
     border: 2px solid var(--color-gray-400);
@@ -332,13 +344,15 @@ input[disabled]{
 .btn-error-outline {
     border: 2px solid var(--color-error);
     color: var(--color-error);
+    background: transparent;
 }
 
 .btn-error {
     color: var(--color-white);
     background-color: var(--color-error);
 }
-.btn-error:hover{
+
+.btn-error:hover {
     background-color: #d42e2e;
 }
 
@@ -590,6 +604,7 @@ textarea {
     padding: 24px 2rem !important;
     min-height: 200px;
 }
+
 /* Modern Select Box */
 
 .modern-select__box {
@@ -606,7 +621,8 @@ textarea {
     cursor: pointer;
     position: relative;
 }
-.modern-select__box .select__list{
+
+.modern-select__box .select__list {
     top: calc(100% + .5rem) !important;
     padding: .5rem .0rem .5rem 0px;
     width: 80%;
@@ -615,21 +631,25 @@ textarea {
     position: absolute;
     right: unset;
 }
-.modern-select__box .select__item:last-child{
+
+.modern-select__box .select__item:last-child {
     border-bottom: none;
 }
-.modern-select__box .select__item{
-    border-bottom:1px solid var(--color-gray-300) ;
-    padding:1.2rem 0;
+
+.modern-select__box .select__item {
+    border-bottom: 1px solid var(--color-gray-300);
+    padding: 1.2rem 0;
     border-radius: 0;
     padding-right: 2rem;
     font-family: var(--t4-font-family);
     font-size: var(--t4-font-size);
     height: unset;
 }
-.modern-select__box .select__list__wrapper{
+
+.modern-select__box .select__list__wrapper {
     padding: 0;
 }
+
 /*
 ===================
    Radio Butotn
@@ -912,7 +932,7 @@ textarea {
 }
 
 .img__selector {
-   
+
     border-radius: 16px;
     display: flex;
     justify-content: center;
@@ -959,10 +979,11 @@ textarea {
 
 /* Toast */
 
-.Vue-Toastification__toast--rtl{
+.Vue-Toastification__toast--rtl {
     margin-left: auto !important;
     margin-right: unset !important;
 }
-.Vue-Toastification__toast{
+
+.Vue-Toastification__toast {
     font-family: var(--t5-font-family) !important;
 }

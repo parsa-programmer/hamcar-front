@@ -5,7 +5,7 @@ export default defineNuxtRouteMiddleware((to, from) => {
   if (to.path.toLocaleLowerCase().startsWith("/account")) {
     const cookie = useCookie("token");
     if (!cookie.value) {
-      return navigateTo("/auth/login");
+      return navigateTo("/auth/login?returnTo=" + to.path);
     }
   }
 });

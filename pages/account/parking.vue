@@ -1,8 +1,5 @@
 <template>
   <div class="profile__content">
-    <Head>
-      <Title>آگهی های من</Title>
-    </Head>
     <client-only>
       <account-top-bar class="mb-mobile-40" />
       <account-page-title
@@ -73,6 +70,7 @@ import { ProssesAsync } from "~~/utilities/ProssesAsync";
 
 definePageMeta({
   layout: "account-layout",
+  title:"پارکینگ"
 });
 
 const toast = useToast();

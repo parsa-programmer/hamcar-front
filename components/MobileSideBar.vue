@@ -141,10 +141,18 @@
         </div>
         <div class="tab__data">
           <div class="content" v-if="activeTab == 1">
-            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/car">خرید خودرو</nuxt-link>
-            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/price">قیمت روز</nuxt-link>
-            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/sell/car">ثبت آگهی</nuxt-link>
-            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/car-review">مشخصات فنی</nuxt-link>
+            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/car"
+              >خرید خودرو</nuxt-link
+            >
+            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/price"
+              >قیمت روز</nuxt-link
+            >
+            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/sell/car"
+              >ثبت آگهی</nuxt-link
+            >
+            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/car-review"
+              >مشخصات فنی</nuxt-link
+            >
             <nuxt-link @click="closeSideBar" class="mt-1_5" to="/account/notify"
               >گوش به زنگ</nuxt-link
             >
@@ -159,7 +167,9 @@
           </div>
           <div class="content" v-if="activeTab == 3">
             <nuxt-link to="/">تعرفه پکیج ها</nuxt-link>
-            <nuxt-link to="/">ثبت نام نمایشگاه</nuxt-link>
+            <nuxt-link to="/account/exhibition/register"
+              >ثبت نام نمایشگاه</nuxt-link
+            >
             <nuxt-link to="/">اخباز</nuxt-link>
             <nuxt-link to="/">قوانین و شرایط</nuxt-link>
             <nuxt-link to="/">درباره ما</nuxt-link>
@@ -181,6 +191,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
 import { authStore } from "~~/stores/auth.store";
 
 const props = defineProps({

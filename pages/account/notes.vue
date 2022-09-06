@@ -1,8 +1,5 @@
 <template>
   <div class="profile__content">
-    <Head>
-      <Title>یادداشت ها</Title>
-    </Head>
     <client-only>
       <account-top-bar :is-show-cards="false" />
       <div class="card row justify-content-space-between">
@@ -149,6 +146,7 @@ onMounted(async () => {
 });
 definePageMeta({
   layout: "account-layout",
+  title:" یادداشت ها"
 });
 </script>
 

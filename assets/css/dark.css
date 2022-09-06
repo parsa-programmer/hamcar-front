@@ -183,3 +183,6 @@
  [data-theme="dark"] aside .top {
     background: var(--color-dark-black-600) !important;
  }
+ [data-theme="dark"]  .zone {
+    background: var(--color-dark-black-600) !important;
+ }

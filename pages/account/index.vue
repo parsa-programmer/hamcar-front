@@ -51,7 +51,8 @@
                 >
                 <span class="badge profile-card__value font-6">
                   اعتبار تا
-                  {{ RemainingTime(new Date(authData.user.plan.expireDate)) }} روز دیگر
+                  {{ RemainingTime(new Date(authData.user.plan.expireDate)) }}
+                  روز دیگر
                 </span>
                 <span class="profile-card__value font-6">
                   {{ toPersianDate(new Date(authData.user.plan.expireDate)) }}
@@ -109,10 +110,10 @@ definePageMeta({
   gap: 1rem;
   flex-grow: 1;
 }
-.profile-card__title.mt-1{
+.profile-card__title.mt-1 {
   margin-top: 1.5rem;
 }
-.profile__card:hover{
+.profile__card:hover {
   box-shadow: 0px 10px 32px rgba(0, 0, 0, 0.06);
 }
 .profile__card {
@@ -121,7 +122,7 @@ definePageMeta({
   padding: 0.5rem;
   flex-grow: 1;
   width: 18.5rem;
-  transition: all ease .3s;
+  transition: all ease 0.3s;
 }
 .profile-card__banner {
   background-color: #e7f2ff;
@@ -145,7 +146,7 @@ definePageMeta({
   font-size: var(--t5-font-size);
   color: var(--color-black-200);
 }
-.mb_3-5{
+.mb_3-5 {
   margin-bottom: 3.5rem;
 }
 .prof_row {

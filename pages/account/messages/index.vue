@@ -1,8 +1,5 @@
 <template>
   <div class="profile__content">
-    <Head>
-      <Title>پیام ها</Title>
-    </Head>
     <client-only>
       <account-messages-mobile-data v-if="isMobile" />
       <template v-else>
@@ -177,6 +174,7 @@ import { ProssesAsync } from "~~/utilities/ProssesAsync";
 
 definePageMeta({
   layout: "account-layout",
+  title:"پیام ها"
 });
 const chatStore = UseChatStore();
 const utilStore = UseUtilStore();

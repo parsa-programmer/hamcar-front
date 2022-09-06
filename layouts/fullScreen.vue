@@ -1,8 +1,8 @@
 <template>
-  <div >
+  <div>
     <div id="header"></div>
     <main class="main">
-      <div class="container-fluid">
+      <div class="container">
         <template v-if="isMobilePage">
           <Teleport to="#header">
             <the-header :show-search-bar="false" :show-mobile-icons="false">
@@ -27,8 +27,8 @@
           </Teleport>
           <slot></slot>
         </template>
-        <div v-else-if="loading==false">
-          <div class="row justify-content-space-between">
+        <div v-else-if="loading == false">
+          <div class="row justify-content-space-between des__header">
             <nuxt-link to="/">
               <img
                 src="/img/Persian-HamCar-Logo.png"
@@ -104,5 +104,8 @@ onMounted(async () => {
 .logo {
   position: relative;
   top: 10px;
+}
+.des__header{
+  margin-top: 40px;
 }
 </style>

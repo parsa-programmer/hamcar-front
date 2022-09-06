@@ -1,8 +1,5 @@
 <template>
   <div class="profile__content">
-    <Head>
-      <Title>آگهی های من</Title>
-    </Head>
     <client-only>
       <account-top-bar />
       <account-page-title
@@ -218,6 +215,7 @@ import { CurrentDomainUrl } from "~~/utilities/api.config";
 
 definePageMeta({
   layout: "account-layout",
+  title:"آگهی های من"
 });
 const toast = useToast();
 const accountStore = useAccountStore();

@@ -46,8 +46,22 @@
             <li>
               <a href="#" class="nav__link">موتور سیکلت</a>
             </li>
-            <li class="nav__item">
+            <li class="nav__item has__menu">
               <a href="#" class="nav__link">همکار من</a>
+              <ul>
+                <li>
+                  <nuxt-link to="/account/packages">تعرفه پکیج ها</nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link to="/account/exhibition/register">ثبت نام نمایشگاه</nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link to="/rules">قوانین و شرایط</nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link to="/about-us">درباره ما</nuxt-link>
+                </li>
+              </ul>
             </li>
             <client-only>
               <li class="nav__item change__theme">
@@ -118,7 +132,7 @@
             </div>
           </div>
           <div class="nav__icon nav__icon--bars-icon" v-else>
-            <svg width="20" height="15" viewBox="0 0 20 15" fill="none">
+            <svg width="20" height="15" viewBox="0 0 20 15" fill="none" @click="isOpenSideBar=true">
               <path
                 d="M1.42969 1.42847H18.574M1.42969 7.14323H18.574M1.42969 12.858H18.574"
                 stroke="#0F0F10"
