@@ -217,6 +217,7 @@ body.modal-open {
 
 .modal__body {
   padding: 2.25rem 4rem 3rem 4rem;
+  overflow-x: hidden;
 }
 
 .modal__submit-btn {

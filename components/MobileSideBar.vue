@@ -150,7 +150,7 @@
             <nuxt-link @click="closeSideBar" class="mt-1_5" to="/sell/car"
               >ثبت آگهی</nuxt-link
             >
-            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/car-review"
+            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/car-reviews"
               >مشخصات فنی</nuxt-link
             >
             <nuxt-link @click="closeSideBar" class="mt-1_5" to="/account/notify"

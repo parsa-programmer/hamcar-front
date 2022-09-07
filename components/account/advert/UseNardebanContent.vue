@@ -126,7 +126,7 @@ const useOrByNardeban = async () => {
   .pay__btn {
     width: 100% !important;
   }
-  .nar__header{
+  .nar__header {
     margin-bottom: 1rem !important ;
   }
   .nar__header img {
@@ -140,6 +140,9 @@ const useOrByNardeban = async () => {
   }
   .custom__desc {
     position: initial !important;
+  }
+  .price p{
+    margin-top: 17px !important;
   }
 }
 .custom__desc {

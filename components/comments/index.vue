@@ -138,3 +138,10 @@ const getComments = async () => {
   }
 };
 </script>
+<style scoped>
+@media screen and (max-width:768px) {
+  .technical__textarea{
+    padding:0 !important;
+  }
+}
+</style>

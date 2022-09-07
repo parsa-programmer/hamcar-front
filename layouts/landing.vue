@@ -10,4 +10,13 @@
 
 <script lang="ts" setup>
 
+useHead({
+  bodyAttrs:{
+    class:'bg-white'
+  }
+})
+definePageMeta({
+  
+})
+
 </script>

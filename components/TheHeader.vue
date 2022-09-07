@@ -135,7 +135,7 @@
             <svg width="20" height="15" viewBox="0 0 20 15" fill="none" @click="isOpenSideBar=true">
               <path
                 d="M1.42969 1.42847H18.574M1.42969 7.14323H18.574M1.42969 12.858H18.574"
-                stroke="#0F0F10"
+                stroke="var(--color-black)"
                 stroke-width="1.50012"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -179,7 +179,7 @@
           </svg>
         </div>
         <div class="header__link">
-          <a href="#">ثبت آگهی رایگان</a>
+          <nuxt-link to="/sell/car" >ثبت آگهی رایگان</nuxt-link>
         </div>
       </div>
     </div>

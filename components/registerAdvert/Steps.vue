@@ -101,7 +101,6 @@ const store = advertStore();
 const progressPercentage = ref(14);
 
 onMounted(() => {
-  store.changeStep(5);
   progressPercentage.value = store.currentStep * 14 + 2;
   window.onscroll = function () {
     myFunction();

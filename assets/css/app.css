@@ -652,15 +652,18 @@ body {
 
 ::-webkit-scrollbar {
     width: 9px;
+
 }
 
 ::-webkit-scrollbar-track {
     background: var(--color-white);
+    border-radius: 18px;
+
 }
 
 ::-webkit-scrollbar-thumb {
     background: var(--color-gray-400);
-    border-radius: 10px;
+    border-radius: 18px;
 }
 
 html {

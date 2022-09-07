@@ -23,6 +23,7 @@ const defaultState = () => ({
   motorAdverts: 0 as number,
   gooshBeZangs: 0 as number,
   loading: true as boolean,
+  isInited: false,
 });
 
 export const useAccountStore = defineStore("account", {
@@ -58,7 +59,8 @@ export const useAccountStore = defineStore("account", {
         GetCurrentExhibition(),
       ]);
       this.loading = false;
-
+      this.isInited = true;
+      
       var saved = result[0];
       var gooshBezangs = result[1];
       var nardebans = result[2];

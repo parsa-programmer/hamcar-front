@@ -1,7 +1,7 @@
 <template>
   <div class="comment-list__item">
     <div class="item__header row justify-content-space-between">
-      <h4 class="font-2">{{ item.sender?.fullName ?? "کاربر مهمان" }}</h4>
+      <h4>{{ item.sender?.fullName ?? "کاربر مهمان" }}</h4>
       <span class="font-5 color-gary">{{ TimeAgo(item.creationDate) }}</span>
     </div>
     <div class="item__content mt-1">
@@ -9,7 +9,7 @@
     </div>
     <div class="row footer justify-content-space-between">
       <div class="reply">
-        <a href="#">
+        <!-- <a href="#">
           <svg
             width="18"
             height="15"
@@ -27,7 +27,7 @@
           </svg>
 
           پاسخ</a
-        >
+        > -->
       </div>
       <div v-if="reactionLoading" class="row reActions align-items-center">
         <h-skeletor width="100px" style="height: 15px" />
@@ -198,11 +198,27 @@ h4 {
 .like {
   margin-left: 1rem;
 }
+h4 {
+  font-family: var(--t2-font-family);
+  font-size: var(--t2-font-size);
+}
 @media screen and (max-width: 768px) {
   .comment-list__item p {
-    font-family: var(--t4-font-family) !important;
-    font-size: var(--t4-font-size) !important;
+    font-family: var(--t6-font-family) !important;
+    font-size: var(--t6-font-size) !important;
     text-align: justify !important;
+  }
+  .comment-list__item {
+    padding: 1rem;
+    box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.06);
+  }
+  h4 {
+    font-family: var(--t5-font-family) !important;
+    font-size: var(--t5-font-size) !important;
+  }
+  .item__header span{
+    font-family: var(--t7-font-family) !important;
+    font-size: var(--t7-font-size) !important;
   }
 }
 </style>

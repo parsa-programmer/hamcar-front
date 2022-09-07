@@ -114,7 +114,7 @@
             {{ advert.images.length }} عکس
           </span>
           <h-image
-            :src="GetAdvertImage(advert.id, advert.images[0]?.imageName??'')"
+            :src="GetAdvertImage(advert.id, advert.images[0]?.imageName ?? '')"
             :alt="`${advert.brand.title} ${advert.model.title} ${advert.year.yearTitle}`"
           />
         </div>
@@ -224,7 +224,7 @@
               :src="
                 GetAdvertImage(
                   advert.id,
-                  advert.images.filter((f) => f.isMainImage)[0]?.imageName??''
+                  advert.images.filter((f) => f.isMainImage)[0]?.imageName ?? ''
                 )
               "
               :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
@@ -264,7 +264,7 @@
                 ]"
               >
                 <h-image
-                  :src="GetAdvertImage(advert.id, item.imageName??'')"
+                  :src="GetAdvertImage(advert.id, item.imageName ?? '')"
                   :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
                 />
               </div>
@@ -385,15 +385,22 @@
       </div>
     </section>
 
-    <report-bug
-      :link-id="advert.id"
-      :report-for="BugReportFor.advertisement"
-      v-model="isOpenModal"
-    />
-    <share-modal
+    <h-modal title="گزارش اشکال" v-model="isOpenModal">
+      <report-bug
+        :link-id="advert.id"
+        :report-for="BugReportFor.advertisement"
+      />
+    </h-modal>
+    <h-modal
+      title="اشتراک گذاری"
+      sub-title="با استفاده از روش های زیر میتوانید این صفحه را با دوستان خود به اشتراک بگذارید."
       v-model="isOpenShareModal"
-      :link="`/car/detail/${advert.shortLink}`"
-    />
+    >
+      <share-page
+        v-model="isOpenShareModal"
+        :link="`/car/detail/${advert.shortLink}`"
+      />
+    </h-modal>
     <h-modal v-model="isOpenPhoneModal">
       <div class="phone__list">
         <div class="row">

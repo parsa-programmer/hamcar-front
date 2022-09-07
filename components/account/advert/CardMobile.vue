@@ -1,11 +1,11 @@
 <template>
   <div class="advert__mobile mobile-card">
-    <div class="advert__mobile-banner">
+    <nuxt-link :to="`/account/adverts/${advert.id}`" class="advert__mobile-banner">
       <h-image :src="GetBitMapAdvertImage(advert.id, advert.imageName)" />
-    </div>
+    </nuxt-link>
     <div class="advert__mobile-body">
       <div class="body__top font-5">
-        <p>{{ advert.title }}</p>
+        <nuxt-link :to="`/account/adverts/${advert.id}`">{{ advert.title }}</nuxt-link>
         <span class="time__ago">({{ TimeAgo(advert.creationDate) }})</span>
       </div>
       <div class="body__middel">
@@ -25,7 +25,7 @@
             >
               <path
                 d="M0.639418 5.89123C0.902745 7.22729 1.74325 8.3571 2.73665 9.26117C3.72673 10.1622 4.82664 10.8004 5.52589 11.1569C5.82742 11.3107 6.17259 11.3107 6.47412 11.1569C7.17337 10.8004 8.27328 10.1622 9.26337 9.26118C10.2568 8.3571 11.0973 7.2273 11.3606 5.89123C11.578 4.78796 11.3459 3.45753 10.5242 2.40958C9.71583 1.3786 8.28954 0.5625 6 0.5625C3.71046 0.5625 2.28417 1.3786 1.47581 2.40958C0.654127 3.45753 0.421972 4.78796 0.639418 5.89123Z"
-                stroke="#85858F"
+                stroke="var(--color-black-200)"
                 stroke-width="1.125"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -33,7 +33,7 @@
               <circle
                 r="1.4375"
                 transform="matrix(-1 0 0 1 6 5)"
-                stroke="#85858F"
+                stroke="var(--color-black-200)"
                 stroke-width="1.125"
               />
             </svg>
@@ -131,6 +131,9 @@ const openNardebanModal = () => {
 <style scoped>
 .advert__mobile-banner {
   width: 148px;
+}
+.body__top a{
+  color: var(--color-black);
 }
 .advert__tag {
   font-family: var(--t7-font-family);

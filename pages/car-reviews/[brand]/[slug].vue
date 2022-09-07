@@ -5,15 +5,19 @@
       <Title>{{ carReview.seoData.metaTitle }}</Title>
       <Link href="/css/technical.css" rel="stylesheet" />
     </Head>
-    <report-bug
-      :reportFor="BugReportFor.review"
-      v-model="isOpenBugReportModal"
-      :link-id="carReview.id"
-    />
-    <share-modal
+    <h-modal title="گزارش اشکال" v-model="isOpenBugReportModal">
+      <report-bug :reportFor="BugReportFor.review" :link-id="carReview.id" />
+    </h-modal>
+    <h-modal
+      title="اشتراک گذاری"
+      sub-title="با استفاده از روش های زیر میتوانید این صفحه را با دوستان خود به اشتراک بگذارید."
       v-model="isOpenShareModal"
-      :link="`/car-review/${carReview.carReviewBrand.slug}/${carReview.slug}`"
-    />
+    >
+      <share-page
+        v-model="isOpenShareModal"
+        :link="`/car-review/${carReview.carReviewBrand.slug}/${carReview.slug}`"
+      />
+    </h-modal>
     <section class="breadcrumb">
       <nuxt-link to="/" class="breadcrumb__item">
         <icons-home></icons-home>

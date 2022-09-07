@@ -145,5 +145,44 @@ const ref=
 onMounted(() => {});
 </script>
 
-<style>
+<style scoped>
+  
+.sidebar {
+  background-color: var(--color-gray-200);
+  border-radius: var(--app-border-radius);
+  padding: 2rem 0;
+  width: 12rem;
+}
+
+.sidebar__lists {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.sidebar__item {
+  color: var(--color-gray-600);
+  display: flex;
+  align-items: center;
+  padding-right: 1.5rem;
+  cursor: pointer;
+}
+
+.sidebar__item svg {
+  margin-left: 1rem;
+}
+
+.sidebar__item svg path {
+  fill: var(--color-gray-600);
+}
+
+.sidebar__item--active {
+  color: var(--color-black);
+  border-right: 2px solid var(--color-black);
+}
+
+.sidebar__item--active svg path {
+  fill: var(--color-black);
+}
+
 </style>

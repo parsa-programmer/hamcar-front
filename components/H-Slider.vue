@@ -106,7 +106,11 @@ export default defineComponent({
     const recalculate = () => {
       const { el, maxX } = getConfig();
       //@ts-ignore
-      Draggable.get(unref(el)).applyBounds({ minX: 0, maxX });
+      try {
+        Draggable.get(unref(el)).applyBounds({ minX: 0, maxX });
+      } catch {
+        //
+      }
     };
     onUpdated(() => {
       recalculate();
