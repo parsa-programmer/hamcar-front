@@ -75,9 +75,9 @@
 </template>
 
 <script setup lang="ts">
-import { Ref } from "vue";
+import { Ref, ref } from "vue";
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
     defailt: "",
@@ -94,11 +94,19 @@ defineProps({
     type: String,
     default: "",
   },
+  buttonClick: {
+    type: Function,
+    default: () => {},
+  },
 });
 const isOpen: Ref<boolean> = ref(false);
-
+const slot = useSlots();
 const toggle = () => {
-  isOpen.value = !isOpen.value;
+  if (slot.default) {
+    isOpen.value = !isOpen.value;
+  } else {
+    props.buttonClick();
+  }
 };
 </script>
 
@@ -108,7 +116,7 @@ const toggle = () => {
     font-family: var(--t5-font-family) !important;
     font-size: var(--t5-font-size) !important;
   }
-  .card{
+  .card {
     background: transparent;
   }
 }

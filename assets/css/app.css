@@ -207,7 +207,17 @@ hr {
     border-radius: var(--app-border-radius);
     padding: 2rem;
 }
-
+.card__title {
+    font-family: var(--t2-font-family);
+    font-size: var(--t2-font-size);
+}
+.card__sub-title{
+    font-family: var(--t5-font-family);
+    font-size: var(--t5-font-size);
+    margin-top: .5rem;
+    color: var(--color-gray-600);
+    margin-bottom: 1rem;
+}
 
 .logo {
     width: 128px;
@@ -239,15 +249,21 @@ hr {
 .border-none {
     border: none !important;
 }
-
+.row__reverse{
+    flex-direction: row-reverse;
+}
 .gap-0_5 {
     gap: .5rem !important;
 }
-
+.gap-3{
+    gap: 3rem !important;
+}
 .p-0 {
     padding: 0;
 }
-
+.p-1_5{
+    padding: 1.5rem;
+}
 .align-items-start {
     align-items: flex-start;
 }
@@ -514,7 +530,9 @@ hr {
 .w-full {
     width: 100%;
 }
-
+.w-50 {
+    width: 50%;
+}
 .cursor-pointer {
     cursor: pointer;
 }
@@ -622,7 +640,9 @@ body {
     z-index: 100;
     top: 35px;
 }
-
+.d-flex{
+    display: flex;
+}
 .nav__menu ul:hover {
     display: block;
 }
@@ -1137,6 +1157,17 @@ button {
 }
 
 @media screen and (max-width: 768px) {
+   
+    .card__title {
+        font-family: var(--t3-font-family) !important;
+        font-size: var(--t3-font-size) !important;
+    }
+    .card__sub-title{
+        font-family: var(--t6-font-family);
+        font-size: var(--t6-font-size);
+        margin-bottom: 1.5rem;
+    }
+    
     .company__serach-box {
         display: none;
     }
@@ -1163,6 +1194,8 @@ button {
 
     body {
         background-color: var(--color-white);
+        letter-spacing: -0.03em;
+
     }
 
     .text__description {

@@ -1,10 +1,22 @@
 <template>
   <button
-    :class="['btn', outline ? `btn-${color}-outline` : `btn-${props.color}`]"
+    :class="[
+      'btn',
+      outline ? `btn-${color}-outline` : `btn-${props.color}`,
+      size ? `btn-${size}` : null,
+    ]"
     :disabled="loading"
   >
-    <div :style="loading==true?`opacity:0`:null">
-      <slot />
+    <div :style="loading == true ? `opacity:0` : null">
+      <template v-if="$slots.icon">
+        <div class="row align-items-center gap-0_5 justify-content-center">
+          <slot name="icon" />
+          <slot />
+        </div>
+      </template>
+      <template v-else>
+        <slot />
+      </template>
     </div>
 
     <div class="sp sp-3balls" v-if="loading"></div>
@@ -24,6 +36,10 @@ const props = defineProps({
   outline: {
     type: Boolean,
     default: false,
+  },
+  size: {
+    type: String,
+    default: "",
   },
 });
 </script>

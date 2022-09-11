@@ -31,6 +31,8 @@ onMounted(async () => {
   ) {
     await router.push("/account");
     return;
+  }else if(!account.exhibition.plan){
+    await router.push('/account/exhibition/buyPackage')
   }
 });
 </script>

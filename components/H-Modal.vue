@@ -32,10 +32,15 @@
               ></path>
             </svg>
           </div>
-          <h5 class="modal__name">{{ title }}</h5>
-          <p class="modal__caption" v-if="subTitle">
-            {{ subTitle }}
-          </p>
+          <template v-if="$slots.header">
+            <slot name="header" />
+          </template>
+          <template v-else>
+            <h5 class="modal__name">{{ title }}</h5>
+            <p class="modal__caption" v-if="subTitle">
+              {{ subTitle }}
+            </p>
+          </template>
         </div>
         <div class="modal__body">
           <slot></slot>
@@ -106,7 +111,7 @@ const closeModal = () => {
 .overflow-auto {
   overflow: auto;
 }
-.overflow-none{
+.overflow-none {
   overflow: initial !important;
 }
 .modal__actions {
@@ -208,7 +213,6 @@ body.modal-open {
 }
 
 .modal__caption {
-  display: none;
   color: var(--color-gray-600);
   font-family: var(--t6-font-family);
   font-size: var(--t6-font-size);

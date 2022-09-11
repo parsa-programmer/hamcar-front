@@ -1,4 +1,7 @@
-import { AddConsultantCommand } from "~~/models/exhibitions/Exhibition.Commands";
+import {
+  AddConsultantCommand,
+  EditConsultantCommand,
+} from "~~/models/exhibitions/Exhibition.Commands";
 import {
   ExhibitionConsultantDto,
   ExhibitionDto,
@@ -15,6 +18,7 @@ export const Register = (
     body: command,
   });
 };
+
 export const VerifyExhibitionAccount = (
   command: FormData
 ): Promise<IApiResponse<undefined>> => {
@@ -23,7 +27,6 @@ export const VerifyExhibitionAccount = (
     body: command,
   });
 };
-
 
 export const Edit = (command: FormData): Promise<IApiResponse<undefined>> => {
   return FetchApi("/exhibition", {
@@ -40,7 +43,22 @@ export const AddConsultant = (
     body: command,
   });
 };
+export const EditConsultant = (
+  command: EditConsultantCommand
+): Promise<IApiResponse<undefined>> => {
+  return FetchApi("/exhibition/consultants", {
+    method: "PUT",
+    body: command,
+  });
+};
 
+export const DeleteConsultant = (
+  id: string
+): Promise<IApiResponse<undefined>> => {
+  return FetchApi("/exhibition/consultants/" + id, {
+    method: "Delete",
+  });
+};
 export const GetCurrentExhibition = (): Promise<
   IApiResponse<ExhibitionDto>
 > => {
@@ -56,7 +74,7 @@ export const GetByEnglishTitle = (
 };
 
 export const GetConsultants = (): Promise<
-  IApiResponse<ExhibitionConsultantDto>
+  IApiResponse<ExhibitionConsultantDto[]>
 > => {
   return FetchApi("/exhibition/consultants");
 };

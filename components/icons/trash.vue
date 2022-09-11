@@ -1,5 +1,6 @@
  <template>
   <svg
+    v-if="type == '1'"
     xmlns="http://www.w3.org/2000/svg"
     :width="width"
     :height="height"
@@ -25,6 +26,22 @@
       :stroke="hashColor"
     />
   </svg>
+
+  <svg
+    v-else
+    :width="width"
+    :height="height"
+    viewBox="0 0 18 18"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M0.75 3.75H6M17.25 3.75H12M2.25 3.75L3.32985 14.5485C3.48321 16.0821 4.77371 17.25 6.31497 17.25H11.685C13.2263 17.25 14.5168 16.0821 14.6701 14.5485L15.75 3.75M9 8.25V12.75M12.375 8.25L12 12.75M5.625 8.25L6 12.75M12 3.75H9H6M12 3.75H6M12 3.75V2.25C12 1.42157 11.3284 0.75 10.5 0.75H7.5C6.67157 0.75 6 1.42157 6 2.25V3.75"
+      :stroke="hashColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+    />
+  </svg>
 </template>
  
 
@@ -41,6 +58,10 @@ const props = defineProps({
   height: {
     type: Number,
     default: 12,
+  },
+  type: {
+    type: String,
+    default: "1",
   },
 });
 </script>

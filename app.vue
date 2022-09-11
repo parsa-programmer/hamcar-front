@@ -37,6 +37,11 @@ useHead({
 });
 </script>
 <style>
+@media screen and (max-width: 768px) {
+  .back__ {
+    background: rgba(0, 0, 0, 0.9) !important;
+  }
+}
 .back__ {
   position: fixed;
   top: 0;

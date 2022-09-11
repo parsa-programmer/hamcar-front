@@ -1,6 +1,22 @@
 <template>
   <div class="profile__content">
     <client-only>
+      <template #fallback>
+        <h-skeletor height="80px" />
+        <h-skeletor height="200px" />
+        <div class="prof_row">
+          <div class="w-auto grow-1">
+            <h-skeletor height="200px" />
+          </div>
+          <div class="w-auto grow-1">
+            <h-skeletor height="200px" />
+          </div>
+          <div class="w-auto grow-1">
+            <h-skeletor height="200px" />
+          </div>
+        </div>
+      </template>
+
       <account-top-bar :showAdvertCount="true" />
       <div class="prof_row">
         <div class="profile__card mobile-card">
