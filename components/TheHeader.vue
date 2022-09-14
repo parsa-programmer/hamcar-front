@@ -53,7 +53,9 @@
                   <nuxt-link to="/account/packages">تعرفه پکیج ها</nuxt-link>
                 </li>
                 <li>
-                  <nuxt-link to="/account/exhibition/register">ثبت نام نمایشگاه</nuxt-link>
+                  <nuxt-link to="/account/exhibition/register"
+                    >ثبت نام نمایشگاه</nuxt-link
+                  >
                 </li>
                 <li>
                   <nuxt-link to="/rules">قوانین و شرایط</nuxt-link>
@@ -74,7 +76,13 @@
           <div
             :class="['nav__register', { 'disable-element': showSearchIcon }]"
           >
-            <client-only>
+            <client-only fallbackTag="div">
+              <template #fallback>
+                <div class="row align-items-center">
+                  <h-skeletor style="height: 15px" type="box" width="120px" />
+                  <h-skeletor style="height: 72px" type="box" width="180px" />
+                </div>
+              </template>
               <div class="row align-items-center" v-if="store.loading">
                 <h-skeletor style="height: 15px" type="box" width="120px" />
                 <h-skeletor style="height: 72px" type="box" width="180px" />
@@ -90,16 +98,28 @@
                 >
                   ورود / ثبت نام
                 </nuxt-link>
-                <nuxt-link
-                  to="/account"
-                  class="
-                    btn btn-transparent
-                    nav__register-link nav__register-link--login
-                  "
-                  v-else
-                >
-                  حساب کاربری
-                </nuxt-link>
+                <template v-else>
+                  <nuxt-link
+                    to="/account/exhibition"
+                    class="
+                      btn btn-transparent
+                      nav__register-link nav__register-link--login
+                    "
+                    v-if="store.isAccessExhibitonPanel"
+                  >
+                    حساب کاربری
+                  </nuxt-link>
+                  <nuxt-link
+                    to="/account/exhibition"
+                    class="
+                      btn btn-transparent
+                      nav__register-link nav__register-link--login
+                    "
+                    v-else
+                  >
+                    حساب کاربری
+                  </nuxt-link>
+                </template>
                 <nuxt-link
                   href="/sell/car"
                   class="
@@ -114,7 +134,13 @@
           </div>
           <div class="nav__icons-wrapper" v-if="showSearchIcon">
             <div class="nav__icon nav__icon--bars-icon">
-              <svg width="20" height="15" viewBox="0 0 20 15" fill="none" @click="isOpenSideBar=true">
+              <svg
+                width="20"
+                height="15"
+                viewBox="0 0 20 15"
+                fill="none"
+                @click="isOpenSideBar = true"
+              >
                 <path
                   d="M1.42969 1.42847H18.574M1.42969 7.14323H18.574M1.42969 12.858H18.574"
                   stroke="var(--color-black)"
@@ -132,7 +158,13 @@
             </div>
           </div>
           <div class="nav__icon nav__icon--bars-icon" v-else>
-            <svg width="20" height="15" viewBox="0 0 20 15" fill="none" @click="isOpenSideBar=true">
+            <svg
+              width="20"
+              height="15"
+              viewBox="0 0 20 15"
+              fill="none"
+              @click="isOpenSideBar = true"
+            >
               <path
                 d="M1.42969 1.42847H18.574M1.42969 7.14323H18.574M1.42969 12.858H18.574"
                 stroke="var(--color-black)"
@@ -179,7 +211,7 @@
           </svg>
         </div>
         <div class="header__link">
-          <nuxt-link to="/sell/car" >ثبت آگهی رایگان</nuxt-link>
+          <nuxt-link to="/sell/car">ثبت آگهی رایگان</nuxt-link>
         </div>
       </div>
     </div>

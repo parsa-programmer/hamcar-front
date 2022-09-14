@@ -26,11 +26,11 @@ export const useAdverFilter = () => {
   const url = route.path.toLowerCase().startsWith("/car") ? "/car" : "/motor";
 
   const { slug } = route.params;
-  if (slug[1]) {
+  if (slug && slug[1]) {
     router.push(url);
   }
-
-  var params = (slug[0] ?? "").split("-");
+  var _slug = slug ?? [];
+  var params = (_slug[0] ?? "").split("-");
   const brand: string | null = params[0] ?? null;
   const model: string | null = params[1] ?? null;
   const trim = params[2];
@@ -195,7 +195,11 @@ export const useAdverFilter = () => {
     return [];
   };
 
-  const getAdverts = (pageId: number = 1, take: number = 12) => {
+  const getAdverts = (
+    pageId: number = 1,
+    take: number = 12,
+    exhibitionTitle: string | null = null
+  ) => {
     return GetByFilter({
       advertisementType: AdvertisementType.car,
       brand:
@@ -232,7 +236,8 @@ export const useAdverFilter = () => {
       colors: (route.query.colors as Color[] | null) ?? null,
       cylinderCount:
         (route.query.cylinderCount as CylinderCount[] | null) ?? null,
-      exhibitionTitle: (route.query.exhibitionTitle as string | null) ?? null,
+      exhibitionTitle:
+        (route.query.exhibitionTitle as string | null) ?? exhibitionTitle,
       manufacture: (route.query.manufacture as Manufacture[] | null) ?? null,
       search: (route.query.search as string | null) ?? "",
       startYear: (route.query.startYear as string | null) ?? null,

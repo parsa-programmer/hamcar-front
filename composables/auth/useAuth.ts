@@ -10,9 +10,6 @@ export const useAuth = () => {
     loading.value = true;
     var result = await LoginOrRegister(phoneNumber);
     loading.value = false;
-    if (result.metaData.message == "برای ارسال مجدد کد باید 2 دقیقه صبر کنید") {
-      return true;
-    }
     return result.isSuccess;
   };
 

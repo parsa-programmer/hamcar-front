@@ -28,6 +28,10 @@ export const authStore = defineStore("auth", {
     isLogin(): boolean {
       return this.accessToken !== "";
     },
+    isAccessExhibitonPanel(): boolean {
+      var role = this.user?.roles.find((f) => f.roleTitle == "ExhibitionPanel");
+      return role != null;
+    },
   },
   actions: {
     setLoginData(loginResult: LoginResultDto) {

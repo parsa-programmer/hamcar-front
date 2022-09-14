@@ -8,7 +8,7 @@
     --color-white: #0F0F10 !important;
     --color-dark-black-600: #1d1d1f;
 
-    
+
     --color-black-200: #F7F7F7 !important;
     --color-black-300: #F0EFEF !important;
     --color-black-400: #DCDDE0 !important;
@@ -91,7 +91,7 @@
     .advert {
         background-color: var(--body-bg-color) !important;
     }
-   
+
     .advertising__filter-btn {
         background-color: var(--body-bg-color) !important;
         color: #fff;
@@ -112,6 +112,7 @@
     [data-theme="dark"] .mobile-card {
         background-color: var(--body-bg-color) !important;
     }
+
     /* [data-theme="dark"] .card {
         background-color: var(--body-bg-color) !important;
     } */
@@ -147,42 +148,63 @@
 [data-theme="dark"] .nav__icon {
     background: transparent !important;
 }
-[data-theme="dark"] .notify__banner{
+
+[data-theme="dark"] .notify__banner {
     background-color: var(--color-dark-black-600) !important;
 }
-[data-theme="dark"] .chat__body__footer input{
+
+[data-theme="dark"] .chat__body__footer input {
     background-color: var(--color-dark-black-600) !important;
     border: 2px solid var(--color-white);
 
 }
-[data-theme="dark"] .chat-wrapper .wrapper__header{
+
+[data-theme="dark"] .chat-wrapper .wrapper__header {
     background: var(--color-gray-500) !important;
 
 }
-[data-theme="dark"] .chat-wrapper .wrapper__content{
+
+[data-theme="dark"] .chat-wrapper .wrapper__content {
     border: none;
     border-radius: 18px;
 }
-[data-theme="dark"] .chat-wrapper .chat__item.active{
-   background: var(--color-dark-black-600);
+
+[data-theme="dark"] .chat-wrapper .chat__item.active {
+    background: var(--color-dark-black-600);
 }
+
 [data-theme="dark"] .chats .content {
     background: var(--color-dark-black-600) !important;
- }
- [data-theme="dark"] .plan__header {
+}
+
+[data-theme="dark"] .plan__header {
     background: var(--color-gray-500) !important;
     color: white !important;
- }
- [data-theme="dark"] .plan__footer {
+}
+
+[data-theme="dark"] .plan__footer {
     background: var(--color-gray-500) !important;
     color: white !important;
- }
+}
 
 
 
- [data-theme="dark"] aside .top {
+[data-theme="dark"] aside .top {
     background: var(--color-dark-black-600) !important;
- }
- [data-theme="dark"]  .zone {
+}
+
+[data-theme="dark"] .zone {
     background: var(--color-dark-black-600) !important;
- }
+}
+
+[data-theme="dark"] .modal {
+    background: var(--color-gray-500) !important;
+}
+
+[data-theme="dark"] .modal__header {
+    background: var(--color-gray-500) !important;
+}
+
+[data-theme="dark"] .modal__close-btn {
+    background: var(--color-dark-black-600) !important;
+}

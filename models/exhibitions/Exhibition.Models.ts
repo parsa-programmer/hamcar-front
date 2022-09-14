@@ -22,6 +22,7 @@ export interface ExhibitionDto {
   type: string;
   phoneNumbers: PhoneNumbers;
   plan: Plan;
+  specialAdvertisementCount: number;
 }
 export interface PhoneNumbers {
   telephone: string;

@@ -5,6 +5,7 @@ import {
 } from "~~/models/account/account.Models";
 import { GetAdvertisementType } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementType } from "~~/models/advertisements/enums/AdvertisementType";
+import { ConsultantDto } from "~~/models/exhibitions/Exhibition.Commands";
 import { ExhibitionDto } from "~~/models/exhibitions/Exhibition.Models";
 import {
   GetNardebanCount,
@@ -17,6 +18,7 @@ import { GetNotifies } from "~~/services/notify.service";
 const defaultState = () => ({
   user: {} as UserDto,
   exhibition: {} as ExhibitionDto,
+  consultant: {} as ConsultantDto,
   advertSaved: [] as UserAdvertisementSavedDto[],
   nardebans: 0 as number,
   carAdverts: 0 as number,
@@ -60,7 +62,7 @@ export const useAccountStore = defineStore("account", {
       ]);
       this.loading = false;
       this.isInited = true;
-      
+
       var saved = result[0];
       var gooshBezangs = result[1];
       var nardebans = result[2];

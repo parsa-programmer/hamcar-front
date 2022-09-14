@@ -33,6 +33,9 @@ export const UseChatStore = defineStore("chatStore", {
   },
   actions: {
     async initConnection() {
+      if (this.connection) {
+        return;
+      }
       const toast = useToast();
       const cookie = useCookie("token");
 

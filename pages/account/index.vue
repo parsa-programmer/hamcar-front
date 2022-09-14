@@ -1,6 +1,22 @@
 <template>
   <div class="profile__content">
     <client-only>
+      <template #fallback>
+        <h-skeletor height="80px" />
+        <h-skeletor height="200px" />
+        <div class="prof_row">
+          <div class="w-auto grow-1">
+            <h-skeletor height="200px" />
+          </div>
+          <div class="w-auto grow-1">
+            <h-skeletor height="200px" />
+          </div>
+          <div class="w-auto grow-1">
+            <h-skeletor height="200px" />
+          </div>
+        </div>
+      </template>
+
       <account-top-bar :showAdvertCount="true" />
       <div class="prof_row">
         <div class="profile__card mobile-card">
@@ -80,6 +96,7 @@ import auth from "~~/middleware/auth";
 import { useAccountStore } from "~~/stores/account.store";
 import { authStore } from "~~/stores/auth.store";
 import { toPersianDate } from "~~/utilities/dateUtil";
+import { use } from "h3";
 
 const accountStore = useAccountStore();
 const authData = authStore();

@@ -307,7 +307,10 @@ input[disabled] {
     border-radius: 12px !important;
     height: 3rem !important;
 }
-
+.btn-lg{
+    width: 296px ;
+    height: 4.5rem !important;
+}
 .btn-md {
     border-radius: 14px !important;
     height: 4rem !important;
@@ -334,7 +337,11 @@ input[disabled] {
 .btn-primary:hover {
     background-color: #0068d6;
 }
+.btn-primary-outline:hover {
+    border-color: #0068d6;
+    color: #0068d6;
 
+}
 .btn-default {
     color: var(--color-gray-500);
     border: 2px solid var(--color-gray-400);
@@ -386,6 +393,10 @@ button[disabled] {
 
     .btn-default-size {
         width: 7.5rem !important;
+    }
+    .btn-lg{
+        width: 100% !important;
+        height: 64px !important;
     }
 }
 

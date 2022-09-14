@@ -30,13 +30,14 @@
       <h-icon :icon="Icon.check" />
       <p>
         با ورود به همکار،
-        <a href="#">شرایط و قوانین</a>
+        <nuxt-link to="/rules">شرایط و قوانین</nuxt-link>
         آن را می پذیرم.
       </p>
     </div>
   </div>
 </template>
 <script setup lang="ts">
+import { ref } from "#imports";
 import { Form } from "vee-validate";
 import * as Yup from "yup";
 import { authStore } from "~~/stores/auth.store";
