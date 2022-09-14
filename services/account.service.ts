@@ -1,4 +1,3 @@
-import exp from "constants";
 import { SetNoteCommand } from "~~/models/account/account.Commands";
 import {
   NardebanDto,
@@ -27,7 +26,7 @@ export const GetCurrenctUser = (): Promise<IApiResponse<UserDto>> => {
 
 
 export const GetNardebanCount = (): Promise<IApiResponse<number>> => {
-  return FetchApi("/account/nardebans");
+  return FetchApi("/account/nardebans", {}, { ignoreErrors: true });
 };
 export const GetNardebanHistory = (
   take: Number = 20

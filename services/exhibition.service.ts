@@ -66,7 +66,11 @@ export const GetCurrentExhibition = (): Promise<
     ignoreErrors: true,
   });
 };
-
+export const GetSpecialAdvertUsed = (): Promise<IApiResponse<number>> => {
+  return FetchApi("/exhibition/SpecialAdvertsCount", undefined, {
+    ignoreErrors: true,
+  });
+};
 export const GetByEnglishTitle = (
   englishTitle: string
 ): Promise<IApiResponse<SingleExhiitionDto>> => {

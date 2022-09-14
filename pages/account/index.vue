@@ -96,6 +96,7 @@ import auth from "~~/middleware/auth";
 import { useAccountStore } from "~~/stores/account.store";
 import { authStore } from "~~/stores/auth.store";
 import { toPersianDate } from "~~/utilities/dateUtil";
+import { use } from "h3";
 
 const accountStore = useAccountStore();
 const authData = authStore();

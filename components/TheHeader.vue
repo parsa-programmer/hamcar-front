@@ -98,16 +98,28 @@
                 >
                   ورود / ثبت نام
                 </nuxt-link>
-                <nuxt-link
-                  to="/account"
-                  class="
-                    btn btn-transparent
-                    nav__register-link nav__register-link--login
-                  "
-                  v-else
-                >
-                  حساب کاربری
-                </nuxt-link>
+                <template v-else>
+                  <nuxt-link
+                    to="/account/exhibition"
+                    class="
+                      btn btn-transparent
+                      nav__register-link nav__register-link--login
+                    "
+                    v-if="store.isAccessExhibitonPanel"
+                  >
+                    حساب کاربری
+                  </nuxt-link>
+                  <nuxt-link
+                    to="/account/exhibition"
+                    class="
+                      btn btn-transparent
+                      nav__register-link nav__register-link--login
+                    "
+                    v-else
+                  >
+                    حساب کاربری
+                  </nuxt-link>
+                </template>
                 <nuxt-link
                   href="/sell/car"
                   class="

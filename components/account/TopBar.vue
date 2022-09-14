@@ -5,7 +5,7 @@
         <h-skeletor width="300px" style="height: 25px" />
       </div>
       <div class="dashboard__welcome" v-else>
-        <span class="dashboard__user-phone">{{ store.user.phoneNumber }}</span>
+        <span class="dashboard__user-phone">{{ store.user?.phoneNumber }}</span>
         ، خوش آمدید!👋
       </div>
       <div class="search">
@@ -60,7 +60,34 @@
           </div>
         </div>
       </div>
-      <div :class="['history', { 'd-mobile-none': showAdvertCount == false }]">
+      <div
+        :class="['banner', { 'd-mobile-none': showAdvertCount == false }]"
+        v-if="isExhibition"
+      >
+        <img class="d-mobile-none" src="/img/clock-desktop.png" />
+        <img class="d-mobile-block" src="/img/clock-mobile.png" />
+        <div class="text-center">
+          <h4 class="banner__title" v-if="loading">
+            <h-skeletor width="150px" height="30px" />
+            <h-skeletor width="150px" class="mt-0_5" height="30px" />
+          </h4>
+          <template v-else>
+            <h4 class="banner__title">
+              {{
+                accountStore.exhibition.specialAdvertisementCount -
+                specialAdvertUsed
+              }}
+              از
+              {{ accountStore.exhibition.specialAdvertisementCount }}
+            </h4>
+            <p class="mt-0_5">تعداد جایگاه های باقی مانده</p>
+          </template>
+        </div>
+      </div>
+      <div
+        :class="['history', { 'd-mobile-none': showAdvertCount == false }]"
+        v-else
+      >
         <div class="history__item mobile-card">
           <div class="history_icon icon__desktop">
             <svg
@@ -175,13 +202,18 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { authStore } from "~~/stores/auth.store";
 import { useAccountStore } from "~~/stores/account.store";
+import { GetSpecialAdvertUsed } from "~~/services/exhibition.service";
 
 const store = authStore();
 const accountStore = useAccountStore();
 const isOpenBuyModal = ref(false);
 const isOpenHistoryModal = ref(false);
+
+const specialAdvertUsed = ref(0);
+const loading = ref(true);
 
 const props = defineProps({
   isShowCards: {
@@ -192,6 +224,20 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  isExhibition: {
+    type: Boolean,
+    default: false,
+  },
+});
+
+onMounted(async () => {
+  if (props.isExhibition) {
+    loading.value = true;
+    var res = await GetSpecialAdvertUsed();
+    loading.value = false;
+
+    specialAdvertUsed.value = res.data ?? 0;
+  }
 });
 </script>
 
@@ -333,7 +379,52 @@ const props = defineProps({
   font-size: var(--t5-font-size);
   color: var(--color-black-300);
 }
-
+.banner {
+  background: rgba(255, 149, 0, 0.1);
+  backdrop-filter: blur(129px);
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 2;
+}
+.banner img {
+  width: fit-content;
+  height: fit-content;
+}
+.banner h4 {
+  font-family: var(--t1-font-family) !important;
+  font-size: var(--t1-font-size) !important;
+}
+.banner p {
+  font-family: var(--t4-font-family);
+  font-size: var(--t4-font-size);
+  color: var(--color-orange-600);
+}
+.banner::after,
+.banner::before {
+  content: "";
+  position: absolute;
+  width: 72px;
+  height: 133px;
+  border-radius: 5rem;
+  background-color: var(--color-orange-400);
+  filter: blur(50px);
+  display: block;
+}
+.banner::after {
+  left: 0;
+  bottom: 0rem;
+}
+.banner::before {
+  top: 0.2rem;
+  right: 0%;
+}
 @media screen and (max-width: 992px) {
   .dashboard__top {
     flex-wrap: wrap;
@@ -347,10 +438,26 @@ const props = defineProps({
   .profile-card__title {
     margin-top: 1rem !important;
   }
+  .banner {
+    flex-direction: row;
+    border: 4px solid white;
+    border-radius: 16px;
+    padding: 12px;
+  }
+  .banner p {
+    font-family: var(--t5-font-family) !important;
+    font-size: var(--t5-font-size) !important;
+  }
+  .banner::after,
+  .banner::before {
+    filter: blur(58px);
+  }
 }
 @media screen and (max-width: 1200px) {
   .history__item {
     padding: 1rem;
+    width: 62px !important;
+    height: 123px !important;
   }
 }
 @media screen and (max-width: 768px) {

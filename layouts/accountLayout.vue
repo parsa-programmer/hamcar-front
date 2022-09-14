@@ -6,8 +6,10 @@
     <the-header :show-search-bar="false" showSearchIcon></the-header>
     <div id="free_wrapper" class="sticky-top"></div>
     <main class="main">
-      <Transition enter-active-class="animate__animated  animate__fadeIn"
-       leave-active-class="animate__animated  animate__fadeOut">
+      <Transition
+        enter-active-class="animate__animated  animate__fadeIn"
+        leave-active-class="animate__animated  animate__fadeOut"
+      >
         <div class="alert__notify" v-if="isShow" @click="isShow = false">
           <p>برای دسترسی به پنل نمایشگاهی باید احراز هویت خود را تکمیل کنید!</p>
           <nuxt-link to="/account/exhibition/verify"
@@ -50,6 +52,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { ToastType } from "~~/composables/useToast";
 import { ExhibitionStatus } from "~~/models/exhibitions/Exhibition.Models";
 import { useAccountStore } from "~~/stores/account.store";
@@ -65,6 +68,15 @@ const accountStore = useAccountStore();
 const authData = authStore();
 const isShow = ref(false);
 
+watch(
+  () => authData.user,
+  (val) => {
+    console.log(val);
+    if (authData.isAccessExhibitonPanel) {
+      router.replace("/account/exhibition");
+    }
+  }
+);
 onMounted(async () => {
   var { transaction } = route.query;
   if (transaction && transaction.toString() == "success") {
@@ -73,16 +85,19 @@ onMounted(async () => {
       path: route.path,
     });
   }
+  if (authData.isAccessExhibitonPanel) {
+    await router.replace("/account/exhibition");
+    return;
+  }
   await chatStore.initConnection();
   isShow.value =
     accountStore.exhibition &&
     (accountStore.exhibition.status == ExhibitionStatus.shouldCompleteAccount ||
       accountStore.exhibition.status == ExhibitionStatus.rejected);
 
-
-      setTimeout(() => {
-        isShow.value=false;
-      }, 5000);
+  setTimeout(() => {
+    isShow.value = false;
+  }, 5000);
 });
 </script>
 
