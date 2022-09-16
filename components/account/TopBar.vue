@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
     <div class="dashboard__top mb-1">
       <div class="dashboard__welcome" v-if="store.loading">
         <h-skeletor width="300px" style="height: 25px" />
@@ -62,7 +62,7 @@
       </div>
       <div
         :class="['banner', { 'd-mobile-none': showAdvertCount == false }]"
-        v-if="isExhibition"
+        v-if="isExhibition && accountStore.exhibition"
       >
         <img class="d-mobile-none" src="/img/clock-desktop.png" />
         <img class="d-mobile-block" src="/img/clock-mobile.png" />
@@ -189,14 +189,35 @@
       :showHeader="false"
       modalClass="overflow-none"
     >
-      <account-buy-nardeban @cancel="() => (isOpenBuyModal = false)" />
+      <account-buy-nardeban
+        @cancel="() => (isOpenBuyModal = false)"
+        v-if="
+          (store.isAccessExhibitonPanel && accountStore.exhibition) ||
+          store.isAccessExhibitonPanel == false
+        "
+      />
+      <div v-else>
+        <p class="text-center">
+          فقط صاحب نمایشگاه می تواند نردبان خریداری کند
+        </p>
+      </div>
     </h-modal>
     <h-modal
       v-model="isOpenHistoryModal"
       title="تراکنش های نردبان"
       :mobileHeader="true"
     >
-      <account-nardeban-history />
+      <account-nardeban-history
+        v-if="
+          (store.isAccessExhibitonPanel && accountStore.exhibition) ||
+          store.isAccessExhibitonPanel == false
+        "
+      />
+      <div v-else>
+        <p class="text-center">
+          شما دسترسی به جزئیات تراکنش های نردبان نمایشگاه ندارید
+        </p>
+      </div>
     </h-modal>
   </div>
 </template>

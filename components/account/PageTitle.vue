@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-1 mb-1">
     <div class="card row justify-content-space-between">
       <div class="flex wrap gap-0_5 grow-1 w-full">
         <p class="font-4">

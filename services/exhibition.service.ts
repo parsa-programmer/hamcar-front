@@ -66,6 +66,11 @@ export const GetCurrentExhibition = (): Promise<
     ignoreErrors: true,
   });
 };
+export const GetNardebans = (): Promise<IApiResponse<number>> => {
+  return FetchApi("/exhibition/nardebans", undefined, {
+    ignoreErrors: true,
+  });
+};
 export const GetSpecialAdvertUsed = (): Promise<IApiResponse<number>> => {
   return FetchApi("/exhibition/SpecialAdvertsCount", undefined, {
     ignoreErrors: true,

@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     "~/assets/css/dark.css",
     "~/assets/css/app.css",
     "~/assets/css/grid.css",
+    "~/assets/css/landing.css",
     "~/assets/css/components.css",
     "~/assets/css/responsive.css",
     "~/assets/css/animation.css",

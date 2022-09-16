@@ -1,14 +1,3 @@
-.breadcrumb {
-    border-bottom: 2px solid var(--color-white);
-    padding-bottom: 1.25rem;
-    margin-bottom: 1.5rem;
-}
-
-
-/* -- registration section -- */
-
-.registration {}
-
 .sticky {
     position: fixed;
     top: 0;
@@ -125,9 +114,6 @@
     background-color: var(--color-blue-200);
 
 }
-
-.step__name {}
-
 .step__number {
     width: 28px;
     height: 28px;
@@ -138,8 +124,6 @@
     flex-shrink: 0;
     border: 2px solid currentColor;
 }
-
-
 /* -- mobile progress bar -- */
 .progress {
     display: none;
@@ -166,28 +150,20 @@
     color: var(--color-blue);
     display: none;
 }
-
 .progress__name--show {
     display: block;
 }
-
-/* -- registration container -- */
 .registration__container {
     display: block;
     max-width: 38rem;
     margin: 0 auto;
 }
-
-.registration__main {}
-
 .selectbox__wrapper {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     margin-bottom: 3rem;
 }
-
-/* -- registration footer -- */
 .registration__footer {
     display: flex;
     align-items: center;
@@ -195,13 +171,11 @@
     flex-wrap: wrap;
     gap: 1rem;
 }
-
 .registration__accept-rules {
     font-family: var(--t5-font-family);
     font-size: var(--t5-font-size);
     color: var(--color-black-200);
 }
-
 .registration__accept-rules a {
     color: var(--color-blue);
     font-family: var(--t4-font-family);
@@ -209,20 +183,16 @@
     border-bottom: 1px solid currentColor;
     padding-bottom: 2px;
 }
-
 .registration__submit {
     font-family: var(--t5-font-family);
     font-size: var(--t5-font-size);
     width: 12rem;
 }
-
-
 @media screen and (max-width: 1400px) {
     .registration__content {
         padding: 3rem 54px;
     }
 }
-
 @media screen and (max-width: 1200px) {
     .registration__content {
         padding: 3rem 2rem;
@@ -232,7 +202,6 @@
         width: 98px;
     }
 }
-
 @media screen and (max-width: 992px) {
     .registration__steps-wrapper {
         justify-content: start;
@@ -253,7 +222,6 @@
         content: none;
     }
 }
-
 @media screen and (max-width: 768px) {
     body {
         background-color: var(--color-white);
@@ -310,7 +278,6 @@
         font-weight: 400 !important;
     }
 }
-
 @media screen and (max-width: 576px) {
     .registration__footer {
         flex-direction: column-reverse;
@@ -321,7 +288,6 @@
         width: 100%;
     }
 }
-
 .advert__type__selection {
     border: 2px solid var(--color-gray-300);
     border-radius: var(--app-border-radius);
@@ -331,14 +297,12 @@
     justify-content: space-around;
     padding: 0.5rem;
 }
-
 .advert__type__selection .selection__active {
     background: var(--color-green) !important;
     color: #fff;
     border-radius: 12px;
     width: 100%;
 }
-
 .advert__type__selection span {
     display: flex;
     justify-content: center;
@@ -349,7 +313,6 @@
     cursor: pointer;
     transition: all ease 0.2s;
 }
-
 .advert__type__selection span:hover {
     background: var(--color-gray-200);
     border-radius: 12px;

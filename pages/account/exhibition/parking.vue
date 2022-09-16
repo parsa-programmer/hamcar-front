@@ -52,7 +52,9 @@
           :showTitle="false"
           description="برای فعال سازی این اگهی و انتقال آن به صدر لیست آگهی ها باید از نردبان استفاده کنید. و یا میتوانید بعد از پایان زمان پارکینگ، آگهی را دوباره ثبت کنید"
           v-model="selectedAdvert"
-          @closed="nardebanUsed"
+          @closed="isOpenNardebanModal = false"
+          @nardebanUsed="nardebanUsed"
+          exhibition
         />
       </h-modal>
     </client-only>
@@ -63,14 +65,19 @@
 import { ref } from "#imports";
 import { Ref } from "vue";
 import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
+import { AdvertisementStatus } from "~~/models/advertisements/enums/AdvertisementStatus";
 import { IApiResponse } from "~~/models/IApiResponse";
 import { GetParkingData } from "~~/services/advertisement.service";
+import {
+  GetConsultAdvertisements,
+  GetConsultParkingData,
+} from "~~/services/consultant.service";
 import { useAccountStore } from "~~/stores/account.store";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
 
 definePageMeta({
   layout: "exhibition-layout",
-  title:"پارکینگ"
+  title: "پارکینگ",
 });
 
 const toast = useToast();
@@ -83,9 +90,7 @@ const isOpenNardebanModal = ref(false);
 const selectedAdvert: Ref<AdvertisementFilterData | null> = ref(null);
 
 const nardebanUsed = () => {
-  adverts.value = adverts.value.filter(
-    (f) => f.id != selectedAdvert.value?.id
-  );
+  adverts.value = adverts.value.filter((f) => f.id != selectedAdvert.value?.id);
   isOpenNardebanModal.value = false;
 };
 const openNardebanModal = (advert: any) => {
@@ -95,7 +100,7 @@ const openNardebanModal = (advert: any) => {
 
 onMounted(async () => {
   var res = await ProssesAsync<IApiResponse<AdvertisementFilterData[]>>(
-    () => GetParkingData(),
+    () => GetConsultParkingData(),
     loading
   );
   adverts.value = res.data ?? [];

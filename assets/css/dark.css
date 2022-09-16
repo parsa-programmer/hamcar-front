@@ -22,7 +22,9 @@
 [data-theme="dark"] .header {
     background-color: var(--color-white) !important;
 }
-
+[data-theme="dark"] .btn-default{
+    color: white !important;
+}
 [data-theme="dark"] .sidebar {
     background-color: var(--body-bg-color) !important;
 }

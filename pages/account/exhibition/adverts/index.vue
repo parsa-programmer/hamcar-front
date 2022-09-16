@@ -1,9 +1,10 @@
 <template>
   <div class="profile__content">
     <client-only>
-      <account-top-bar />
+      <account-top-bar is-exhibition />
       <account-page-title
-        title="آگهی های من"
+        style="letter-spacing: -0.02em"
+        title="آخرین آگهی (های) من"
         :loading="loading"
         :sub-title="
           filterResult == null || filterResult.entityCount == 0
@@ -12,7 +13,10 @@
         "
         button-text="ثبت آگهی رایگان"
       >
-        <nuxt-link to="/sell/car" class="grow-1 btn btn-primary w-50">
+        <button
+          @click="openCreateAdvertPopUp('car')"
+          class="grow-1 btn btn-primary w-50"
+        >
           <div class="row align-items-center">
             <account-icons-mini-car class="d-mobile-none" />
             <account-icons-mini-car
@@ -22,8 +26,11 @@
             />
             درج آگهی خودرو
           </div>
-        </nuxt-link>
-        <nuxt-link to="/sell/motorcycle" class="grow-1 btn btn-primary w-50">
+        </button>
+        <button
+          @click="openCreateAdvertPopUp('motor')"
+          class="grow-1 btn btn-primary w-50"
+        >
           <div class="row align-items-center">
             <icons-motor class="d-mobile-none" />
             <icons-motor class="d-mobile-block" :width="26" :height="14" />
@@ -31,7 +38,7 @@
               درج آگهی موتور <span class="d-mobile-none"> سیکلت </span></span
             >
           </div>
-        </nuxt-link>
+        </button>
       </account-page-title>
       <div class="content">
         <div
@@ -66,7 +73,7 @@
               <div class="row d-mobile-none desk__actions">
                 <p>
                   <nuxt-link
-                    :to="`/account/adverts/exhibition/${item.id}`"
+                    :to="`/account/exhibition/adverts/${item.id}`"
                     class="
                       color-blue
                       row
@@ -145,38 +152,12 @@
         </div>
       </div>
       <h-modal :show-header="false" v-model="isOpenDeleteModal">
-        <h3>آگهی را حذف میکنم به دلیل...</h3>
-        <div class="row wrap mt-1_5 button__wraper">
-          <h-button
-            @click="reasoneType = 1"
-            :class="['btn-default grow-1', { active: reasoneType == 1 }]"
-            >فروخته شده</h-button
-          >
-          <h-button
-            @click="reasoneType = 2"
-            :class="['btn-default grow-1', { active: reasoneType == 2 }]"
-            >معاوضه کردم</h-button
-          >
-          <h-button
-            @click="reasoneType = 3"
-            :class="['btn-default grow-1', { active: reasoneType == 3 }]"
-            >منصرف شدم</h-button
-          >
-        </div>
-        <template #actions>
-          <h-button
-            :loading="loading"
-            :disabled="loading"
-            @click="deleteAdvert"
-            class="btn-default-size btn-error"
-            >حذف آگهی</h-button
-          >
-          <h-button
-            class="btn-default border-none ml-1"
-            @click="() => (isOpenDeleteModal = false)"
-            >انصراف</h-button
-          >
-        </template>
+        <account-advert-move-to-tash
+          @cancelOperation="isOpenDeleteModal = false"
+          isExhibition
+          @deleted="deleteAdvert"
+          v-model="selectedAdvert"
+        />
       </h-modal>
       <h-modal v-model="isOpenNardebanModal" :show-header="false">
         <account-advert-use-nardeban-content
@@ -184,7 +165,45 @@
           :description="null"
           v-model="selectedAdvert"
           @closed="() => (isOpenNardebanModal = false)"
+          @nardeban-used="isOpenNardebanModal = false"
+          exhibition
         />
+      </h-modal>
+      <h-modal size="sm" v-model="isOpenCreateAdvertModal" mobile-header>
+        <template #header>
+          <p class="crete_advert_text text__description">
+            یکی از روش های زیر را برای ثبت آگهی خود انتخاب کنید
+          </p>
+        </template>
+        <div class="create__advert">
+          <div
+            @click="selectedAdvertPlanType = 'jayegah'"
+            :class="['item', { active: selectedAdvertPlanType == 'jayegah' }]"
+          >
+            <img
+              src="/img/clock-desktop.png"
+              v-if="selectedAdvertPlanType == 'jayegah'"
+            />
+            <img src="/img/clock-gray.png" v-else />
+            <p>جایگاه</p>
+          </div>
+          <div
+            @click="selectedAdvertPlanType = 'normal'"
+            :class="['item', { active: selectedAdvertPlanType == 'normal' }]"
+          >
+            <img
+              src="/img/Plus.png"
+              v-if="selectedAdvertPlanType == 'normal'"
+            />
+            <img src="/img/Plus-gray.png" v-else />
+            <p>پلن ها</p>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-1_5 create__advert-footer">
+          <h-button @click="moveToCreateAdvertPage" class="btn-lg"
+            >تایید و ادامه</h-button
+          >
+        </div>
       </h-modal>
     </client-only>
   </div>
@@ -208,26 +227,37 @@ import { filter } from "lodash";
 import { CreateTransaction } from "~~/services/transaction.service";
 import { TransactionOrderType } from "~~/models/transactions/CreateTransactionCommand";
 import { CurrentDomainUrl } from "~~/utilities/api.config";
+import {
+  DeleteAdvert,
+  GetConsultAdvertisements,
+} from "~~/services/consultant.service";
 
 definePageMeta({
   layout: "exhibition-layout",
   title: "آگهی های من",
 });
 const toast = useToast();
+const router = useRouter();
 const accountStore = useAccountStore();
 
 const filterResult: Ref<FilterResult<AdvertisementFilterData> | null> =
   ref(null);
 
-const useAdvert = useAdverFilter();
 const loading = ref(false);
 const pageId = ref(1);
 const isOpenDeleteModal = ref(false);
 const isOpenNardebanModal = ref(false);
+const isOpenCreateAdvertModal = ref(false);
 const reasoneType = ref(1);
 const selectedAdvert: Ref<AdvertisementFilterData | AdvertisementCard | null> =
   ref(null);
 
+const selectedAdvertPlanType = ref("jayegah");
+const createAdvertType = ref("car");
+const openCreateAdvertPopUp = (type: string) => {
+  createAdvertType.value = type;
+  isOpenCreateAdvertModal.value = true;
+};
 const openNardebanModal = (advert: any) => {
   selectedAdvert.value = advert;
   isOpenNardebanModal.value = true;
@@ -236,55 +266,85 @@ const openDeletePopup = (advert: any) => {
   selectedAdvert.value = advert;
   isOpenDeleteModal.value = true;
 };
-
-const deleteAdvert = async () => {
-  var result = await ProssesAsync<IApiResponse<undefined>>(
-    () => MoveToTrash(selectedAdvert.value?.id ?? ""),
-    loading
-  );
-  if (result.isSuccess) {
-    toast.showToast("آگهی به پارکینگ منتقل شد");
-    filterResult.value!.data = filterResult.value?.data?.filter(
-      (f) => f.id != selectedAdvert.value?.id
-    );
-    selectedAdvert.value = null;
-    isOpenDeleteModal.value = false;
+const moveToCreateAdvertPage = () => {
+  var queryParam = "?exhibition=true";
+  if (selectedAdvertPlanType.value == "jayegah") {
+    queryParam += "&special=true";
   }
+  isOpenCreateAdvertModal.value = false;
+  if (createAdvertType.value == "car") {
+    router.replace("/sell/car" + queryParam);
+  } else {
+    router.replace("/sell/motorcycle" + queryParam);
+  }
+};
+const deleteAdvert = async () => {
+  filterResult.value!.data = filterResult.value?.data?.filter(
+    (f) => f.id != selectedAdvert.value?.id
+  );
+  selectedAdvert.value = null;
+  isOpenDeleteModal.value = false;
 };
 onMounted(async () => {
   await loadAdverts();
 });
 const loadAdverts = async () => {
-  if (accountStore.exhibition) {
-    var res = await ProssesAsync<
-      Promise<IApiResponse<FilterResult<AdvertisementFilterData>>>
-    >(
-      () => useAdvert.getAdverts(1, 50, accountStore.exhibition.englishTitle),
-      loading
-    );
-    filterResult.value = res.data ?? null;
-  } else {
-    var res = await ProssesAsync<
-      Promise<IApiResponse<FilterResult<AdvertisementFilterData>>>
-    >(
-      () =>
-        GetUserAdvertisements(
-          pageId.value,
-          50,
-          AdvertisementFilterOrderBy.latest
-        ),
-      loading
-    );
-    filterResult.value = res.data ?? null;
-  }
+  var res = await ProssesAsync<
+    Promise<IApiResponse<FilterResult<AdvertisementFilterData>>>
+  >(
+    () =>
+      GetConsultAdvertisements(
+        pageId.value,
+        50,
+        AdvertisementFilterOrderBy.latest
+      ),
+    loading
+  );
+  filterResult.value = res.data ?? null;
 };
 </script>
   
   <style scoped>
+[data-theme="dark"] .create__advert .item {
+  background: transparent;
+}
+[data-theme="dark"] .create__advert .item.active {
+  background: black;
+}
+[data-theme="dark"] .crete_advert_text {
+  color: white !important;
+}
 .color_black_200 {
   color: var(--color-black-200) !important;
 }
-
+.create__advert {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.create__advert .item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  background: var(--color-gray-200);
+  border-radius: 18px;
+  padding: 1.5rem 3rem 1rem;
+  position: relative;
+  border: 2px solid var(--color-gray-200);
+  color: var(--color-gray-600);
+  cursor: pointer;
+}
+.create__advert .item.active {
+  color: var(--color-black) !important;
+  border-color: var(--color-blue) !important;
+}
+.create__advert .item img {
+  width: 96px;
+  height: 96px;
+}
 .nardeban {
   width: 64px !important;
   height: 32px !important;
@@ -302,6 +362,25 @@ const loadAdverts = async () => {
   gap: 1rem;
 }
 @media screen and (max-width: 768px) {
+  .crete_advert_text {
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+  }
+  .create__advert .item img {
+    width: 76px !important;
+    height: 76px !important;
+  }
+  .create__advert {
+    gap: 1rem !important;
+  }
+  .create__advert-footer {
+    margin-top: 40px !important;
+  }
+  .create__advert .item {
+    font-family: var(--t2-font-family) !important;
+    font-size: var(--t2-font-size) !important;
+    gap: 19px !important;
+  }
   .card {
     margin-top: 40px;
   }

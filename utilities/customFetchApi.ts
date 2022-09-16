@@ -12,7 +12,7 @@ export async function FetchApi<T>(
   config: FetchOptions = {},
   customConfig: FetchCustomConfig = {}
 ): Promise<IApiResponse<T>> {
-  config = { baseURL: BASE_URL, ...config };
+  config = { baseURL: BASE_URL, retry: 0, ...config };
   const store = authStore();
 
   if (!config.headers) {

@@ -15,7 +15,7 @@
     >
       <!--  modal-wrapper--normal    -->
 
-      <div :class="['modal', modalClass]" v-if="modelValue">
+      <div :class="['modal', size, modalClass]" v-if="modelValue">
         <div
           :class="[
             'modal__header',
@@ -86,6 +86,10 @@ const props = defineProps({
     type: String,
     default: "overflow-auto",
   },
+  size: {
+    type: String,
+    default: "default",
+  },
 });
 
 const store = UseUtilStore();
@@ -148,6 +152,9 @@ body.modal-open {
   flex-shrink: 0;
   max-height: 90%;
   overflow: auto;
+}
+.modal.sm  {
+  width: 608px;
 }
 .modal-fix-header .modal__close-btn {
   background-color: var(--color-gray-200);

@@ -55,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import {
   AdvertisementDto,
   AdvertisementFilterData,
@@ -63,6 +64,7 @@ import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { IApiResponse } from "~~/models/IApiResponse";
 import { TransactionOrderType } from "~~/models/transactions/CreateTransactionCommand";
 import { UseNardeban } from "~~/services/advertisement.service";
+import { UseConsultantNardeban } from "~~/services/consultant.service";
 import { CreateTransaction } from "~~/services/transaction.service";
 import { useAccountStore } from "~~/stores/account.store";
 import { CurrentDomainUrl } from "~~/utilities/api.config";
@@ -76,6 +78,7 @@ const props = defineProps<{
     | AdvertisementDto;
   showTitle: boolean | null;
   description: string | null;
+  exhibition: boolean;
 }>();
 const accountStore = useAccountStore();
 const transactionLoading = ref(false);
@@ -88,6 +91,14 @@ const coseModal = () => {
   emit("closed");
 };
 const useOrByNardeban = async () => {
+  if (props.exhibition) {
+    exhibitionUseNardeban();
+  } else {
+    userUseNardeban();
+  }
+};
+
+const userUseNardeban = async () => {
   if (accountStore.nardebans >= 1) {
     var res = await ProssesAsync<IApiResponse<undefined>>(
       () => UseNardeban(props.modelValue?.id ?? ""),
@@ -95,7 +106,7 @@ const useOrByNardeban = async () => {
     );
     if (res.isSuccess) {
       toast.showToast("نردبان با موفقیت اعمال شد");
-      emit("closed");
+      emit("nardebanUsed");
       accountStore.nardebans -= 1;
     }
   } else {
@@ -116,11 +127,26 @@ const useOrByNardeban = async () => {
     }
   }
 };
+
+const exhibitionUseNardeban = async () => {
+  var res = await ProssesAsync<IApiResponse<undefined>>(
+    () => UseConsultantNardeban(props.modelValue?.id ?? ""),
+    transactionLoading
+  );
+  if (res.isSuccess) {
+    toast.showToast("نردبان با موفقیت اعمال شد");
+    emit("nardebanUsed");
+    accountStore.nardebans -= 1;
+  }
+};
 </script>
 
 <style scoped>
 .color_black_200 {
   color: var(--color-black-200) !important;
+}
+[data-theme="dark"] .actions .btn-default {
+  color: white !important;
 }
 @media screen and (max-width: 768px) {
   .pay__btn {
@@ -141,7 +167,7 @@ const useOrByNardeban = async () => {
   .custom__desc {
     position: initial !important;
   }
-  .price p{
+  .price p {
     margin-top: 17px !important;
   }
 }

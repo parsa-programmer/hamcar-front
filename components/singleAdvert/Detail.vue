@@ -3,7 +3,10 @@
     <loadings-full-loading v-if="pageLoading" />
     <div class="ads__connection">
       <button
-        class="btn btn-primary ads__contact-btn"
+        :class="[
+          'btn btn-primary ads__contact-btn',
+          { 'w-full': preview },
+        ]"
         :disabled="isShowPhones"
         @click="showPhone"
       >
@@ -11,6 +14,7 @@
       </button>
       <nuxt-link
         @click="chatWithSeller"
+        v-if="preview == false"
         class="btn btn-primary-outline ads__chat-btn"
         >چت</nuxt-link
       >
@@ -33,16 +37,16 @@
               />
             </span>
           </div>
-          <div class="ads__detail" v-if="advert.exhibition != null">
+          <div class="ads__detail" v-if="advert.exhibition != null && advert.exhibition.phoneNumbers?.telephone">
             <span class="ads__detail-name">
               <icons-phone />
               شماره تماس 2
             </span>
             <span class="ads__detail-value">
-              {{ advert.exhibition.phoneNumbers.mobilePhone }}
+              {{ advert.exhibition.phoneNumbers?.telephone }}
               <h-copy
                 hash-color="var(--color-black)"
-                :text="advert.exhibition.phoneNumbers.mobilePhone"
+                :text="advert.exhibition.phoneNumbers?.telephone"
               />
             </span>
           </div>
@@ -270,6 +274,7 @@ const pageLoading = ref(false);
 
 const props = defineProps<{
   advert: AdvertisementDto;
+  preview: boolean;
 }>();
 
 const chatWithSeller = async () => {

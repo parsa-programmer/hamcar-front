@@ -145,38 +145,12 @@
         </div>
       </div>
       <h-modal :show-header="false" v-model="isOpenDeleteModal">
-        <h3>آگهی را حذف میکنم به دلیل...</h3>
-        <div class="row wrap mt-1_5 button__wraper">
-          <h-button
-            @click="reasoneType = 1"
-            :class="['btn-default grow-1', { active: reasoneType == 1 }]"
-            >فروخته شده</h-button
-          >
-          <h-button
-            @click="reasoneType = 2"
-            :class="['btn-default grow-1', { active: reasoneType == 2 }]"
-            >معاوضه کردم</h-button
-          >
-          <h-button
-            @click="reasoneType = 3"
-            :class="['btn-default grow-1', { active: reasoneType == 3 }]"
-            >منصرف شدم</h-button
-          >
-        </div>
-        <template #actions>
-          <h-button
-            :loading="loading"
-            :disabled="loading"
-            @click="deleteAdvert"
-            class="btn-default-size btn-error"
-            >حذف آگهی</h-button
-          >
-          <h-button
-            class="btn-default border-none ml-1"
-            @click="() => (isOpenDeleteModal = false)"
-            >انصراف</h-button
-          >
-        </template>
+        <account-advert-move-to-tash
+          @cancelOperation="isOpenDeleteModal = false"
+          :isExhibition="false"
+          v-model="selectedAdvert"
+          @deleted="deleteAdvert"
+        />
       </h-modal>
       <h-modal v-model="isOpenNardebanModal" :show-header="false">
         <account-advert-use-nardeban-content
@@ -184,6 +158,7 @@
           :description="null"
           v-model="selectedAdvert"
           @closed="() => (isOpenNardebanModal = false)"
+          :exhibition="false"
         />
       </h-modal>
     </client-only>
@@ -215,7 +190,7 @@ import { CurrentDomainUrl } from "~~/utilities/api.config";
 
 definePageMeta({
   layout: "account-layout",
-  title:"آگهی های من"
+  title: "آگهی های من",
 });
 const toast = useToast();
 const accountStore = useAccountStore();
@@ -241,18 +216,11 @@ const openDeletePopup = (advert: any) => {
 };
 
 const deleteAdvert = async () => {
-  var result = await ProssesAsync<IApiResponse<undefined>>(
-    () => MoveToTrash(selectedAdvert.value?.id ?? ""),
-    loading
+  filterResult.value!.data = filterResult.value?.data?.filter(
+    (f) => f.id != selectedAdvert.value?.id
   );
-  if (result.isSuccess) {
-    toast.showToast("آگهی به پارکینگ منتقل شد");
-    filterResult.value!.data = filterResult.value?.data?.filter(
-      (f) => f.id != selectedAdvert.value?.id
-    );
-    selectedAdvert.value = null;
-    isOpenDeleteModal.value = false;
-  }
+  selectedAdvert.value = null;
+  isOpenDeleteModal.value = false;
 };
 onMounted(async () => {
   await loadAdverts();

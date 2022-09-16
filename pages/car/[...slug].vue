@@ -262,11 +262,11 @@ const { data, refresh, pending } = await useAsyncData(
 cars.value = data?.value?.data?.filterResult.data ?? [];
 
 watch(data, async (val) => {
-  if (val.data?.filterResult.data?.length ?? 0 > 0) {
+  if (val?.data?.filterResult.data?.length ?? 0 > 0) {
     if (pageId.value == 1) {
-      cars.value = val.data?.filterResult.data ?? [];
+      cars.value = val?.data?.filterResult.data ?? [];
     } else {
-      cars.value.push(...(val.data?.filterResult.data ?? []));
+      cars.value.push(...(val?.data?.filterResult.data ?? []));
       cars.value = RemoveDubplicateObjects(cars.value);
     }
   } else {
@@ -305,7 +305,7 @@ onMounted(async () => {
       document.documentElement.offsetHeight;
 
     if (bottomOfWindow) {
-      if (pageId.value < (data.value.data?.filterResult?.pageCount ?? 1)) {
+      if (pageId.value < (data.value?.data?.filterResult?.pageCount ?? 1)) {
         pageId.value += 1;
         nextPageLoading.value = true;
         refresh().finally(() => {

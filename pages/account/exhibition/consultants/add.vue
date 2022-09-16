@@ -66,7 +66,11 @@
           </label>
         </div>
         <div class="line__row">
-          <p>سقف آگهی مجاز در هر روز</p>
+          <p>
+            سقف آگهی مجاز در هر
+            <span v-if="consultData.period == 'روزانه'">روز</span>
+            <span v-else>ماه</span>
+          </p>
           <span class="line"></span>
           <label class="color-blue" @click="isOpenAdvertCountModal = true">
             <template v-if="consultData.advertCount == '0'">نامحدود</template>
@@ -74,7 +78,12 @@
           </label>
         </div>
         <div class="line__row">
-          <p>سقف نردبان مجاز در هر روز</p>
+          <p>
+            سقف نردبان مجاز در هر
+            <span v-if="consultData.period == 'روزانه'">روز</span>
+            <span v-else>ماه</span>
+          </p>
+
           <span class="line"></span>
           <label class="color-blue" @click="isOpenNardebanCountModal = true">
             <template v-if="consultData.nardebanCount == '0'">نامحدود</template>
@@ -130,7 +139,11 @@
     </h-modal>
     <h-modal
       v-model="isOpenAdvertCountModal"
-      title="سقف آگهی مجاز در هر روز"
+      :title="
+        consultData.period == 'روزانه'
+          ? 'سقف آگهی مجاز در هر روز'
+          : 'سقف آگهی مجاز در هر ماه'
+      "
       sub-title="وارد کردن عدد 0 به معنای نامحدود بودن این  قابلیت است"
       :mobile-header="true"
     >
@@ -143,7 +156,11 @@
     </h-modal>
     <h-modal
       v-model="isOpenNardebanCountModal"
-      title="سقف نردبان مجاز در هر روز"
+      :title="
+        consultData.period == 'روزانه'
+          ? 'سقف نردبان مجاز در هر روز'
+          : 'سقف نردبان مجاز در هر ماه'
+      "
       sub-title="وارد کردن عدد 0 به معنای نامحدود بودن این  قابلیت است"
       :mobile-header="true"
     >

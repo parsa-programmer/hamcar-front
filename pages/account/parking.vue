@@ -53,6 +53,7 @@
           description="برای فعال سازی این اگهی و انتقال آن به صدر لیست آگهی ها باید از نردبان استفاده کنید. و یا میتوانید بعد از پایان زمان پارکینگ، آگهی را دوباره ثبت کنید"
           v-model="selectedAdvert"
           @closed="nardebanUsed"
+          :exhibition="false"
         />
       </h-modal>
     </client-only>

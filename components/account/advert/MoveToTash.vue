@@ -3,17 +3,20 @@
   <div class="row wrap mt-1_5 button__wraper">
     <h-button
       @click="reasoneType = 1"
-      :class="['btn-default grow-1', { active: reasoneType == 1 }]"
+      color="default"
+      :class="['grow-1', { active: reasoneType == 1 }]"
       >فروخته شده</h-button
     >
     <h-button
       @click="reasoneType = 2"
-      :class="['btn-default grow-1', { active: reasoneType == 2 }]"
+      color="default"
+      :class="[' grow-1', { active: reasoneType == 2 }]"
       >معاوضه کردم</h-button
     >
     <h-button
       @click="reasoneType = 3"
-      :class="['btn-default grow-1', { active: reasoneType == 3 }]"
+      color="default"
+      :class="[' grow-1', { active: reasoneType == 3 }]"
       >منصرف شدم</h-button
     >
   </div>
@@ -42,13 +45,14 @@
         حذف آگهی
       </div>
     </h-button>
-    <h-button class="btn-default border-none ml-1" @click="cancelOperation"
+    <h-button color="default" class="border-none ml-1" @click="cancelOperation"
       >انصراف</h-button
     >
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import {
   AdvertisementDto,
   AdvertisementFilterData,
@@ -56,31 +60,44 @@ import {
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { IApiResponse } from "~~/models/IApiResponse";
 import { MoveToTrash } from "~~/services/advertisement.service";
+import { DeleteAdvert } from "~~/services/consultant.service";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
 
 const reasoneType = ref(1);
 const loading = ref(false);
 const toast = useToast();
-const emit = defineEmits(["cancelOperation"]);
+const emit = defineEmits(["cancelOperation","deleted"]);
 const props = defineProps<{
   modelValue:
     | AdvertisementCard
     | AdvertisementFilterData
     | null
     | AdvertisementDto;
+  isExhibition: boolean;
 }>();
 
 const cancelOperation = () => {
   emit("cancelOperation");
 };
 const deleteAdvert = async () => {
-  var result = await ProssesAsync<IApiResponse<undefined>>(
-    () => MoveToTrash(props.modelValue?.id ?? ""),
-    loading
-  );
-  if (result.isSuccess) {
-    toast.showToast("آگهی به پارکینگ منتقل شد");
-    emit("cancelOperation");
+  if (props.isExhibition) {
+    var result = await ProssesAsync<IApiResponse<undefined>>(
+      () => DeleteAdvert(props.modelValue?.id ?? ""),
+      loading
+    );
+    if (result.isSuccess) {
+      toast.showToast("آگهی به پارکینگ منتقل شد");
+      emit("deleted");
+    }
+  } else {
+    var result = await ProssesAsync<IApiResponse<undefined>>(
+      () => MoveToTrash(props.modelValue?.id ?? ""),
+      loading
+    );
+    if (result.isSuccess) {
+      toast.showToast("آگهی به پارکینگ منتقل شد");
+      emit("deleted");
+    }
   }
 };
 </script>
@@ -100,6 +117,7 @@ const deleteAdvert = async () => {
   height: 64px;
   border-radius: 16px;
 }
+
 .button__wraper button.active {
   background: var(--color-green);
   color: white;

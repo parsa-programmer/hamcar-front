@@ -65,6 +65,7 @@ import { AdvertisementPrice } from "~~/models/advertisements/valueObjects/Advert
 import { Address } from "~~/models/utilities/Address";
 import { SelectData } from "~~/models/utilities/SelectData";
 import { GetById } from "~~/services/advertisement.service";
+import { GetConsultAdvertById, GetConsultantById } from "~~/services/consultant.service";
 import { useAccountStore } from "~~/stores/account.store";
 definePageMeta({
   layout: "full-screen",
@@ -95,8 +96,8 @@ const provinceChnaged = async (data: SelectData) => {
 onMounted(async () => {
   var id = route.query.id?.toString();
 
-  var res = await GetById(id ?? "");
-  if (!res.isSuccess || !res.data || res.data.userId != account.user.id) {
+  var res = await GetConsultAdvertById(id ?? "");
+  if (!res.isSuccess || !res.data) {
     toast.showToast("اطلاعات یافت نشد", ToastType.error);
     await router.push("/account/exhibition/adverts");
     return;

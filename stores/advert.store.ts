@@ -8,8 +8,9 @@ import { Ghesti } from "~~/models/advertisements/valueObjects/Ghesti";
 import { GhestiPaymentType } from "~~/models/advertisements/enums/GhestiPaymentType";
 import { ToastType } from "~~/composables/useToast";
 import { CreateAdvertisement } from "~~/services/advertisement.service";
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 import { GetBrands } from "~~/services/brand.service";
+import { CreateConsultAdvert } from "~~/services/consultant.service";
 
 const defaultState = () => ({
   currentStep: 1,
@@ -66,6 +67,9 @@ export const advertStore = defineStore("advert", {
   actions: {
     async createCarAdvert(): Promise<void> {
       const toast = useToast();
+      const route = useRoute();
+      const router = useRouter();
+
       if (this.validateCarData() == false) {
         toast.showToast("لطفا تمامی موارد را تکمیل کنید", ToastType.error);
         return;
@@ -140,20 +144,40 @@ export const advertStore = defineStore("advert", {
           this.steps.five.images[i].name //FileName
         );
       }
-      return CreateAdvertisement(data)
-        .then((res) => {
-          if (res.isSuccess) {
-            this.currentStep = 6;
-            const router = useRouter();
-            router.push("/sell/selectPlan");
-          }
-        })
-        .catch((err) => {
-          toast.showToast("مشکلی در عملیات رخ داده", ToastType.error);
-        })
-        .finally(() => {
-          this.loading = false;
-        });
+      if (route.query.exhibition) {
+        if (route.query.special) {
+          data.append("IsSpecialExhibitionAdvert", "true");
+        }
+        return CreateConsultAdvert(data)
+          .then((res) => {
+            if (res.isSuccess) {
+              this.currentStep = 6;
+              if (route.query.special) {
+                router.replace("/sell/finish?id=" + res.data);
+              } else {
+                router.replace("/sell/selectPlan");
+              }
+            }
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      } else {
+        return CreateAdvertisement(data)
+          .then((res) => {
+            if (res.isSuccess) {
+              this.currentStep = 6;
+              const router = useRouter();
+              router.push("/sell/selectPlan");
+            }
+          })
+          .catch((err) => {
+            toast.showToast("مشکلی در عملیات رخ داده", ToastType.error);
+          })
+          .finally(() => {
+            this.loading = false;
+          });
+      }
     },
     changeStep(step: number) {
       this.currentStep = step;
@@ -166,22 +190,18 @@ export const advertStore = defineStore("advert", {
     validateCarData(): boolean {
       let stepOne = this.steps.one;
       let stepTwo = this.steps.two;
-      let stepThree = this.steps.three;
-      let stepFour = this.steps.four;
-      let stepFive = this.steps.five;
 
       if (
         stepOne.brandId == "" ||
         stepOne.modelId == "" ||
-        stepOne.yearId == "" ||
-        stepOne.trimId == ""
+        stepOne.yearId == ""
       ) {
         return false;
       }
       if (
         stepTwo.carType == null ||
-        (stepTwo.carType == CarType.کارکرده && stepTwo.milage == "") ||
-        stepTwo.milage == "0" ||
+        (stepTwo.carType == CarType.کارکرده &&
+          (stepTwo.milage == "" || stepTwo.milage == "0")) ||
         stepTwo.description == "" ||
         stepTwo.bodyCondition == null ||
         stepTwo.exteriorColor == null ||

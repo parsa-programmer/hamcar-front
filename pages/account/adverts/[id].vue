@@ -42,7 +42,7 @@
         <Head>
           <Title
             >همکار - {{ advert.brand.title }} {{ advert.model.title }}
-            {{ advert.trim.title }} {{ advert.year.yearTitle }}</Title
+            {{ advert.trim?.title }} {{ advert.year.yearTitle }}</Title
           >
           <Link href="/css/pdp-personal.css" rel="stylesheet" />
         </Head>
@@ -114,7 +114,7 @@
               </div>
             </div>
 
-            <single-advert-detail :advert="advert">
+            <single-advert-detail :advert="advert" preview>
               <div class="ads__detail" v-if="advert.status == 'published'">
                 <span class="ads__detail-name">
                   <icons-calendar />
@@ -242,7 +242,9 @@
       <h-modal :show-header="false" v-model="isOpenDeleteModal">
         <account-advert-move-to-tash
           v-model="advert"
+          :is-exhibition="false"
           @cancel-operation="() => (isOpenDeleteModal = false)"
+          @deleted="deleteAdvert"
         />
       </h-modal>
       <h-modal v-model="isOpenNardebanModal" :show-header="false">
@@ -251,6 +253,7 @@
           :description="null"
           v-model="advert"
           @closed="() => (isOpenNardebanModal = false)"
+          :exhibition="false"
         />
       </h-modal>
     </client-only>
@@ -304,7 +307,10 @@ const togglePhoneModal = () => {
 const openGallery = () => {
   isOpenGallery.value = true;
 };
-
+const deleteAdvert = () => {
+  isOpenDeleteModal.value=false;
+  router.push("/account/adverts");
+};
 onMounted(async () => {
   var res = await ProssesAsync<IApiResponse<AdvertisementDto>>(
     () => GetById(advertId.toString()),

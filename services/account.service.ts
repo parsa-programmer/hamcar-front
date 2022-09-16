@@ -128,7 +128,7 @@ export const DeleteAllSavedItem = (
 
 export const GetUserAdvertisements = (
   pageId: number = 1,
-  take: number = 1,
+  take: number = 12,
   orderBy: AdvertisementFilterOrderBy = AdvertisementFilterOrderBy.latest
 ): Promise<IApiResponse<FilterResult<AdvertisementFilterData>>> => {
   return FetchApi(`/account/adverts`, {

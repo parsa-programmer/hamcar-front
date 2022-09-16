@@ -19,9 +19,12 @@
           >
           <h-button
             class="grow-1"
-            :to="`/account/adverts/upgradePlan?id=${advert.id}`"
+            :to="`/account/exhibition/adverts/upgradePlan?id=${advert.id}`"
             outline
-            v-if="advert.plan.planId != '4'"
+            v-if="
+              advert.plan.planId != '4' &&
+              advert.plan.planType == AdvertisementPlanType.Advertisement
+            "
             >ارتقاع آگهی</h-button
           >
           <h-button class="grow-1" outline>ویرایش</h-button>
@@ -42,7 +45,7 @@
         <Head>
           <Title
             >همکار - {{ advert.brand.title }} {{ advert.model.title }}
-            {{ advert.trim.title }} {{ advert.year.yearTitle }}</Title
+            {{ advert.trim?.title }} {{ advert.year.yearTitle }}</Title
           >
           <Link href="/css/pdp-personal.css" rel="stylesheet" />
         </Head>
@@ -53,12 +56,14 @@
           </nuxt-link>
 
           <icons-chevron-left />
-          <nuxt-link :to="`/account`" class="breadcrumb__item"
-            >پنل کاربری</nuxt-link
+          <nuxt-link :to="`/account/exhibition`" class="breadcrumb__item"
+            >پنل نمایشگاه</nuxt-link
           >
 
           <icons-chevron-left />
-          <nuxt-link :to="`/account/adverts`" class="breadcrumb__item"
+          <nuxt-link
+            :to="`/account/exhibition/adverts`"
+            class="breadcrumb__item"
             >آگهی ها</nuxt-link
           >
 
@@ -74,7 +79,7 @@
                 {{ advert.images.length }} عکس
               </span>
               <h-image
-                :src="GetAdvertImage(advert.id, advert.images[0].imageName)"
+                :src="GetAdvertImage(advert.id, advert.images[0]?.imageName)"
                 :alt="`${advert.brand.title} ${advert.model.title} ${advert.year.yearTitle}`"
               />
             </div>
@@ -114,7 +119,7 @@
               </div>
             </div>
 
-            <single-advert-detail :advert="advert">
+            <single-advert-detail :advert="advert" preview>
               <div class="ads__detail" v-if="advert.status == 'published'">
                 <span class="ads__detail-name">
                   <icons-calendar />
@@ -146,7 +151,7 @@
                   :src="
                     GetAdvertImage(
                       advert.id,
-                      advert.images.filter((f) => f.isMainImage)[0].imageName
+                      advert.images.filter((f) => f.isMainImage)[0]?.imageName
                     )
                   "
                   :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
@@ -243,6 +248,8 @@
         <account-advert-move-to-tash
           v-model="advert"
           @cancel-operation="() => (isOpenDeleteModal = false)"
+          @deleted="deleteAdvert"
+          is-exhibition
         />
       </h-modal>
       <h-modal v-model="isOpenNardebanModal" :show-header="false">
@@ -251,6 +258,8 @@
           :description="null"
           v-model="advert"
           @closed="() => (isOpenNardebanModal = false)"
+          @nardeban-used="isOpenNardebanModal = false"
+          exhibition
         />
       </h-modal>
     </client-only>
@@ -272,6 +281,11 @@ import { authStore as useAuthStore } from "~~/stores/auth.store";
 import { AlertType } from "~~/models/utilities/AlertType";
 import { IApiResponse } from "~~/models/IApiResponse";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
+import {
+  DeleteAdvert,
+  GetConsultAdvertById,
+} from "~~/services/consultant.service";
+import { AdvertisementPlanType } from "~~/models/advertisements/enums/AdvertisementPlanType";
 
 const advert: Ref<AdvertisementDto | null> = ref(null);
 
@@ -304,14 +318,17 @@ const togglePhoneModal = () => {
 const openGallery = () => {
   isOpenGallery.value = true;
 };
-
+const deleteAdvert = () => {
+  isOpenDeleteModal.value=false;
+  router.push("/account/exhibition/adverts");
+};
 onMounted(async () => {
   var res = await ProssesAsync<IApiResponse<AdvertisementDto>>(
-    () => GetById(advertId.toString()),
+    () => GetConsultAdvertById(advertId.toString()),
     loading
   );
   if (!res.data) {
-    await router.push("/account/adverts");
+    await router.push("/account/exhibition/adverts");
   }
   advert.value = res.data ?? null;
   advertTitle.value = `${advert.value?.brand.title} ${advert.value?.model.title}  ${advert.value?.year.yearTitle}`;

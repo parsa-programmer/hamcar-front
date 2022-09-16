@@ -63,10 +63,12 @@
           <nuxt-link :to="link" class="advert__name">
             {{ advert.title }}
           </nuxt-link>
-          <span class="advert__date-type color_black_200 font-6"
+          <span
+            class="advert__date-type color_black_200 font-6"
+            v-if="planDetail[0] == 'Advertisement'"
             >{{ getPlan() }}
             <nuxt-link
-            v-if="planDetail[1]!='4'"
+              v-if="planDetail[1] != '4'"
               class="text-decoration"
               :to="`/account/adverts/upgradePlan?id=${advert.id}`"
               >(ارتقاء نوع آگهی)</nuxt-link
@@ -145,6 +147,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { remainingTime } from "@persian-tools/persian-tools";
 import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
@@ -154,7 +157,6 @@ import { GetAdvertImage, GetBitMapAdvertImage } from "~~/utilities/imageUtil";
 import { splitNumber } from "~~/utilities/numberUtils";
 
 const emit = defineEmits(["useNardebanClicked"]);
-
 
 const link = ref("");
 const isMobile = ref(false);
@@ -233,6 +235,7 @@ a:-webkit-any-link {
 .advertising__row--wide-item .advert__flag--place {
   right: 1rem;
   left: auto;
+  color: #fff !important;
 }
 .advert__footer,
 .advert__wrapper {

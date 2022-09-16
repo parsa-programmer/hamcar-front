@@ -30,6 +30,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { advertStore } from "~~/stores/advert.store";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
 

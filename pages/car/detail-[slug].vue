@@ -109,12 +109,12 @@
     <section class="ads">
       <div class="ads-mobile">
         <div class="ads-mobile__slider" @click="openGallery">
-          <span class="image__counter font-6">
+          <span class="image__counter font-6" v-if="advert.images?.length>0">
             <icons-camera class="ml-0_5" />
-            {{ advert.images.length }} عکس
+            {{ advert.images?.length??0 }} عکس
           </span>
           <h-image
-            :src="GetAdvertImage(advert.id, advert.images[0]?.imageName ?? '')"
+            :src="GetAdvertImage(advert.id, advert.images[0]?.imageName)"
             :alt="`${advert.brand.title} ${advert.model.title} ${advert.year.yearTitle}`"
           />
         </div>
@@ -180,7 +180,7 @@
           </div>
         </div>
 
-        <single-advert-detail :advert="advert" />
+        <single-advert-detail :advert="advert" :preview="false"/>
         <div class="ads-caption">
           <div class="ads-caption__header">
             <icons-message hash-color="var(--color-black)" />
@@ -224,7 +224,7 @@
               :src="
                 GetAdvertImage(
                   advert.id,
-                  advert.images.filter((f) => f.isMainImage)[0]?.imageName ?? ''
+                  advert.images.filter((f) => f.isMainImage)[0]?.imageName
                 )
               "
               :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
@@ -518,7 +518,7 @@ const { data, pending } = await useAsyncData(
     initialCache: false,
   }
 );
-if (data.value.data) {
+if (data.value?.data) {
   advert.value = data.value.data;
   advertTitle.value = `${advert.value.brand.title} ${advert.value.model.title}  ${advert.value.year.yearTitle}`;
   searchUrl.value =
