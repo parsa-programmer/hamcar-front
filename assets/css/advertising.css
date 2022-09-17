@@ -48,10 +48,10 @@
     justify-content: center;
     width: 7.5rem;
     height: 2.5rem;
-    border-radius: var(--app-border-radius);
-    background-color: var(--color-gray-200);
-    font-size: var(--t7-font-size);
-    font-family: var(--t7-font-family);
+    border-radius: var(--app-border-radius) !important;
+    background-color: var(--color-gray-200) !important;
+    font-size: var(--t7-font-size) ;
+    font-family: var(--t7-font-family) ;
     flex-shrink: 0;
 }
 

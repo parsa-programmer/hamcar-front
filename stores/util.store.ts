@@ -1,5 +1,6 @@
 import { Mode } from "fs";
 import { defineStore } from "pinia";
+import { LandingBrandsDto } from "~~/models/LandingDto";
 import { Brand } from "~~/models/utilities/Brand";
 import { Model } from "~~/models/utilities/Model";
 import { Trim } from "~~/models/utilities/Trim";
@@ -8,12 +9,14 @@ import {
   GetModels,
   GetTrimsByModelId,
 } from "~~/services/brand.service";
+import { GetLandingBrands } from "~~/services/landing.service";
 
 const defaultState = () => ({
   showBlackBackGround: false,
   brands: [] as Brand[],
   models: [] as Model[],
   Trims: [] as Trim[],
+  landingBrands: [] as LandingBrandsDto[],
 });
 
 export const UseUtilStore = defineStore("util", {
@@ -46,11 +49,28 @@ export const UseUtilStore = defineStore("util", {
         this.Trims = res.data!;
       });
     },
+    setLandingBrands(): Promise<void> {
+      if (this.landingBrands.length > 0) {
+        return new Promise((resolve) => resolve());
+      }
+      return GetLandingBrands().then((res) => {
+        this.landingBrands = res.data!;
+      });
+    },
   },
   getters: {
     isMobile() {
       var width = window.innerWidth;
       return width < 768;
+    },
+    getLandingBrands() {
+      return (search: string = ""): LandingBrandsDto[] => {
+        return this.landingBrands.filter((f) =>
+          f.brands.some(
+            (r) => r.name.includes(search) || r.slug.includes(search)
+          )
+        );
+      };
     },
     getCarBrands() {
       return (search: string = ""): Brand[] =>

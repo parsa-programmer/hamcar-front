@@ -285,7 +285,7 @@
 import { ref } from "#imports";
 import { BodyType } from "~~/models/advertisements/enums/BodyType";
 import { ModelCarType } from "~~/models/advertisements/enums/ModelCarType";
-import { ChassisLandingDto } from "~~/models/ChassisLandingDto";
+import { ChassisLandingDto } from "~~/models/LandingDto";
 import { GetChassis } from "~~/services/landing.service";
 import { RemoveEmptyProps } from "~~/utilities/objectUtils";
 

@@ -90,11 +90,11 @@
 }
 
 @media screen and (max-width: 768px) {
-    .advert {
+    [data-theme="dark"] .advert {
         background-color: var(--body-bg-color) !important;
     }
 
-    .advertising__filter-btn {
+    [data-theme="dark"] .advertising__filter-btn {
         background-color: var(--body-bg-color) !important;
         color: #fff;
     }

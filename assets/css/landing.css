@@ -34,14 +34,9 @@
 
 /* Info Data */
 .info-data{
-    position: absolute;
-    right: 0.95rem;
-    left: 0.95rem;
-    top: 5.4rem;
     background-color: var(--color-gray-200);
     border-radius: var(--app-border-radius);
     padding: 2rem 2rem 0 2rem;
-    z-index: 999;
 }
 .info-data__header{
     display: flex;
@@ -56,9 +51,14 @@
     display: flex;
     gap: 1rem;
 }
+.info-data__country:hover{
+background: var(--color-gray-200);
+}
+.info-data__country.active{
+background: var(--color-gray-300);
+}
 .info-data__country{
-    height:4rem;
-    width: 7.75rem;
+    padding:.5rem 1rem;
     border-radius: var(--app-border-radius);
     border: 2px solid var(--color-gray-300);
     display: flex;
@@ -68,6 +68,7 @@
     flex-shrink: 0;
     background-color: var(--color-white);
     cursor: pointer;
+    transition: all ease .2s;
 }
 .info-data__filter-btn{
     width: 7.5rem;
@@ -192,40 +193,7 @@
     padding: 1.5rem 0;
     border-top: 2px solid var(--color-white);
 }
-.pagination{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-}
-.pagination__link{
-    font-family: var(--t2-font-family);
-    font-size: var(--t2-font-size);
-    color: var(--color-gray-600);
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-.pagination__link--active{
-    color: var(--color-black);
 
-}
-.pagination__dots{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-}
-.pagination__dot{
-    width: 0.5rem;
-    height: 0.5rem;
-    border-radius: 100%;
-    background-color: var(--color-gray-500);
-}
-.pagination__dot--active{
-    transform: scale(1.5);
-    background-color: var(--color-black);
-}
 
 /* -- Main-Content Section -- */
 
@@ -418,7 +386,6 @@
     }
     .info-data{
         background-color: var(--color-white);
-        top: 4.4rem;
         padding: 0 12px;
     }
     .info-data__header{
@@ -433,12 +400,12 @@
         display: flex;
     }
     .info-data__input{
-        height: 3rem;
-        font-family: var(--t6-font-family);
-        font-size: var(--t6-font-size);
+        height: 3rem !important;
+        font-family: var(--t6-font-family) !important;
+        font-size: var(--t6-font-size) !important;
         border: none;
-        padding-right: 14px;
-        background-color: var(--color-gray-200);
+        padding-right: 14px !important;
+        background-color: var(--color-gray-200) !important;
     }
     .info-data__main{
         display: none;
