@@ -35,7 +35,7 @@
           <span v-else>متور سیکلت</span>
         </h5>
         <div class="header">
-          <img src="/img/notification.png" />
+          <h-image src="static/img/notification.png" />
           <p>
             لطفا مشخصات <span v-if="isCar">خودرو</span>
             <span v-if="isCar == false">متور سیکلت</span> مدنظر خود را وارد کنید
