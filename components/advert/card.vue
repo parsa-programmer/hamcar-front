@@ -172,10 +172,9 @@ import { splitNumber } from "~~/utilities/numberUtils";
 const link = ref("");
 const props = defineProps<{
   advert: AdvertisementFilterData;
-  isCar: boolean;
 }>();
 
-if (props.isCar) {
+if (props.advert.isCar) {
   link.value = `/car/detail-${props.advert.shortLink}-${props.advert.brand_Model}`;
   if (props.advert.trim) {
     link.value += `-${props.advert.trim}`;

@@ -1,5 +1,7 @@
 import { NullLiteral } from "@babel/types";
 import { Plan } from "../account/account.Models";
+import { AdvertisementFilterData } from "../advertisements/Advertisement.Models";
+import { AdvertisementCard } from "../advertisements/AdvertisementCard";
 import { Manufacture } from "../advertisements/enums/Manufacture";
 import { SpecialCases } from "../advertisements/enums/SpecialCases";
 import { FilterParams } from "../IApiResponse";
@@ -35,14 +37,16 @@ export interface PhoneNumbers {
   mobilePhoneTree: string;
 }
 export interface SingleExhiitionDto {
+  id:string;
   title: string;
   address: Address;
-  postalCode: string;
   logoImageName: string;
   englishTitle: string;
-  type: string;
-  phoneNumbers: PhoneNumbers;
-  advertisementCount: number;
+  outerImage: string;
+  advertCount: number;
+  mobilePhone: string;
+  telephone: string;
+  latestAdverts: AdvertisementFilterData[];
 }
 export interface ExhibitionConsultantDto {
   id: string;

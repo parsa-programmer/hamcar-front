@@ -1053,7 +1053,9 @@
         width: 9rem;
     }
 }
-
+[data-theme='dark'] .advert__footer>span{
+    background: var(--color-white);
+}
 @media screen and (max-width: 576px) {
 
     .advert {
@@ -1106,9 +1108,8 @@
     }
 
     .advert__wrapper {
-        height: 50px;
+        height: 40px;
     }
-
     .advert__footer>span {
         display: flex;
     }

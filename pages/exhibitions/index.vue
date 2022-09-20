@@ -196,8 +196,7 @@
   
   <script setup lang="ts">
 import { splitNumber } from "~~/utilities/numberUtils";
-import { Ref } from "vue";
-import { ref } from "#imports";
+import { Ref, ref } from "vue";
 import {
   RemoveDubplicateObjects,
   RemoveEmptyProps,
@@ -273,6 +272,9 @@ watch(
     await refresh();
   }
 );
+watch(orderBy, async () => {
+  await refresh();
+});
 const onResize = () => {
   if (window.innerWidth <= 600) {
     isMobile.value = true;

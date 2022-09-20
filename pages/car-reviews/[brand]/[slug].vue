@@ -510,7 +510,6 @@ onMounted(async () => {
     ];
   }
   setTimeout(() => {
-    window.scrollTo(0, 0);
     //@ts-ignore
     document
       .querySelector(".technical__see-more")

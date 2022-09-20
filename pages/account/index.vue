@@ -51,11 +51,7 @@
         </div>
         <div class="profile__card mobile-card">
           <div class="profile-card__banner">
-            <img
-              src="/img/Notification.png"
-              alt="Notification"
-              class="profile-card__logo"
-            />
+           
           </div>
           <div class="card__desc">
             <template v-if="authData.user?.plan">

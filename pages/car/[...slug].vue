@@ -253,7 +253,7 @@ const orderBy: Ref<AdvertisementFilterOrderBy> = ref(
 
 const { data, refresh, pending } = await useAsyncData(
   "carFilter",
-  () => advertFilter.getAdverts(pageId.value, 12),
+  () => advertFilter.getAdverts(pageId.value, 2),
   {
     initialCache: false,
     server: true,

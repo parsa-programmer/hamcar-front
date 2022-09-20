@@ -1,5 +1,5 @@
 <template>
-  <div @click="copy" >
+  <div @click="copy">
     <input
       ref="clone"
       v-on:focus="$event.target.select()"
@@ -8,6 +8,7 @@
       class="clone"
     />
     <svg
+      v-if="hideIcon == false"
       :width="width"
       :height="height"
       viewBox="0 0 24 24"
@@ -28,7 +29,7 @@
         :fill="hashColor"
       ></path>
     </svg>
-    <slot/>
+    <slot />
   </div>
 </template>
 
@@ -51,6 +52,10 @@ const props = defineProps({
   text: {
     type: String,
     default: "",
+  },
+  hideIcon: {
+    type: Boolean,
+    default: false,
   },
 });
 const clone = ref(null);

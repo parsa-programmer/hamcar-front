@@ -205,70 +205,7 @@ background: var(--color-gray-300);
     gap: 1rem;
     align-items: start;
 }
-.sidebar{
-    background-color: var(--color-gray-200);
-    border-radius: var(--app-border-radius);
-    padding: 2rem 0;
-    width: 12rem;
-}
-.sidebar__lists{
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-}
-.sidebar__item{
-    color: var(--color-gray-600);
-    display: flex;
-    align-items: center;
-    padding-right: 1.5rem;
-    cursor: pointer;
-}
-.sidebar__item svg{
-    margin-left: 1rem;
-}
-.sidebar__item svg path{
-    fill: var(--color-gray-600);
-}
-.sidebar__item--active{
-    color: var(--color-black);
-    border-right: 2px solid var(--color-black);
-}
-.sidebar__item--active svg path{
-    fill: var(--color-black);
-}
 
-.content{
-    flex-grow: 1;
-    position: relative;
-    height: 645px;
-}
-.content__img{
-    border-radius: var(--app-border-radius);
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-.content .div{
-    position: absolute;
-    bottom: 0px;
-    right: 0;
-    left: 0;
-    display: none;
-}
-.content span {
-    text-align: center;
-    font-family: var(--t4-font-family);
-    font-size: var(--t4-font-size);
-    margin: 0 auto;
-    display: block;
-    width: 7.5rem;
-    height: 2.1rem;
-    line-height: 2.2rem;
-    position: relative;
-    border-top-right-radius: var(--app-border-radius);
-    border-top-left-radius: var(--app-border-radius);
-    background-color: var(--color-white);
-}
 
 
 .picture-lists{
@@ -309,9 +246,7 @@ background: var(--color-gray-300);
         width: 13rem;
         flex-shrink: 0;
     }
-    .content{
-        height: 581px;
-    }
+  
     .sidebar__lists{
         gap: 2rem;
     }
@@ -324,12 +259,6 @@ background: var(--color-gray-300);
 }
 
 @media screen and (max-width: 992px) {
-    .header{
-        box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.05);
-    }
-    .header__bottom{
-        display: flex;
-    }
     .info{
         margin-bottom: 1.5rem;
     }
@@ -370,20 +299,12 @@ background: var(--color-gray-300);
     .info__item--active{
         font-family: var(--t5-font-family);
     }
-    .sidebar{
-        display: none;
-    }
+  
     .picture-lists,
     .main-content__link{
         display: flex;
     }
-    .content{
-        height: auto;
-        min-height: auto;
-    }
-    .content .div{
-        display: block;
-    }
+   
     .info-data{
         background-color: var(--color-white);
         padding: 0 12px;

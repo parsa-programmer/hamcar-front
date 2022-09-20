@@ -223,7 +223,7 @@
     >
       <template #item="{ item }">
         <div
-        @click="selectedChassis =item"
+          @click="selectedChassis = item"
           :class="[
             'picture-lists__item',
             { 'picture-lists__item--active': item == selectedChassis },
@@ -291,7 +291,7 @@ import { RemoveEmptyProps } from "~~/utilities/objectUtils";
 
 const selectedChassis = ref(BodyType.کوپه);
 
-const middelValue=ref(0);
+const middelValue = ref(0);
 const props = defineProps<{
   data: ChassisLandingDto[];
 }>();
@@ -328,12 +328,46 @@ const getImage = (item: BodyType | string) => {
       return "static/img/cope.png";
   }
 };
-onMounted(()=>{
-    middelValue.value=4;
-})
+onMounted(() => {
+  middelValue.value = 4;
+});
 </script>
 <style scoped>
+.sidebar {
+  background-color: var(--color-gray-200);
+  border-radius: var(--app-border-radius);
+  padding: 2rem 0;
+  width: 12rem;
+}
+.sidebar__lists {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+.sidebar__item {
+  color: var(--color-gray-600);
+  display: flex;
+  align-items: center;
+  padding-right: 1.5rem;
+  cursor: pointer;
+}
+.sidebar__item svg {
+  margin-left: 1rem;
+}
+.sidebar__item svg path {
+  fill: var(--color-gray-600);
+}
+.sidebar__item--active {
+  color: var(--color-black);
+  border-right: 2px solid var(--color-black);
+}
+.sidebar__item--active svg path {
+  fill: var(--color-black);
+}
 @media screen and (max-width: 768px) {
+  .sidebar {
+    display: none;
+  }
   .d-mobile-block {
     display: flex !important;
   }
@@ -356,10 +390,10 @@ onMounted(()=>{
   height: 100px !important;
 }
 .arrows .prev {
-  right: .5rem;
+  right: 0.5rem;
 }
 .arrows .next {
-  left: .5rem;
+  left: 0.5rem;
 }
 .arrows div {
   background: rgba(0, 0, 0, 0.3);

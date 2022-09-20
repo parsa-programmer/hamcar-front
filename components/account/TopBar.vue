@@ -67,7 +67,7 @@
         <img class="d-mobile-none" src="/img/clock-desktop.png" />
         <img class="d-mobile-block" src="/img/clock-mobile.png" />
         <div class="text-center">
-          <h4 class="banner__title" v-if="loading">
+          <h4 class="banner__title" v-if="loading || accountStore.loading">
             <h-skeletor width="150px" height="30px" />
             <h-skeletor width="150px" class="mt-0_5" height="30px" />
           </h4>
@@ -255,9 +255,8 @@ onMounted(async () => {
   if (props.isExhibition) {
     loading.value = true;
     var res = await GetSpecialAdvertUsed();
-    loading.value = false;
-
     specialAdvertUsed.value = res.data ?? 0;
+    loading.value = false;
   }
 });
 </script>

@@ -28,7 +28,8 @@
       <div class="actions">
         <h-button
           @click="closeModal"
-          class="btn-default btn-default-size d-mobile-none"
+          color="default"
+          class=" btn-default-size d-mobile-none"
           >انصراف</h-button
         >
         <h-button
