@@ -62,7 +62,6 @@ const clone = ref(null);
 const toast = useToast();
 
 const copy = () => {
-  console.log(clone.value.value);
   clone.value.focus();
   document.execCommand("copy");
   toast.showToast("متن کپی شد", AlertType.Success);

@@ -105,9 +105,11 @@ const searchOn: Ref<CarPriceSearchOn> = ref(CarPriceSearchOn.همه);
 const route = useRoute();
 const { search: s } = route.query;
 const search = ref(s?.toString());
-const { data, refresh, pending } = await useAsyncData("carPrices", () =>
-  GetMainPage(search.value, searchOn.value),{
-    initialCache:false
+const { data, refresh, pending } = await useAsyncData(
+  "carPrices",
+  () => GetMainPage(search.value, searchOn.value),
+  {
+    initialCache: false,
   }
 );
 
@@ -189,7 +191,9 @@ const searchAgain = async (e: any) => {
     margin-top: 8px !important;
     border-radius: 12px;
   }
-
+  .price__filter {
+    gap: 0.5rem;
+  }
   .price-list__item__header {
     margin-bottom: 1rem;
     font-family: var(--t3-font-family);
@@ -206,7 +210,6 @@ const searchAgain = async (e: any) => {
     background-color: var(--color-gray-300) !important;
   }
   .price__content .price__filter button {
-    margin-top: 1rem;
     width: 184px !important;
     height: 48px !important;
     font-family: var(--t6-font-family) !important;
@@ -214,6 +217,7 @@ const searchAgain = async (e: any) => {
     line-height: 21.46px !important;
     text-align: center;
     padding: 0 1rem !important;
+    flex-grow: 1;
   }
 }
 </style>

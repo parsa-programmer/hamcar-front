@@ -1,4 +1,4 @@
-import {drop} from "lodash"
+import lodash from "lodash";
 export const RemoveEmptyProps = (object) => {
   for (const key in object) {
     //@ts-ignore
@@ -53,7 +53,7 @@ export const ImageDimensions = (file) =>
     var pg = page || 1,
       pgSize = pageSize || 100,
       offset = (pg - 1) * pgSize,
-      pagedItems = drop(items, offset).slice(0, pgSize);
+      pagedItems = lodash.drop(items, offset).slice(0, pgSize);
     return {
       page: pg,
       pageSize: pgSize,

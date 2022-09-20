@@ -33,9 +33,11 @@
                 <li>
                   <nuxt-link to="/car-reviews">مشخصات فنی خودرو</nuxt-link>
                 </li>
-
                 <li>
-                  <nuxt-link to="/">گوش به زنگ خودرو</nuxt-link>
+                  <nuxt-link to="/price">قیمت روز خودرو</nuxt-link>
+                </li>
+                <li>
+                  <nuxt-link to="/account/notify">گوش به زنگ خودرو</nuxt-link>
                 </li>
                 <li>
                   <nuxt-link to="/exhibitions">نمایشگاه های خودرو</nuxt-link>
