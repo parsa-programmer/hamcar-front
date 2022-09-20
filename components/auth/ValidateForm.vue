@@ -70,6 +70,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { Form } from "vee-validate";
 import * as Yup from "yup";
 import { useAuth } from "~~/composables/auth/useAuth";

@@ -8,6 +8,13 @@ export const GetCarReviewImage = (imageName: string): string => {
   return `hamcar/images/carReview/${imageName}`;
 };
 
+export const GetExhibitionLogoImage = (
+  exhibitionId: string,
+  imageName: string
+): string => {
+  return `hamcar/images/exhibitions/${exhibitionId}/${imageName}`;
+};
+
 export const GetBitMapAdvertImage = (
   advertId: string | undefined,
   imageName: string

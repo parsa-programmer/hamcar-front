@@ -1,7 +1,13 @@
 <template>
   <div class="container">
     <div class="shortcut">
-      <nuxt-link to="/car?startMileage=0&endMileage=0" class="shortcut__item">
+      <nuxt-link
+        to="/car?startMileage=0&endMileage=0"
+        class="
+          shortcut__item
+          animate__animated animate__fadeInUp animate__delay-_5s
+        "
+      >
         <svg
           :width="width"
           :height="height"
@@ -18,7 +24,10 @@
       </nuxt-link>
       <nuxt-link
         to="/car?startMileage=0&endMileage=10000"
-        class="shortcut__item"
+        class="
+          shortcut__item
+          animate__animated animate__fadeInUp animate__delay-1s
+        "
       >
         <svg
           :width="width"
@@ -35,7 +44,13 @@
         <p>کم مصرف</p>
       </nuxt-link>
 
-      <nuxt-link to="/car?justGhesti=true" class="shortcut__item">
+      <nuxt-link
+        to="/car?justGhesti=true"
+        class="
+          shortcut__item
+          animate__animated animate__fadeInUp animate__delay-1_5s
+        "
+      >
         <svg
           :width="width"
           :height="height"
@@ -59,7 +74,13 @@
 
         <p>اقساطی</p>
       </nuxt-link>
-      <nuxt-link to="/car?gearBox=اوتوماتیک" class="shortcut__item">
+      <nuxt-link
+        to="/car?gearBox=اوتوماتیک"
+        class="
+          shortcut__item
+          animate__animated animate__fadeInUp animate__delay-2s
+        "
+      >
         <svg
           :width="width"
           :height="height"
@@ -77,7 +98,13 @@
         </svg>
         <p>اتوماتیک</p>
       </nuxt-link>
-      <nuxt-link to="/car?differential=دو_دیفرانسیل" class="shortcut__item">
+      <nuxt-link
+        to="/car?differential=دو_دیفرانسیل"
+        class="
+          shortcut__item
+          animate__animated animate__fadeInUp animate__delay-2_5s
+        "
+      >
         <svg
           :width="width"
           :height="height"
@@ -93,7 +120,13 @@
 
         <p>دو دیفرانسیل</p>
       </nuxt-link>
-      <nuxt-link to="/car?specialCases=آفرود" class="shortcut__item">
+      <nuxt-link
+        to="/car?specialCases=آفرود"
+        class="
+          shortcut__item
+          animate__animated animate__fadeInUp animate__delay-3s
+        "
+      >
         <svg
           :width="width"
           :height="height"
@@ -112,7 +145,13 @@
 
         <p>آفرود</p>
       </nuxt-link>
-      <nuxt-link to="/car" class="shortcut__item">
+      <nuxt-link
+        to="/car"
+        class="
+          shortcut__item
+          animate__animated animate__fadeInUp animate__delay-3_5s
+        "
+      >
         <svg
           :width="width"
           :height="height"
@@ -127,7 +166,13 @@
         </svg>
         <p>مقبل معاوضه</p>
       </nuxt-link>
-      <nuxt-link to="/car?manufacture=منتاژ" class="shortcut__item">
+      <nuxt-link
+        to="/car?manufacture=منتاژ"
+        class="
+          shortcut__item
+          animate__animated animate__fadeInUp animate__delay-4s
+        "
+      >
         <svg
           :width="width"
           :height="height"
@@ -143,7 +188,13 @@
 
         <p>منتاژ</p>
       </nuxt-link>
-      <nuxt-link to="/car?manufacture=داخلی" class="shortcut__item">
+      <nuxt-link
+        to="/car?manufacture=داخلی"
+        class="
+          shortcut__item
+          animate__animated animate__fadeInUp animate__delay-4_5s
+        "
+      >
         <svg
           :width="width"
           :height="height"
@@ -158,7 +209,13 @@
         </svg>
         <p>داخلی</p>
       </nuxt-link>
-      <nuxt-link to="/car?manufacture=وارداتی" class="shortcut__item">
+      <nuxt-link
+        to="/car?manufacture=وارداتی"
+        class="
+          shortcut__item
+          animate__animated animate__fadeInUp animate__delay-5s
+        "
+      >
         <svg
           :width="width"
           :height="height"
@@ -178,6 +235,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { UseUtilStore } from "~~/stores/util.store";
 
 var width = ref(91);
@@ -224,6 +282,7 @@ onMounted(() => {
   gap: 1rem;
   flex-wrap: wrap;
   border-radius: var(--app-border-radius);
+  animation-duration: calc(var(--animate-duration)/3);
 }
 [data-theme="dark"] .shortcut {
   background: var(--color-dark-black-600);
@@ -242,5 +301,10 @@ onMounted(() => {
   letter-spacing: -0.02em;
   gap: 1.5rem;
   color: var(--color-black);
+  transition: all ease .3s;
+
+}
+.shortcut__item:hover{
+  box-shadow: 0px 40px 100px rgba(0, 0, 0, 0.16);
 }
 </style>

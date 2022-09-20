@@ -166,13 +166,13 @@
             <nuxt-link to="/">نمایشگاه های موتورسیکلت</nuxt-link>
           </div>
           <div class="content" v-if="activeTab == 3">
-            <nuxt-link to="/">تعرفه پکیج ها</nuxt-link>
+            <nuxt-link to="/account/packages">تعرفه پکیج ها</nuxt-link>
             <nuxt-link to="/account/exhibition/register"
               >ثبت نام نمایشگاه</nuxt-link
             >
-            <nuxt-link to="/">اخباز</nuxt-link>
-            <nuxt-link to="/">قوانین و شرایط</nuxt-link>
-            <nuxt-link to="/">درباره ما</nuxt-link>
+            <nuxt-link to="/">اخبار</nuxt-link>
+            <nuxt-link to="/terms">قوانین و شرایط</nuxt-link>
+            <nuxt-link to="/about">درباره ما</nuxt-link>
           </div>
         </div>
         <div class="row justify-content-space-between mt-4">

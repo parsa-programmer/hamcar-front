@@ -30,7 +30,7 @@
       <h-icon :icon="Icon.check" />
       <p>
         با ورود به همکار،
-        <nuxt-link to="/rules">شرایط و قوانین</nuxt-link>
+        <a href="/terms" target="_blank">شرایط و قوانین</a>
         آن را می پذیرم.
       </p>
     </div>

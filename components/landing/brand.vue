@@ -1,6 +1,23 @@
 <template>
   <div class="container">
-    <h-skeletor width="100%" height="400" v-if="loading" />
+    <template v-if="loading">
+      <div class="info-data">
+        <div class="row">
+          <div class="w-full" style="flex-grow: 3;">
+            <h-skeletor width="100%" height="60" />
+          </div>
+          <div class="d-mobile-none row" style="width: 30%;">
+            <div class="w-full">
+              <h-skeletor width="100%" height="60" />
+            </div>
+            <div class="w-full">
+              <h-skeletor width="100%" height="60" />
+            </div>
+          </div>
+        </div>
+        <h-skeletor width="100%" class="mt-1" height="400" />
+      </div>
+    </template>
     <div class="info-data" v-else>
       <div class="info-data__header">
         <input
@@ -171,9 +188,9 @@ watch(searchBy, (val) => {
   data.value = res.data;
 });
 onMounted(async () => {
-  loading.value=true;
+  loading.value = true;
   await utilStore.setLandingBrands();
-  loading.value=false;
+  loading.value = false;
 
   var brands = getBrands();
   var res = getPaginatedItems(brands, currentPage.value, 5);
@@ -212,7 +229,7 @@ const getBrands = () => {
   align-items: center;
   gap: 1rem;
 }
-[data-theme='dark'] .info-data__country.active{
+[data-theme="dark"] .info-data__country.active {
   background: var(--color-dark-black-200) !important;
 }
 .navigation__link--active {

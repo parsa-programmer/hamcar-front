@@ -4,6 +4,7 @@
       type="text"
       class="form-control bg-transparent"
       placeholder="جستجو میان همه آگهی ها..."
+      :value="$route.query.search"
       @keyup.enter="(e) => $router.push(`/car?search=${e.target.value}`)"
     />
     <icons-search
@@ -12,3 +13,6 @@
     ></icons-search>
   </div>
 </template>
+<script setup lang="ts">
+
+</script>

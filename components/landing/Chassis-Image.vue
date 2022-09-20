@@ -69,11 +69,36 @@ const showAdverts = () => {
 }
 .advert__count {
   position: absolute;
-  bottom: -5px;
+  bottom: -9px;
   left: 50%;
   transform: translate(-50%, 0);
   z-index: 2;
   width: 400px;
-  border: 5px solid white;
+  border: 5px solid var(--color-white);
+  z-index: 2;
+}
+.advert__count:after{
+  position: absolute;
+  content: " ";
+  background:  var(--color-white);
+  width: 6px;
+  height: 20px;
+  bottom: -7px;
+  right: -11px;
+  border-radius: 20px;
+  transform: rotateZ(130deg) rotate(10deg); 
+  z-index: 1;
+}
+.advert__count::before{
+  position: absolute;
+  content: " ";
+  background:  var(--color-white);
+  width: 6px;
+  height: 20px;
+  bottom: -7px;
+  left: -10.5px;
+  border-radius: 20px;
+  transform: rotateZ(25deg) rotate(10deg); 
+  z-index: 1;
 }
 </style>

@@ -67,6 +67,19 @@
         </div>
       </template>
     </template>
+    <template v-if="selectedFilter.exhibitionTitle">
+      <div class="selected-filters__item" v-if="selectedFilter.exhibitionTitle">
+        <label class="selected-filters__name" for="exhibitionTitle">
+          فقط آگهی های نمایشگاه '{{ selectedFilter.exhibitionTitle }}'
+        </label>
+        <h-input
+          type="checkbox"
+          checked
+          input-id="exhibitionTitle"
+          name="exhibitionTitle"
+        />
+      </div>
+    </template>
     <template v-if="selectedFilter.startYear || selectedFilter.endYear">
       <h5 class="text-center">فیلتر سال تولید</h5>
       <div class="selected-filters__item" v-if="selectedFilter.startYear">
@@ -236,6 +249,7 @@
         />
       </div>
     </template>
+
     <template
       v-if="
         selectedFilter.haveImage ||
@@ -368,12 +382,18 @@ import { splitNumber } from "~~/utilities/numberUtils";
 import { RemoveEmptyProps } from "~~/utilities/objectUtils";
 const emit = defineEmits(["closed"]);
 
+const router = useRouter();
+const route = useRoute();
 const advertFilter = useAdverFilter();
 const selectedFilter = ref(advertFilter.getFilterQueryParams());
 const utilStore = UseUtilStore();
 const setFilters = async () => {
   const justGhesti =
     document.querySelector("input[name=_just_Gesti_]:checked") != null;
+
+  const exhibitionTitle =
+    document.querySelector("input[name=exhibitionTitle]:checked") != null;
+
   const justHavePrice =
     document.querySelector("input[name=just_havePrice_]:checked") != null;
 
@@ -453,6 +473,15 @@ const setFilters = async () => {
 
   if (justGhesti == false && selectedFilter.value.justGhesti) {
     await advertFilter.justGhesti(false);
+  }
+  if (exhibitionTitle == false && selectedFilter.value.exhibitionTitle) {
+    await router.push({
+      path: route.path,
+      query: {
+        ...route.query,
+        exhibitionTitle: ``,
+      },
+    });
   }
   if (justHaveImage == false && selectedFilter.value.haveImage) {
     await advertFilter.justHaveImage(false);
@@ -560,7 +589,6 @@ const GetDataAndChangeQueryParam = async (
   }
 };
 
-const route = useRoute();
 watch(
   () => route.query,
   () => {

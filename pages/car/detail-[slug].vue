@@ -60,20 +60,15 @@
     </section>
     <section class="ads-company" v-if="advert.exhibition">
       <div class="ads-company__right">
-        <svg
+        <h-image
           class="ads-company__logo"
-          width="72"
-          height="72"
-          viewBox="0 0 72 72"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M61.458 10.5463C56.4236 5.51108 50.009 2.08183 43.0255 0.692225C36.042 -0.697375 28.8033 0.0151666 22.2249 2.73972C15.6464 5.46428 10.0236 10.0786 6.06754 15.9988C2.11153 21.9191 0 28.8796 0 36C0 43.1204 2.11153 50.0809 6.06754 56.0012C10.0236 61.9214 15.6464 66.5357 22.2249 69.2603C28.8033 71.9848 36.042 72.6974 43.0255 71.3078C50.009 69.9182 56.4236 66.4889 61.458 61.4537C68.208 54.7025 72 45.5467 72 36C72 26.4533 68.208 17.2975 61.458 10.5463ZM9.38893 23.8172C11.2029 19.7937 13.8909 16.2249 17.2574 13.3707C20.6238 10.5164 24.584 8.44816 28.85 7.31661C33.1161 6.18505 37.5808 6.01855 41.9193 6.8292C46.2578 7.63984 50.361 9.40718 53.9308 12.0028C45.0944 11.1682 34.0326 15.6846 25.0654 24.6354C21.681 28.0143 18.8137 31.8741 16.5563 36.09C13.4859 32.437 11.0619 28.2863 9.38893 23.8172ZM29.238 65.5772C22.4052 63.7465 16.449 59.5396 12.4392 53.7121C8.42927 47.8847 6.62838 40.8186 7.35995 33.7826C11.0744 41.85 20.4508 49.1809 32.7563 52.4537C37.3501 53.6998 42.1046 54.2513 46.8617 54.09C45.2449 58.5622 42.8824 62.7285 39.8744 66.4118C36.3057 66.7728 32.7011 66.4789 29.238 65.5445V65.5772ZM51.6399 31.3609C50.4269 26.7463 48.5412 22.3354 46.0435 18.27C50.7222 17.4371 55.5083 17.4039 60.198 18.1718C62.2972 21.0779 63.8447 24.3449 64.7635 27.81C66.5973 34.6438 65.934 41.9076 62.8926 48.2962C59.8513 54.6848 54.6314 59.7793 48.1708 62.6646C53.2763 55.4482 54.9126 43.6172 51.6399 31.3609Z"
-            fill="var(--color-black-600)"
-          ></path>
-        </svg>
-
+          :src="
+            GetExhibitionLogoImage(
+              advert.exhibition.id,
+              advert.exhibition.logoImageName
+            )
+          "
+        />
         <div class="ads-company__wrapper">
           <h3 class="ads-company__name">{{ advert.exhibition.title }}</h3>
           <p class="ads-company__address">
@@ -89,18 +84,16 @@
                 fill="var(--color-black-200)"
               ></path>
             </svg>
-            {{ advert.exhibition.address.province }}،
-            {{ advert.exhibition.address.city }}،
-            {{ advert.exhibition.address.postalAddress }}
+            {{ advert.exhibition.address }}
           </p>
         </div>
       </div>
       <div class="ads-company__left">
         <p class="ads-company__stock">
-          این نمایشگاه دارای {{ exhibitionAdvertCount }} خودرو میباشد
+          این نمایشگاه دارای {{ advert.exhibition.advertCount }} خودرو میباشد
         </p>
         <nuxt-link
-          :to="`/car?exhibitionTitle=${advert.exhibition.englishTitle}`"
+          :to="`/${searchUrl}?exhibitionTitle=${advert.exhibition.englishTitle}`"
           class="ads-company__link"
           >مشاهده تمام آگهی ها</nuxt-link
         >
@@ -109,9 +102,9 @@
     <section class="ads">
       <div class="ads-mobile">
         <div class="ads-mobile__slider" @click="openGallery">
-          <span class="image__counter font-6" v-if="advert.images?.length>0">
+          <span class="image__counter font-6" v-if="advert.images?.length > 0">
             <icons-camera class="ml-0_5" />
-            {{ advert.images?.length??0 }} عکس
+            {{ advert.images?.length ?? 0 }} عکس
           </span>
           <h-image
             :src="GetAdvertImage(advert.id, advert.images[0]?.imageName)"
@@ -180,7 +173,7 @@
           </div>
         </div>
 
-        <single-advert-detail :advert="advert" :preview="false"/>
+        <single-advert-detail :advert="advert" :preview="false" />
         <div class="ads-caption">
           <div class="ads-caption__header">
             <icons-message hash-color="var(--color-black)" />
@@ -395,6 +388,7 @@
       title="اشتراک گذاری"
       sub-title="با استفاده از روش های زیر میتوانید این صفحه را با دوستان خود به اشتراک بگذارید."
       v-model="isOpenShareModal"
+      :mobile-header="true"
     >
       <share-page
         v-model="isOpenShareModal"
@@ -419,31 +413,25 @@
             <span class="text-muted font-6">شماره تماس 2</span>
           </div>
           <div class="copy__phone">
-            {{ advert.exhibition.phoneNumbers.mobilePhone }}
+            {{ advert.exhibition.mobilePhone }}
             <h-copy
               hash-color="#C4C4C4"
-              :text="advert.exhibition.phoneNumbers.mobilePhone"
+              :text="advert.exhibition.mobilePhone"
             />
           </div>
         </div>
 
         <div
           class="row"
-          v-if="
-            advert.exhibition != null &&
-            advert.exhibition.phoneNumbers.telephone
-          "
+          v-if="advert.exhibition != null && advert.exhibition.telePhone"
         >
           <div class="phone__title">
             <icons-phone :width="20" :height="20" />
             <span class="text-muted font-6">شماره تماس 3</span>
           </div>
           <div class="copy__phone">
-            {{ advert.exhibition.phoneNumbers.telephone }}
-            <h-copy
-              hash-color="#C4C4C4"
-              :text="advert.exhibition.phoneNumbers.telephone"
-            />
+            {{ advert.exhibition.telePhone }}
+            <h-copy hash-color="#C4C4C4" :text="advert.exhibition.telePhone" />
           </div>
         </div>
       </div>
@@ -457,7 +445,7 @@ import { ref } from "#imports";
 import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models";
 import { GetByShortLink } from "~~/services/advertisement.service";
 import { BugReportFor } from "~~/services/bugReport.service";
-import { GetAdvertImage } from "~~/utilities/imageUtil";
+import { GetAdvertImage, GetExhibitionLogoImage } from "~~/utilities/imageUtil";
 import { TimeAgo } from "~~/utilities/dateUtil";
 import {
   SaveAdvertisement,
@@ -502,7 +490,6 @@ const pageLoading = ref(false);
 var slug = route.params.slug;
 const shortLink = slug.toString().split("-")[0];
 const advertTitle = ref("");
-const exhibitionAdvertCount = ref(0);
 
 const searchUrl = ref("car");
 
@@ -563,6 +550,7 @@ const setAdvertNote = async () => {
 const chatWithSeller = async () => {
   if (authStore.isLogin == false) {
     toast.showToast("برای شروع گفتوگو وارد حساب کاربری شوید", ToastType.error);
+    await router.push("/auth/login?returnTo=" + route.path);
     return;
   }
   var res = await ProssesAsync<IApiResponse<SendChatMessageResponseDto>>(

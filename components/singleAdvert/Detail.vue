@@ -37,16 +37,16 @@
               />
             </span>
           </div>
-          <div class="ads__detail" v-if="advert.exhibition != null && advert.exhibition.phoneNumbers?.telephone">
+          <div class="ads__detail" v-if="advert.exhibition != null && advert.exhibition?.telePhone">
             <span class="ads__detail-name">
               <icons-phone />
               شماره تماس 2
             </span>
             <span class="ads__detail-value">
-              {{ advert.exhibition.phoneNumbers?.telephone }}
+              {{ advert.exhibition.telePhone }}
               <h-copy
                 hash-color="var(--color-black)"
-                :text="advert.exhibition.phoneNumbers?.telephone"
+                :text="advert.exhibition.telePhone"
               />
             </span>
           </div>
@@ -247,7 +247,7 @@
             </svg>
             سوخت
           </span>
-          <span class="ads__detail-value">{{ advert.model.fuel }}</span>
+          <span class="ads__detail-value">{{ advert.model.fuel.replaceAll("_"," ") }}</span>
         </div>
       </div>
     </div>
@@ -270,6 +270,7 @@ const showPhone = () => {
 };
 const toast = useToast();
 const router = useRouter();
+const route=useRoute();
 const pageLoading = ref(false);
 
 const props = defineProps<{
@@ -280,6 +281,7 @@ const props = defineProps<{
 const chatWithSeller = async () => {
   if (auStor.isLogin == false) {
     toast.showToast("برای شروع گفتوگو وارد حساب کاربری شوید", ToastType.error);
+    await router.push("/auth/login?returnTo=" + route.path);
     return;
   }
   pageLoading.value = true;

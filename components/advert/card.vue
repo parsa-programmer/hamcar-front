@@ -1,8 +1,5 @@
 <template>
-  <nuxt-link
-    :to="link"
-    class="advert"
-  >
+  <nuxt-link :to="link" class="advert">
     <div class="advert__badge" v-if="false">
       <svg
         class="advert__safe-badge"
@@ -164,6 +161,7 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { split } from "lodash";
 import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
@@ -182,8 +180,8 @@ if (props.isCar) {
   if (props.advert.trim) {
     link.value += `-${props.advert.trim}`;
   }
-}else{
-   link.value = `/motorcycle/detail-${props.advert.shortLink}-${props.advert.brand_Model}`;
+} else {
+  link.value = `/motorcycle/detail-${props.advert.shortLink}-${props.advert.brand_Model}`;
   if (props.advert.trim) {
     link.value += `-${props.advert.trim}`;
   }

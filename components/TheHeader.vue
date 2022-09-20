@@ -38,7 +38,7 @@
                   <nuxt-link to="/">گوش به زنگ خودرو</nuxt-link>
                 </li>
                 <li>
-                  <nuxt-link to="/">نمایشگاه های خودرو</nuxt-link>
+                  <nuxt-link to="/exhibitions">نمایشگاه های خودرو</nuxt-link>
                 </li>
               </ul>
             </li>
@@ -58,10 +58,10 @@
                   >
                 </li>
                 <li>
-                  <nuxt-link to="/rules">قوانین و شرایط</nuxt-link>
+                  <nuxt-link to="/terms">قوانین و شرایط</nuxt-link>
                 </li>
                 <li>
-                  <nuxt-link to="/about-us">درباره ما</nuxt-link>
+                  <nuxt-link to="/about">درباره ما</nuxt-link>
                 </li>
               </ul>
             </li>
@@ -219,6 +219,7 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from "#imports";
 import { Icon } from "~~/models/utilities/Icon";
 import { authStore } from "~~/stores/auth.store";
 const store = authStore();

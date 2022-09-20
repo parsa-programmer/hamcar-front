@@ -5,10 +5,13 @@ import {
 import {
   ExhibitionConsultantDto,
   ExhibitionDto,
+  ExhibitionFilterData,
+  ExhibitionFilterParams,
   SingleExhiitionDto,
 } from "~~/models/exhibitions/Exhibition.Models";
-import { IApiResponse } from "~~/models/IApiResponse";
+import { FilterResult, IApiResponse } from "~~/models/IApiResponse";
 import { FetchApi } from "~~/utilities/customFetchApi";
+import { RemoveEmptyProps } from "~~/utilities/objectUtils";
 
 export const Register = (
   command: FormData
@@ -18,7 +21,14 @@ export const Register = (
     body: command,
   });
 };
-
+export const GetByFilter = (
+  filterParams: ExhibitionFilterParams
+): Promise<IApiResponse<FilterResult<ExhibitionFilterData>>> => {
+  RemoveEmptyProps(filterParams);
+  return FetchApi("/exhibition/ByFilter", {
+    params: filterParams,
+  });
+};
 export const VerifyExhibitionAccount = (
   command: FormData
 ): Promise<IApiResponse<undefined>> => {

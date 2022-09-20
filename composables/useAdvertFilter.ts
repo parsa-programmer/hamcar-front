@@ -23,8 +23,13 @@ export const useAdverFilter = () => {
   const router = useRouter();
   const utilStore = UseUtilStore();
 
-  const url = route.path.toLowerCase().startsWith("/car") ? "/car" : "/motor";
-
+  const url = "/search";
+  if (
+    route.path.toLowerCase().startsWith("/car") ||
+    route.path.toLowerCase().startsWith("/motor")
+  ) {
+    route.path.toLowerCase().startsWith("/car") ? "/car" : "/motor";
+  }
   const { slug } = route.params;
   if (slug && slug[1]) {
     router.push(url);

@@ -1,10 +1,9 @@
 <template>
   <div v-if="carReview == undefined || pending">Loading ...</div>
   <div v-else>
-    <Head>
-      <Title>{{ carReview.seoData.metaTitle }}</Title>
+    <render-seo-data :meta="carReview.seoData">
       <Link href="/css/technical.css" rel="stylesheet" />
-    </Head>
+    </render-seo-data>
     <h-modal title="گزارش اشکال" v-model="isOpenBugReportModal">
       <report-bug :reportFor="BugReportFor.review" :link-id="carReview.id" />
     </h-modal>
@@ -480,7 +479,7 @@ const relatedAdvertCount = ref(0);
 const commentCount = ref(0);
 const commentRate = ref(0);
 
-carReview.value = data.value.data;
+carReview.value = data.value?.data;
 
 const toggleBugReportModal = () => {
   isOpenBugReportModal.value = !isOpenBugReportModal.value;
@@ -493,7 +492,7 @@ const getCommentsData = (count: number, rate: number) => {
   commentRate.value = rate;
 };
 onMounted(async () => {
-  if (data.value.isSuccess) {
+  if (data.value?.isSuccess) {
     const specifications = [...data.value.data?.specifications!];
     var specCount = (specifications.length ?? 0) / 2;
     if (specCount > 1) {
@@ -529,6 +528,7 @@ onMounted(async () => {
       model: carReview.value!.carReviewModel.slug,
       modelType: null,
       exhibitionId: null,
+      setCurrentUserId: false,
     }
   );
   relatedAdvertCount.value = res.data!;

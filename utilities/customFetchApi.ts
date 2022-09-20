@@ -64,11 +64,12 @@ export async function FetchApi<T>(
           },
         });
       } else if (e.response?.status == 400) {
+        var errMessage = "اطلاعات نامعتبر است";
         showError({
           isSuccess: false,
           data: undefined,
           metaData: {
-            message: "اطلاعات نامعتبر است",
+            message: e.response?._data?.MetaData?.Message ?? errMessage,
             appStatusCode: ApiStatusCodes.BadRequest,
           },
         });

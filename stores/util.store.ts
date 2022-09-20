@@ -1,5 +1,6 @@
 import { Mode } from "fs";
 import { defineStore } from "pinia";
+import { ProvinceModel } from "~~/models/iranDivision/province";
 import { LandingBrandsDto } from "~~/models/LandingDto";
 import { Brand } from "~~/models/utilities/Brand";
 import { Model } from "~~/models/utilities/Model";
@@ -9,6 +10,7 @@ import {
   GetModels,
   GetTrimsByModelId,
 } from "~~/services/brand.service";
+import { getProvinces } from "~~/services/iranDivision.service";
 import { GetLandingBrands } from "~~/services/landing.service";
 
 const defaultState = () => ({
@@ -17,6 +19,7 @@ const defaultState = () => ({
   models: [] as Model[],
   Trims: [] as Trim[],
   landingBrands: [] as LandingBrandsDto[],
+  provinces: [] as ProvinceModel[],
 });
 
 export const UseUtilStore = defineStore("util", {
@@ -55,6 +58,14 @@ export const UseUtilStore = defineStore("util", {
       }
       return GetLandingBrands().then((res) => {
         this.landingBrands = res.data!;
+      });
+    },
+    setProvinces(): Promise<void> {
+      if (this.provinces.length ?? 0 > 0) {
+        return new Promise((resolve) => resolve());
+      }
+      return getProvinces().then((res) => {
+        this.provinces = res.data!;
       });
     },
   },
@@ -118,6 +129,10 @@ export const UseUtilStore = defineStore("util", {
         this.Trims.filter(
           (f) => f.title.includes(search) || f.englishTitle.includes(search)
         );
+    },
+    getProvinces() {
+      return (search: string = ""): ProvinceModel[] =>
+        this.provinces.filter((f) => f.name.includes(search));
     },
   },
 });

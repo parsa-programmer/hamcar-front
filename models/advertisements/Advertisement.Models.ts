@@ -120,7 +120,17 @@ export interface AdvertisementDto {
   trim: Trim;
   plan: AdvertPlanInfo;
   status: string;
-  exhibition: ExhibitionDto;
+  exhibition: AdvertExhibitionDto;
+}
+export interface AdvertExhibitionDto {
+  id: string;
+  title: string;
+  address: string;
+  logoImageName: string;
+  englishTitle: string;
+  mobilePhone: string;
+  telePhone: string;
+  advertCount: number;
 }
 export interface AdvertPlanInfo {
   planId: string;

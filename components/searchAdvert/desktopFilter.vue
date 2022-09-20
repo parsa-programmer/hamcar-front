@@ -475,12 +475,10 @@ function changeJustGhesti() {
 
 function changeJustImage() {
   const checked = document.querySelector("#justHasImage:checked") !== null;
-  console.log(checked);
   advertFilter.justHaveImage(checked);
 }
 function changeJustPrice() {
   const checked = document.querySelector("#justPrice:checked") !== null;
-  console.log(checked);
   advertFilter.justHavePrice(checked);
 }
 

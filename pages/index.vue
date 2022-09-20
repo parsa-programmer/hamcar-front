@@ -1,8 +1,6 @@
 <template>
   <div>
-    <Head>
-      <Title>همکار</Title>
-    </Head>
+    <render-seo-data :meta="meta" />
     <section class="info">
       <div class="container">
         <div class="info__wrapper">
@@ -11,6 +9,7 @@
               type="text"
               class="form-control light-border"
               placeholder="جستجو میان همه آگهی ها..."
+              @keydown.enter="(e) => search(e)"
             />
             <svg
               class="input-icon"
@@ -77,10 +76,31 @@
       </div>
     </section>
     <section class="main-content">
-      <landing-chassis v-if="selectedTab == 0" :data="data?.data ?? []" />
-      <landing-brand v-if="selectedTab == 1" />
-      <landing-years v-if="selectedTab == 2" />
-      <landing-shortcut v-if="selectedTab == 3" />
+      <Transition
+        mode="out-in"
+        enter-active-class="animate__animated  animate__fadeInRight "
+        leave-active-class="animate__animated  animate__fadeOutLeft animate__faster"
+      >
+        <landing-chassis v-if="selectedTab == 0" :data="data?.data ?? []" />
+      </Transition>
+      <Transition
+        enter-active-class="animate__animated  animate__fadeInRight "
+        leave-active-class="animate__animated  animate__fadeOutLeft animate__faster"
+      >
+        <landing-brand v-if="selectedTab == 1" />
+      </Transition>
+      <Transition
+        enter-active-class="animate__animated  animate__fadeInRight "
+        leave-active-class="animate__animated  animate__fadeOutLeft animate__faster"
+      >
+        <landing-years v-if="selectedTab == 2" />
+      </Transition>
+      <Transition
+        enter-active-class="animate__animated  animate__fadeInRight "
+        leave-active-class="animate__animated  animate__fadeOutLeft animate__faster"
+      >
+        <landing-shortcut v-if="selectedTab == 3" />
+      </Transition>
     </section>
   </div>
 </template>
@@ -88,6 +108,7 @@
 <script setup lang="ts">
 import { ref } from "#imports";
 import { GetChassis } from "~~/services/landing.service";
+import { BASE_URL } from "~~/utilities/api.config";
 
 const selectedTab = ref(0);
 definePageMeta({
@@ -95,6 +116,17 @@ definePageMeta({
 });
 
 const { data } = await useAsyncData("landing", () => GetChassis());
+const { data: meta } = await useAsyncData(
+  "landing_meta",
+  () => $fetch<any>(`${BASE_URL}/SiteEntities/Landing`),
+  {
+    initialCache: true,
+  }
+);
+const router = useRouter();
+const search = (e: any) => {
+  router.push("/car?search=" + e.target.value);
+};
 </script>
 
 

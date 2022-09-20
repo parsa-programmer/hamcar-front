@@ -40,7 +40,7 @@
     <div class="registration__footer" v-if="store.currentStep == 1">
       <span class="registration__accept-rules">
         فشردن این دکمه، به منزله پذیرش
-        <a href="#">شرایط و قوانین</a>
+        <nuxt-link to="/terms">شرایط و قوانین</nuxt-link>
         همکار است.
       </span>
       <h-button

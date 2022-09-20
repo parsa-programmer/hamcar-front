@@ -1,4 +1,8 @@
+import { NullLiteral } from "@babel/types";
 import { Plan } from "../account/account.Models";
+import { Manufacture } from "../advertisements/enums/Manufacture";
+import { SpecialCases } from "../advertisements/enums/SpecialCases";
+import { FilterParams } from "../IApiResponse";
 import { Address } from "../utilities/Address";
 
 export enum ExhibitionStatus {
@@ -50,4 +54,29 @@ export interface ExhibitionConsultantDto {
   activeAdvertisements: number;
   advertisementInCurrentMonth: number;
   usedNardebansInCurrentMonth: number;
+}
+export interface ExhibitionFilterData {
+  id: string;
+  creationDate: Date;
+  title: string;
+  logoImageName: string;
+  englishTitle: string;
+  status: string;
+  type: string;
+  advertCount: number;
+  address: string;
+  telePhone: string;
+  phoneNumber: string;
+}
+export interface ExhibitionFilterParams extends FilterParams {
+  title: string | null;
+  hasZeroMileageCar: boolean | string;
+  province: string | null;
+  specialCases: SpecialCases[] | null;
+  orderBy: ExhibitionFilterOrderBy;
+  manufacture: Manufacture[] | null;
+}
+export enum ExhibitionFilterOrderBy {
+  creationDate = "creationDate",
+  popular = "popular",
 }
