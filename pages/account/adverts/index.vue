@@ -183,7 +183,6 @@ import { AdvertisementFilterOrderBy } from "~~/models/advertisements/enums/Adver
 import { FilterResult, IApiResponse } from "~~/models/IApiResponse";
 import { useAccountStore } from "~~/stores/account.store";
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
-import { filter } from "lodash";
 import { CreateTransaction } from "~~/services/transaction.service";
 import { TransactionOrderType } from "~~/models/transactions/CreateTransactionCommand";
 import { CurrentDomainUrl } from "~~/utilities/api.config";

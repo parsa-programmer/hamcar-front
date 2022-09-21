@@ -348,7 +348,6 @@ import { UseUtilStore } from "~~/stores/util.store";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
 import { Brand } from "~~/models/utilities/Brand";
 import { AlertType } from "~~/models/utilities/AlertType";
-import { filter, orderBy } from "lodash";
 import { Model } from "~~/models/utilities/Model";
 import { GenerateYear } from "~~/utilities/selectDataGenerator";
 import { toPersianDate } from "~~/utilities/dateUtil";

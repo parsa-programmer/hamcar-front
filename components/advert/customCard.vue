@@ -188,14 +188,13 @@
 </template>
 
 <script setup lang="ts">
-import { split } from "lodash";
+import { ref } from "#imports";
 import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
 import { TimeAgo } from "~~/utilities/dateUtil";
 import { GetAdvertImage, GetBitMapAdvertImage } from "~~/utilities/imageUtil";
 import { splitNumber } from "~~/utilities/numberUtils";
-
 
 const link = ref("");
 const isMobile = ref(false);

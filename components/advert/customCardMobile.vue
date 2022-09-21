@@ -100,9 +100,8 @@
 
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { timeAgo } from "@persian-tools/persian-tools";
-import { on } from "events";
-import { split } from "lodash";
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
 import { TimeAgo } from "~~/utilities/dateUtil";
@@ -131,7 +130,7 @@ if (props.advert.isCar) {
 
 
 <style scoped>
-  a:-webkit-any-link {
+a:-webkit-any-link {
   color: inherit;
 }
 .advert__mobile-banner {

@@ -376,7 +376,6 @@
 
 <script setup lang="ts">
 import { ref } from "#imports";
-import { filter } from "lodash";
 import { UseUtilStore } from "~~/stores/util.store";
 import { splitNumber } from "~~/utilities/numberUtils";
 import { RemoveEmptyProps } from "~~/utilities/objectUtils";

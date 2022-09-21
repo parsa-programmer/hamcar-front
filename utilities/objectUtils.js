@@ -1,4 +1,5 @@
-import lodash from "lodash";
+import drop from "lodash/drop.js";
+
 export const RemoveEmptyProps = (object) => {
   for (const key in object) {
     //@ts-ignore
@@ -49,6 +50,7 @@ export const ImageDimensions = (file) =>
     img.src = URL.createObjectURL(file);
   });
 
+<<<<<<< HEAD
   export function getPaginatedItems(items, page, pageSize) {
     var pg = page || 1,
       pgSize = pageSize || 100,
@@ -62,3 +64,18 @@ export const ImageDimensions = (file) =>
       data: pagedItems
     };
   }
+=======
+export function getPaginatedItems(items, page, pageSize) {
+  var pg = page || 1,
+    pgSize = pageSize || 100,
+    offset = (pg - 1) * pgSize,
+    pagedItems = drop(items, offset).slice(0, pgSize);
+  return {
+    page: pg,
+    pageSize: pgSize,
+    total: items.length,
+    total_pages: Math.ceil(items.length / pgSize),
+    data: pagedItems,
+  };
+}
+>>>>>>> 17917449735152a4a77d3960f3381e4d1522b494

@@ -422,6 +422,7 @@ onMounted(async () => {
       model: carPriceData.value.model.slug,
       exhibitionId: null,
       modelType: null,
+      setCurrentUserId: false,
     }
   );
   if ((res.data ?? 0) > 0) {

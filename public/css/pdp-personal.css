@@ -31,8 +31,8 @@ body {
 }
 
 .ads-company__logo {
-    width: 72px ;
-    height: 72px ;
+    width: 72px;
+    height: 72px;
     border-radius: 50%;
 }
 
@@ -524,7 +524,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(15, 15, 16, 0.9);
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     z-index: 999;
 }
@@ -945,7 +945,10 @@ body {
         gap: 0.5rem;
     }
 
-    .ads-info__item {
+    [data-theme="dark"] .ads-info__item {
+        background: var(--color-dark-black-600) !important;
+    }
+    [data-theme="light"] .ads-info__item {
         background-color: var(--color-gray-200);
     }
 

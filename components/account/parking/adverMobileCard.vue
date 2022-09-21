@@ -64,7 +64,7 @@
   
   
   <script setup lang="ts">
-import { split } from "lodash";
+import { ref } from "#imports";
 import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";

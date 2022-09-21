@@ -1,7 +1,6 @@
 import { setLocale, addMethod, string, number } from "yup";
 import { phoneNumberValidator } from "@persian-tools/persian-tools";
 import { ErrorMessage } from "vee-validate";
-import { isNull } from "lodash";
 
 export default defineNuxtPlugin(() => {
   setLocale({

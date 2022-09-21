@@ -104,7 +104,6 @@
 
 <script setup lang="ts">
 import { ref } from "#imports";
-import { filter } from "lodash";
 import { Ref } from "vue";
 import { Manufacture } from "~~/models/advertisements/enums/Manufacture";
 import { SpecialCases } from "~~/models/advertisements/enums/SpecialCases";

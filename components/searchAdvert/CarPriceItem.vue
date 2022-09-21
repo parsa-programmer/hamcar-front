@@ -51,7 +51,6 @@ import { CarPriceDetail } from "~~/models/carPrices/CarPriceModels";
 import { splitNumber } from "~~/utilities/numberUtils";
 import { ref } from "#imports";
 import { TimeAgo } from "~~/utilities/dateUtil";
-import { orderBy } from "lodash";
 
 const props = defineProps<{
   item: CarPriceDetail;
