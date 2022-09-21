@@ -1,11 +1,16 @@
 <template>
   <div class="advert__mobile mobile-card">
-    <nuxt-link :to="`/account/adverts/${advert.id}`" class="advert__mobile-banner">
+    <nuxt-link
+      :to="`/account/adverts/${advert.id}`"
+      class="advert__mobile-banner"
+    >
       <h-image :src="GetBitMapAdvertImage(advert.id, advert.imageName)" />
     </nuxt-link>
     <div class="advert__mobile-body">
       <div class="body__top font-5">
-        <nuxt-link :to="`/account/adverts/${advert.id}`">{{ advert.title }}</nuxt-link>
+        <nuxt-link :to="`/account/adverts/${advert.id}`">{{
+          advert.title
+        }}</nuxt-link>
         <span class="time__ago">({{ TimeAgo(advert.creationDate) }})</span>
       </div>
       <div class="body__middel">
@@ -83,7 +88,7 @@
         </div>
         <div v-else></div>
         <div class="footer--actions">
-          <slot name="actions"/>
+          <slot name="actions" />
         </div>
       </div>
     </div>
@@ -92,8 +97,8 @@
 
 
 <script setup lang="ts">
+import { ref } from "#imports";
 import { timeAgo } from "@persian-tools/persian-tools";
-import { split } from "lodash";
 import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementCard } from "~~/models/advertisements/AdvertisementCard";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
@@ -132,7 +137,7 @@ const openNardebanModal = () => {
 .advert__mobile-banner {
   width: 148px;
 }
-.body__top a{
+.body__top a {
   color: var(--color-black);
 }
 .advert__tag {

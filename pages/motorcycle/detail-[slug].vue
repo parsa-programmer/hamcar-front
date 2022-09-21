@@ -15,7 +15,7 @@
       >
       <Link href="/css/pdp-personal.css" rel="stylesheet" />
     </Head>
-    <single-advert-breadcrumb :advert="advert" />
+    <single-advert-Breadcrumb :advert="advert" />
     <singleAdvert-exhibition-card :advert="advert" />
     <single-advert-mobile-data
       :advert="advert"
@@ -90,7 +90,6 @@
       </div>
       <div class="ads__left">
         <search-advert class="ads__search-box" />
-
         <single-advert-desktop-image-slider
           :advert="advert"
           :isSavedAdvert="isSavedAdvert"
@@ -227,7 +226,9 @@
     >
       <share-page
         v-model="isOpenShareModal"
-        :link="`/car/detail-${advert.shortLink}-${advert.brand.slug}-${advert.model.slug}`"
+        :link="`/${advert.brand.isCar ? 'car' : 'motor'}/detail-${
+          advert.shortLink
+        }-${advert.brand.slug}-${advert.model.slug}`"
       />
     </h-modal>
     <h-modal v-model="isOpenPhoneModal">
@@ -280,7 +281,7 @@ import { Ref } from "vue";
 import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models";
 import { GetByShortLink } from "~~/services/advertisement.service";
 import { BugReportFor } from "~~/services/bugReport.service";
-import { GetAdvertImage, GetExhibitionLogoImage } from "~~/utilities/imageUtil";
+import { GetAdvertImage } from "~~/utilities/imageUtil";
 import { TimeAgo } from "~~/utilities/dateUtil";
 import {
   SaveAdvertisement,

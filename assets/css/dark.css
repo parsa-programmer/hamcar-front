@@ -126,11 +126,12 @@
 [data-theme="dark"] .filters-page__header {
     background: #0F0F10;
 }
-
+[data-theme="dark"] .advert__flag {
+    color: #fff;
+}
 [data-theme="dark"] .sidebar__item--active {
     background: var(--body-bg-color) !important;
 }
-
 [data-theme="dark"] .filters-page__header .nav__icon {
     background: transparent !important;
 }

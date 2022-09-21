@@ -1,8 +1,6 @@
 import { defineNuxtConfig } from "nuxt";
 import { PROXY_CONFIG } from "./utilities/api.config";
 
-// https://v3.nuxtjs.org/api/configuration/nuxt.config
-
 export default defineNuxtConfig({
   typescript: {
     strict: true,
@@ -14,6 +12,9 @@ export default defineNuxtConfig({
       //@ts-ignore
       proxy: PROXY_CONFIG,
     },
+  },
+  build: {
+    transpile: ["vue-toastification"],
   },
   css: [
     "~/assets/css/dark.css",

@@ -1554,3 +1554,6 @@ button {
 .animate__delay-7s{
     animation-delay: 7s;
 }
+.gap-4px {
+    gap: 4px !important;
+  }

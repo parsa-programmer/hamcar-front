@@ -27,6 +27,7 @@
       :prevSlide="clickPrev"
       :nextSlide="clickNext"
     ></slot>
+    <slot name="dots" :count="items.length" :current="currentIndex" />
     <div class="overflow-x-hidden">
       <div ref="sliderWrapperRef" :class="`row ${rowClass}`">
         <slot name="first-item"></slot>
@@ -45,6 +46,7 @@
 </template>
 
 <script lang="ts">
+import { ref } from "#imports";
 import { defineComponent } from "vue";
 import { gsap } from "gsap";
 import Draggable from "gsap/Draggable";
@@ -86,10 +88,16 @@ export default defineComponent({
       type: Number,
       default: -1,
     },
+    draggableOff: {
+      type: Boolean,
+      default: false,
+    },
   },
-  setup(props) {
+  emits: ["getCurrentIndex"],
+  setup(props, { emit }) {
     const sliderWrapperRef = ref<any>(null);
     const childrenRef = ref<any>([]);
+    const currentIndex = ref(props.middle == -1 ? 0 : props.middle);
     const setChildrenRef = (el: any, index: number) => {
       if (el) childrenRef.value[index] = el;
     };
@@ -119,12 +127,14 @@ export default defineComponent({
       setTimeout(() => {
         gsap.registerPlugin(Draggable);
         let { el, maxX } = getConfig();
-        Draggable.create(unref(el), {
-          type: "x",
-          edgeResistance: 0.9,
-          //@ts-ignore
-          bounds: { minX: 0, maxX },
-        });
+        if (props.draggableOff == false) {
+          Draggable.create(unref(el), {
+            type: "x",
+            edgeResistance: 0.9,
+            //@ts-ignore
+            bounds: { minX: 0, maxX },
+          });
+        }
         useEventListener("resize", recalculate);
       }, 100);
     });
@@ -201,29 +211,35 @@ export default defineComponent({
         setActiveIndexEnd(value);
       }
     );
+    watch(currentIndex, (val) => {
+      emit("getCurrentIndex", val);
+    });
     const clickNext = () => {
       const { el } = getConfig();
       const currentX = gsap.getProperty(unref(el), "x");
       const plusX = unref(el)!.clientWidth;
       gsap.to(unref(el), {
-        x: getValidX(+currentX + plusX),
+        x: getValidX(+currentX + plusX -10 ),//TODO -10  رو خودم برای اسلایدر صفحه آگهی اضافه کردن
         ...props.config,
       });
+      currentIndex.value += 1;
     };
     const clickPrev = () => {
       const { el } = getConfig();
       const currentX = gsap.getProperty(unref(el), "x");
       const plusX = unref(el)!.clientWidth;
       gsap.to(unref(el), {
-        x: getValidX(+currentX - plusX),
+        x: getValidX(+currentX - plusX +10),//TODO +10  رو خودم برای اسلایدر صفحه آگهی اضافه کردن
         ...props.config,
       });
+      currentIndex.value -= 1;
     };
     return {
       clickNext,
       clickPrev,
       sliderWrapperRef,
       setChildrenRef,
+      currentIndex,
     };
   },
 });

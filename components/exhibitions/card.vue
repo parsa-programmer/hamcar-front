@@ -76,7 +76,6 @@
   
   <script setup lang="ts">
 import { ref } from "#imports";
-import { split } from "lodash";
 import { AdvertisementFilterData } from "~~/models/advertisements/Advertisement.Models";
 import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
 import { ExhibitionFilterData } from "~~/models/exhibitions/Exhibition.Models";
