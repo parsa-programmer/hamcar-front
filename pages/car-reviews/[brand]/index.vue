@@ -2,7 +2,6 @@
   <div>
     <Head>
       <Title>مشخصات فنی خودرو های مدل {{ brand }}</Title>
-      <Link href="/css/technical.css" rel="stylesheet" />
     </Head>
     <section class="breadcrumb">
       <nuxt-link to="/" class="breadcrumb__item">
@@ -15,20 +14,22 @@
       >
       <icons-left-arrow></icons-left-arrow>
       <a class="breadcrumb__item breadcrumb__item--active"
-        >مشخصات فنی خودرو های مدل {{ brand }}</a
-      >
+        >مشخصات فنی خودرو های مدل {{ data?.data?.brandName }}
+      </a>
     </section>
     <section class="technical">
       <div class="technical__head">
-        <h1 class="technical__title">مشخصات فنی خودرو های مدل {{ brand }}</h1>
+        <h1 class="technical__title">
+          مشخصات فنی خودرو های مدل {{ data?.data?.brandName }}
+        </h1>
         <search-advert />
       </div>
 
       <div class="technical__content">
-        <div class="row wrap" v-if="data.data?.entityCount ?? 0 > 0">
+        <div class="row wrap" v-if="data?.data?.entityCount ?? 0 > 0">
           <div
             class="model-items"
-            v-for="(modelItem, index) in data.data?.data"
+            v-for="(modelItem, index) in data?.data?.data"
             :key="index"
           >
             <car-model-card :item="modelItem"></car-model-card>
@@ -80,5 +81,19 @@ const { data } = await useAsyncData(
     width: 275px;
     height: 193px !important;
   }
+  .technical__head {
+    margin-bottom: 1rem;
+  }
+  h1{
+    font-size: var(--t3-font-size);
+    font-family: var(--t3-font-family);
+  }
+}
+.technical__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
 }
 </style>

@@ -4,6 +4,7 @@ import {
   CarReviewDto,
   CarReviewFilterParams,
   CarReviewFilterData,
+CarReviewFilterResult,
 } from "~~/models/carReviews/CarReviewModels";
 import { Specification } from "~~/models/carReviews/Specification";
 import { FilterResult, IApiResponse } from "~~/models/IApiResponse";
@@ -40,7 +41,7 @@ export const GetByModel = (
 
 export const GetByFilter = (
   filterParams: CarReviewFilterParams
-): Promise<IApiResponse<FilterResult<CarReviewFilterData>>> => {
+): Promise<IApiResponse<CarReviewFilterResult>> => {
   return FetchApi("/carReview/filter", {
     params: filterParams,
   });

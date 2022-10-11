@@ -13,7 +13,7 @@
     <section class="advertising">
       <div class="advertising__head">
         <h1 class="advertising__title">
-          همه آگهی های فروش خودرو {{ data?.data?.title }}
+          همه آگهی های فروش موتورسیکلت {{ data?.data?.title }}
           <span
             >( {{ splitNumber(data?.data?.filterResult.entityCount ?? 0) }} آگهی
             )</span
@@ -253,7 +253,7 @@ const orderBy: Ref<AdvertisementFilterOrderBy> = ref(
 
 const { data, refresh, pending } = await useAsyncData(
   "carFilter",
-  () => advertFilter.getAdverts(pageId.value, 2),
+  () => advertFilter.getAdverts(pageId.value, 12),
   {
     initialCache: false,
     server: true,

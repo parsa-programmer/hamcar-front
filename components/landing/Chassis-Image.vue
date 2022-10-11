@@ -69,8 +69,8 @@ const showAdverts = () => {
 }
 @media screen and (max-width: 768px) {
   .content {
-    height: auto;
-    min-height: auto;
+    height: auto !important;
+    min-height: auto !important;
   }
   .content .div {
     display: block;

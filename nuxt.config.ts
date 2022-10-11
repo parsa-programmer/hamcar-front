@@ -15,6 +15,12 @@ export default defineNuxtConfig({
   },
   build: {
     transpile: ["vue-toastification"],
+    html: {
+      minify: {
+        minifyCSS: true,
+        minifyJS: true,
+      },
+    },
   },
   css: [
     "~/assets/css/dark.css",
@@ -25,7 +31,20 @@ export default defineNuxtConfig({
     "~/assets/css/responsive.css",
     "~/assets/css/animation.css",
     "~/assets/css/advertising.css",
+    "~/assets/css/technical.css",
   ],
+  head: {
+    link: [
+      {
+        rel: "icon",
+        type: "image/x-icon",
+        href: "/favicon.ico",
+      },
+    ],
+  },
+  render: {
+    csp: true,
+  },
   image: {
     domains: ["dl.test13.ir", "localhost:3000"],
     alias: {

@@ -253,7 +253,7 @@ const orderBy: Ref<AdvertisementFilterOrderBy> = ref(
 
 const { data, refresh, pending } = await useAsyncData(
   "carFilter",
-  () => advertFilter.getAdverts(pageId.value, 2),
+  () => advertFilter.getAdverts(pageId.value, 12),
   {
     initialCache: false,
     server: true,
@@ -318,6 +318,11 @@ onMounted(async () => {
 </script>
 
 <style  scoped>
+@media screen and (max-width:768px) {
+  .advertising__container{
+    padding-bottom: 5rem;
+  }
+}
 .order-btn {
   cursor: pointer;
 }

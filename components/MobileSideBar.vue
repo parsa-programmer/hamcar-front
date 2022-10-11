@@ -156,23 +156,39 @@
             <nuxt-link @click="closeSideBar" class="mt-1_5" to="/account/notify"
               >گوش به زنگ</nuxt-link
             >
-            <nuxt-link class="mt-1_5" to="/">نمایشگاه های خودرو</nuxt-link>
+            <nuxt-link @click="closeSideBar" class="mt-1_5" to="/exhibitions"
+              >نمایشگاه های خودرو</nuxt-link
+            >
           </div>
           <div class="content" v-if="activeTab == 2">
-            <nuxt-link to="/motor">خرید موتورسیکلت</nuxt-link>
-            <nuxt-link to="/price/motor">قیمت روز</nuxt-link>
-            <nuxt-link to="/sell/motor">ثبت آگهی</nuxt-link>
-            <nuxt-link to="/account/notify">گوش به زنگ</nuxt-link>
-            <nuxt-link to="/">نمایشگاه های موتورسیکلت</nuxt-link>
+            <nuxt-link @click="closeSideBar" to="/motor"
+              >خرید موتورسیکلت</nuxt-link
+            >
+            <nuxt-link @click="closeSideBar" to="/price/motor"
+              >قیمت روز</nuxt-link
+            >
+            <nuxt-link @click="closeSideBar" to="/sell/motor"
+              >ثبت آگهی</nuxt-link
+            >
+            <nuxt-link @click="closeSideBar" to="/account/notify"
+              >گوش به زنگ</nuxt-link
+            >
+            <nuxt-link @click="closeSideBar" to="/exhibitions"
+              >نمایشگاه های موتورسیکلت</nuxt-link
+            >
           </div>
           <div class="content" v-if="activeTab == 3">
-            <nuxt-link to="/account/packages">تعرفه پکیج ها</nuxt-link>
-            <nuxt-link to="/account/exhibition/register"
+            <nuxt-link @click="closeSideBar" to="/account/packages"
+              >تعرفه پکیج ها</nuxt-link
+            >
+            <nuxt-link @click="closeSideBar" to="/account/exhibition/register"
               >ثبت نام نمایشگاه</nuxt-link
             >
-            <nuxt-link to="/">اخبار</nuxt-link>
-            <nuxt-link to="/terms">قوانین و شرایط</nuxt-link>
-            <nuxt-link to="/about">درباره ما</nuxt-link>
+            <nuxt-link @click="closeSideBar" to="/">اخبار</nuxt-link>
+            <nuxt-link @click="closeSideBar" to="/terms"
+              >قوانین و شرایط</nuxt-link
+            >
+            <nuxt-link @click="closeSideBar" to="/about">درباره ما</nuxt-link>
           </div>
         </div>
         <div class="row justify-content-space-between mt-4">

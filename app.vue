@@ -31,7 +31,7 @@ const store = UseUtilStore();
 useHead({
   script: [
     {
-      src: "/js/themeController.js",
+      src: "/js/themeController.min.js",
     },
   ],
 });

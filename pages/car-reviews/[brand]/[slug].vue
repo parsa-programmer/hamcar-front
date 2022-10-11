@@ -1,9 +1,6 @@
 <template>
-  <div v-if="carReview == undefined || pending">Loading ...</div>
-  <div v-else>
-    <render-seo-data :meta="carReview.seoData">
-      <Link href="/css/technical.css" rel="stylesheet" />
-    </render-seo-data>
+  <div>
+    <render-seo-data :meta="carReview.seoData" />
     <h-modal title="گزارش اشکال" v-model="isOpenBugReportModal">
       <report-bug :reportFor="BugReportFor.review" :link-id="carReview.id" />
     </h-modal>
@@ -457,7 +454,8 @@ const isOpenBugReportModal: Ref<boolean> = ref(false);
 const isOpenShareModal: Ref<boolean> = ref(false);
 const commentDataLoading = ref(true);
 
-const carReview: Ref<CarReviewDto | undefined> = ref(undefined);
+//@ts-ignore
+const carReview: Ref<CarReviewDto> = ref();
 const relatedCars: Ref<CarReviewFilterData[]> = ref([]);
 const carPrice: Ref<CarPriceDetail | null> = ref(null);
 
@@ -479,7 +477,7 @@ const relatedAdvertCount = ref(0);
 const commentCount = ref(0);
 const commentRate = ref(0);
 
-carReview.value = data.value?.data;
+carReview.value = data.value?.data!;
 
 const toggleBugReportModal = () => {
   isOpenBugReportModal.value = !isOpenBugReportModal.value;

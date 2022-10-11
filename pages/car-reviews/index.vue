@@ -2,7 +2,6 @@
   <div>
     <Head>
       <Title>مشخصات فنی و مقایسه خودرو ها</Title>
-      <Link href="/css/technical.css" rel="stylesheet" />
     </Head>
     <section class="breadcrumb">
       <nuxt-link to="/" class="breadcrumb__item">

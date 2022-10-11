@@ -29,12 +29,22 @@ export interface CarReviewFilterData {
   trim: string;
   brandSlug: string;
 }
-export interface CarReviewFilterParams  {
+export interface CarReviewFilterParams {
   search: string | null;
   brandSlug: string | null;
   orderBy: CarReviewFilterOrderBy | null;
-    pageId:number;
-  take:number;
+  pageId: number;
+  take: number;
+}
+export interface CarReviewFilterResult {
+  brandName: string;
+  data: CarReviewFilterData[] | undefined;
+  entityCount: number;
+  currentPage: number;
+  pageCount: number;
+  startPage: number;
+  endPage: number;
+  take: number;
 }
 export enum CarReviewFilterOrderBy {
   visit = "visit",
@@ -42,7 +52,7 @@ export enum CarReviewFilterOrderBy {
 }
 //#endregion
 export interface CarReviewDto {
-  id:string;
+  id: string;
   slug: string;
   year: number;
   description: string;
