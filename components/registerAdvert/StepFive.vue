@@ -5,17 +5,11 @@
     </h-alert>
     <div class="content mt-3">
       <h4 style="margin-bottom: 4px; font-size: 1.25rem">عکس آگهی</h4>
-      <span class="text__description"
-        >حداکثر ۴عکس میتوانید انتخاب کنید و هر عکس حداکثر 10 مگابایت.
+      <span class="text__description">حداکثر ۴عکس میتوانید انتخاب کنید و هر عکس حداکثر 10 مگابایت.
       </span>
     </div>
-    <h-image-uploader
-      style="margin-top: 1.5rem"
-      :maxFileSizePerMeg="10"
-      :maxFileCount="4"
-      v-model="images"
-      :multiple="true"
-    />
+    <h-image-uploader style="margin-top: 1.5rem" :maxFileSizePerMeg="10" :maxFileCount="4" v-model="images"
+      :multiple="true" />
 
     <h-button class="w-full" @click="createAdvert">ثبت آگهی</h-button>
     <small class="text__description">
@@ -30,18 +24,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "#imports";
+import { SetAddress } from "~~/services/account.service";
 import { advertStore } from "~~/stores/advert.store";
+import { authStore } from "~~/stores/auth.store";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
 
+const route = useRoute();
+const isCar: boolean = route.path == "/sell/car";
 const store = advertStore();
+const auth = authStore();
 
 const images = ref([]);
 const loading = ref(false);
 
-const createAdvert = () => {
+const createAdvert = async () => {
   store.steps.five.images = images.value;
-  ProssesAsync(() => store.createCarAdvert(), loading);
+  if (!auth.user?.address) {
+    loading.value = true;
+    await SetAddress({
+      city: store.steps.four.City,
+      province: store.steps.four.Province,
+      postalAddress: store.steps.four.PostalAddress
+    });
+  }
+  await ProssesAsync(() => store.createAdvert(isCar), loading);
 };
 </script>
 
@@ -52,10 +58,12 @@ const createAdvert = () => {
     margin-bottom: 1rem !important;
   }
 }
+
 .w-full {
   margin-top: 6.5rem;
   margin-bottom: 2rem;
 }
+
 small.text__description {
   font-size: var(--t5-font-size);
   line-height: 170%;

@@ -1,9 +1,11 @@
-import { LoginOrRegister, LogOut, ValidateCode } from "~/services/auth.service";
+import { LoginOrRegister, LogoutUser, ValidateCode } from "~/services/auth.service";
 import { authStore } from "~/stores/auth.store";
+import { useAccountStore } from "~~/stores/account.store";
 
 export const useAuth = () => {
   const loading = ref(false);
   const store = authStore();
+  const accountStore = useAccountStore();
   const { showToast } = useToast();
 
   const login = async (phoneNumber: string): Promise<boolean> => {
@@ -41,10 +43,11 @@ export const useAuth = () => {
       loading.value = false;
       return true;
     }
-    var result = await LogOut();
+    var result = await LogoutUser();
 
     loading.value = false;
     localStorage.removeItem("auth-data");
+    accountStore.clearData();
     return result.isSuccess;
   };
 

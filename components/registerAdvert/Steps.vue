@@ -30,62 +30,38 @@
         <span class="step__number">7</span>
       </div>
     </div>
-    <div class="progress bg-white">
+    <div class="advert__progress bg-white">
       <div class="progress__bar">
-        <span
-          class="progress__value"
-          :style="{ width: `${progressPercentage}%` }"
-        ></span>
+        <span class="progress__value" :style="{ width: `${progressPercentage}%` }"></span>
       </div>
-      <span
-        :class="[
-          'progress__name',
-          { 'progress__name--show': store.currentStep == 1 },
-        ]"
-        >1. مشخصات کلی</span
-      >
-      <span
-        :class="[
-          'progress__name',
-          { 'progress__name--show': store.currentStep == 2 },
-        ]"
-        >2. مشخصات فنی</span
-      >
-      <span
-        :class="[
-          'progress__name',
-          { 'progress__name--show': store.currentStep == 3 },
-        ]"
-        >3. قیمت گذاری</span
-      >
-      <span
-        :class="[
-          'progress__name',
-          { 'progress__name--show': store.currentStep == 4 },
-        ]"
-        >4. مشخصات مالک</span
-      >
-      <span
-        :class="[
-          'progress__name',
-          { 'progress__name--show': store.currentStep == 5 },
-        ]"
-        >5. آپلود تصاویر</span
-      >
-      <span
-        :class="[
-          'progress__name',
-          { 'progress__name--show': store.currentStep == 6 },
-        ]"
-        >6. انتخاب پلن</span
-      >
-      <span
-        :class="[
-          'progress__name',
-          { 'progress__name--show': store.currentStep == 7 },
-        ]"
-        >7. ثبت نهایی</span
-      >
+      <span :class="[
+        'progress__name',
+        { 'progress__name--show': store.currentStep == 1 },
+      ]">1. مشخصات کلی</span>
+      <span :class="[
+        'progress__name',
+        { 'progress__name--show': store.currentStep == 2 },
+      ]">2. مشخصات فنی</span>
+      <span :class="[
+        'progress__name',
+        { 'progress__name--show': store.currentStep == 3 },
+      ]">3. قیمت گذاری</span>
+      <span :class="[
+        'progress__name',
+        { 'progress__name--show': store.currentStep == 4 },
+      ]">4. مشخصات مالک</span>
+      <span :class="[
+        'progress__name',
+        { 'progress__name--show': store.currentStep == 5 },
+      ]">5. آپلود تصاویر</span>
+      <span :class="[
+        'progress__name',
+        { 'progress__name--show': store.currentStep == 6 },
+      ]">6. انتخاب پلن</span>
+      <span :class="[
+        'progress__name',
+        { 'progress__name--show': store.currentStep == 7 },
+      ]">7. ثبت نهایی</span>
     </div>
   </div>
 </template>
@@ -119,7 +95,7 @@ function myFunction() {
 }
 watch(
   () => store.currentStep,
-  (newVal) => { 
+  (newVal) => {
     progressPercentage.value = newVal * 14 + 2;
   }
 );
@@ -128,5 +104,41 @@ watch(
 <style scoped>
 .z-index-100 {
   z-index: 1000;
+}
+
+.advert__progress {
+  display: none;
+  margin-bottom: 1.5rem;
+}
+
+.progress__bar {
+  height: 4px;
+  border-radius: 1rem;
+  background-color: var(--color-gray-200);
+  margin-bottom: 0.5rem;
+}
+
+.progress__value {
+  display: block;
+  height: 100%;
+  background-color: var(--color-blue);
+  border-radius: 1rem;
+}
+
+.progress__name {
+  font-family: var(--t6-font-family);
+  font-size: var(--t6-font-size);
+  color: var(--color-blue);
+  display: none;
+}
+
+.progress__name--show {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .advert__progress {
+    display: block;
+  }
 }
 </style>

@@ -36,7 +36,7 @@
                 class="logo"
               />
             </nuxt-link>
-            <nuxt-link class="bg-white close-btn" @click="closePage">
+            <nuxt-link class="bg-white close-btn cursor-pointer" @click="closePage">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="26"

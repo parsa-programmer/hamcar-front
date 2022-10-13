@@ -161,13 +161,13 @@
             >
           </div>
           <div class="content" v-if="activeTab == 2">
-            <nuxt-link @click="closeSideBar" to="/motor"
+            <nuxt-link @click="closeSideBar" to="/motorcycle"
               >خرید موتورسیکلت</nuxt-link
             >
             <nuxt-link @click="closeSideBar" to="/price/motor"
               >قیمت روز</nuxt-link
             >
-            <nuxt-link @click="closeSideBar" to="/sell/motor"
+            <nuxt-link @click="closeSideBar" to="/sell/motorcycle"
               >ثبت آگهی</nuxt-link
             >
             <nuxt-link @click="closeSideBar" to="/account/notify"

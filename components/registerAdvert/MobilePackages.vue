@@ -3,7 +3,7 @@
     <register-advert-steps class="mt-1" />
     <div>
       <h2 class="page__sub__title">پلن موردنظر خود را انتخاب کنید:</h2>
-      <div class="row" style="margin-top: 0.5rem" v-if="selectedPlan > 0">
+      <div class="row" style="margin-top: 0.5rem" v-if="bestPlan > 0">
         <icons-flash class="ml-0_5" />
 
         <p class="text__description">
@@ -22,7 +22,7 @@
         <div class="mobile__plan__header">
           <h2 class="font-3 row align-items-center">
             <span class="ml-0_5">پلن رایگان</span>
-            <icons-flash v-if="selectedPlan == 1" />
+            <icons-flash v-if="bestPlan == 1" />
           </h2>
           <label class="bg-error font-6">رایگان</label>
         </div>
@@ -88,7 +88,7 @@
         <div class="mobile__plan__header">
           <h2 class="font-3 row align-items-center">
             <span class="ml-0_5">استاندارد</span>
-            <icons-flash v-if="selectedPlan == 2" />
+            <icons-flash v-if="bestPlan == 2" />
           </h2>
           <label class="bg-success font-6">
             {{ splitNumber(plans.filter((f) => f.id == 2)[0].totalPrice) }}
@@ -164,7 +164,7 @@
         <div class="mobile__plan__header">
           <h2 class="font-3 row align-items-center">
             <span class="ml-0_5"> پر سرعت </span>
-            <icons-flash v-if="selectedPlan == 3" />
+            <icons-flash v-if="bestPlan == 3" />
           </h2>
           <label class="bg-success font-6">
             {{ splitNumber(plans.filter((f) => f.id == 3)[0].totalPrice) }}
@@ -239,7 +239,7 @@
         <div class="mobile__plan__header">
           <h2 class="font-3 row align-items-center">
             <span class="ml-0_5">توربو</span>
-            <icons-flash v-if="selectedPlan == 4" />
+            <icons-flash v-if="bestPlan == 4" />
           </h2>
           <label class="bg-success font-6">
             {{ splitNumber(plans.filter((f) => f.id == 4)[0].totalPrice) }}
@@ -315,12 +315,12 @@ import { ref } from "#imports";
 import { AdvertisementPlan } from "~~/models/plans/AdvertisementPlan";
 import { splitNumber } from "~~/utilities/numberUtils";
 
-const { plans, selectedPlan = 0 } = defineProps<{
+const { plans, bestPlan = 0 } = defineProps<{
   plans: AdvertisementPlan[];
-  selectedPlan: number;
+  bestPlan: number;
   ignorePlans: any[];
 }>();
-const plan = ref(selectedPlan);
+const plan = ref(bestPlan);
 const emit = defineEmits(["planSeleced", ""]);
 
 const selectPlan = (planId: number) => {

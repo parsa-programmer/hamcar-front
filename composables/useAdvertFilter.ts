@@ -26,9 +26,9 @@ export const useAdverFilter = () => {
   var url = "/search";
   if (
     route.path.toLowerCase().startsWith("/car") ||
-    route.path.toLowerCase().startsWith("/motor")
+    route.path.toLowerCase().startsWith("/motorcycle")
   ) {
-    url = route.path.toLowerCase().startsWith("/car") ? "/car" : "/motor";
+    url = route.path.toLowerCase().startsWith("/car") ? "/car" : "/motorcycle";
   }
   const { slug } = route.params;
   if (slug && slug[1]) {
@@ -40,7 +40,7 @@ export const useAdverFilter = () => {
   const model: string | null = params[1] ?? null;
   const trim = params[2];
 
-  const isCarFilter = () => {
+  const isCarFilter = (): boolean => {
     return url === "/car";
   };
   const justGhesti = async (val: boolean) => {
@@ -203,10 +203,11 @@ export const useAdverFilter = () => {
   const getAdverts = (
     pageId: number = 1,
     take: number = 12,
-    exhibitionTitle: string | null = null
+    exhibitionTitle: string | null = null,
+    advertType: AdvertisementType = AdvertisementType.car
   ) => {
     return GetByFilter({
-      advertisementType: AdvertisementType.car,
+      advertisementType: advertType,
       brand:
         brand == null || brand == ""
           ? (route.query.brands as string[] | null) ?? null

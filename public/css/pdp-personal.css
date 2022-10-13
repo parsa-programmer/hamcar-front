@@ -72,7 +72,7 @@ body {
 
 .ads {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     justify-content: space-between;
 }
 
@@ -140,7 +140,7 @@ body {
     margin-left: 1.5rem;
 }
 
-.ads-mobile__flag:first-child::before {
+.ads-mobile__flag.has__border::after {
     content: "";
     position: absolute;
     left: -12px;
@@ -763,7 +763,7 @@ body {
 @media screen and (max-width: 992px) {
     .ads {
         gap: 1.5rem;
-        justify-content: start;
+        justify-content: flex-start;
     }
 
     .ads__left {
@@ -903,7 +903,7 @@ body {
 
     .ads-company__left {
         display: flex;
-        align-items: end;
+        align-items: flex-end;
         gap: 0.5rem;
         flex-wrap: wrap;
     }
@@ -948,6 +948,7 @@ body {
     [data-theme="dark"] .ads-info__item {
         background: var(--color-dark-black-600) !important;
     }
+
     [data-theme="light"] .ads-info__item {
         background-color: var(--color-gray-200);
     }

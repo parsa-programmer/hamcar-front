@@ -440,7 +440,7 @@ watch(startYear, (val) => {
 });
 
 onMounted(async () => {
-  brands.value = await advertFilter.getBrands(true, "");
+  brands.value = await advertFilter.getBrands(advertFilter.isCarFilter(), "");
   //arraymove();
   models.value = await ProssesAsync(() => advertFilter.GetModels(), loading);
   //ModelArraymove();

@@ -203,7 +203,7 @@ background: var(--color-gray-300);
 .main-content__wrapper{
     display: flex;
     gap: 1rem;
-    align-items: start;
+    align-items: flex-start;
 }
 
 

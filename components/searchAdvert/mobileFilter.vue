@@ -533,7 +533,7 @@ watch(
   }
 );
 onMounted(async () => {
-  brands.value = await advertFilter.getBrands(true, "");
+  brands.value = await advertFilter.getBrands(advertFilter.isCarFilter(), "");
   models.value = await ProssesAsync(() => advertFilter.GetModels(), loading);
 });
 

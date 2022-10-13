@@ -278,7 +278,7 @@ watch(orderBy, (val) => {
 });
 watch(
   () => route.query,
-  async (newVal) => {
+  async () => {
     await refresh();
   }
 );

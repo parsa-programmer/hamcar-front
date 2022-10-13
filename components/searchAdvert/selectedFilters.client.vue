@@ -7,31 +7,16 @@
           <label class="selected-filters__name" :for="`brand_filter`">
             {{ utilStore.getBrandBySlug(advertFilter.brand)?.title }}
           </label>
-          <h-input
-            type="checkbox"
-            checked
-            :input-id="`brand_filter`"
-            name="brand_filter"
-            :value="selectedFilter.brand"
-          />
+          <h-input type="checkbox" checked :input-id="`brand_filter`" name="brand_filter"
+            :value="selectedFilter.brand" />
         </div>
       </template>
       <template v-else-if="selectedFilter.brand">
-        <div
-          class="selected-filters__item"
-          v-for="(item, index) in selectedFilter.brand"
-          :key="index"
-        >
+        <div class="selected-filters__item" v-for="(item, index) in selectedFilter.brand" :key="index">
           <label class="selected-filters__name" :for="`brand_filters${index}`">
             {{ utilStore.getBrandBySlug(item)?.title }}
           </label>
-          <h-input
-            type="checkbox"
-            checked
-            :input-id="`brand_filters${index}`"
-            name="brand_filters"
-            :value="item"
-          />
+          <h-input type="checkbox" checked :input-id="`brand_filters${index}`" name="brand_filters" :value="item" />
         </div>
       </template>
       <template v-if="advertFilter.model">
@@ -39,31 +24,17 @@
           <label class="selected-filters__name" :for="`model_filter`">
             {{ utilStore.getModelBySlug(advertFilter.model)?.title }}
           </label>
-          <h-input
-            type="checkbox"
-            checked
-            :input-id="`model_filter`"
-            name="model_filter"
-            :value="selectedFilter.model"
-          />
+          <h-input type="checkbox" checked :input-id="`model_filter`" name="model_filter"
+            :value="selectedFilter.model" />
         </div>
       </template>
       <template v-else-if="selectedFilter.model">
-        <div
-          class="selected-filters__item"
-          v-for="(item, index) in selectedFilter.model"
-          :key="index"
-        >
+        <div class="selected-filters__item" v-for="(item, index) in selectedFilter.model" :key="index">
           <label class="selected-filters__name" :for="`model_filters${index}`">
             {{ utilStore.getModelBySlug(item)?.title }}
           </label>
-          <h-input
-            type="checkbox"
-            checked
-            :input-id="`model_filters${index}`"
-            name="model_filters"
-            :value="selectedFilter.model"
-          />
+          <h-input type="checkbox" checked :input-id="`model_filters${index}`" name="model_filters"
+            :value="selectedFilter.model" />
         </div>
       </template>
     </template>
@@ -72,12 +43,7 @@
         <label class="selected-filters__name" for="exhibitionTitle">
           فقط آگهی های نمایشگاه '{{ selectedFilter.exhibitionTitle }}'
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="exhibitionTitle"
-          name="exhibitionTitle"
-        />
+        <h-input type="checkbox" checked input-id="exhibitionTitle" name="exhibitionTitle" />
       </div>
     </template>
     <template v-if="selectedFilter.startYear || selectedFilter.endYear">
@@ -86,26 +52,14 @@
         <label class="selected-filters__name" for="start_year">
           از سال {{ selectedFilter.startYear }}
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="start_year"
-          name="start_year"
-          :value="selectedFilter.startYear"
-        />
+        <h-input type="checkbox" checked input-id="start_year" name="start_year" :value="selectedFilter.startYear" />
       </div>
 
       <div class="selected-filters__item" v-if="selectedFilter.endYear">
         <label class="selected-filters__name" for="end_year">
           تا سال {{ selectedFilter.endYear }}
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="end_year"
-          name="end_year"
-          :value="selectedFilter.endYear"
-        />
+        <h-input type="checkbox" checked input-id="end_year" name="end_year" :value="selectedFilter.endYear" />
       </div>
     </template>
     <template v-if="selectedFilter.startPrice || selectedFilter.endPrice">
@@ -115,31 +69,17 @@
           از {{ splitNumber(selectedFilter.startPrice) }}
           <small>تومان</small>
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="start_Price"
-          name="start_Price"
-          :value="selectedFilter.startPrice"
-        />
+        <h-input type="checkbox" checked input-id="start_Price" name="start_Price" :value="selectedFilter.startPrice" />
       </div>
 
       <div class="selected-filters__item" v-if="selectedFilter.endPrice">
         <label class="selected-filters__name" for="end_Price">
-          <span v-if="!selectedFilter.startPrice"
-            >از 0 <small>تومان</small></span
-          >
+          <span v-if="!selectedFilter.startPrice">از 0 <small>تومان</small></span>
 
           تا {{ splitNumber(selectedFilter.endPrice) }}
           <small>تومان</small>
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="end_Price"
-          name="end_Price"
-          :value="selectedFilter.endPrice"
-        />
+        <h-input type="checkbox" checked input-id="end_Price" name="end_Price" :value="selectedFilter.endPrice" />
       </div>
     </template>
     <template v-if="selectedFilter.startMileage || selectedFilter.endMileage">
@@ -149,189 +89,83 @@
           از {{ splitNumber(selectedFilter.startMileage) }}
           <small>کیلومتر</small>
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="start_Mileage"
-          name="start_Mileage"
-          :value="selectedFilter.startMileage"
-        />
+        <h-input type="checkbox" checked input-id="start_Mileage" name="start_Mileage"
+          :value="selectedFilter.startMileage" />
       </div>
-      <div
-        class="selected-filters__item"
-        v-if="selectedFilter.endMileage == '0'"
-      >
+      <div class="selected-filters__item" v-if="selectedFilter.endMileage == '0'">
         <label class="selected-filters__name" for="start_Mileage">
           صفر
           <small>کیلومتر</small>
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="start_Mileage"
-          name="start_Mileage"
-          :value="0"
-        />
-        <h-input
-          type="checkbox"
-          input-id="end_Mileage"
-          name="end_Mileage"
-          :value="0"
-          style="position: fixed; left: -100%; opacity: 0; z-index: -10000"
-        />
+        <h-input type="checkbox" checked input-id="start_Mileage" name="start_Mileage" :value="0" />
+        <h-input type="checkbox" input-id="end_Mileage" name="end_Mileage" :value="0"
+          style="position: fixed; left: -100%; opacity: 0; z-index: -10000" />
       </div>
-      <div
-        class="selected-filters__item"
-        v-else-if="
-          selectedFilter.endMileage && selectedFilter.endMileage != '500000'
-        "
-      >
+      <div class="selected-filters__item" v-else-if="
+        selectedFilter.endMileage && selectedFilter.endMileage != '500000'
+      ">
         <label class="selected-filters__name" for="end_Mileage">
-          <span v-if="!selectedFilter.startMileage"
-            >از 0 <small>کیلومتر </small></span
-          >
+          <span v-if="!selectedFilter.startMileage">از 0 <small>کیلومتر </small></span>
           تا {{ splitNumber(selectedFilter.endMileage) }}
           <small>کیلومتر</small>
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="end_Mileage"
-          name="end_Mileage"
-          :value="selectedFilter.endMileage"
-        />
+        <h-input type="checkbox" checked input-id="end_Mileage" name="end_Mileage" :value="selectedFilter.endMileage" />
       </div>
     </template>
 
     <template v-if="selectedFilter.cylinderCount?.length ?? 0 > 0">
       <h5 class="text-center">فیلتر سیلندر</h5>
-      <div
-        class="selected-filters__item"
-        v-for="(item, index) in selectedFilter.cylinderCount"
-        :key="index"
-      >
-        <label
-          class="selected-filters__name"
-          :for="`fcy_${index}`"
-          v-if="item == 'three'"
-          >3 سیلندر</label
-        >
-        <label
-          class="selected-filters__name"
-          :for="`fcy_${index}`"
-          v-if="item == 'four'"
-          >4 سیلندر</label
-        >
-        <label
-          class="selected-filters__name"
-          :for="`fcy_${index}`"
-          v-if="item == 'five'"
-          >5 سیلندر</label
-        >
-        <label
-          class="selected-filters__name"
-          :for="`fcy_${index}`"
-          v-if="item == 'six'"
-          >6 سیلندر</label
-        >
-        <label
-          class="selected-filters__name"
-          :for="`fcy_${index}`"
-          v-if="item == 'eight'"
-          >8 سیلندر</label
-        >
-        <h-input
-          type="checkbox"
-          checked
-          :input-id="`fcy_${index}`"
-          :value="item"
-          name="cylinderCount_"
-        />
+      <div class="selected-filters__item" v-for="(item, index) in selectedFilter.cylinderCount" :key="index">
+        <label class="selected-filters__name" :for="`fcy_${index}`" v-if="item == 'three'">3 سیلندر</label>
+        <label class="selected-filters__name" :for="`fcy_${index}`" v-if="item == 'four'">4 سیلندر</label>
+        <label class="selected-filters__name" :for="`fcy_${index}`" v-if="item == 'five'">5 سیلندر</label>
+        <label class="selected-filters__name" :for="`fcy_${index}`" v-if="item == 'six'">6 سیلندر</label>
+        <label class="selected-filters__name" :for="`fcy_${index}`" v-if="item == 'eight'">8 سیلندر</label>
+        <h-input type="checkbox" checked :input-id="`fcy_${index}`" :value="item" name="cylinderCount_" />
       </div>
     </template>
 
-    <template
-      v-if="
-        selectedFilter.haveImage ||
-        selectedFilter.havePrice ||
-        selectedFilter.justGhesti
-      "
-    >
-      <hr
-        class="mt-0_5"
-        style="margin-bottom: 1rem"
-        v-if="advertFilter.getFilterCount() > 1"
-      />
+    <template v-if="
+      selectedFilter.haveImage ||
+      selectedFilter.havePrice ||
+      selectedFilter.justGhesti
+    ">
+      <hr class="mt-0_5" style="margin-bottom: 1rem" v-if="advertFilter.getFilterCount() > 1" />
       <div class="selected-filters__item" v-if="selectedFilter.haveImage">
         <label class="selected-filters__name" for="just_have_Image">
           عکس دار
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="just_have_Image"
-          name="just_have_Image"
-        />
+        <h-input type="checkbox" checked input-id="just_have_Image" name="just_have_Image" />
       </div>
       <div class="selected-filters__item" v-if="selectedFilter.havePrice">
         <label class="selected-filters__name" for="just_havePrice_">
           قیمت دار
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="just_havePrice_"
-          name="just_havePrice_"
-        />
+        <h-input type="checkbox" checked input-id="just_havePrice_" name="just_havePrice_" />
       </div>
       <div class="selected-filters__item" v-if="selectedFilter.justGhesti">
         <label class="selected-filters__name" for="_just_Gesti_">
           اقساطی
         </label>
-        <h-input
-          type="checkbox"
-          checked
-          input-id="_just_Gesti_"
-          name="_just_Gesti_"
-        />
+        <h-input type="checkbox" checked input-id="_just_Gesti_" name="_just_Gesti_" />
       </div>
     </template>
     <template v-if="selectedFilter.colors?.length ?? 0 > 0">
       <h5 class="text-center">فیلتر رنگ</h5>
-      <div
-        class="selected-filters__item"
-        v-for="(item, index) in selectedFilter.colors"
-        :key="index"
-      >
+      <div class="selected-filters__item" v-for="(item, index) in selectedFilter.colors" :key="index">
         <label class="selected-filters__name" :for="`fc_${index}`">{{
-          item.replace("_", " ")
+        item.replace("_", " ")
         }}</label>
-        <h-input
-          type="checkbox"
-          checked
-          :value="item"
-          :input-id="`fc_${index}`"
-          name="color_"
-        />
+        <h-input type="checkbox" checked :value="item" :input-id="`fc_${index}`" name="color_" />
       </div>
     </template>
     <template v-if="selectedFilter.modelType?.length ?? 0 > 0">
       <h5 class="text-center">فیلتر شاسی</h5>
-      <div
-        class="selected-filters__item"
-        v-for="(item, index) in selectedFilter.modelType"
-        :key="index"
-      >
+      <div class="selected-filters__item" v-for="(item, index) in selectedFilter.modelType" :key="index">
         <label class="selected-filters__name" :for="`fmt_${item}`">{{
-          item.toString().replace("_", " ")
+        item.toString().replace("_", " ")
         }}</label>
-        <h-input
-          type="checkbox"
-          checked
-          :input-id="`fmt_${item}`"
-          name="modelType_"
-          :value="item"
-        />
+        <h-input type="checkbox" checked :input-id="`fmt_${item}`" name="modelType_" :value="item" />
       </div>
     </template>
     <search-advert-selected-filters-car-fuel :filters="selectedFilter" />
@@ -344,30 +178,15 @@
     <search-advert-selected-filters-special-cases :filters="selectedFilter" />
 
     <div class="selected-filters__action">
-      <button
-        @click="removeFilters"
-        class="btn btn-sm btn-transparent selected-filters__delete-btn"
-      >
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 18 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+      <button @click="removeFilters" class="btn btn-sm btn-transparent selected-filters__delete-btn">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M0.75 3.75H6M17.25 3.75H12M2.25 3.75L3.32985 14.5485C3.48321 16.0821 4.77371 17.25 6.31497 17.25H11.685C13.2263 17.25 14.5168 16.0821 14.6701 14.5485L15.75 3.75M9 8.25V12.75M12.375 8.25L12 12.75M5.625 8.25L6 12.75M12 3.75H9H6M12 3.75H6M12 3.75V2.25C12 1.42157 11.3284 0.75 10.5 0.75H7.5C6.67157 0.75 6 1.42157 6 2.25V3.75"
-            stroke="#EF3838"
-            stroke-width="1.5"
-            stroke-linecap="round"
-          ></path>
+            stroke="#EF3838" stroke-width="1.5" stroke-linecap="round"></path>
         </svg>
         حذف همه
       </button>
-      <button
-        class="btn btn-sm btn-primary selected-filters__submit-btn"
-        @click="setFilters"
-      >
+      <button class="btn btn-sm btn-primary selected-filters__submit-btn" @click="setFilters">
         اعمال
       </button>
     </div>
@@ -594,9 +413,8 @@ watch(
     emit("closed");
   }
 );
-const removeFilters = () => {
-  advertFilter.removeAllFilters();
-  emit("closed");
+const removeFilters = async () => {
+  await advertFilter.removeAllFilters();
 };
 onMounted(() => {
   fixFilters();

@@ -124,35 +124,6 @@
     flex-shrink: 0;
     border: 2px solid currentColor;
 }
-/* -- mobile progress bar -- */
-.progress {
-    display: none;
-    margin-bottom: 1.5rem;
-}
-
-.progress__bar {
-    height: 4px;
-    border-radius: 1rem;
-    background-color: var(--color-gray-200);
-    margin-bottom: 0.5rem;
-}
-
-.progress__value {
-    display: block;
-    height: 100%;
-    background-color: var(--color-blue);
-    border-radius: 1rem;
-}
-
-.progress__name {
-    font-family: var(--t6-font-family);
-    font-size: var(--t6-font-size);
-    color: var(--color-blue);
-    display: none;
-}
-.progress__name--show {
-    display: block;
-}
 .registration__container {
     display: block;
     max-width: 38rem;
@@ -204,7 +175,7 @@
 }
 @media screen and (max-width: 992px) {
     .registration__steps-wrapper {
-        justify-content: start;
+        justify-content: flex-start;
         flex-wrap: wrap;
         gap: 2.5rem;
     }
@@ -254,9 +225,7 @@
         margin-top: 1.5rem;
     }
 
-    .progress {
-        display: block;
-    }
+    
 
     .registration__submit {
         width: 9rem;
@@ -281,7 +250,7 @@
 @media screen and (max-width: 576px) {
     .registration__footer {
         flex-direction: column-reverse;
-        align-items: start;
+        align-items: flex-start;
     }
 
     .registration__submit {

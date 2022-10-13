@@ -3,7 +3,7 @@
     <label class="checkbox">
       <input
         type="checkbox"
-        :value="modelValue"
+        :value="inputValue"
         :name="name"
         @input="modelValueChanged"
         :id="inputId"
@@ -28,7 +28,7 @@
     <label class="checkbox">
       <input
         type="radio"
-        :value="modelValue"
+        :value="inputValue"
         :name="name"
         v-bind="$attrs"
         @input="modelValueChanged"
@@ -64,7 +64,7 @@
           { 'invalid-data': !!errorMessage },
         ]"
         :placeholder="placeholder"
-        :value="modelValue"
+        :value="inputValue"
         :autofocus="autofocus"
         v-bind="$attrs"
         @input="modelValueChanged"
@@ -89,7 +89,7 @@
             ,
           ]"
           :placeholder="placeholder"
-          :value="modelValue"
+          :value="inputValue"
           :autofocus="autofocus"
           v-bind="$attrs"
           @input="modelValueChanged"
@@ -129,7 +129,7 @@
           { 'invalid-data': !!errorMessage },
         ]"
         :placeholder="placeholder"
-        :value="modelValue"
+        :value="inputValue"
         :autofocus="autofocus"
         v-bind="$attrs"
         @input="modelValueChanged"

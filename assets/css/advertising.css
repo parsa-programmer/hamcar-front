@@ -194,7 +194,7 @@
 .advertising__wrapper {
     display: flex;
     gap: 1rem;
-    align-items: start;
+    align-items: flex-start;
 }
 
 /* advertising sidebar */
@@ -673,7 +673,7 @@
 .advert__footer {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .advert__footer>span {
@@ -709,7 +709,7 @@
 .advert__wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     height: 69px;
     margin-right: auto;
 }
@@ -748,7 +748,7 @@
 }
 
 .advertising__row--wide-item .advert__header {
-    justify-content: start;
+    justify-content: flex-start;
     gap: 1rem;
 }
 
@@ -1073,7 +1073,7 @@
     }
 
     .advert__header {
-        justify-content: start;
+        justify-content: flex-start;
         gap: 1rem;
     }
 

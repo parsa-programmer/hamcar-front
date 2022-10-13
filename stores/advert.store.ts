@@ -11,6 +11,7 @@ import { CreateAdvertisement } from "~~/services/advertisement.service";
 import { defineStore } from "pinia";
 import { GetBrands } from "~~/services/brand.service";
 import { CreateConsultAdvert } from "~~/services/consultant.service";
+import { MotorType } from "~~/models/advertisements/enums/MotorType";
 
 const defaultState = () => ({
   currentStep: 1,
@@ -30,6 +31,11 @@ const defaultState = () => ({
       exteriorColor: null as Color | null,
       interiorColor: null as Color | null,
       gearBox: null as GearBox | null,
+      motorData: {
+        fuel: "",
+        color: null as Color | null,
+        type: null as MotorType | null,
+      },
     },
     three: {
       advertisementPaymentType: null as AdvertisementPaymentType | null,
@@ -65,15 +71,29 @@ export const advertStore = defineStore("advert", {
     },
   },
   actions: {
-    async createCarAdvert(): Promise<void> {
+    async createAdvert(isCar: boolean = true): Promise<void> {
       const toast = useToast();
       const route = useRoute();
       const router = useRouter();
 
-      if (this.validateCarData() == false) {
-        toast.showToast("لطفا تمامی موارد را تکمیل کنید", ToastType.error);
-        return;
+      if (isCar) {
+        if (this.validateCarData() == false) {
+          toast.showToast("لطفا تمامی موارد را تکمیل کنید", ToastType.error);
+          return;
+        }
+        if (this.steps.two.carType !== CarType.کارکرده) {
+          this.steps.two.milage = "0";
+        }
+      } else {
+        if (this.validateMotorData() == false) {
+          toast.showToast("لطفا تمامی موارد را تکمیل کنید", ToastType.error);
+          return;
+        }
+        if (this.steps.two.motorData.type !== MotorType.کارکرده) {
+          this.steps.two.milage = "0";
+        }
       }
+
       this.loading = true;
 
       var data = new FormData();
@@ -89,19 +109,38 @@ export const advertStore = defineStore("advert", {
         this.steps.two.milage == "" ? "0" : this.steps.two.milage
       );
       data.append("GearBox", this.steps.two.gearBox!.toString());
-      data.append(
-        "CarDetail.BodyCondition",
-        this.steps.two.bodyCondition!.toString()
-      );
-      data.append(
-        "CarDetail.ExteriorColor",
-        this.steps.two.exteriorColor!.toString()
-      );
-      data.append(
-        "CarDetail.InteriorColor",
-        this.steps.two.interiorColor!.toString()
-      );
-      data.append("CarDetail.CarType", this.steps.two.carType!);
+      //Car Detail
+      if (isCar) {
+        data.append(
+          "CarDetail.BodyCondition",
+          this.steps.two.bodyCondition!.toString()
+        );
+        data.append(
+          "CarDetail.ExteriorColor",
+          this.steps.two.exteriorColor!.toString()
+        );
+        data.append(
+          "CarDetail.InteriorColor",
+          this.steps.two.interiorColor!.toString()
+        );
+        data.append("CarDetail.CarType", this.steps.two.carType!);
+      } else {
+        //Motor Detail
+        data.append(
+          "MotorCycleDetail.Fuel",
+          this.steps.two.motorData.fuel.toString()
+        );
+
+        data.append(
+          "MotorCycleDetail.MotorType",
+          this.steps.two.motorData.type!.toString()
+        );
+
+        data.append(
+          "MotorCycleDetail.Color",
+          this.steps.two.motorData.color!.toString()
+        );
+      }
 
       data.append(
         "Price.AdvertisementPaymentType",
@@ -206,6 +245,31 @@ export const advertStore = defineStore("advert", {
         stepTwo.bodyCondition == null ||
         stepTwo.exteriorColor == null ||
         stepTwo.interiorColor == null ||
+        stepTwo.gearBox == null
+      ) {
+        return false;
+      }
+
+      return true;
+    },
+    validateMotorData(): boolean {
+      let stepOne = this.steps.one;
+      let stepTwo = this.steps.two;
+
+      if (
+        stepOne.brandId == "" ||
+        stepOne.modelId == "" ||
+        stepOne.yearId == ""
+      ) {
+        return false;
+      }
+      if (
+        stepTwo.motorData.type == null ||
+        (stepTwo.motorData.type == MotorType.کارکرده &&
+          (stepTwo.milage == "" || stepTwo.milage == "0")) ||
+        stepTwo.description == "" ||
+        stepTwo.motorData.color == null ||
+        stepTwo.motorData.fuel == null ||
         stepTwo.gearBox == null
       ) {
         return false;

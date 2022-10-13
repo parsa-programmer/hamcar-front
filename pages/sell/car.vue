@@ -1,9 +1,10 @@
 <template>
   <div>
+
     <Head>
       <link href="" rel="stylesheet" />
       <Title>ثبت آگهی فروش خودرو شما</Title>
-      <Link href="/css/advertisement-registration.css" rel="stylesheet"/>
+      <Link href="/css/advertisement-registration.css" rel="stylesheet" />
     </Head>
     <section class="breadcrumb">
       <nuxt-link href="/" class="breadcrumb__item">
@@ -22,33 +23,21 @@
         <register-advert-steps />
         <div class="registration__container">
           <register-advert-step-one />
-          <Transition
-            name="custom-classes2"
-            enter-active-class="animate__animated animate__fadeInUp "
-            leave-active-class="animate__animated animate__bounceOutRight"
-          >
+          <Transition name="custom-classes2" enter-active-class="animate__animated animate__fadeInUp "
+            leave-active-class="animate__animated animate__bounceOutRight">
             <register-advert-step-two v-if="store.currentStep >= 2" />
           </Transition>
 
-          <Transition
-            name="custom-classes2"
-            enter-active-class="animate__animated animate__fadeInUp"
-            leave-active-class="animate__animated animate__bounceOutRight"
-          >
+          <Transition name="custom-classes2" enter-active-class="animate__animated animate__fadeInUp"
+            leave-active-class="animate__animated animate__bounceOutRight">
             <register-advert-step-three v-if="store.currentStep >= 3" />
           </Transition>
-          <Transition
-            name="custom-classes2"
-            enter-active-class="animate__animated animate__fadeInUp"
-            leave-active-class="animate__animated animate__bounceOutRight"
-          >
+          <Transition name="custom-classes2" enter-active-class="animate__animated animate__fadeInUp"
+            leave-active-class="animate__animated animate__bounceOutRight">
             <register-advert-step-four v-if="store.currentStep >= 4" />
           </Transition>
-          <Transition
-            name="custom-classes2"
-            enter-active-class="animate__animated animate__fadeInUp"
-            leave-active-class="animate__animated animate__bounceOutRight"
-          >
+          <Transition name="custom-classes2" enter-active-class="animate__animated animate__fadeInUp"
+            leave-active-class="animate__animated animate__bounceOutRight">
             <register-advert-step-five v-if="store.currentStep >= 5" />
           </Transition>
         </div>
@@ -63,6 +52,7 @@ import {
   GetDraftAdvert,
   CreateAdvertisement,
 } from "~~/services/advertisement.service";
+import { useAccountStore } from "~~/stores/account.store";
 
 const { data, pending } = await useAsyncData(
   "ad_draft",
@@ -76,8 +66,21 @@ if (data?.value?.data) {
   await navigateTo("/sell/selectPlan", { redirectCode: 301 });
 }
 const store = advertStore();
-onMounted(() => {
+const accountStore = useAccountStore();
+
+const router = useRouter();
+
+onMounted(async () => {
   store.changeStep(1);
+  if (accountStore.exhibition?.id || accountStore.consultant?.id) {
+    await router.push({
+      path: router.currentRoute.value.path,
+      query: {
+        ...router.currentRoute.value.query,
+        exhibition: "true"
+      }
+    })
+  }
 });
 </script>
 

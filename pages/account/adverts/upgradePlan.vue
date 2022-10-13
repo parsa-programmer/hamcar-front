@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <Head>
       <link href="/css/advertisement-registration.css" rel="stylesheet" />
       <link href="/css/plan.css" rel="stylesheet" />
@@ -7,15 +8,12 @@
     </Head>
     <Teleport to="body">
       <div class="fixed__loading" v-if="isLoadingToPay">
-        <p
-          class="text-center"
-          style="
+        <p class="text-center" style="
             background: var(--color-white);
             color: var(--color-black);
             padding: 2rem;
             height: fit-content;
-          "
-        >
+          ">
           درحال انتقال به درگاه بانک ...
         </p>
       </div>
@@ -25,27 +23,21 @@
       <h-skeletor width="100%" />
     </div>
     <div v-else-if="pending == false">
-      <register-advert-mobile-packages
-        v-if="isMobilePage"
-        class="mt-1"
-        :plans="data?.data ?? []"
-        @planSeleced="selectPlan"
-        :selected-plan="selectedPlan"
-        :ignorePlans="[1, Number(advert?.plan?.planId ?? '0')]"
-      />
+      <register-advert-mobile-packages v-if="isMobilePage" class="mt-1" :plans="data?.data?.item1 ?? []"
+        @planSeleced="selectPlan" :best-plan="data?.data?.item2??0"
+        :ignorePlans="[1, Number(advert?.plan?.planId ?? '0')]" :advert-title="advertTitle" />
+
       <div v-else>
-        <register-advert-desktop-plan
-          :plans="data?.data ?? []"
-          @planSeleced="selectPlan"
-          :selected-plan="selectedPlan"
-          :ignorePlans="[1, Number(advert?.plan?.planId ?? '0')]"
-        />
+        <register-advert-desktop-plan :plans="data?.data?.item1 ?? []" @planSeleced="selectPlan"
+          :best-plan="data?.data?.item2??0" :ignorePlans="[1, Number(advert?.plan?.planId ?? '0')]"
+          :advert-title="advertTitle" />
+
       </div>
     </div>
   </div>
 </template>
   
-  <script setup lang="ts">
+<script setup lang="ts">
 import { ref } from "#imports";
 import { Ref } from "vue";
 import { GetAdvertisementPlans } from "~~/services/plans.service";
@@ -76,6 +68,7 @@ const accountStore = useAccountStore();
 const advert: Ref<AdvertisementDto | null> = ref(null);
 const router = useRouter();
 const toast = useToast();
+const advertTitle = ref("");
 
 const { data, pending } = await useAsyncData(
   "plans",
@@ -121,12 +114,14 @@ onMounted(async () => {
     return;
   }
   if (res.data!.plan!.planId == "4") {
-    toast.showToast("این آگهی دارای پکیج توربو است.",ToastType.info);
+    toast.showToast("این آگهی دارای پکیج توربو است.", ToastType.info);
     await router.push("/account/adverts");
     return;
   }
   advert.value = res.data!;
   loading.value = false;
+  advertTitle.value = `${advert.value.brand.title} ${advert.value.model.title}`
+
 });
 </script>
   

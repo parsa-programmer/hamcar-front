@@ -26,7 +26,7 @@ export async function ValidateCode(
   );
   return res;
 }
-export async function LogOut(): Promise<IApiResponse<undefined>> {
+export async function LogoutUser(): Promise<IApiResponse<undefined>> {
   var res = await FetchApi<undefined>(
     `/Auth/logout`,
     {

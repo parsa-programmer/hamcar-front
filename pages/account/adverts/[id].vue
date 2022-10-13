@@ -37,7 +37,8 @@
         <single-advert-gallery
           :advert="advert"
           v-model="isOpenGallery"
-          :isAdvertSaved="true"
+          :is-advert-saved="true"
+          :save-advert-loading="false"
         />
         <Head>
           <Title
@@ -209,10 +210,10 @@
                 <span class="text-muted font-6">شماره تماس 2</span>
               </div>
               <div class="copy__phone">
-                {{ advert.exhibition.phoneNumbers.mobilePhone }}
+                {{ advert.exhibition.mobilePhone }}
                 <h-copy
                   hash-color="#C4C4C4"
-                  :text="advert.exhibition.phoneNumbers.mobilePhone"
+                  :text="advert.exhibition.mobilePhone"
                 />
               </div>
             </div>
@@ -221,7 +222,7 @@
               class="row"
               v-if="
                 advert.exhibition != null &&
-                advert.exhibition.phoneNumbers.telephone
+                advert.exhibition.telePhone
               "
             >
               <div class="phone__title">
@@ -229,10 +230,10 @@
                 <span class="text-muted font-6">شماره تماس 3</span>
               </div>
               <div class="copy__phone">
-                {{ advert.exhibition.phoneNumbers.telephone }}
+                {{ advert.exhibition.telePhone }}
                 <h-copy
                   hash-color="#C4C4C4"
-                  :text="advert.exhibition.phoneNumbers.telephone"
+                  :text="advert.exhibition.telePhone"
                 />
               </div>
             </div>

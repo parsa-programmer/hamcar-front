@@ -1,5 +1,7 @@
 import { Address } from "../utilities/Address";
+import { CarType } from "./enums/CarType";
 import { GearBox } from "./enums/GearBox";
+import { MotorType } from "./enums/MotorType";
 import { AdvertisementPrice } from "./valueObjects/AdvertisementPrice";
 import { CarAdvertisementDetail } from "./valueObjects/CarAdvertisementDetail";
 import { MotorCycleAdvertisementDetail } from "./valueObjects/MotorCycleAdvertisementDetail";
@@ -39,7 +41,18 @@ export interface EditAdvertisementCommand {
   mileage: number;
   gearBox: string;
   address: Address;
-  price: AdvertisementPrice;
+  price: EditAdvertisementPrice;
+  carType: CarType | null;
+  motorType: MotorType | null;
+}
+export interface EditAdvertisementPrice {
+  advertisementPaymentType: string;
+  staticAmount: number;
+  tedadeGhestHa: number;
+  pishPardakht: number;
+  ghestiPaymentType: string;
+  amountPricePerGhest: number;
+  deliveryDate: number;
 }
 export class FullEditAdvertisementCommand {
   constructor(

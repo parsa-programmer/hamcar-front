@@ -1,76 +1,36 @@
 <template>
   <div class="ads-slider">
     <div class="ads-slider__picture">
-      <div
-        class="navigation__arrow right"
-        @click="prevSlide"
-        v-if="currentIndex > 0"
-      >
-        <svg
-          width="10"
-          height="15"
-          viewBox="0 0 10 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1.56889 1.66699L7.74536 7.66699L1.56889 13.667"
-            stroke="#F0EFEF"
-            stroke-width="1.64706"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+      <div class="navigation__arrow right" @click="prevSlide" v-if="currentIndex > 0">
+        <svg width="10" height="15" viewBox="0 0 10 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.56889 1.66699L7.74536 7.66699L1.56889 13.667" stroke="#F0EFEF" stroke-width="1.64706"
+            stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
-      <div
-        class="navigation__arrow left"
-        @click="nextSlide"
-        v-if="currentIndex < advert.images.length - 1"
-      >
-        <svg
-          width="10"
-          height="15"
-          viewBox="0 0 10 15"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1.56889 1.66699L7.74536 7.66699L1.56889 13.667"
-            stroke="#F0EFEF"
-            stroke-width="1.64706"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+      <div class="navigation__arrow left" @click="nextSlide" v-if="currentIndex < advert.images.length - 1">
+        <svg width="10" height="15" viewBox="0 0 10 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.56889 1.66699L7.74536 7.66699L1.56889 13.667" stroke="#F0EFEF" stroke-width="1.64706"
+            stroke-linecap="round" stroke-linejoin="round" />
         </svg>
       </div>
       <div class="navigator">
-        <div
-          :class="[
-            'navigate__item',
-            { navigate__active: currentIndex == index },
-          ]"
-          v-for="(item, index) in advert.images.length"
-          :key="item"
-        ></div>
+        <div :class="[
+          'navigate__item',
+          { navigate__active: currentIndex == index },
+        ]" v-for="(item, index) in advert.images.length" :key="item"></div>
       </div>
-      <h-image
-        @click="openGallery"
-        class="main__image"
+      <h-image @click="openGallery" class="main__image"
         :src="GetAdvertImage(advert.id, advert.images[currentIndex]?.imageName)"
-        :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
-      />
+        :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`" />
       <div class="ads-slider__flags">
         <client-only>
-          <span
-            class="ads-slider__flag"
-            v-if="
-              isSavedAdvert == false &&
-              authStore.isLogin &&
-              saveAdvertLoading == false
-            "
-            @click="saveAdvert"
-          >
-            <icons-save />
+          <span class="ads-slider__flag" v-if="
+          isSavedAdvert == false &&
+            authStore.isLogin
+          " @click="saveAdvert">
+            <icons-save v-if="saveAdvertLoading==false" />
+            <loadings-spinner v-else />
+
           </span>
         </client-only>
         <span class="ads-slider__flag" @click="toggleShareModal">
@@ -79,25 +39,14 @@
       </div>
     </div>
 
-    <h-slider
-      class="ads-slider__list"
-      :items="advert.images"
-      :dots="true"
-      :arrows="false"
-      :middle="currentIndex"
-    >
+    <h-slider class="ads-slider__list" :items="advert.images" :dots="true" :arrows="false" :middle="currentIndex">
       <template #item="{ item, index }">
-        <div
-          @click="currentIndex = index"
-          :class="[
-            'ads-slider__item',
-            { 'ads-slider__item--active': index == currentIndex },
-          ]"
-        >
-          <h-image
-            :src="GetAdvertImage(advert.id, item.imageName ?? '')"
-            :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`"
-          />
+        <div @click="currentIndex = index" :class="[
+          'ads-slider__item',
+          { 'ads-slider__item--active': index == currentIndex },
+        ]">
+          <h-image :src="GetAdvertImage(advert.id, item.imageName ?? '')"
+            :alt="`${advert.brand.title} ${advert.model.title} ${advert.year}`" />
         </div>
       </template>
     </h-slider>
@@ -110,7 +59,7 @@ import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models"
 import { GetAdvertImage } from "~~/utilities/imageUtil";
 import { authStore as Store } from "~~/stores/auth.store";
 const emit = defineEmits(["openGallery", "toggleShareModal", "saveAdvert"]);
-defineProps<{
+const props = defineProps<{
   advert: AdvertisementDto;
   isSavedAdvert: boolean;
   saveAdvertLoading: boolean;
@@ -135,9 +84,10 @@ const saveAdvert = () => {
 </script>
     
 <style scoped>
-  .main__image{
-    cursor: zoom-in;
-  }
+.main__image {
+  cursor: zoom-in;
+}
+
 .navigation__arrow {
   width: 36px;
   height: 36px;
@@ -152,18 +102,22 @@ const saveAdvert = () => {
   cursor: pointer;
   top: 42%;
 }
+
 .left {
   left: 1rem;
   transform: matrix(-1, 0, 0, 1, 0, 0);
 }
+
 .right {
   right: 1rem;
 }
+
 .arrows {
   position: absolute;
   width: 100%;
   height: 100%;
 }
+
 .navigator {
   position: absolute;
   bottom: 1rem;
@@ -179,12 +133,14 @@ const saveAdvert = () => {
   align-items: center;
   justify-content: center;
 }
+
 .navigate__item {
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: #8a8b8d;
 }
+
 .navigate__active {
   background: white;
   width: 10px;

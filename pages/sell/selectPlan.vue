@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <Head>
       <link href="/css/advertisement-registration.css" rel="stylesheet" />
       <link href="/css/plan.css" rel="stylesheet" />
@@ -7,36 +8,24 @@
     </Head>
     <Teleport to="body">
       <div class="fixed__loading" v-if="isLoadingToPay">
-        <p
-          class="text-center"
-          style="
+        <p class="text-center" style="
             background: var(--color-white);
             color: var(--color-black);
             padding: 2rem;
             height: fit-content;
-          "
-        >
+          ">
           درحال انتقال به درگاه بانک ...
         </p>
       </div>
     </Teleport>
     <icons-loading v-if="pending" />
     <div v-if="pending == false">
-      <register-advert-mobile-packages
-        v-if="isMobilePage"
-        class="mt-1"
-        :plans="data?.data ?? []"
-        @planSeleced="selectPlan"
-        :selected-plan="selectedPlan"
-        :ignore-plans="[]"
-      />
+      <register-advert-mobile-packages :advert-title="advertTitle" v-if="isMobilePage" class="mt-1"
+        :plans="data?.data?.item1 ?? []" @planSeleced="selectPlan" :best-plan="data?.data?.item2??0"
+        :ignore-plans="[]" />
       <div v-else>
-        <register-advert-desktop-plan
-          :plans="data?.data ?? []"
-          @planSeleced="selectPlan"
-          :selected-plan="selectedPlan"
-          :ignore-plans="[]"
-        />
+        <register-advert-desktop-plan :advert-title="advertTitle" :plans="data?.data?.item1 ?? []"
+          @planSeleced="selectPlan" :best-plan="data?.data?.item2??0" :ignore-plans="[]" />
       </div>
     </div>
   </div>
@@ -69,7 +58,7 @@ const store = advertStore();
 const advert: Ref<AdvertisementDto | null> = ref(null);
 const router = useRouter();
 const toast = useToast();
-
+const advertTitle = ref("");
 const { data, pending } = await useAsyncData(
   "plans",
   () => GetAdvertisementPlans(),
@@ -119,6 +108,7 @@ onMounted(async () => {
     return;
   }
   advert.value = res.data!;
+  advertTitle.value = `${advert.value.brand.title} ${advert.value.model.title}`
   store.changeStep(6);
 });
 </script>

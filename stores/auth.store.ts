@@ -29,8 +29,10 @@ export const authStore = defineStore("auth", {
       return this.accessToken !== "";
     },
     isAccessExhibitonPanel(): boolean {
-      var role = this.user?.roles.find((f) => f.roleTitle == "ExhibitionPanel");
-      return role != null;
+      var role = this.user?.roles?.find(
+        (f) => f.roleTitle == "ExhibitionPanel"
+      );
+      return role != undefined;
     },
   },
   actions: {
@@ -66,7 +68,7 @@ export const authStore = defineStore("auth", {
       this.refreshToken = "";
       this.user = null;
       if (isRedirected) {
-        router.push("/");
+        location.replace("/");
       }
     },
   },

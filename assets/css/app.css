@@ -425,7 +425,9 @@ hr {
 .p-2 {
     padding: 2rem;
 }
-
+.p-1{
+    padding: 1rem;
+}
 .py-1 {
     padding: 1rem 0;
 }
@@ -675,9 +677,11 @@ body {
     line-height: 27.2px;
     transition: all ease .2s;
 }
-.nav__menu ul li:last-child{
+
+.nav__menu ul li:last-child {
     padding: 0 !important;
 }
+
 .nav__menu ul li a {
     padding-bottom: 1rem;
     font-family: var(--t5-font-family);
@@ -1087,7 +1091,7 @@ button {
 .advert__footer {
     display: flex;
     justify-content: space-between;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .advert__footer>span {
@@ -1123,7 +1127,7 @@ button {
 .advert__wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     height: 69px;
     margin-right: auto;
 }
@@ -1291,7 +1295,7 @@ button {
     }
 
     .advert__header {
-        justify-content: start;
+        justify-content: flex-start;
         gap: 1rem;
     }
 
@@ -1530,30 +1534,80 @@ button {
     text-align: justify;
     letter-spacing: -0.02em;
 }
-.animate__delay-_5s{
+
+.animate__delay-_5s {
     animation-delay: 500ms;
 }
-.animate__delay-1_5s{
+
+.animate__delay-1_5s {
     animation-delay: 1500ms;
 }
-.animate__delay-2_5s{
+
+.animate__delay-2_5s {
     animation-delay: 2500ms;
 }
-.animate__delay-3_5s{
+
+.animate__delay-3_5s {
     animation-delay: 3500ms;
 }
-.animate__delay-4_5s{
+
+.animate__delay-4_5s {
     animation-delay: 4500ms;
 }
-.animate__delay-5s{
+
+.animate__delay-5s {
     animation-delay: 5s;
 }
-.animate__delay-6s{
+
+.animate__delay-6s {
     animation-delay: 6s;
 }
-.animate__delay-7s{
+
+.animate__delay-7s {
     animation-delay: 7s;
 }
+
 .gap-4px {
     gap: 4px !important;
-  }
+}
+/* ////////////////////////// */
+@media screen and (max-width: 768px) {
+    .advert__type__selection span {
+        font-family: var(--t4-font-family);
+        font-size: var(--t4-font-size);
+        font-weight: 400 !important;
+    }
+}
+
+.advert__type__selection {
+    border: 2px solid var(--color-gray-300);
+    border-radius: var(--app-border-radius);
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+    padding: 0.5rem;
+}
+
+.advert__type__selection .selection__active {
+    background: var(--color-green) !important;
+    color: #fff;
+    border-radius: 12px;
+    width: 100%;
+}
+
+.advert__type__selection span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    text-align: center;
+    height: 3.5rem;
+    cursor: pointer;
+    transition: all ease 0.2s;
+}
+
+.advert__type__selection span:hover {
+    background: var(--color-gray-200);
+    border-radius: 12px;
+}

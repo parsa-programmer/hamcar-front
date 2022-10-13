@@ -2,13 +2,9 @@
   <div class="row plan__page__header">
     <div>
       <h2 class="page__sub__title">پلن موردنظر خود را انتخاب کنید:</h2>
-      <p
-        class="text__description mb-1_5"
-        style="margin-top: 0.5rem"
-        v-if="selectedPlan > 0"
-      >
+      <p class="text__description mb-1_5" style="margin-top: 0.5rem" v-if="bestPlan > 0">
         <icons-flash class="ml-1" />
-        آگهی‌های اپل آسترا سدان 1994 معمولا با انتخاب پلن «پرسرعت» بازخورد بهتری
+        آگهی‌های {{advertTitle}} معمولا با انتخاب پلن «پرسرعت» بازخورد بهتری
         داشته‌اند.
       </p>
     </div>
@@ -20,7 +16,7 @@
       </p>
     </div>
   </div>
-  <div class="plan__list row wrap">
+  <div class="plan__list row mobile_wrap">
     <div class="plan__item plan__text">
       <div class="plan__header"></div>
       <div class="plan__facilities">
@@ -37,11 +33,7 @@
         <p>نمایش در پیشنهادات همکار</p>
       </div>
     </div>
-    <div
-      :class="['plan__item', { active: plan == 1 }]"
-      @click="selectPlan(1)"
-      v-if="ignorePlans.includes(1) == false"
-    >
+    <div :class="['plan__item', { active: plan == 1 }]" @click="selectPlan(1)" v-if="ignorePlans.includes(1) == false">
       <div class="plan__header">
         <h4>رایگان</h4>
       </div>
@@ -77,15 +69,13 @@
         </p>
       </div>
     </div>
-    <div :class="['plan__item', { active: plan == 2 }]" @click="selectPlan(2)"
-    v-if="ignorePlans.includes(2) == false"
-    >
+    <div :class="['plan__item', { active: plan == 2 }]" @click="selectPlan(2)" v-if="ignorePlans.includes(2) == false">
       <div class="plan__header">
-        <icons-flash v-if="selectedPlan == 2" />
+        <icons-flash v-if="bestPlan == 2" />
 
         <h4>استاندارد</h4>
         <p>
-          {{ splitNumber(plans.filter((f) => f.id == 2)[0].totalPrice) }} تومان
+          {{ splitNumber(plans.filter((f) => f.id == 2)[0]?.totalPrice) }} تومان
         </p>
       </div>
       <div class="plan__facilities">
@@ -116,11 +106,9 @@
         </p>
       </div>
     </div>
-    <div :class="['plan__item', { active: plan == 3 }]" @click="selectPlan(3)"
-    v-if="ignorePlans.includes(3) == false"
-    >
+    <div :class="['plan__item', { active: plan == 3 }]" @click="selectPlan(3)" v-if="ignorePlans.includes(3) == false">
       <div class="plan__header">
-        <icons-flash v-if="selectedPlan == 3" />
+        <icons-flash v-if="bestPlan == 3" />
         <h4>پر سرعت</h4>
         <p>
           {{ splitNumber(plans.filter((f) => f.id == 3)[0].totalPrice) }} تومان
@@ -148,11 +136,9 @@
         </p>
       </div>
     </div>
-    <div :class="['plan__item', { active: plan == 4 }]" @click="selectPlan(4)"
-    v-if="ignorePlans.includes(4) == false"
-    >
+    <div :class="['plan__item', { active: plan == 4 }]" @click="selectPlan(4)" v-if="ignorePlans.includes(4) == false">
       <div class="plan__header">
-        <icons-flash v-if="selectedPlan == 4" />
+        <icons-flash v-if="bestPlan == 4" />
 
         <h4>توربو</h4>
         <p>
@@ -180,24 +166,20 @@
       </div>
     </div>
   </div>
-  <h-button
-    class="pull-left pay__btn"
-    @click="finallyPlan"
-    :disabled="plan == 0"
-    >پرداخت</h-button
-  >
+  <h-button class="pull-left pay__btn" @click="finallyPlan" :disabled="plan == 0">پرداخت</h-button>
 </template>
 
 <script setup lang="ts">
 import { ToastType } from "~~/composables/useToast";
 import { AdvertisementPlan } from "~~/models/plans/AdvertisementPlan";
 import { splitNumber } from "~~/utilities/numberUtils";
-const { plans, selectedPlan = 1 } = defineProps<{
+const { plans, bestPlan = 1 } = defineProps<{
   plans: AdvertisementPlan[];
-  selectedPlan: number;
+  bestPlan: number;
   ignorePlans: any[];
+  advertTitle: string
 }>();
-const plan = ref(selectedPlan);
+const plan = ref(bestPlan);
 const emit = defineEmits(["planSeleced"]);
 const toast = useToast();
 
@@ -213,5 +195,10 @@ const finallyPlan = () => {
 };
 </script>
 
-<style>
+<style scoped>
+@media screen and (max-width:990px) {
+  .mobile_wrap {
+    flex-wrap: wrap;
+  }
+}
 </style>

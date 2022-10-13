@@ -4,5 +4,5 @@ import { Ghesti } from "./Ghesti";
 export interface AdvertisementPrice {
   advertisementPaymentType: AdvertisementPaymentType;
   amount: number;
-  ghest: Ghesti;
+  ghest: Ghesti | null;
 }

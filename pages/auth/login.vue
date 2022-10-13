@@ -83,7 +83,7 @@ const nextStep = (step: number) => {
 
 .login__term {
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   height: 100%;
 }
 

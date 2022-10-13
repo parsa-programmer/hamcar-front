@@ -20,7 +20,7 @@
           </template>
           <template v-else>
             <icons-left-arrow></icons-left-arrow>
-            <nuxt-link to="/account" class="breadcrumb__item"
+            <nuxt-link to="/account/exhibition" class="breadcrumb__item"
               >پنل نمایشگاه</nuxt-link
             >
 

@@ -73,7 +73,7 @@
 
 .price-list__wrapper {
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   gap: 1rem;
   margin-bottom: 3rem;
 }
@@ -251,7 +251,7 @@
   font-size: var(--t1-font-size);
   display: flex;
   gap: 0.5rem;
-  align-items: end;
+  align-items: flex-end;
   line-height: 41px;
 }
 
@@ -264,7 +264,7 @@
 .price-list__links {
   display: flex;
   gap: 1rem;
-  justify-content: end;
+  justify-content: flex-end;
   margin-top: 5.5rem;
 }
 
@@ -289,13 +289,13 @@
   }
 
   .prices__item {
-    align-items: start;
+    align-items: flex-start;
     gap: 0;
   }
 
   .prices__left {
     flex-direction: column-reverse;
-    align-items: end;
+    align-items: flex-end;
   }
 }
 

@@ -281,7 +281,7 @@ const getAdvert = async () => {
 };
 const showAdvert = () => {
   const router = useRouter();
-  router.push(`/profile/adverts/${advert.value?.id}`);
+  router.push(`/account/adverts/${advert.value?.id}`);
 };
 </script>
 

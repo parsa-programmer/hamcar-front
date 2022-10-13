@@ -183,7 +183,6 @@ const files: Ref<any[]> = ref(props.initData);
 const dropZone: Ref<HTMLElement | null> = ref(null);
 
 const editImage = () => {
-  console.log("123");
   open!();
 };
 const removeImage = (index: number) => {
@@ -352,7 +351,7 @@ ul li p {
 }
 .images {
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-self: flex-start;
   padding: 0 1rem;
   gap: 1rem;

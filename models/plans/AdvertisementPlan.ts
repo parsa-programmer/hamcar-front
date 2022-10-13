@@ -16,3 +16,8 @@ export interface AdvertisementPlan {
   discount: number;
   totalPrice: number;
 }
+export interface AdvertismeentPlansResult {
+  item1: AdvertisementPlan[];
+  //Selected Plan
+  item2: number;
+}

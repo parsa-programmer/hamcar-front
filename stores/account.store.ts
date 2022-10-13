@@ -77,5 +77,11 @@ export const useAccountStore = defineStore("account", {
       this.advertSaved = saved.data ?? [];
       this.exhibition = exhibition.data!;
     },
+    clearData() {
+      this.user = {} as UserDto;
+      this.exhibition = {} as ExhibitionDto;
+      this.consultant = {} as ConsultantDto;
+      this.advertSaved = [] as UserAdvertisementSavedDto[];
+    },
   },
 });

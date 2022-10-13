@@ -246,7 +246,7 @@ onUnmounted(() => {
 }
 .main__info {
   flex-grow: 1;
-  justify-content: start;
+  justify-content: flex-start;
   color: var(--color-black-200);
   width: 44.5%;
   font-family: var(--t4-font-family);
