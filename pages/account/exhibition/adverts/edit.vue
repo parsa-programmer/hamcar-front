@@ -254,8 +254,17 @@ const FullEditAdvert = async (data: any, e: any) => {
     modelId: data.modelId,
     trimId: data.trimId,
     yearId: data.yearId,
-    carDetail: {} as CarAdvertisementDetail,
-    motorDetail: {} as MotorCycleAdvertisementDetail,
+    carDetail: advertData.isCar ? {
+      interiorColor: data.interiorColor,
+      bodyCondition: data.bodyCondition,
+      carType: data.advertType,
+      exteriorColor: data.exteriorColor
+    } : null,
+    motorDetail: advertData.isCar ? null : {
+      color: data.color,
+      fuel: data.fuel,
+      motorType: data.advertType
+    }
   } as FullEditAdvertisementCommand;
 
   apiLoading.value = true;

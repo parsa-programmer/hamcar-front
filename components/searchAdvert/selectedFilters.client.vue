@@ -38,6 +38,17 @@
         </div>
       </template>
     </template>
+    <template v-if="selectedFilter.province">
+      <div class="selected-filters__item" v-for="(item,index) 
+      in selectedFilter.province" :key="index">
+        <label class="selected-filters__name" :for="`province_filter`">
+          {{ item }}
+        </label>
+        <h-input type="checkbox" checked 
+        :input-id="`province_filter`"
+        name="province_filter" :value="item" />
+      </div>
+    </template>
     <template v-if="selectedFilter.exhibitionTitle">
       <div class="selected-filters__item" v-if="selectedFilter.exhibitionTitle">
         <label class="selected-filters__name" for="exhibitionTitle">
@@ -332,11 +343,20 @@ const setFilters = async () => {
   //Fuel
   await GetDataAndChangeQueryParam("fuel_", "fuel", selectedFilter.value.fuel);
 
+  
   //country
   await GetDataAndChangeQueryParam(
     "country_",
     "country",
     selectedFilter.value.country
+  );
+
+
+  //
+  await GetDataAndChangeQueryParam(
+    "province_filter",
+    "province",
+    selectedFilter.value.province
   );
 
   //differential
@@ -454,7 +474,9 @@ const fixFilters = () => {
   if (typeof selectedFilter.value.specialCases == "string") {
     selectedFilter.value.specialCases = [selectedFilter.value.specialCases];
   }
-
+  if (typeof selectedFilter.value.province == "string") {
+    selectedFilter.value.province = [selectedFilter.value.province];
+  }
   //@ts-ignore
   delete selectedFilter.value["take"];
   //@ts-ignore

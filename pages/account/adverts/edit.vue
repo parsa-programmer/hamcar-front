@@ -253,7 +253,7 @@ const editAdvert = async (data: any, e: any) => {
       tedadeGhestHa: data.tedadeGhestHa ?? 0
     },
     carType: advertData.isCar ? data.advertType : null,
-    motorType: advertData.isCar ? null : data.advertType
+    motorType: advertData.isCar ? null : data.advertType,
   } as EditAdvertisementCommand;
 
   apiLoading.value = true;
@@ -291,7 +291,17 @@ const FullEditAdvert = async (data: any, e: any) => {
     modelId: data.modelId,
     trimId: data.trimId,
     yearId: data.yearId,
-    carDetail: {} as CarAdvertisementDetail,
+    carDetail: advertData.isCar ? {
+      interiorColor: data.interiorColor,
+      bodyCondition: data.bodyCondition,
+      carType: data.advertType,
+      exteriorColor: data.exteriorColor
+    } : null,
+    motorDetail: advertData.isCar ? null : {
+      color: data.color,
+      fuel: data.fuel,
+      motorType: data.advertType
+    }
   } as FullEditAdvertisementCommand;
 
   apiLoading.value = true;

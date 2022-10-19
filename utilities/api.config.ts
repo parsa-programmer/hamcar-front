@@ -5,7 +5,8 @@ export const CurrentDomainUrl = isProd
   ? "https://hamcar.ir"
   : "http://localhost:3000";
 
-export const BASE_URL: string = isProd ? productionUrl : developmentUrl;
+//export const BASE_URL: string = isProd ? productionUrl : developmentUrl;
+export const BASE_URL: string = productionUrl;
 
 export const CLIENT_ID = "testclientfront";
 export const CLIENT_SECRET = "ghgkhgh@bfb,fbfgfgasd";
