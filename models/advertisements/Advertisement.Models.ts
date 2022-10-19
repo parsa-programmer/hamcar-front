@@ -106,7 +106,7 @@ export interface AdvertisementDto {
   trimId: string;
   description: string;
   mileage: number;
-  gearBox: string;
+  gearBox: GearBox;
   shortLink: string;
   address: Address;
   price: AdvertisementPrice;

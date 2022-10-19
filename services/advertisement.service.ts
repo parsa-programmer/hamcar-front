@@ -129,7 +129,13 @@ export const AddImage = (
     body: command,
   });
 };
-
+export const GetMaxImageCount = (
+  advertId: string
+): Promise<IApiResponse<number>> => {
+  return FetchApi(`/advertisement/Images/${advertId}`, {
+    method: "Get",
+  });
+};
 export const DeleteImage = (
   advertId: string,
   imageId: string

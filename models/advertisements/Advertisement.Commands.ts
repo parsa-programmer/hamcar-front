@@ -54,18 +54,17 @@ export interface EditAdvertisementPrice {
   amountPricePerGhest: number;
   deliveryDate: number;
 }
-export class FullEditAdvertisementCommand {
-  constructor(
-    public brandId: string,
-    public modelId: string,
-    public yearId: string,
-    public trimId: string | null,
-    public advertisementId: string,
-    public description: string,
-    public mileage: number,
-    public gearBox: string,
-    public address: Address,
-    public price: AdvertisementPrice,
-    public carDetail: CarAdvertisementDetail
-  ) {}
+export interface FullEditAdvertisementCommand {
+  advertisementId: string;
+  brandId: string;
+  modelId: string;
+  yearId: string;
+  trimId: string | null;
+  description: string;
+  mileage: number;
+  gearBox: string;
+  address: Address;
+  price: EditAdvertisementPrice;
+  carType: CarType | null;
+  motorType: MotorType | null;
 }

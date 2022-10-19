@@ -1,13 +1,10 @@
 <template>
   <div>
     <Teleport to="body">
-      <h-delete-popup
-        v-model="isShowDeletePopup"
-        @accepted="deleteAdvertImage"
-        title="حذف تصویر آگهی"
-        description="آیا از حذف این تصویر اطمینان دارید؟"
-      />
+      <h-delete-popup v-model="isShowDeletePopup" @accepted="deleteAdvertImage" title="حذف تصویر آگهی"
+        description="آیا از حذف این تصویر اطمینان دارید؟" />
     </Teleport>
+
     <Head>
       <Link href="/css/plan.css" rel="stylesheet" />
       <link href="/css/advertisement-registration.css" rel="stylesheet" />
@@ -37,11 +34,7 @@
             <b>{{ advert?.userDto.phoneNumber }}</b> اطلاع شما خواهد رسید.
           </p>
           <div class="mt-2">
-            <h-collapse
-              title="پنل توربو"
-              :is-open="true"
-              v-if="utilStore.isMobile"
-            >
+            <h-collapse title="پنل توربو" :is-open="true" v-if="utilStore.isMobile">
               <ul class="mobile__plan__body" style="display: block">
                 <li class="mobile__plan__body__item">
                   <label> بالا بر اتوماتیک </label>
@@ -165,32 +158,15 @@
               <span class="counter"> <label>۱۴</label> </span>
             </p>
           </div>
-          <h-image-uploader
-            v-on:upload-new-image="UploadNewImage"
-            :max-file-count="4"
-            size="sm"
-            class="mt-1"
-          >
-            <div
-              class="image__item"
-              v-for="(item, index) in advert?.images"
-              :key="index"
-              :id="item.id"
-            >
-              <h-image
-                :src="GetBitMapAdvertImage(advert?.id, item.imageName)"
-              />
-              <button
-                class="delete__image__item"
-                @click="OpenDeletePopup(item.id)"
-              >
+          <h-image-uploader v-on:upload-new-image="UploadNewImage" :max-file-count="maxImage" size="sm" class="mt-1">
+            <div class="image__item" v-for="(item, index) in advert?.images" :key="index" :id="item.id">
+              <h-image :src="GetBitMapAdvertImage(advert?.id, item.imageName)" />
+              <button class="delete__image__item" @click="OpenDeletePopup(item.id)">
                 <icons-trash :width="20" :height="40" />
               </button>
             </div>
           </h-image-uploader>
-          <div
-            class="row align-items-center justify-content-space-between footer"
-          >
+          <div class="row align-items-center justify-content-space-between footer">
             <div class="row">
               <icons-danger />
               <p class="text__description font-5">
@@ -198,9 +174,7 @@
                 <b>{{ advert?.userDto.phoneNumber }}</b> اطلاع شما خواهد رسید.
               </p>
             </div>
-            <h-button class="pull-left pay__btn" @click="showAdvert"
-              >مشاهده آگهی</h-button
-            >
+            <h-button class="pull-left pay__btn" @click="showAdvert">مشاهده آگهی</h-button>
           </div>
         </div>
         <div class="text-center" v-else>
@@ -219,6 +193,7 @@ import {
   GetById,
   DeleteImage,
   AddImage,
+  GetMaxImageCount,
 } from "~~/services/advertisement.service";
 import { Ref } from "vue";
 import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models";
@@ -237,6 +212,8 @@ const plan: Ref<AdvertisementPlan | null> = ref(null);
 const isShowDeletePopup = ref(false);
 const advertImageIdForDelete = ref("");
 const id = route.query.id;
+const maxImage = ref(4);
+
 if (!id) {
   await navigateTo("/404");
 }
@@ -267,13 +244,15 @@ const UploadNewImage = async (file: any): Promise<boolean> => {
 };
 onMounted(async () => {
   store.changeStep(7);
+  loading.value = true;
   await getAdvert();
+  var maxImageCountResult = await GetMaxImageCount(id!.toString());
+  maxImage.value = maxImageCountResult.data ?? 4;
+  loading.value = false;
+
 });
 const getAdvert = async () => {
-  const result = await ProssesAsync<IApiResponse<AdvertisementDto>>(
-    () => GetById(id!.toString()),
-    loading
-  );
+  const result = await GetById(id!.toString());
   if (result.isSuccess == false || result.data == null) {
     await navigateTo("/");
   }
@@ -291,15 +270,19 @@ const showAdvert = () => {
     justify-content: space-between;
     align-items: center;
   }
+
   .footer .row {
     display: none;
   }
+
   .footer .btn {
     width: 100%;
   }
+
   .h-image-uploader {
     margin-top: 1.5rem !important;
   }
+
   .image__count__text {
     border: 2px solid #f0efef;
     border-radius: 67px;
@@ -307,6 +290,7 @@ const showAdvert = () => {
     align-items: center;
     padding-right: 1rem;
   }
+
   .counter label {
     display: flex;
     align-items: center;
@@ -315,6 +299,7 @@ const showAdvert = () => {
     font-weight: 800;
     font-size: var(--t3-font-size);
   }
+
   .image__count__text span {
     color: black;
     display: inline-block;
@@ -330,15 +315,18 @@ const showAdvert = () => {
 .spec__title {
   min-width: 185px;
 }
+
 .spec__item {
   margin-bottom: 24px;
 }
+
 .spec__item .text__description {
   height: 0;
   margin-right: 1.5rem;
   font-family: var(--t5-font-family);
   font-size: var(--t5-font-size);
 }
+
 .footer {
   margin-top: 63px;
 }

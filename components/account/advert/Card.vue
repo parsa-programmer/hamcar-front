@@ -33,10 +33,9 @@
           <nuxt-link :to="link" class="advert__name">
             {{ advert.title }}
           </nuxt-link>
-          <span class="advert__date-type color_black_200 font-6"
-            v-if="planDetail[0] == 'Advertisement' && advert.status!='draft'">{{ getPlan() }}
-            <nuxt-link v-if="planDetail[1] != '4'" class="text-decoration"
-              :to="`/account/adverts/upgradePlan?id=${advert.id}`">(ارتقاء نوع آگهی)</nuxt-link>
+          <span class="advert__date-type color_black_200 font-6">{{ getPlan() }}
+            <nuxt-link v-if="planDetail[0] == 'Advertisement'&&planDetail[1] != '4' && advert.status!='draft'"
+              class="text-decoration" :to="`/account/adverts/upgradePlan?id=${advert.id}`">(ارتقاء نوع آگهی)</nuxt-link>
           </span>
         </div>
         <span class="advert__date-wide" v-if="expireDate && advert.status == 'published'">
@@ -140,6 +139,8 @@ const getPlan = () => {
   var planId = planDetail[1];
   if (planType == "Advertisement") {
     return "آگهی نوع " + planId;
+  } else if (planType == "Personal") {
+    return "پکیج شخصی نوع " + planId;
   }
 };
 const useNardeban = () => {

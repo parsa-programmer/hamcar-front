@@ -1,6 +1,6 @@
 <template>
   <img v-if="src == '' || src == 'null' || src == null || src.includes('null')||src.includes('undefined')" :src="placeholderImg" />
-  <nuxt-img v-else placeholder :src="src" />
+  <nuxt-img  loading="lazy"  v-else placeholder :src="src" />
 
 </template>
 

@@ -18,7 +18,7 @@
           ref="fileUpload"
           :multiple="multiple"
           accept="image/*"
-          style="position: fixed"
+          style="position: fixed;left: -100%;"
           type="file"
           @change="(e) => SelectedFile(e)"
         />
@@ -81,6 +81,7 @@ const selectedData = ref([]);
 const emit = defineEmits(["onSelected", "update:modelValue"]);
 const fileUpload: Ref<HTMLInputElement | null> = ref(null);
 const imageNames: Ref<string[]> = ref([]);
+
 const OpenSelectBox = () => {
   fileUpload.value!.click();
 };
@@ -118,11 +119,8 @@ const SelectedFile = async (e: any) => {
       () => props.onUploadNewImage(file),
       loading
     );
-    if (!result) {
-      return;
-    }
     //@ts-ignore
-    if (result == false) {
+    if (!result || result == false) {
       return;
     }
     //@ts-ignore

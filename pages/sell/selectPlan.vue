@@ -1,5 +1,6 @@
 <template>
   <div>
+    <icons-loading v-if="operationLoading" />
 
     <Head>
       <link href="/css/advertisement-registration.css" rel="stylesheet" />
@@ -19,7 +20,21 @@
       </div>
     </Teleport>
     <icons-loading v-if="pending" />
-    <div v-if="pending == false">
+    <div v-else>
+      <template v-if="accountStore.user.plan?.planId">
+        <h-alert :type="AlertType.Success">
+          <div class=" flex align-items-center justify-content-center gap-0_5">
+            <div class="text-justify">درصورتی که تمایل دارید این آگهی با پکیج شخصی شما ثبت شود روی دکمه روبرو کلیک کنید
+                </div>
+            <h-button size="sm" @click="selectPlan(1)">
+              ثبت آگهی
+              <span class="d-mobile-none">با پکیج شخصی</span>
+            </h-button>
+          </div>
+        </h-alert>
+        <hr />
+      </template>
+
       <register-advert-mobile-packages :advert-title="advertTitle" v-if="isMobilePage" class="mt-1"
         :plans="data?.data?.item1 ?? []" @planSeleced="selectPlan" :best-plan="data?.data?.item2??0"
         :ignore-plans="[]" />
@@ -45,6 +60,8 @@ import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models"
 import { ToastType } from "~~/composables/useToast";
 import { TransactionOrderType } from "~~/models/transactions/CreateTransactionCommand";
 import { CurrentDomainUrl } from "~~/utilities/api.config";
+import { AlertType } from "~~/models/utilities/AlertType";
+import { useAccountStore } from "~~/stores/account.store";
 
 definePageMeta({
   layout: "full-screen",
@@ -53,12 +70,14 @@ definePageMeta({
 
 const isMobilePage = ref(false);
 const isLoadingToPay = ref(false);
-const selectedPlan = ref(0);
 const store = advertStore();
 const advert: Ref<AdvertisementDto | null> = ref(null);
 const router = useRouter();
 const toast = useToast();
 const advertTitle = ref("");
+const accountStore = useAccountStore();
+const operationLoading = ref(false);
+
 const { data, pending } = await useAsyncData(
   "plans",
   () => GetAdvertisementPlans(),
@@ -69,7 +88,10 @@ const { data, pending } = await useAsyncData(
 
 const selectPlan = async (id: number) => {
   if (id == 1) {
+    operationLoading.value = true;
     const result = await FinallyAdvert(advert.value!.id);
+    operationLoading.value = false;
+
     if (result.isSuccess) {
       router.push(`/sell/finish?id=${advert.value?.id}`);
     } else {

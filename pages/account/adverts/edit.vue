@@ -7,15 +7,38 @@
     <loadings-full-loading v-if="loading" />
 
     <div v-else class="container">
-      <h6 class="page__title mb-1">ویرایش آگهی</h6>
+      <h-alert class="alert__text mb-1" :type="AlertType.Warning" show-icon>
+        بعد از ویرایش اطلاعات یا تغییر تصاویر ، وضعیت آگهی به ' <b class="text-error">در حال برسی</b> ' تغییر می کند.
+      </h-alert>
+      <div class="card">
+        <h4 class=" mb-1">ویرایش تصاویر آگهی</h4>
 
-      <Form @submit="editAdvert" class="p-1 card" :validationSchema="formSchema" v-slot="{meta}">
-        <h-alert :type="AlertType.Warning" class="mb-1">
-          <p class="alert__text">
-            بعد از ویرایش ، وضعیت آگهی به ' <b class="text-error">در حال برسی</b> ' تغییر می کند.
-          </p>
-        </h-alert>
+        <p class="text__description">
+          <small> تعداد مجاز تصویر برای این آگهی : {{maxImage}}</small>
+        </p>
+        <h-image-uploader v-on:upload-new-image="UploadNewImage" size="sm" :max-file-count="maxImage"
+          v-if="imageLoading==false">
+          <div class="image__item" v-for="(item, index) in advert?.images" :key="index" :id="item.id">
+            <h-image :src="GetBitMapAdvertImage(advert.id, item.imageName)" />
+            <button type="button" class="delete__image__item" @click="OpenDeletePopup(item.id)">
+              <icons-trash :width="20" :height="40" />
+            </button>
+          </div>
+        </h-image-uploader>
+        <div v-else>
+          <h-skeletor width="100%" height="250px" />
+        </div>
+        <Teleport to="body">
+          <h-delete-popup v-model="isShowDeletePopup" @accepted="deleteAdvertImage" title="حذف تصویر آگهی"
+            description="آیا از حذف این تصویر اطمینان دارید؟" />
+        </Teleport>
+      </div>
+
+      <Form @submit=" editAdvert" class="p-1 card mt-1" :validationSchema="formSchema" v-slot="{meta}">
+        <h4 class=" mb-1">ویرایش اطلاعات آگهی</h4>
+
         <div class="row" style="flex-direction: column">
+          <account-advert-edit-full-edit-inputs :advert="advert" />
           <div>
             <label class="text__description">گیربکس :</label>
             <h-select-box placeholder="گیربکس" :data="[
@@ -62,15 +85,18 @@
             </div>
             <div class="grow-1 mt-4">
               <p class="text__description">مشخصات فنی : </p>
-              <account-advert-edit-milage-inputs class="grow-1" :carType="advertData.advertType!"
+              <account-advert-edit-milage-inputs class="grow-1" :carType="advertData.advertType"
                 :milage="advertData.mileage.toString()" :is-car="advertData.isCar" />
             </div>
           </div>
+
         </div>
         <div class="row justify-content-flex-end mt-2">
-          <h-button :disabled="meta.valid==false || apiLoading" :loading="apiLoading" class="">ویرایش آگهی</h-button>
+          <h-button type="submit" :disabled="meta.valid==false || apiLoading" :loading="apiLoading" class="">ویرایش آگهی
+          </h-button>
         </div>
       </Form>
+
     </div>
   </div>
 </template>
@@ -83,15 +109,19 @@ import { GearBox } from "~~/models/advertisements/enums/GearBox";
 import { AdvertisementPrice } from "~~/models/advertisements/valueObjects/AdvertisementPrice";
 import { Address } from "~~/models/utilities/Address";
 import { SelectData } from "~~/models/utilities/SelectData";
-import { GetById, EditAdvertisement } from "~~/services/advertisement.service";
+import { GetById, EditAdvertisement, AddImage, DeleteImage, GetMaxImageCount, FullEditAdvertisement } from "~~/services/advertisement.service";
 import { useAccountStore } from "~~/stores/account.store";
 import { Form } from "vee-validate";
 import * as Yup from "yup";
 import { CarType } from "~~/models/advertisements/enums/CarType";
 import { MotorType } from "~~/models/advertisements/enums/MotorType";
-import { AdvertisementPaymentType } from "~~/models/advertisements/enums/AdvertisementPaymentType";
-import { EditAdvertisementCommand } from "~~/models/advertisements/Advertisement.Commands";
+import { EditAdvertisementCommand, FullEditAdvertisementCommand } from "~~/models/advertisements/Advertisement.Commands";
 import { AlertType } from "~~/models/utilities/AlertType";
+import { GetBitMapAdvertImage } from "~~/utilities/imageUtil";
+import { ProssesAsync } from "~~/utilities/ProssesAsync";
+import { IApiResponse } from "~~/models/IApiResponse";
+import { AdvertisementPlanType } from "~~/models/advertisements/enums/AdvertisementPlanType";
+import { CarAdvertisementDetail } from "~~/models/advertisements/valueObjects/CarAdvertisementDetail";
 
 definePageMeta({
   layout: "full-screen",
@@ -104,6 +134,11 @@ const account = useAccountStore();
 const { getCities, getProvinces } = useIranDivision();
 const loading = ref(true);
 const apiLoading = ref(false);
+const imageLoading = ref(false);
+const isShowDeletePopup = ref(false);
+const advert: Ref<AdvertisementDto> = ref({} as AdvertisementDto);
+const advertImageIdForDelete = ref("");
+const maxImage = ref(4);
 
 const formSchema = Yup.object().shape({
   description: Yup.string().required().label("توضیحات"),
@@ -112,6 +147,10 @@ const formSchema = Yup.object().shape({
   postalAddress: Yup.string().required().label("آدرس پستی"),
   price: Yup.number().min(10000).label("قیمت"),
   milage: Yup.number().min(1, "کیلومتر را وارد کنید").label("کیلومتر"),
+  brandId: Yup.string().required().label("برند"),
+  modelId: Yup.string().required().label("مدل"),
+  yearId: Yup.string().required().label("سال"),
+  trimId: Yup.string().label("تریم"),
 });
 
 const provinces: Ref<SelectData[]> = ref([]);
@@ -129,6 +168,32 @@ const advertData = reactive({
 const provinceChnaged = async (data: SelectData) => {
   cities.value = await getCities(data.value);
 };
+const UploadNewImage = async (file: any): Promise<boolean> => {
+  var formData = new FormData();
+  formData.append("AdvertisementId", advert.value!.id);
+  formData.append("Images", file);
+  var result = await AddImage(formData);
+  if (result.isSuccess) {
+    setAdvertImage();
+  }
+  return false;
+};
+const OpenDeletePopup = (imageId: string) => {
+  isShowDeletePopup.value = true;
+  advertImageIdForDelete.value = imageId;
+};
+const deleteAdvertImage = async () => {
+  var result = await ProssesAsync<IApiResponse<undefined>>(
+    () => DeleteImage(advert.value!.id, advertImageIdForDelete.value),
+    imageLoading
+  );
+  if (result.isSuccess) {
+    document.getElementById(advertImageIdForDelete.value)?.remove();
+    advert.value.images = advert.value.images.filter(f => f.id != advertImageIdForDelete.value);
+    advertImageIdForDelete.value = "";
+    toast.showToast("تصویر حذف شد !");
+  }
+};
 onMounted(async () => {
   loading.value = true;
   var id = route.query.id?.toString();
@@ -139,6 +204,9 @@ onMounted(async () => {
     await router.push("/account/adverts");
     return;
   }
+  var maxImageCountResult = await GetMaxImageCount(id!);
+  maxImage.value = maxImageCountResult.data ?? 4;
+  advert.value = res.data;
   provinces.value = await getProvinces();
   cities.value = await getCities(
     provinces.value.find((f) => f.label == res.data!.address.province)?.value
@@ -160,6 +228,11 @@ onMounted(async () => {
 
 });
 const editAdvert = async (data: any, e: any) => {
+  if (advert.value.plan.planType == AdvertisementPlanType.Personal) {
+    FullEditAdvert(data, e);
+    return;
+  }
+
   var model = {
     address: {
       city: data.city,
@@ -190,6 +263,50 @@ const editAdvert = async (data: any, e: any) => {
     toast.showToast("آگهی با موفقیت ویرایش شد");
     await router.push('/account/adverts');
   }
+}
+const FullEditAdvert = async (data: any, e: any) => {
+  console.log("123");
+  var model = {
+    address: {
+      city: data.city,
+      province: data.province,
+      postalAddress: data.postalAddress
+    },
+    mileage: data.milage ?? 0,
+    gearBox: data.gearBox,
+    description: data.description,
+    advertisementId: route.query.id!.toString(),
+    price: {
+      staticAmount: data.amount ?? 0,
+      advertisementPaymentType: data.advertisementPaymentType,
+      amountPricePerGhest: data.amountPricePerGhest ?? 0,
+      deliveryDate: data.deliveryDate ?? 0,
+      ghestiPaymentType: data.ghestiPaymentType ?? "ماهانه",
+      pishPardakht: data.pishPardakht ?? 0,
+      tedadeGhestHa: data.tedadeGhestHa ?? 0
+    },
+    carType: advertData.isCar ? data.advertType : null,
+    motorType: advertData.isCar ? null : data.advertType,
+    brandId: data.brandId,
+    modelId: data.modelId,
+    trimId: data.trimId,
+    yearId: data.yearId,
+    carDetail: {} as CarAdvertisementDetail,
+  } as FullEditAdvertisementCommand;
+
+  apiLoading.value = true;
+  var result = await FullEditAdvertisement(model);
+  apiLoading.value = false;
+  if (result.isSuccess) {
+    toast.showToast("آگهی با موفقیت ویرایش شد");
+    await router.push('/account/adverts');
+  }
+}
+const setAdvertImage = async () => {
+  imageLoading.value = true;
+  var res = await GetById(advert.value.id);
+  advert.value.images = res.data?.images ?? [];
+  imageLoading.value = false;
 }
 </script>
 

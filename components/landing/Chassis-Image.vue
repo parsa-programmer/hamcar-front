@@ -54,7 +54,7 @@ const router = useRouter();
 
 const showAdverts = () => {
   if (props.selected == BodyType.موتورسیکلت) {
-    router.push("/motor");
+    router.push("/motorcycle");
   } else {
     router.push("/car?modelType=" + props.selected.toString());
   }
