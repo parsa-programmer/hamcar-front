@@ -280,8 +280,6 @@ onMounted(async () => {
       return { label: b.title, value: b.id };
     });
   } else {
-    console.log(utilStore.getMotorBrands());
-
     brands.value = utilStore.getMotorBrands().map((b) => {
       return { label: b.title, value: b.id };
     });

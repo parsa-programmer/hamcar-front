@@ -21,10 +21,45 @@
                 </template>
             </div>
             <template v-if="advert.brand.isCar">
-            
+                <hr style="margin: 2rem 0;" />
+
+                <p class="text__description">وضعیت بدنه :</p>
+                <h-select-box class="mb-1" name="bodyCondition" v-model="carDetail.bodyCondition"
+                    :data="GenerateBodyConditionSelectData()" />
+
+                <div class="row">
+                    <div class="grow-1">
+                        <p class="text__description">رنگ بدنه :</p>
+                        <h-select-box class="mb-1" :data="GenerateColorSelectData()" name="exteriorColor"
+                            v-model="carDetail.exteriorColor" />
+                    </div>
+                    <div class="grow-1">
+                        <p class="text__description">رنگ داخل :</p>
+                        <h-select-box class="mb-1" :data="GenerateColorSelectData()" name="interiorColor"
+                            v-model="carDetail.interiorColor" />
+                    </div>
+                </div>
+
+                <hr style="margin: 2rem 0;" />
+
             </template>
             <template v-else>
+                <hr style="margin: 2rem 0;" />
+                <h-select-box name="fuel" v-model="motorDetail.fuel" class="mt-1" placeholder="سوخت" show-check-box
+                    :data="[
+                      {
+                        label: 'برقی',
+                        value: Fuel.برقی,
+                      },
+                      {
+                        label: 'بنزینی',
+                        value: Fuel.بنزینی,
+                      },
+                    ]" />
 
+                <h-select-box class="mt-1" placeholder="رنگ" :data="GenerateColorSelectData()" name="color"
+                    v-model="motorDetail.color" show-check-box />
+                <hr style="margin: 2rem 0;" />
             </template>
         </div>
     </div>
@@ -38,6 +73,10 @@ import { Ref, ref } from "vue";
 import { SelectData } from "~~/models/utilities/SelectData";
 import { ProssesAsync } from "~~/utilities/ProssesAsync";
 import { AdvertisementDto } from "~~/models/advertisements/Advertisement.Models";
+import { GenerateBodyConditionSelectData } from "~~/models/advertisements/enums/BodyCondition";
+import { GenerateColorSelectData } from "~~/models/advertisements/enums/Color";
+import { Fuel } from "~~/models/advertisements/enums/Fuel";
+
 const store = advertStore();
 
 const isLoading = ref(false);
@@ -58,6 +97,9 @@ const brand = ref(props.advert.brandId);
 const model = ref(props.advert.modelId);
 const trim = ref(props.advert.trimId);
 const year = ref(props.advert.yearId);
+
+const carDetail = ref(props.advert.carDetail);
+const motorDetail = ref(props.advert.motorCycleDetail);
 
 onMounted(async () => {
     isLoading.value = true;

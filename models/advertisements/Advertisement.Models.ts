@@ -64,7 +64,7 @@ export interface AdvertisementFilterParams extends FilterParams {
   year: string | null;
   trim: string | null;
   search: string | null;
-  province: string | null;
+  province: string[] | null;
   city: string | null;
   exhibitionTitle: string | null;
   startMileage: string | null;

@@ -1,10 +1,14 @@
-import { defineNuxtConfig } from "nuxt";
 import { PROXY_CONFIG } from "./utilities/api.config";
 
 export default defineNuxtConfig({
   typescript: {
     strict: true,
     shim: false,
+  },
+  routeRules: {
+    "/account/**": { ssr: false },
+    "/account/**/**": { ssr: false },
+    "/account/**/**/**": { ssr: false },
   },
   buildModules: ["@pinia/nuxt", "@nuxt/image-edge"],
   vite: {

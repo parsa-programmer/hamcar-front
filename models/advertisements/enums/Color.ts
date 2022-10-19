@@ -45,11 +45,10 @@ export const GenerateColorSelectData = (): SelectData[] => {
   Object.values(Color).map(f=>{
     colors.push({
       //@ts-ignore
-        label: f,
+        label: f.replaceAll("_"," "),
       //@ts-ignore
         value: f,
       });
   })
-  colors.map((f) => (f.label = f.label.replace("_", " ")));
   return colors;
 };

@@ -67,4 +67,6 @@ export interface FullEditAdvertisementCommand {
   price: EditAdvertisementPrice;
   carType: CarType | null;
   motorType: MotorType | null;
+  carDetail: CarAdvertisementDetail | null;
+  motorDetail: MotorCycleAdvertisementDetail | null;
 }
